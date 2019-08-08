@@ -62,10 +62,6 @@ export const MOTEBEHOVSVAR_GYLDIG_VARIGHET_DAGER = 10 * 7;
 export const OPPFOLGINGSFORLOP_MOTEBEHOV_START_DAGER = 16 * 7;
 export const OPPFOLGINGSFORLOP_MOTEBEHOV_SLUTT_DAGER = 26 * 7;
 
-export const hentMoteLandingssideUrl = (skalViseMotebehov) => {
-    const moteVisning = skalViseMotebehov ? '' : '/mote';
-    return `${process.env.REACT_APP_CONTEXT_ROOT}/dialogmoter${moteVisning}`;
-};
 
 export const erOppfoelgingsdatoNyereEnn132DagerForProdsetting = (oppfoelgingsdato) => {
     const antallDagerMellomGrensedatoOgProddato = 132;
@@ -227,12 +223,4 @@ export const erMotebehovTilgjengeligForOppfolgingsforlop = (state) => {
 
 export const harMotebehovSvar = (state) => {
     return state.motebehov.data.length > 0;
-};
-
-export const erMotebehovUbesvart = (state) => {
-    try {
-        return erMotebehovTilgjengeligForOppfolgingsforlop(state) && !harMotebehovSvar(state);
-    } catch (e) {
-        return false;
-    }
 };

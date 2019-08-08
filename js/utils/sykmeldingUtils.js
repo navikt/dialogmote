@@ -1,5 +1,3 @@
-import erSykmeldingGyldigForOppfolgingMedGrensedato from '../oppfolgingsdialogNpm/erSykmeldingGyldigForOppfolgingMedGrensedato';
-
 export const sykmeldtHarNaermestelederHosArbeidsgiver = (virksomhetsnummer, naermesteLedere) => {
     return naermesteLedere.filter((leder) => {
         return virksomhetsnummer === leder.orgnummer;
@@ -11,15 +9,6 @@ export const finnSykmeldtSinNaermestelederNavnHosArbeidsgiver = (virksomhetsnumm
         return virksomhetsnummer === leder.orgnummer;
     })[0];
     return naermesteLeder ? naermesteLeder.navn : undefined;
-};
-
-export const sykmeldtHarGyldigSykmelding = (sykmeldinger) => {
-    const tomGrenseDato = new Date();
-    return sykmeldinger.filter((sykmelding) => {
-        return sykmelding.orgnummer && sykmelding.orgnummer !== null;
-    }).filter((sykmelding) => {
-        return erSykmeldingGyldigForOppfolgingMedGrensedato(sykmelding, tomGrenseDato);
-    }).length > 0;
 };
 
 export const erSykmeldingAktiv = (sykmelding) => {
@@ -46,20 +35,4 @@ export const finnArbeidsgivereForAktiveSykmeldinger = (sykmeldinger, naermesteLe
             return t.virksomhetsnummer === sykmelding.virksomhetsnummer && sykmelding.virksomhetsnummer !== null;
         }) === idx;
     });
-};
-
-export const skalViseOppfoelgingsdialogLenke = (sykmeldinger, oppfolgingsdialoger) => {
-    return sykmeldtHarGyldigSykmelding(sykmeldinger) || oppfolgingsdialoger.data.length > 0;
-};
-
-export const getTidligsteStartdatoSykeforloep = (sykepengesoknad) => {
-    return sykepengesoknad.oppfoelgingsdato && sykepengesoknad.oppfoelgingsdato < sykepengesoknad.identdato
-        ? sykepengesoknad.oppfoelgingsdato
-        : sykepengesoknad.identdato;
-};
-
-export const getSykmeldtFornavn = (sykmelding) => {
-    return sykmelding.pasient.mellomnavn
-        ? `${sykmelding.pasient.fornavn} ${sykmelding.pasient.mellomnavn}`
-        : `${sykmelding.pasient.fornavn}`;
 };

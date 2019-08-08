@@ -1,15 +1,9 @@
 const express = require('express');
-const mockSyfooppfolgingsplanservice = require('./mockSyfooppfolgingsplanservice');
 const mockSyfomoteadmin = require('./mockSyfomoteadmin');
 const mockSyfomotebehov = require('./mockSyfomotebehov');
 const mockSyforest = require('./mockSyforest');
-const mockSyfoservicestrangler = require('./mockSyfoservicestrangler');
-const mockSyfosoknad = require('./mockSyfosoknad');
 const mockSyfotekster = require('./mockSyfotekster');
 const mockSyfounleash = require('./mockSyfounleash');
-const mockVeilarboppfolging = require('./mockVeilarboppfolging');
-const mockVeilarbregistrering = require('./mockVeilarbregistrering');
-const mockSmSykmeldinger = require('./mockSmSykmeldinger');
 
 function mockEndepunkter(server, erLokal) {
     server.use(express.json());
@@ -24,17 +18,11 @@ function mockEndepunkter(server, erLokal) {
     });
 
     [
-        mockSyfooppfolgingsplanservice,
         mockSyfomoteadmin,
         mockSyfomotebehov,
         mockSyforest,
-        mockSyfoservicestrangler,
-        mockSyfosoknad,
         mockSyfotekster,
         mockSyfounleash,
-        mockVeilarboppfolging,
-        mockVeilarbregistrering,
-        mockSmSykmeldinger,
     ].forEach((func) => {
         func(server, erLokal);
     });

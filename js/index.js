@@ -3,21 +3,24 @@ import 'babel-polyfill';
 import { render } from 'react-dom';
 import React from 'react';
 import {
-    applyMiddleware, combineReducers, compose, createStore,
+    applyMiddleware,
+    combineReducers,
+    compose,
+    createStore,
 } from 'redux';
 import { Provider } from 'react-redux';
 import createSagaMiddleware from 'redux-saga';
 import {
-    forlengInnloggetSesjon, hentLedetekster, setPerformOnHttpCalls, sjekkInnloggingssesjon,
+    forlengInnloggetSesjon,
+    hentLedetekster,
+    setPerformOnHttpCalls,
+    sjekkInnloggingssesjon,
 } from '@navikt/digisyfo-npm';
 import AppRouter from './routers/AppRouter';
-import { hentVedlikehold } from './data/vedlikehold/vedlikehold_actions';
 import history from './history';
 import rootSaga from './data/rootSaga';
 import '../styles/styles.less';
-import './logging';
 import { hentUnleashToggles } from './data/unleash-toggles/unleashToggles_actions';
-import { hentSoknader } from './data/soknader/soknaderActions';
 import setPerformOnOppDialogHttpCalls from './oppfolgingsdialogNpm/setPerformOnOppDialogHttpCalls';
 import reducers from './data/reducers';
 
@@ -34,10 +37,8 @@ sagaMiddleware.run(rootSaga);
 
 // <OBS>: Minimer antall kall som gjøres her!
 store.dispatch(hentLedetekster());
-store.dispatch(hentVedlikehold());
 store.dispatch(forlengInnloggetSesjon());
 store.dispatch(hentUnleashToggles());
-store.dispatch(hentSoknader());
 // </OBS>
 
 setPerformOnHttpCalls(() => {

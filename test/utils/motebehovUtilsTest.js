@@ -3,7 +3,6 @@ import sinon from 'sinon';
 import {
     finnNyesteMotebehovForVirksomhetListeIOppfolgingsforlop,
     skalViseMotebehovKvittering,
-    hentMoteLandingssideUrl,
     erOppfolgingstilfelleSluttDatoPassert,
     erOppfoelgingsdatoNyereEnn132DagerForProdsetting,
     erOppfoelgingsdatoPassertMed16UkerOgIkke26Uker,
@@ -178,20 +177,6 @@ describe('motebehovUtils', () => {
         it('Skal returnere false om det eksisterer motebehov hos virksomhet, men ikke i et oppfolgingstilfelle', () => {
             const exp = false;
             const res = skalViseMotebehovKvittering(motebehovReducer, virksomhetsnrListe, []);
-            expect(res).to.equal(exp);
-        });
-    });
-
-    describe('hentMoteLandingssideUrl', () => {
-        it('Skal returnere url til landingsside for dialogmoter om skalViseMotebehov=true ', () => {
-            const exp = '/sykefravaer/dialogmoter';
-            const res = hentMoteLandingssideUrl(true);
-            expect(res).to.equal(exp);
-        });
-
-        it('Skal returnere url til side for mote om skalViseMotebehov=false', () => {
-            const exp = '/sykefravaer/dialogmoter/mote';
-            const res = hentMoteLandingssideUrl(false);
             expect(res).to.equal(exp);
         });
     });

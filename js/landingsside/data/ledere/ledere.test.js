@@ -5,9 +5,6 @@ import {
     hentLedereFeilet,
     ledereHentet,
     henterLedere,
-    avkreftLederFeilet,
-    lederAvkreftet,
-    avkrefterLeder,
 } from './ledereActions';
 
 describe('ledere', () => {
@@ -66,96 +63,6 @@ describe('ledere', () => {
             hentingFeilet: true,
             hentet: true,
             data: [],
-        });
-    });
-
-    it('håndterer AVKREFTER_LEDER', () => {
-        const initialState = deepFreeze({
-            avkrefter: false,
-            avkreftFeilet: false,
-            data: [
-                {
-                    navn: 'Ole Brum',
-                    orgnummer: '81549300',
-                    id: '1',
-                },
-                {
-                    navn: 'Nasse Neoff',
-                    orgnummer: '23529291',
-                    id: '2',
-                },
-            ],
-        });
-        const action = avkrefterLeder();
-        const nextState = ledere(initialState, action);
-        expect(nextState).to.deep.equal({
-            avkrefter: true,
-            avkreftet: false,
-            avkreftFeilet: false,
-            data: initialState.data,
-        });
-    });
-
-    it('håndterer LEDER_AVKREFTET_FEILET', () => {
-        const initialState = deepFreeze({
-            avkrefter: true,
-            avkreftFeilet: false,
-            data: [
-                {
-                    navn: 'Ole Brum',
-                    orgnummer: '81549300',
-                    id: '1',
-                },
-                {
-                    navn: 'Nasse Neoff',
-                    orgnummer: '23529291',
-                    id: '2',
-                },
-            ],
-        });
-        const action = avkreftLederFeilet();
-        const nextState = ledere(initialState, action);
-        expect(nextState).to.deep.equal({
-            avkrefter: false,
-            avkreftFeilet: true,
-            data: initialState.data,
-        });
-    });
-
-    it('håndterer LEDER_AVKREFTET', () => {
-        const initialState = deepFreeze({
-            avkrefter: true,
-            avkreftFeilet: false,
-            data: [
-                {
-                    navn: 'Ole Brum',
-                    orgnummer: '81549300',
-                    id: '1',
-                },
-                {
-                    navn: 'Nasse Neoff',
-                    orgnummer: '23529291',
-                    id: '2',
-                },
-            ],
-        });
-        const action = lederAvkreftet('23529291');
-        const nextState = ledere(initialState, action);
-
-        expect(nextState).to.deep.equal({
-            avkrefter: false,
-            avkreftet: true,
-            avkreftFeilet: false,
-            data: [{
-                navn: 'Ole Brum',
-                orgnummer: '81549300',
-                id: '1',
-            }, {
-                navn: 'Nasse Neoff',
-                orgnummer: '23529291',
-                id: '2',
-                avkreftet: true,
-            }],
         });
     });
 });

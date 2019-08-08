@@ -159,7 +159,7 @@ export const Knapper = ({ motebehovSvarReducerListe }) => {
                 </Hovedknapp>
             </div>
             <div className="knapperad">
-                <Link className="lenke" to="/sykefravaer/dialogmoter">
+                <Link className="lenke" to="/dialogmote">
                 Avbryt
                 </Link>
             </div>

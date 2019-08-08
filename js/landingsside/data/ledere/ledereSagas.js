@@ -1,10 +1,15 @@
 import {
-    all, call, fork, put, takeEvery,
+    all,
+    call,
+    fork,
+    put,
+    takeEvery,
 } from 'redux-saga/effects';
-import { get, log, post } from '@navikt/digisyfo-npm';
+import {
+    get,
+    log,
+} from '@navikt/digisyfo-npm';
 import * as actions from './ledereActions';
-
-const { AVKREFT_LEDER_FORESPURT, HENT_LEDERE_FORESPURT } = actions;
 
 export function* hentLedere() {
     yield put(actions.henterLedere());
@@ -17,28 +22,12 @@ export function* hentLedere() {
     }
 }
 
-export function* avkreftLeder(action) {
-    yield put(actions.avkrefterLeder(action.orgnummer));
-    try {
-        yield call(post, `${process.env.REACT_APP_SYFOREST_ROOT}/naermesteledere/${action.orgnummer}/actions/avkreft`);
-        yield put(actions.lederAvkreftet(action.orgnummer));
-    } catch (e) {
-        log(e);
-        yield put(actions.avkreftLederFeilet());
-    }
-}
-
 function* watchHentLedere() {
-    yield takeEvery(HENT_LEDERE_FORESPURT, hentLedere);
-}
-
-function* watchAvkreftLeder() {
-    yield takeEvery(AVKREFT_LEDER_FORESPURT, avkreftLeder);
+    yield takeEvery(actions.HENT_LEDERE_FORESPURT, hentLedere);
 }
 
 export default function* ledereSagas() {
     yield all([
         fork(watchHentLedere),
-        fork(watchAvkreftLeder),
     ]);
 }

@@ -294,23 +294,6 @@ export const hentSykmeldingIkkeGyldigForOppfoelging = (dagensDato) => {
     });
 };
 
-export const hentSykmeldingGyldigForOppfoelging = (dagensDato) => {
-    return getSykmelding({
-        mulighetForArbeid: {
-            perioder: [
-                {
-                    fom: leggTilDagerPaaDato(dagensDato, -35).toISOString(),
-                    tom: leggTilDagerPaaDato(dagensDato, -5).toISOString(),
-                },
-                {
-                    fom: leggTilDagerPaaDato(dagensDato, -5).toISOString(),
-                    tom: leggTilDagerPaaDato(dagensDato, 35).toISOString(),
-                },
-            ],
-        },
-    });
-};
-
 export const hentSykmeldingUtgaatt = (dagensDato) => {
     return getSykmelding({
         mulighetForArbeid: {

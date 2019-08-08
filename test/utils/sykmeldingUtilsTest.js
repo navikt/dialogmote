@@ -1,12 +1,10 @@
 import sinon from 'sinon';
 import chai from 'chai';
 import {
-    sykmeldtHarNaermestelederHosArbeidsgiver,
-    finnSykmeldtSinNaermestelederNavnHosArbeidsgiver,
-    skalViseOppfoelgingsdialogLenke,
-    sykmeldtHarGyldigSykmelding,
     erSykmeldingAktiv,
     finnArbeidsgivereForAktiveSykmeldinger,
+    finnSykmeldtSinNaermestelederNavnHosArbeidsgiver,
+    sykmeldtHarNaermestelederHosArbeidsgiver,
 } from '../../js/utils/sykmeldingUtils';
 import {
     hentSykmeldingAktiv,
@@ -22,79 +20,24 @@ describe('sykmeldingUtils', () => {
     let clock;
     let sykmelding;
     let sykmeldinger;
-    let sykmeldingUtgaattOver4mnd;
-    let sykmeldingUtgaatt;
     let sykmeldingAktiv;
+    let sykmeldingUtgaatt;
+    let sykmeldingUtgaattOver4mnd;
     const today = new Date('2017-01-01');
     today.setHours(0, 0, 0, 0);
 
     beforeEach(() => {
         sykmeldinger = getSykmeldinger;
         clock = sinon.useFakeTimers(today.getTime());
-        sykmeldingUtgaattOver4mnd = hentSykmeldingIkkeGyldigForOppfoelging(today);
-        sykmeldingUtgaatt = hentSykmeldingUtgaatt(today);
         sykmeldingAktiv = hentSykmeldingAktiv(today);
+        sykmeldingUtgaatt = hentSykmeldingUtgaatt(today);
+        sykmeldingUtgaattOver4mnd = hentSykmeldingIkkeGyldigForOppfoelging(today);
     });
 
     afterEach(() => {
         clock.restore();
     });
     const naermesteLedere = getLedere;
-
-    describe('skalViseOppfoelgingsdialogLenke', () => {
-        let oppfolgingsdialoger;
-
-        it('skal returnere true med 1 sykmelding uten orgnummer, med oppfolgingsdialog', () => {
-            oppfolgingsdialoger = {
-                data: [{
-                    virksomhetsnummer: '12345678',
-                }],
-            };
-            sykmeldinger = [Object.assign({}, sykmeldingAktiv, {
-                orgnummer: null,
-            })];
-            expect(skalViseOppfoelgingsdialogLenke(sykmeldinger, oppfolgingsdialoger)).to.equal(true);
-        });
-
-        it('skal returnere false med 1 sykmelding, som har siste gyldige sykmeldingsdato eldre enn grensedato(4mnd siden), med oppfolgingsdialogerSagas', () => {
-            oppfolgingsdialoger = {
-                data: [{
-                    virksomhetsnummer: '12345678',
-                }],
-            };
-            sykmeldinger = [sykmeldingUtgaattOver4mnd];
-            expect(skalViseOppfoelgingsdialogLenke(sykmeldinger, oppfolgingsdialoger)).to.equal(true);
-        });
-
-        it('skal returnere false med 1 sykmelding uten orgnummer, uten oppfolgingsdialogerSagas', () => {
-            oppfolgingsdialoger = {
-                data: [],
-            };
-            sykmeldinger = [Object.assign({}, sykmeldingAktiv, {
-                orgnummer: null,
-            })];
-            expect(skalViseOppfoelgingsdialogLenke(sykmeldinger, oppfolgingsdialoger)).to.equal(false);
-        });
-
-        // eslint-disable-next-line max-len
-        it('skal returnere false med 1 sykmelding, som ikke har orgnummer, men som har siste gyldige sykmeldingsdato nyligere eller lik grensedato(4mnd siden), uten oppfolgingsdialogerSagas', () => {
-            oppfolgingsdialoger = {
-                data: [],
-            };
-            sykmeldinger = [Object.assign({}, sykmeldingAktiv, {
-                orgnummer: null,
-            })];
-            expect(skalViseOppfoelgingsdialogLenke(sykmeldinger, oppfolgingsdialoger)).to.equal(false);
-        });
-
-        it('skal returnere true med 1 sykmelding, som har siste gyldige sykmeldingsdato nyligere enn grensedato(4mnd siden), uteno oppfolgingsdialogerSagas', () => {
-            oppfolgingsdialoger = {
-                data: [],
-            };
-            sykmeldinger = [sykmeldingAktiv];
-            expect(skalViseOppfoelgingsdialogLenke(sykmeldinger, oppfolgingsdialoger)).to.equal(true);
-        });
-    });
 
     describe('erSykmeldingAktiv', () => {
         it('skal returnere false med 1 sykmelding, som ikke er aktiv', () => {
@@ -131,32 +74,6 @@ describe('sykmeldingUtils', () => {
         it('skal returnere 1 arbeidsgiver, når det er duplikat av arbeidsgiver', () => {
             sykmeldinger = [sykmeldingAktiv, sykmeldingAktiv];
             expect(finnArbeidsgivereForAktiveSykmeldinger(sykmeldinger, naermesteLedere)).to.have.length(1);
-        });
-    });
-
-    describe('sykmeldtHarGyldigSykmelding', () => {
-        it('skal returnere false med 1 sykmelding uten orgnummer', () => {
-            sykmeldinger = [Object.assign({}, sykmeldingAktiv, {
-                orgnummer: null,
-            })];
-            expect(sykmeldtHarGyldigSykmelding(sykmeldinger)).to.equal(false);
-        });
-
-        it('skal returnere false med 1 sykmelding, som har siste gyldige sykmeldingsdato eldre enn grensedato(4mnd siden)', () => {
-            sykmeldinger = [sykmeldingUtgaattOver4mnd];
-            expect(sykmeldtHarGyldigSykmelding(sykmeldinger)).to.equal(false);
-        });
-
-        it('skal returnere false med 1 sykmelding, som ikke har orgnummer, men som har siste gyldige sykmeldingsdato nyligere eller lik grensedato(4mnd siden)', () => {
-            sykmeldinger = [Object.assign({}, sykmeldingAktiv, {
-                orgnummer: null,
-            })];
-            expect(sykmeldtHarGyldigSykmelding(sykmeldinger)).to.equal(false);
-        });
-
-        it('skal returnere true med 1 sykmelding, som har siste gyldige sykmeldingsdato nyligere enn grensedato(4mnd siden)', () => {
-            sykmeldinger = [sykmeldingAktiv];
-            expect(sykmeldtHarGyldigSykmelding(sykmeldinger)).to.equal(true);
         });
     });
 

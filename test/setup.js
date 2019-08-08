@@ -48,6 +48,6 @@ global.navigator = {
     userAgent: 'node.js',
 };
 global.window.APP_SETTINGS = {
-    APP_ROOT: '/sykefravaer',
+    APP_ROOT: '/dialogmote',
 };
 copyProps(window, global);

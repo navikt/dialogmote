@@ -1,42 +1,16 @@
 import { expect } from 'chai';
-import { get, getAjax } from '@navikt/digisyfo-npm';
-import { put, call, select } from 'redux-saga/effects';
-import { hentBrukerinfo, sjekkInnlogging } from './brukerinfoSagas';
-import { skalHenteBrukerinfoSelector } from './brukerinfoSelectors';
 import {
-    henterBrukerinfo, brukerinfoHentet, setErInnlogget, sjekkerInnlogging,
+    put,
+    call,
+} from 'redux-saga/effects';
+import { getAjax } from '@navikt/digisyfo-npm';
+import { sjekkInnlogging } from './brukerinfoSagas';
+import {
+    setErInnlogget,
+    sjekkerInnlogging,
 } from './brukerinfo_actions';
 
 describe('brukerinfoSagas', () => {
-    describe('hentBrukerinfo', () => {
-        const generator = hentBrukerinfo();
-
-        it('Skal sjekke om get skal utføres', () => {
-            const nextSelect = select(skalHenteBrukerinfoSelector);
-            expect(generator.next().value).to.deep.equal(nextSelect);
-        });
-
-        it('Skal dispatche HENTER_BRUKERINFO', () => {
-            const nextPut = put(henterBrukerinfo());
-            const skalHente = true;
-            expect(generator.next(skalHente).value).to.deep.equal(nextPut);
-        });
-
-        it('Skal dernest hente brukerinfo', () => {
-            const nextCall = call(get, '/syforest/informasjon/bruker');
-            expect(generator.next().value).to.deep.equal(nextCall);
-        });
-
-        it('Skal dernest sette brukerinfo', () => {
-            const nextPut = put(brukerinfoHentet({
-                navn: 'Ole Olsen',
-            }));
-            expect(generator.next({
-                navn: 'Ole Olsen',
-            }).value).to.deep.equal(nextPut);
-        });
-    });
-
     describe('sjekkInnlogging', () => {
         const generator = sjekkInnlogging();
 
@@ -46,7 +20,7 @@ describe('brukerinfoSagas', () => {
         });
 
         it('Skal dernest sjekke om brukeren er innlogget', () => {
-            const nextCall = call(getAjax, '/sykefravaer/');
+            const nextCall = call(getAjax, '/dialogmote/');
             expect(generator.next().value).to.deep.equal(nextCall);
         });
 

@@ -3,7 +3,10 @@ import chaiEnzyme from 'chai-enzyme';
 import * as actions from './dineSykmeldingerActions';
 
 const {
-    HENT_DINE_SYKMELDINGER_FEILET, HENT_DINE_SYKMELDINGER_FORESPURT, HENTER_DINE_SYKMELDINGER, SET_DINE_SYKMELDINGER, SET_SORTERING,
+    HENT_DINE_SYKMELDINGER_FEILET,
+    HENT_DINE_SYKMELDINGER_FORESPURT,
+    HENTER_DINE_SYKMELDINGER,
+    SET_DINE_SYKMELDINGER,
 } = actions;
 
 chai.use(chaiEnzyme());
@@ -41,22 +44,6 @@ describe('dineSykmeldinger_actions', () => {
     it('Skal ha en hentDineSykmeldinger()-funksjon som returnerer riktig action', () => {
         expect(actions.hentDineSykmeldinger()).to.deep.equal({
             type: HENT_DINE_SYKMELDINGER_FORESPURT,
-        });
-    });
-
-    it('Skal ha en sorterSykmeldinger()-funksjon som returnerer riktig action', () => {
-        const res = actions.sorterSykmeldinger('arbeidsgiver', 'tidligere');
-        expect(res).to.deep.equal({
-            type: SET_SORTERING,
-            kriterium: 'arbeidsgiver',
-            status: 'tidligere',
-        });
-
-        const res2 = actions.sorterSykmeldinger('arbeidsgiver', 'nye');
-        expect(res2).to.deep.equal({
-            type: SET_SORTERING,
-            kriterium: 'arbeidsgiver',
-            status: 'nye',
         });
     });
 });

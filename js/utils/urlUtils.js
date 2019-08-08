@@ -3,18 +3,8 @@ export const erPaaHeroku = () => {
     return url.indexOf('heroku') > -1;
 };
 
-export const getSykepengesoknaderUrl = () => {
+export const getSykefravaerUrl = (sti) => {
     return erPaaHeroku()
-        ? 'https://sykepengesoknad.herokuapp.com/sykepengesoknad'
-        : process.env.REACT_APP_SYKEPENGESOKNAD_ROOT;
-};
-
-export const getSykepengesoknadUrl = (soknadId) => {
-    return `${getSykepengesoknaderUrl()}/soknader/${soknadId}`;
-};
-
-export const getOppfolgingsplanerUrl = () => {
-    return erPaaHeroku()
-        ? 'https://oppfolgingsplan.herokuapp.com/oppfolgingsplan/oppfolgingsplaner'
-        : `${process.env.REACT_APP_OPPFOLGINGSPLAN_CONTEXT_ROOT}/oppfolgingsplaner`;
+        ? `https://sykefravaer.herokuapp.com${sti}`
+        : sti;
 };
