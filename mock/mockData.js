@@ -11,33 +11,12 @@ const lastFilTilMinne = (filnavn) => {
     });
 };
 
-lastFilTilMinne(enums.ARBEIDSGIVERS_SYKMELDINGER);
-lastFilTilMinne(enums.NY_SOKNAD_UTLAND);
-lastFilTilMinne(enums.ARBEIDSGIVERE);
-lastFilTilMinne(enums.METADATA);
 lastFilTilMinne(enums.MOTEBEHOV);
 lastFilTilMinne(enums.NAERMESTELEDERE);
-lastFilTilMinne(enums.OPPFOELGINGSDIALOGER);
-lastFilTilMinne(enums.SOKNADER);
 lastFilTilMinne(enums.SYFOUNLEASH);
-lastFilTilMinne(enums.SYKEFORLOEAP);
-lastFilTilMinne(enums.SYKEPENGESOKNADER);
 lastFilTilMinne(enums.SYKMELDINGER);
 lastFilTilMinne(enums.TEKSTER);
-lastFilTilMinne(enums.VARSLER);
-lastFilTilMinne(enums.VEDLIKEHOLD);
-lastFilTilMinne(enums.TILGANG);
-lastFilTilMinne(enums.TOGGLES);
-lastFilTilMinne(enums.ARBEIDSFORHOLD);
-lastFilTilMinne(enums.KONTAKTINFO);
-lastFilTilMinne(enums.NAERMESTELEDER);
 lastFilTilMinne(enums.PERIODER);
-lastFilTilMinne(enums.PERSON);
-lastFilTilMinne(enums.PERSONVIRKSOMHETSNUMMER);
-lastFilTilMinne(enums.VIRKSOMHET);
-lastFilTilMinne(enums.FORRIGE_LEDER);
 lastFilTilMinne(enums.SISTE);
-lastFilTilMinne(enums.HENDELSER);
-lastFilTilMinne(enums.SM_SYKMELDINGER);
 
 module.exports = mockData;

@@ -2,14 +2,20 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import { getLedetekst, keyValue } from '@navikt/digisyfo-npm';
+import {
+    getLedetekst,
+    keyValue,
+} from '@navikt/digisyfo-npm';
 import getContextRoot from '../utils/getContextRoot';
 import history from '../history';
 import Side from './Side';
 import AppSpinner from '../components/AppSpinner';
 import Feilmelding from '../components/Feilmelding';
 import DialogmoterInnhold from '../components/moter/DialogmoterInnhold';
-import { brodsmule as brodsmulePt, motebehovReducerPt } from '../propTypes';
+import {
+    brodsmule as brodsmulePt,
+    motebehovReducerPt,
+} from '../propTypes';
 import { hentDineSykmeldinger } from '../sykmeldinger/data/dine-sykmeldinger/dineSykmeldingerActions';
 import { hentLedere } from '../landingsside/data/ledere/ledereActions';
 import { hentMote } from '../data/moter/mote_actions';
@@ -57,7 +63,7 @@ class Container extends Component {
         }
 
         if (harForsoektHentetAlt && skalViseMotebehov === false) {
-            history.push(`${getContextRoot()}/dialogmoter/mote`);
+            history.push(`${getContextRoot()}/mote`);
         }
     }
 
@@ -73,7 +79,7 @@ class Container extends Component {
         finnOgHentManglendeOppfolgingsforlopsPerioder(actions.hentOppfolgingsforlopsPerioder, oppfolgingsforlopsPerioderReducerListe, virksomhetsnrListe);
 
         if (harForsoektHentetAlt && skalViseMotebehov === false) {
-            history.push(`${getContextRoot()}/dialogmoter/mote`);
+            history.push(`${getContextRoot()}/mote`);
         }
     }
 
@@ -189,7 +195,7 @@ export function mapStateToProps(state) {
         virksomhetnrMedMotebehovListe,
         brodsmuler: [{
             tittel: getLedetekst('landingsside.sidetittel'),
-            sti: '/',
+            sti: '/sykefravaer',
             erKlikkbar: true,
         }, {
             tittel: getLedetekst('mote.moter.sidetittel'),

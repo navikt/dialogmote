@@ -1,7 +1,5 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Link } from 'react-router';
-import { getLedetekst } from '@navikt/digisyfo-npm';
 import { BRUKER, ARBEIDSGIVER, NAV_VEILEDER } from '../../../enums/moteplanleggerDeltakerTyper';
 import {
     motePt,
@@ -19,7 +17,6 @@ const BesvarteTidspunkter = (
         mote,
         alternativer,
         deltakertype = BRUKER,
-        fnr,
     },
 ) => {
     const arbeidsgiver = mote.deltakere.filter((d) => {
@@ -90,17 +87,6 @@ const BesvarteTidspunkter = (
                             ) }
                                     { deltakertype !== NAV_VEILEDER && <NavKan /> }
                                 </ul>
-                                { deltakertype === NAV_VEILEDER
-                        && (
-                            <div className="alternativsvar__bekreft">
-                                <Link
-                                    to={`/sykefravaer/${fnr}/mote/bekreft/${field.id}`}
-                                    className="knapp knapp--hoved knapp--mini js-bekreft-tidspunkt">
-                                    {getLedetekst('mote.bookingstatus.velgtidspunkt')}
-                                </Link>
-                            </div>
-                        )
-                                }
                             </li>
                         );
                     })
@@ -113,7 +99,6 @@ BesvarteTidspunkter.propTypes = {
     mote: motePt,
     alternativer: PropTypes.arrayOf(moteplanleggerAlternativPt),
     deltakertype: moteplanleggerDeltakertypePt,
-    fnr: PropTypes.string,
 };
 
 export default BesvarteTidspunkter;

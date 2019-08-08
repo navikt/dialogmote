@@ -1,12 +1,10 @@
 import {
     erGyldigDatoformat,
     tilLesbarDatoMedArstall,
-    tilLesbarPeriodeMedArstall,
 } from '@navikt/digisyfo-npm';
 
 export {
     tilLesbarDatoMedArstall,
-    tilLesbarPeriodeMedArstall,
 };
 
 const maneder = ['januar', 'februar', 'mars', 'april', 'mai', 'juni', 'juli', 'august', 'september', 'oktober', 'november', 'desember'];

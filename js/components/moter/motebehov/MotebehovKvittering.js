@@ -79,7 +79,7 @@ const MotebehovKvittering = (
                 <MotebehovKvitteringUtvidbar motebehov={motebehov} />
             </div>
             <div className="knapperad">
-                <Link className="lenke" to="/sykefravaer/dialogmoter">
+                <Link className="lenke" to="/dialogmote">
                 Tilbake
                 </Link>
             </div>

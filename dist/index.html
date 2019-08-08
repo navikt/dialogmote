@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="no">
 <head>
-    <!-- /sykefravaer -->
+    <!-- /dialogmote -->
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <title></title>
     <meta charset="UTF-8">
@@ -12,7 +12,7 @@
     {{{NAV_MEGAMENU_RESOURCES}}}
     {{{NAV_SCRIPTS}}}
     {{#isProd}}
-    <link href="/sykefravaer/resources/styles.css?ts={{{timestamp}}}" rel="stylesheet" id="sykefravaer-styles" />
+    <link href="/dialogmote/resources/styles.css?ts={{{timestamp}}}" rel="stylesheet" id="dialogmote-styles" />
     {{/isProd}}
     <meta name="viewport" content="width=device-width, initial-scale=1"/>
     <style>
@@ -85,10 +85,10 @@
             <p>Her finner du <a href="https://www.nav.no/no/Person/Arbeid/Sykmeldt%2C+arbeidsavklaringspenger+og+yrkesskade">informasjon om sykmelding og sykepenger</a>.</p>
             {{/isProd}}
             {{^isProd}}
-            <h2 class="scriptFeilmelding__tittel">Utvikling i sykefravaer</h2>
+            <h2 class="scriptFeilmelding__tittel">Utvikling i dialogmote</h2>
             <p>Kjør appen lokalt med mockede rest-endepunkter ved å kjøre <code>npm run start-local</code>. Mock-oppsett og mock-data finner du i <code>/mock</code></p>
             <p>Kjør <code>npm run dev</code> for å kjøre opp en webpack-dev-server som bygger JS og CSS for deg.</p>
-            <p>Sykefravaer blir da tilgjengelig under <a href="http://localhost:8080/sykefravaer">http://localhost:8080/sykefravaer</a></p>
+            <p>Dialogmote blir da tilgjengelig under <a href="http://localhost:8080/dialogmote">http://localhost:8080/dialogmote</a></p>
             <p>Happy coding!</p>
             {{/isProd}}
         </div>
@@ -162,7 +162,7 @@
         var script = document.createElement("script");
 
         {{#isProd}}
-        script.src = "/sykefravaer/resources/bundle-prod.js?ts={{timestamp}}";
+        script.src = "/dialogmote/resources/bundle-prod.js?ts={{timestamp}}";
         {{/isProd}}
             {{^isProd}}
             script.src = "http://localhost:9090/assets/bundle.js";
@@ -173,7 +173,7 @@
 </script>
 <script type="application/javascript">
     window.frontendlogger = { info: function(){}, warn: function(){}, error: function(){}, event: function(){}};
-    window.frontendlogger.appname = 'sykefravaer';
+    window.frontendlogger.appname = 'dialogmote';
 </script>
 {{#isProd}}
 <script type="application/javascript" src="/frontendlogger/logger.js"></script>

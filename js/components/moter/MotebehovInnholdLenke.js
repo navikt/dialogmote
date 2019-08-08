@@ -22,7 +22,7 @@ const MotebehovInnholdLenke = (
             <p>{TEKSTER.undertekst}</p>
             <Link
                 className="knapp"
-                to="/sykefravaer/dialogmoter/behov"
+                to="/dialogmote/behov"
             >
                 {getLedetekst(knappTekstNokkel)}
             </Link>

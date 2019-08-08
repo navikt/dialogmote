@@ -2,7 +2,10 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import { getLedetekst, keyValue } from '@navikt/digisyfo-npm';
+import {
+    getLedetekst,
+    keyValue,
+} from '@navikt/digisyfo-npm';
 import {
     brodsmule as brodsmulePt,
     motebehovReducerPt,
@@ -184,7 +187,7 @@ export function mapStateToProps(state) {
         virksomhetnrMedMotebehovListe,
         brodsmuler: [{
             tittel: getLedetekst('landingsside.sidetittel'),
-            sti: '/',
+            sti: '/sykefravaer',
             erKlikkbar: true,
         }, {
             tittel: getLedetekst('mote.sidetittel'),

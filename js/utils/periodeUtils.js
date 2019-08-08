@@ -1,4 +1,8 @@
-import { fraInputdatoTilJSDato, periodeOverlapperMedPeriode, tilDatePeriode } from '@navikt/digisyfo-npm';
+import {
+    fraInputdatoTilJSDato,
+    periodeOverlapperMedPeriode,
+    tilDatePeriode,
+} from '@navikt/digisyfo-npm';
 
 const ETT_DOGN = 1000 * 60 * 60 * 24;
 
@@ -122,14 +126,4 @@ export const antallVirkedagerIPerioder = (perioder, startdato) => {
         }
     });
     return virkedager.size;
-};
-
-export const tilDager = (perioder) => {
-    const dager = [];
-    perioder.forEach((periode) => {
-        for (let i = periode.fom.getTime(); i <= periode.tom.getTime(); i += ETT_DOGN) {
-            dager.push(new Date(i));
-        }
-    });
-    return dager;
 };
