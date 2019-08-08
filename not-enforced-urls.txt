@@ -1,0 +1,2 @@
+https://${DomainName}/dialogmote/img/*
+https://${DomainName}/dialogmote/resources/*
