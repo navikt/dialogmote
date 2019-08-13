@@ -148,12 +148,14 @@ export const TekstOpplysning = () => {
 };
 
 export const Knapper = ({ motebehovSvarReducerListe }) => {
+    const sender = harSvarMotebehovSender(motebehovSvarReducerListe);
     return (
         <Fragment>
             <div className="knapperad">
                 <Hovedknapp
                     type="submit"
-                    spinner={harSvarMotebehovSender(motebehovSvarReducerListe)}
+                    disabled={sender}
+                    spinner={sender}
                 >
                     {TEKSTER_INFORMASJON.knappSend}
                 </Hovedknapp>
