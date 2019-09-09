@@ -1,11 +1,12 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router';
-import { getLedetekst } from '@navikt/digisyfo-npm';
 
 const TEKSTER = {
-    tittel: 'Ønsker du et dialogmøte med NAV?',
-    undertekst: 'I møtet går vi gjennom situasjonen sammen og ser på muligheter. Her kan du vurdere om du ønsker et møte',
+    tittel: 'Trenger dere et dialogmøte med NAV?',
+    undertekst: 'I møtet går vi gjennom situasjonen sammen og ser på muligheter.',
+    knappKvittering: 'Se Kvittering',
+    knappBehov: 'Meld behov for møte',
 };
 
 const MotebehovInnholdLenke = (
@@ -14,8 +15,8 @@ const MotebehovInnholdLenke = (
     },
 ) => {
     const knappTekstNokkel = skalViseKvittering
-        ? 'mote.motebehovInnholdLenke.knapp.kvittering'
-        : 'mote.motebehovInnholdLenke.knapp.svar';
+        ? TEKSTER.knappKvittering
+        : TEKSTER.knappBehov;
     return (
         <div className="motebehovInnholdLenke panel">
             <h2 className="panel__tittel">{TEKSTER.tittel}</h2>
@@ -24,7 +25,7 @@ const MotebehovInnholdLenke = (
                 className="knapp"
                 to="/dialogmote/behov"
             >
-                {getLedetekst(knappTekstNokkel)}
+                {knappTekstNokkel}
             </Link>
         </div>
     );
