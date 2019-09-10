@@ -3,10 +3,6 @@ import PropTypes from 'prop-types';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import {
-    getLedetekst,
-    keyValue,
-} from '@navikt/digisyfo-npm';
-import {
     brodsmule as brodsmulePt,
     motebehovReducerPt,
     motebehovSvarReducerPt,
@@ -40,7 +36,14 @@ import {
     harSvarMotebehovFeilet,
     skalViseMotebehovMedOppfolgingsforlopListe,
 } from '../utils/motebehovUtils';
-import { selectLedeteksterData } from '../data/ledetekster/ledeteksterSelectors';
+
+const tekster = {
+    brodsmuler: {
+        dittSykefravaer: 'Ditt sykefravær',
+        dialogmote: 'Dialogmøte',
+    },
+    sideTittel: 'Dialogmøte',
+};
 
 class Container extends Component {
     componentDidMount() {
@@ -76,7 +79,7 @@ class Container extends Component {
         } = this.props;
         return (
             <Side
-                tittel={getLedetekst('mote.behov.sidetittel')}
+                tittel={tekster.sideTittel}
                 brodsmuler={brodsmuler}
                 laster={henter}>
                 {
@@ -105,7 +108,6 @@ class Container extends Component {
     }
 }
 Container.propTypes = {
-    ledetekster: keyValue,
     henter: PropTypes.bool,
     hentingFeilet: PropTypes.bool,
     sendingFeilet: PropTypes.bool,
@@ -179,18 +181,17 @@ export function mapStateToProps(state) {
         skalHenteLedere,
         skalHenteOppfolgingsPerioder,
         skalViseMotebehov,
-        ledetekster: selectLedeteksterData(state),
         motebehovReducer,
         motebehovSvarReducerListe,
         oppfolgingsforlopsPerioderReducerListe,
         virksomhetsnrListe,
         virksomhetnrMedMotebehovListe,
         brodsmuler: [{
-            tittel: getLedetekst('landingsside.sidetittel'),
+            tittel: tekster.brodsmuler.dittSykefravaer,
             sti: '/sykefravaer',
             erKlikkbar: true,
         }, {
-            tittel: getLedetekst('mote.sidetittel'),
+            tittel: tekster.brodsmuler.dialogmote,
         }],
     };
 }

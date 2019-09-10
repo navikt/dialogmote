@@ -2,10 +2,6 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import {
-    getLedetekst,
-    keyValue,
-} from '@navikt/digisyfo-npm';
 import getContextRoot from '../utils/getContextRoot';
 import history from '../history';
 import Side from './Side';
@@ -40,7 +36,14 @@ import {
     forsoektHentetOppfolgingsPerioder,
     hentOppfolgingsPerioderFeilet,
 } from '../utils/oppfolgingsforlopsperioderUtils';
-import { selectLedeteksterData } from '../data/ledetekster/ledeteksterSelectors';
+
+const tekster = {
+    brodsmuler: {
+        dittSykefravaer: 'Ditt sykefravær',
+        dialogmote: 'Dialogmøter',
+    },
+    sideTittel: 'Dialogmøter',
+};
 
 class Container extends Component {
     componentDidMount() {
@@ -91,7 +94,7 @@ class Container extends Component {
         } = this.props;
         return (
             <Side
-                tittel={getLedetekst('mote.moter.sidetittel')}
+                tittel={tekster.sideTittel}
                 brodsmuler={brodsmuler}
                 laster={henter}>
                 {
@@ -116,7 +119,6 @@ class Container extends Component {
 Container.propTypes = {
     henter: PropTypes.bool,
     hentingFeilet: PropTypes.bool,
-    ledetekster: keyValue,
     brodsmuler: PropTypes.arrayOf(brodsmulePt),
     koblingId: PropTypes.string,
     motebehovReducer: motebehovReducerPt,
@@ -183,7 +185,6 @@ export function mapStateToProps(state) {
         || hentOppfolgingsforlopsPerioderFeilet
         || motebehovReducer.hentingForbudt
         || (skalViseMotebehov && motebehovReducer.hentingFeilet),
-        ledetekster: selectLedeteksterData(state),
         motebehovReducer,
         oppfolgingsforlopsPerioderReducerListe,
         harMote,
@@ -194,11 +195,11 @@ export function mapStateToProps(state) {
         virksomhetsnrListe,
         virksomhetnrMedMotebehovListe,
         brodsmuler: [{
-            tittel: getLedetekst('landingsside.sidetittel'),
+            tittel: tekster.brodsmuler.dittSykefravaer,
             sti: '/sykefravaer',
             erKlikkbar: true,
         }, {
-            tittel: getLedetekst('mote.moter.sidetittel'),
+            tittel: tekster.brodsmuler.dialogmote,
         }],
     };
 }
