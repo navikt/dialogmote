@@ -1,9 +1,10 @@
 import React, { Component, Fragment } from 'react';
 import PropTypes from 'prop-types';
-import { Hovedknapp } from 'nav-frontend-knapper';
 import { connect } from 'react-redux';
 import { Field, reduxForm, getFormValues } from 'redux-form';
 import { Link } from 'react-router';
+import { Hovedknapp } from 'nav-frontend-knapper';
+import Alertstripe from 'nav-frontend-alertstriper';
 import { harSvarMotebehovSender } from '../../../utils/motebehovUtils';
 import { motebehovSvarReducerPt } from '../../../propTypes';
 import Tekstomraade from '../../skjema/Tekstomraade';
@@ -19,6 +20,7 @@ const SVAR_MOTEBEHOV_SKJEMANAVN = 'svarMotebehov';
 export const TEKSTER_INFORMASJON = {
     knappSend: 'Send svar',
     sensitiv: 'Ikke skriv sensitiv informasjon, for eksempel detaljerte opplysninger om helsen din.',
+    svarNeiAlert: 'Selv om du svarer nei, kan det hende vi likevel kommer til at det er nødvendig med et møte. Svaret ditt brukes når vi vurderer behovet.',
 };
 /* eslint-enable max-len */
 
@@ -172,6 +174,13 @@ Knapper.propTypes = {
     motebehovSvarReducerListe: PropTypes.arrayOf(motebehovSvarReducerPt),
 };
 
+export const AlertstripeNei = () => {
+    return (
+        <Alertstripe className="alertstripeNei" type="info">
+            {TEKSTER_INFORMASJON.svarNeiAlert}
+        </Alertstripe>
+    );
+};
 
 export class SvarMotebehovSkjemaKomponent extends Component {
     constructor(props) {
@@ -205,6 +214,9 @@ export class SvarMotebehovSkjemaKomponent extends Component {
                         felt={FELTER.harMotebehov}
                         handleOptionChange={this.setHarBehovSvar}
                     />
+                    { harMotebehov === 'false'
+                    && <AlertstripeNei />
+                    }
                     <MotebehovSkjemaTekstomraade
                         felt={FELTER.forklaring}
                         harMotebehov={harMotebehov}
