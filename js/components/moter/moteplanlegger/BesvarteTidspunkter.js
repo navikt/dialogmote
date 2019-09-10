@@ -1,14 +1,22 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { BRUKER, ARBEIDSGIVER, NAV_VEILEDER } from '../../../enums/moteplanleggerDeltakerTyper';
 import {
-    motePt,
+    ARBEIDSGIVER,
+    BRUKER,
+} from '../../../enums/moteplanleggerDeltakerTyper';
+import {
     moteplanleggerAlternativPt,
-    moteplanleggerDeltakertypePt,
+    motePt,
 } from '../../../propTypes';
-import { SvarMedIkon, NavKan } from './SvarMedIkon';
+import {
+    NavKan,
+    SvarMedIkon,
+} from './SvarMedIkon';
 import DatoOgTid from './DatoOgTid';
-import { getSvar, MULIGE_SVAR } from '../../../utils/moteUtils';
+import {
+    getSvar,
+    MULIGE_SVAR,
+} from '../../../utils/moteUtils';
 
 const { PASSER } = MULIGE_SVAR;
 
@@ -16,23 +24,15 @@ const BesvarteTidspunkter = (
     {
         mote,
         alternativer,
-        deltakertype = BRUKER,
     },
 ) => {
     const arbeidsgiver = mote.deltakere.filter((d) => {
         return d.type === ARBEIDSGIVER;
     })[0];
-    const bruker = mote.deltakere.filter((d) => {
+    const forsteDeltaker = mote.deltakere.filter((d) => {
         return d.type === BRUKER;
     })[0];
-
-    let forsteDeltaker = bruker;
-    let andreDeltaker = arbeidsgiver;
-
-    if (deltakertype === ARBEIDSGIVER) {
-        forsteDeltaker = arbeidsgiver;
-        andreDeltaker = bruker;
-    }
+    const andreDeltaker = arbeidsgiver;
 
     return (
         <ol className="motetidspunkter motetidspunkter--besvarteTidspunkter">
@@ -55,9 +55,7 @@ const BesvarteTidspunkter = (
                             return s.id === field.id;
                         })[0];
                         const _forsteDeltaker = forsteDeltaker && Object.assign({}, forsteDeltaker, {
-                            navn: deltakertype === NAV_VEILEDER
-                                ? forsteDeltaker.navn
-                                : 'Du',
+                            navn: 'Du',
                         });
 
                         let className = 'motetidspunkt--besvart';
@@ -85,7 +83,7 @@ const BesvarteTidspunkter = (
                                     svar={andreDeltakersSvar}
                                 />
                             ) }
-                                    { deltakertype !== NAV_VEILEDER && <NavKan /> }
+                                    <NavKan />
                                 </ul>
                             </li>
                         );
@@ -98,7 +96,6 @@ const BesvarteTidspunkter = (
 BesvarteTidspunkter.propTypes = {
     mote: motePt,
     alternativer: PropTypes.arrayOf(moteplanleggerAlternativPt),
-    deltakertype: moteplanleggerDeltakertypePt,
 };
 
 export default BesvarteTidspunkter;

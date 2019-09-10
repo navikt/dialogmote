@@ -83,7 +83,6 @@ export class Container extends Component {
                             return (
                                 <Kvittering
                                     mote={mote}
-                                    deltakertype={BRUKER}
                                 />
                             );
                         }

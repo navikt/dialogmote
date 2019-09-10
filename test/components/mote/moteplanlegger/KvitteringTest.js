@@ -108,7 +108,6 @@ describe('Kvittering', () => {
 
         const kvittering = shallow(<Kvittering
             mote={mote}
-            deltakertype={deltakertype}
         />);
         const m = kvittering.find(Motested);
         expect(m.prop('sted')).to.equal('Oslo');

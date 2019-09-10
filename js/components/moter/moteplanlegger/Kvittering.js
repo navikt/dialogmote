@@ -1,43 +1,34 @@
 import React from 'react';
 import {
-    getLedetekst,
     getHtmlLedetekst,
     Utvidbar,
 } from '@navikt/digisyfo-npm';
-import {
-    motePt,
-    moteplanleggerDeltakertypePt,
-} from '../../../propTypes';
+import { motePt } from '../../../propTypes';
 import { BRUKER } from '../../../enums/moteplanleggerDeltakerTyper';
 import { finnDeltakerByType } from '../../../utils/moteUtils';
 import BesvarteTidspunkter from './BesvarteTidspunkter';
 import Motested from './Motested';
 
-export const getVeienVidereTekst = (deltaker, deltakertype = BRUKER) => {
-    const deltakertypenokkel = deltakertype === BRUKER
-        ? 'arbeidstaker'
-        : 'arbeidsgiver';
-    const nokkel = deltakertype === BRUKER
-        ? 'mote.kvittering.hva_skjer_videre.innhold.v2.arbeidstaker'
-        : 'mote.kvittering.hva_skjer_videre.innhold.v2.arbeidsgiver';
+const tekster = {
+    tittel: 'Kvittering',
+    dineSvar: 'Se dine svar',
+};
+
+export const getVeienVidereTekst = (deltaker) => {
+    const nokkel = 'mote.kvittering.hva_skjer_videre.innhold.v2.arbeidstaker';
     return deltaker.svar.filter((svar) => {
         return svar.valgt;
     }).length === 0
-        ? getHtmlLedetekst(`mote.kvittering.hva_skjer_videre.innhold.ingenalternativpasser.v3.${deltakertypenokkel}`)
+        ? getHtmlLedetekst('mote.kvittering.hva_skjer_videre.innhold.ingenalternativpasser.v3.arbeidstaker')
         : getHtmlLedetekst(nokkel);
 };
 
-const Kvittering = (
-    {
-        mote,
-        deltakertype = BRUKER,
-    },
-) => {
-    const deltaker = finnDeltakerByType(mote.deltakere, deltakertype);
+const Kvittering = ({ mote }) => {
+    const deltaker = finnDeltakerByType(mote.deltakere, BRUKER);
     return (
         <div>
             <header className="sidetopp">
-                <h1 className="sidetopp__tittel">{getLedetekst('mote.kvittering.tittel')}</h1>
+                <h1 className="sidetopp__tittel">{tekster.tittel}</h1>
             </header>
             <div className="panel">
                 <div className="illustrertTittel">
@@ -51,17 +42,16 @@ const Kvittering = (
                     </h2>
                 </div>
                 <div
-                    dangerouslySetInnerHTML={getVeienVidereTekst(deltaker, deltakertype)}
+                    dangerouslySetInnerHTML={getVeienVidereTekst(deltaker)}
                     className="redaksjonelt blokk"
                 />
-                <Utvidbar tittel={getLedetekst('mote.kvittering.se.dine.svar')}>
+                <Utvidbar tittel={tekster.dineSvar}>
                     <div>
                         <div className="blokk">
                             <Motested sted={deltaker.svar[0].sted} />
                         </div>
                         <BesvarteTidspunkter
                             mote={mote}
-                            deltakertype={deltakertype}
                             alternativer={mote.alternativer}
                         />
                     </div>
@@ -72,7 +62,6 @@ const Kvittering = (
 };
 
 Kvittering.propTypes = {
-    deltakertype: moteplanleggerDeltakertypePt,
     mote: motePt,
 };
 
