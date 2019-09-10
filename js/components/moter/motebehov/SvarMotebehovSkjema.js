@@ -18,21 +18,21 @@ const SVAR_MOTEBEHOV_SKJEMANAVN = 'svarMotebehov';
 /* eslint-disable max-len */
 export const TEKSTER_INFORMASJON = {
     knappSend: 'Send svar',
-    sensitiv: 'Ikke skriv sensitiv informasjon, for eksempel om helsen din.',
+    sensitiv: 'Ikke skriv sensitiv informasjon, for eksempel detaljerte opplysninger om helsen din.',
 };
 /* eslint-enable max-len */
 
 export const FELTER = {
     harMotebehov: {
         navn: 'harMotebehov',
-        spoersmaal: 'Har du behov for et møte med NAV?',
+        spoersmaal: 'Har dere behov for et møte med NAV?',
         svar: [
             {
-                tekst: 'Ja, jeg vil gjerne ha et møte',
+                tekst: 'Ja, jeg mener det er behov for et møte',
                 verdi: true,
             },
             {
-                tekst: 'Nei, jeg har ikke behov for møte',
+                tekst: 'Nei, jeg mener det ikke er behov for et møte',
                 verdi: false,
             },
         ],
@@ -128,7 +128,7 @@ export const TekstSensitiv = () => {
 export const TekstOpplysning = () => {
     const TEKSTER = {
         tekstOpplysning: {
-            tekst: 'Vi bruker opplysningene du gir oss til å forbedre tjenestene våre. ',
+            tekst: 'Vi bruker opplysningene også til å gjøre selve tjeneste bedre. ',
             lenke: 'Les mer om hvordan NAV behandler personopplysninger.',
         },
     };

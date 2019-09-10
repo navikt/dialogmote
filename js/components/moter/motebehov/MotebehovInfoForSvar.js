@@ -5,8 +5,8 @@ import { erPaaHeroku } from '../../../utils/urlUtils';
 export const TEKSTER = {
     forDuSvarer: {
         tittel: 'Før du svarer',
-        lagetPlan: 'Har du laget en oppfølgingsplan? Husk å dele den med NAV nå.',
-        ikkeLagetPlan: 'Er oppfølgingsplanen ikke laget? Bruk gjerne den digitale planen du finner når du er logget inn.',
+        lagetPlan: 'Har dere laget en oppfølgingsplan? Husk å dele den med NAV nå.',
+        ikkeLagetPlan: 'Er oppfølgingsplanen ikke laget?',
     },
     tekstInformasjonInnhold: {
         lenke: 'Opprett en ny plan.',
