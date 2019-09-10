@@ -3,7 +3,7 @@ import React from 'react';
 /* eslint-disable max-len */
 export const TEKSTER = {
     folketrygdloven: 'Ifølge folketrygdloven skal NAV innkalle til dialogmøte senest innen 26 ukers sykefravær, med mindre det er åpenbart unødvendig. Vi bruker opplysningene du gir her til å vurdere om det er behov for møte. ',
-    lenke: 'Les mer om dialogmøte.',
+    lenke: 'Les om dialogmøte.',
 };
 /* eslint-enable max-len */
 
