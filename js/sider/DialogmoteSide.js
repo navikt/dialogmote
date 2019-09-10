@@ -2,7 +2,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { getLedetekst } from '@navikt/digisyfo-npm';
 import {
     brodsmule as brodsmulePt,
     moteplanleggerDeltakerPt,
@@ -29,6 +28,14 @@ import {
 import { BRUKER } from '../enums/moteplanleggerDeltakerTyper';
 import { sendSvar } from '../data/svar/svar_actions';
 
+const tekster = {
+    brodsmuler: {
+        dittSykefravaer: 'Ditt sykefravær',
+        dialogmote: 'Dialogmøte',
+    },
+    sideTittel: 'Dialogmøte',
+};
+
 export class Container extends Component {
     componentWillMount() {
         const { doHentMote } = this.props;
@@ -48,7 +55,7 @@ export class Container extends Component {
         const modus = getSvarsideModus(mote);
         return (
             <Side
-                tittel={getLedetekst('mote.sidetittel')}
+                tittel={tekster.sideTittel}
                 brodsmuler={brodsmuler}
                 laster={henter || !hentet}
             >
@@ -138,11 +145,11 @@ export function mapStateToProps(state) {
         sender: state.svar.sender,
         sendingFeilet: state.svar.sendingFeilet,
         brodsmuler: [{
-            tittel: getLedetekst('landingsside.sidetittel'),
+            tittel: tekster.brodsmuler.dittSykefravaer,
             sti: '/sykefravaer',
             erKlikkbar: true,
         }, {
-            tittel: getLedetekst('mote.sidetittel'),
+            tittel: tekster.brodsmuler.dialogmote,
         }],
     };
 }
