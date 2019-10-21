@@ -7,10 +7,13 @@ const DatoOgTid = (
         tid,
         Tag = 'h4',
         className = '',
-    }) => {
-    return (<Tag className={`motetidspunkt__label ${className}`}>
-        {`${visDato(tid)} kl. ${visKlokkeslett(tid)} - ${visKlokkeslett(addMinutes(tid, 30))}`}
-    </Tag>);
+    },
+) => {
+    return (
+        <Tag className={`motetidspunkt__label ${className}`}>
+            {`${visDato(tid)} kl. ${visKlokkeslett(tid)} - ${visKlokkeslett(addMinutes(tid, 30))}`}
+        </Tag>
+    );
 };
 
 DatoOgTid.propTypes = {
