@@ -29,8 +29,10 @@ const text = {
         'drøfte hvordan du kan komme tilbake til jobb. Her kan du svare på hvilke tidspunkter som passer for deg.`,
     lenke: 'Les om hvordan vi behandler personopplysningene dine.',
     husk: 'Husk at NAV skal ha mottatt en oppfølgingsplan senest en uke før møtet.',
-    konklusjon: `Vi har konkludert med at det bør holdes dialogmøte selv om du tidligere har svart nei på behovet. Vi har sett på svarene fra deg og arbeidsgiveren din og på andre 
-        opplysninger vi har om sykefraværet.`,
+    konklusjon: `
+        Vi har konkludert med at det bør holdes dialogmøte selv om du tidligere har svart nei på behovet. 
+        Vi har sett på svarene fra deg og arbeidsgiveren din og på andre opplysninger vi har om sykefraværet.
+    `,
 };
 
 export function getData(values) {
