@@ -25,8 +25,10 @@ import BesvarteTidspunkter from './BesvarteTidspunkter';
 import MinstEttTidspunktContainer from './MinstEttTidspunkt';
 
 const text = {
-    personvern: `Ifølge folketrygdloven kan NAV innkalle deg og arbeidsgiveren din til dialogmøte for å 
-        'drøfte hvordan du kan komme tilbake til jobb. Her kan du svare på hvilke tidspunkter som passer for deg.`,
+    personvern: `
+        Ifølge folketrygdloven kan NAV innkalle deg og arbeidsgiveren din til dialogmøte for å drøfte hvordan du kan komme tilbake til jobb. 
+        Her kan du svare på hvilke tidspunkter som passer for deg.
+    `,
     lenke: 'Les om hvordan vi behandler personopplysningene dine.',
     husk: 'Husk at NAV skal ha mottatt en oppfølgingsplan senest en uke før møtet.',
     konklusjon: `
