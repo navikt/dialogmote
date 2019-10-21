@@ -8,6 +8,7 @@ import {
     getHtmlLedetekst,
     Utvidbar,
 } from '@navikt/digisyfo-npm';
+import Ikon from 'nav-frontend-ikoner-assets';
 import {
     motePt,
     moteplanleggerDeltakertypePt,
@@ -23,11 +24,13 @@ import Alternativer from './Alternativer';
 import BesvarteTidspunkter from './BesvarteTidspunkter';
 import MinstEttTidspunktContainer from './MinstEttTidspunkt';
 
-export const hentPersonvernTekst = (deltakertype) => {
-    const personvernTekstNokkel = deltakertype === BRUKER
-        ? 'mote.moteInfoPersonvern.at'
-        : 'mote.moteInfoPersonvern.ag';
-    return getHtmlLedetekst(personvernTekstNokkel);
+const text = {
+    personvern: `Ifølge folketrygdloven kan NAV innkalle deg og arbeidsgiveren din til dialogmøte for å 
+        'drøfte hvordan du kan komme tilbake til jobb. Her kan du svare på hvilke tidspunkter som passer for deg.`,
+    lenke: 'Les om hvordan vi behandler personopplysningene dine.',
+    husk: 'Husk at NAV skal ha mottatt en oppfølgingsplan senest en uke før møtet.',
+    konklusjon: `Vi har konkludert med at det bør holdes dialogmøte selv om du tidligere har svart nei på behovet. Vi har sett på svarene fra deg og arbeidsgiveren din og på andre 
+        opplysninger vi har om sykefraværet.`,
 };
 
 export function getData(values) {
@@ -39,9 +42,10 @@ export function getData(values) {
             return alternativ.verdi;
         }
         return undefined;
-    }).filter((id) => {
-        return id !== undefined;
-    });
+    })
+        .filter((id) => {
+            return id !== undefined;
+        });
 }
 
 export const Skjema = (
@@ -66,17 +70,23 @@ export const Skjema = (
     const tidligereAlternativer = getTidligereAlternativer(mote, deltakertype);
 
     return (
-        <form className="panel" onSubmit={handleSubmit(onSubmit)}>
-            <h2 className="svarskjema__tittel">{getLedetekst('mote.skjema.alternativer.hvilke-alternativer-passer')}</h2>
-            <p
-                className="svarskjema__intro"
-                dangerouslySetInnerHTML={hentPersonvernTekst(deltakertype)}
-            />
+        <form onSubmit={handleSubmit(onSubmit)}>
+            <div style={{ padding: '1rem', marginBottom: '1rem' }}>
+                <p>{text.personvern}</p>
+                <p><a href="https://www.nav.no/personvern">{text.lenke}</a></p>
+            </div>
             <div className="tidOgSted">
-                <div className="tidOgSted__sted">
+                {!!tidligereAlternativer.length
+                && (
+                    <div className="panel">
+                        {text.konklusjon}
+                    </div>
+                )
+                }
+                <div className="panel tidOgSted__sted">
                     <Motested sted={deltaker.svar[0].sted} />
                 </div>
-                <div className="tidOgSted__alternativer">
+                <div className="panel tidOgSted__alternativer">
                     <FieldArray
                         name="tidspunkter"
                         deltakertype={deltakertype}
@@ -86,22 +96,34 @@ export const Skjema = (
                         touch={touch}
                         autofill={autofill}
                     />
+                    <div style={{
+                        display: 'flex',
+                        alignItems: 'center',
+                    }}>
+                        <Ikon kind="info-sirkel-fyll" />
+                        <span style={{
+                            paddingLeft: '0.5em',
+                            fontWeight: 'bold',
+                        }}>
+                            {text.husk}
+                        </span>
+                    </div>
                 </div>
             </div>
-            { tidligereAlternativer.length > 0
-        && (
-            <Utvidbar
-                tittel="Tidligere foreslåtte tidspunkter"
-                className="blokk"
-                visLukklenke={false}>
-                <BesvarteTidspunkter
-                    alternativer={tidligereAlternativer}
-                    mote={mote}
-                />
-            </Utvidbar>
-        )
+            {tidligereAlternativer.length > 0
+            && (
+                <Utvidbar
+                    tittel="Tidligere foreslåtte tidspunkter"
+                    className="blokk"
+                    visLukklenke={false}>
+                    <BesvarteTidspunkter
+                        alternativer={tidligereAlternativer}
+                        mote={mote}
+                    />
+                </Utvidbar>
+            )
             }
-            { deltakertype === BRUKER && <MinstEttTidspunktContainer /> }
+            {deltakertype === BRUKER && <MinstEttTidspunktContainer />}
             <div className="blokk">
                 <Alertstripe
                     type="info">
@@ -109,12 +131,12 @@ export const Skjema = (
                 </Alertstripe>
             </div>
             <div aria-live="polite" role="alert">
-                { sendingFeilet
-            && (
-                <Alertstripe type="advarsel">
-                    <p className="sist">{getLedetekst('mote.skjema.innsending.feilet')}</p>
-                </Alertstripe>
-            )
+                {sendingFeilet
+                && (
+                    <Alertstripe type="advarsel">
+                        <p className="sist">{getLedetekst('mote.skjema.innsending.feilet')}</p>
+                    </Alertstripe>
+                )
                 }
             </div>
             <div className="knapperad">
