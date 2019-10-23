@@ -22,8 +22,10 @@ import Motested from './Motested';
 import Alternativer from './Alternativer';
 import BesvarteTidspunkter from './BesvarteTidspunkter';
 import MinstEttTidspunktContainer from './MinstEttTidspunkt';
+import { Link } from 'react-router';
+import getContextRoot from '../../../utils/getContextRoot';
 
-const text = {
+const texts = {
     personvern: `
         Ifølge folketrygdloven kan NAV innkalle deg og arbeidsgiveren din til dialogmøte for å drøfte hvordan du kan komme tilbake til jobb. 
         Her kan du svare på hvilke tidspunkter som passer for deg.
@@ -34,6 +36,7 @@ const text = {
         Vi har konkludert med at det bør holdes dialogmøte selv om du tidligere har svart nei på behovet. 
         Vi har sett på svarene fra deg og arbeidsgiveren din og på andre opplysninger vi har om sykefraværet.
     `,
+    cancel: 'Avbryt',
 };
 
 export function getData(values) {
@@ -75,14 +78,14 @@ export const Skjema = (
     return (
         <form onSubmit={handleSubmit(onSubmit)}>
             <div style={{ padding: '1rem', marginBottom: '1rem' }}>
-                <p>{text.personvern}</p>
-                <p><a href="https://www.nav.no/personvern">{text.lenke}</a></p>
+                <p>{texts.personvern}</p>
+                <p><a href="https://www.nav.no/personvern">{texts.lenke}</a></p>
             </div>
             <div className="tidOgSted">
                 {!!tidligereAlternativer.length
                 && (
                     <div className="panel">
-                        {text.konklusjon}
+                        {texts.konklusjon}
                     </div>
                 )
                 }
@@ -108,7 +111,7 @@ export const Skjema = (
                             paddingLeft: '0.5em',
                             fontWeight: 'bold',
                         }}>
-                            {text.husk}
+                            {texts.husk}
                         </span>
                     </div>
                 </div>
@@ -144,7 +147,9 @@ export const Skjema = (
                     spinner={sender}>
                     {getLedetekst('mote.skjema.send-svar-knapp')}
                 </Hovedknapp>
-                <a hre
+                <div>
+                    <Link href={getContextRoot()}>{texts.cancel}</Link>
+                </div>
             </div>
         </form>
     );
