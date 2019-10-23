@@ -60,6 +60,10 @@ Label.propTypes = {
     tid: PropTypes.instanceOf(Date),
 };
 
+const texts = {
+    passerIkke: 'Forslag til tidspunkt passer ikke',
+}
+
 const Alternativer = (props) => {
     const {
         alternativer, mote, meta = { touched: false, error: '' }, touch, autofill, deltakertype = BRUKER,
@@ -133,7 +137,7 @@ const Alternativer = (props) => {
                         verdi: 'ingen',
                         avkrysset: erAvkrysset,
                     })}>
-                    {getLedetekst('mote.skjema.alternativer.ingen-alternativer-passer')}
+                    {texts.passerIkke}
                 </Field>
             </div>
         </Feilomrade>

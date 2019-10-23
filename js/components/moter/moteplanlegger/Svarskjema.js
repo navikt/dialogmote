@@ -5,7 +5,6 @@ import Alertstripe from 'nav-frontend-alertstriper';
 import { Hovedknapp } from 'nav-frontend-knapper';
 import {
     getLedetekst,
-    getHtmlLedetekst,
     Utvidbar,
 } from '@navikt/digisyfo-npm';
 import Ikon from 'nav-frontend-ikoner-assets';
@@ -128,12 +127,6 @@ export const Skjema = (
             )
             }
             {deltakertype === BRUKER && <MinstEttTidspunktContainer />}
-            <div className="blokk">
-                <Alertstripe
-                    type="info">
-                    <div dangerouslySetInnerHTML={getHtmlLedetekst(`mote.skjema.konsekvens-ved-manglende-svar.${deltakertype.toLowerCase()}.v2`)} />
-                </Alertstripe>
-            </div>
             <div aria-live="polite" role="alert">
                 {sendingFeilet
                 && (
@@ -151,6 +144,7 @@ export const Skjema = (
                     spinner={sender}>
                     {getLedetekst('mote.skjema.send-svar-knapp')}
                 </Hovedknapp>
+                <a hre
             </div>
         </form>
     );
