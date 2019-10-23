@@ -8,6 +8,7 @@ import {
     Utvidbar,
 } from '@navikt/digisyfo-npm';
 import Ikon from 'nav-frontend-ikoner-assets';
+import { Link } from 'react-router';
 import {
     motePt,
     moteplanleggerDeltakertypePt,
@@ -22,7 +23,6 @@ import Motested from './Motested';
 import Alternativer from './Alternativer';
 import BesvarteTidspunkter from './BesvarteTidspunkter';
 import MinstEttTidspunktContainer from './MinstEttTidspunkt';
-import { Link } from 'react-router';
 import getContextRoot from '../../../utils/getContextRoot';
 
 const texts = {
@@ -74,6 +74,12 @@ export const Skjema = (
         sendSvar(mote.moteUuid, deltakertype, data);
     };
     const tidligereAlternativer = getTidligereAlternativer(mote, deltakertype);
+
+    const previous = () => {
+        const oldPath = window.location.pathname.split('/');
+        const newPath = oldPath.slice(0, oldPath.length - 1).join('/');
+        return newPath;
+    };
 
     return (
         <form onSubmit={handleSubmit(onSubmit)}>
@@ -148,7 +154,7 @@ export const Skjema = (
                     {getLedetekst('mote.skjema.send-svar-knapp')}
                 </Hovedknapp>
                 <div>
-                    <Link href={getContextRoot()}>{texts.cancel}</Link>
+                    <a href={previous()}>{texts.cancel}</a>
                 </div>
             </div>
         </form>
