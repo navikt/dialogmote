@@ -1,7 +1,6 @@
 /* eslint arrow-body-style: ["error", "as-needed"] */
 import React from 'react';
 import PropTypes from 'prop-types';
-import { getLedetekst } from '@navikt/digisyfo-npm';
 import { Field } from 'redux-form';
 import {
     fieldPropTypes,
@@ -62,7 +61,7 @@ Label.propTypes = {
 
 const texts = {
     passerIkke: 'Forslag til tidspunkt passer ikke',
-}
+};
 
 const Alternativer = (props) => {
     const {
