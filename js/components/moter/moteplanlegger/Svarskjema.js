@@ -87,7 +87,7 @@ export const Skjema = (
                 <p><a href="https://www.nav.no/personvern">{texts.lenke}</a></p>
             </div>
             <div className="tidOgSted">
-                {motebehovReducer.data.find((behov) => { return !behov.harMotebehov; })
+                {motebehovReducer && motebehovReducer.data.find((behov) => { return !behov.harMotebehov; })
                 && (
                     <div className="panel">
                         {texts.konklusjon}

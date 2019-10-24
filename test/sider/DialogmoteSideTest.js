@@ -18,12 +18,14 @@ describe('DialogmoteSide', () => {
     describe('Container', () => {
         let doSendSvar;
         let doHentMote;
+        let doHentMotebehov;
         let mote;
         let clock;
 
         beforeEach(() => {
             mote = getMote();
             doHentMote = sinon.spy();
+            doHentMotebehov = sinon.spy();
             doSendSvar = sinon.spy();
             clock = sinon.useFakeTimers(1485524800000); // in a distant future in a galaxy far, far away
         });
@@ -32,17 +34,17 @@ describe('DialogmoteSide', () => {
         });
 
         it('Skal vise AppSpinner hvis henter = true', () => {
-            const comp = shallow(<Container doHentMote={doHentMote} doSendSvar={doSendSvar} henter />);
+            const comp = shallow(<Container doHentMotebehov={doHentMotebehov} doHentMote={doHentMote} doSendSvar={doSendSvar} henter />);
             expect(comp.find(AppSpinner)).to.have.length(1);
         });
 
         it('Skal vise en feilmelding hvis hentingFeilet = true', () => {
-            const comp = shallow(<Container doHentMote={doHentMote} doSendSvar={doSendSvar} hentingFeilet />);
+            const comp = shallow(<Container doHentMotebehov={doHentMotebehov} doHentMote={doHentMote} doSendSvar={doSendSvar} hentingFeilet />);
             expect(comp.contains(<Feilmelding />)).to.equal(true);
         });
 
         it('Skal sende alle props videre til Svarside', () => {
-            const comp = shallow(<Container mote={mote} doHentMote={doHentMote} doSendSvar={doSendSvar} banan="banan" eple="eple" />);
+            const comp = shallow(<Container doHentMotebehov={doHentMotebehov}  mote={mote} doHentMote={doHentMote} doSendSvar={doSendSvar} banan="banan" eple="eple" />);
             const s = comp.find(Svarside);
             expect(s.prop('banan')).to.equal('banan');
             expect(s.prop('eple')).to.equal('eple');
@@ -50,14 +52,14 @@ describe('DialogmoteSide', () => {
         });
 
         it('Skal sende sendSvar videre til Svarside', () => {
-            const comp = shallow(<Container mote={mote} doHentMote={doHentMote} doSendSvar={doSendSvar} />);
+            const comp = shallow(<Container doHentMotebehov={doHentMotebehov} mote={mote} doHentMote={doHentMote} doSendSvar={doSendSvar} />);
             expect(comp.find(Svarside).prop('sendSvar')).to.deep.equal(doSendSvar);
         });
 
         describe('Hvis alle alternativer er besvart', () => {
             it('Skal vise Kvittering', () => {
                 mote = moteBesvartAlleAlternativer;
-                const component = shallow(<Container doHentMote={doHentMote} doSendSvar={doSendSvar} mote={mote} />);
+                const component = shallow(<Container doHentMotebehov={doHentMotebehov} doHentMote={doHentMote} doSendSvar={doSendSvar} mote={mote} />);
                 expect(component.find(Kvittering)).to.have.length(1);
             });
         });
