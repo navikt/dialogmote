@@ -4,6 +4,7 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import {
     brodsmule as brodsmulePt,
+    motebehovReducerPt,
     moteplanleggerDeltakerPt,
     motePt,
 } from '../propTypes';
@@ -27,6 +28,7 @@ import {
 } from '../utils/moteUtils';
 import { BRUKER } from '../enums/moteplanleggerDeltakerTyper';
 import { sendSvar } from '../data/svar/svar_actions';
+import { hentMotebehov } from '../data/motebehov/motebehov_actions';
 
 const tekster = {
     brodsmuler: {
@@ -42,6 +44,11 @@ export class Container extends Component {
         doHentMote();
     }
 
+    componentDidMount() {
+        const { doHentMotebehov } = this.props;
+        doHentMotebehov();
+    }
+
     render() {
         const {
             henter,
@@ -53,6 +60,7 @@ export class Container extends Component {
             doSendSvar,
         } = this.props;
         const modus = getSvarsideModus(mote);
+
         return (
             <Side
                 tittel={tekster.sideTittel}
@@ -125,18 +133,22 @@ Container.propTypes = {
     brodsmuler: PropTypes.arrayOf(brodsmulePt),
     doHentMote: PropTypes.func,
     doSendSvar: PropTypes.func,
+    doHentMotebehov: PropTypes.func,
     hentingFeilet: PropTypes.bool,
     moteIkkeFunnet: PropTypes.bool,
     sender: PropTypes.bool,
     sendingFeilet: PropTypes.bool,
     mote: motePt,
+    motebehovReducer: motebehovReducerPt,
     hentet: PropTypes.bool,
 };
 
 export function mapStateToProps(state) {
+    const motebehovReducer = state.motebehov;
     return {
         mote: state.mote.data,
         moteIkkeFunnet: state.mote.moteIkkeFunnet === true,
+        motebehovReducer,
         henter: state.mote.henter,
         hentet: state.mote.hentet === true,
         hentingFeilet: state.mote.hentingFeilet
@@ -156,6 +168,7 @@ export function mapStateToProps(state) {
 
 const actionCreators = {
     doHentMote: hentMote,
+    doHentMotebehov: hentMotebehov,
     doSendSvar: sendSvar,
 };
 

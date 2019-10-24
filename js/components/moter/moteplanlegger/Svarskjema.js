@@ -8,10 +8,9 @@ import {
     Utvidbar,
 } from '@navikt/digisyfo-npm';
 import Ikon from 'nav-frontend-ikoner-assets';
-import { Link } from 'react-router';
 import {
     motePt,
-    moteplanleggerDeltakertypePt,
+    moteplanleggerDeltakertypePt, motebehovReducerPt,
 } from '../../../propTypes';
 import {
     SVARSKJEMANAVN,
@@ -23,7 +22,6 @@ import Motested from './Motested';
 import Alternativer from './Alternativer';
 import BesvarteTidspunkter from './BesvarteTidspunkter';
 import MinstEttTidspunktContainer from './MinstEttTidspunkt';
-import getContextRoot from '../../../utils/getContextRoot';
 
 const texts = {
     personvern: `
@@ -58,6 +56,7 @@ export const Skjema = (
     {
         handleSubmit,
         mote,
+        motebehovReducer,
         sendSvar,
         sender,
         sendingFeilet,
@@ -88,13 +87,12 @@ export const Skjema = (
                 <p><a href="https://www.nav.no/personvern">{texts.lenke}</a></p>
             </div>
             <div className="tidOgSted">
-                {!!tidligereAlternativer.length
+                {motebehovReducer.data.find((behov) => { return !behov.harMotebehov; })
                 && (
                     <div className="panel">
                         {texts.konklusjon}
                     </div>
-                )
-                }
+                )}
                 <div className="panel tidOgSted__sted">
                     <Motested sted={deltaker.svar[0].sted} />
                 </div>
@@ -164,6 +162,7 @@ export const Skjema = (
 Skjema.propTypes = {
     handleSubmit: PropTypes.func,
     mote: motePt,
+    motebehovReducer: motebehovReducerPt,
     sendSvar: PropTypes.func,
     deltakertype: moteplanleggerDeltakertypePt,
     sender: PropTypes.bool,
