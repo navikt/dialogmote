@@ -44,7 +44,7 @@ describe('DialogmoteSide', () => {
         });
 
         it('Skal sende alle props videre til Svarside', () => {
-            const comp = shallow(<Container doHentMotebehov={doHentMotebehov}  mote={mote} doHentMote={doHentMote} doSendSvar={doSendSvar} banan="banan" eple="eple" />);
+            const comp = shallow(<Container doHentMotebehov={doHentMotebehov} mote={mote} doHentMote={doHentMote} doSendSvar={doSendSvar} banan="banan" eple="eple" />);
             const s = comp.find(Svarside);
             expect(s.prop('banan')).to.equal('banan');
             expect(s.prop('eple')).to.equal('eple');
