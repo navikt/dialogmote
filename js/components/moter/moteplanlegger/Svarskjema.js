@@ -21,7 +21,6 @@ import { BRUKER } from '../../../enums/moteplanleggerDeltakerTyper';
 import Motested from './Motested';
 import Alternativer from './Alternativer';
 import BesvarteTidspunkter from './BesvarteTidspunkter';
-import MinstEttTidspunktContainer from './MinstEttTidspunkt';
 
 const texts = {
     personvern: `
@@ -133,7 +132,6 @@ export const Skjema = (
                 </Utvidbar>
             )
             }
-            {deltakertype === BRUKER && <MinstEttTidspunktContainer />}
             <div aria-live="polite" role="alert">
                 {sendingFeilet
                 && (
