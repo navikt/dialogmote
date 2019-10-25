@@ -79,7 +79,6 @@ export const Skjema = (
     };
 
 
-
     return (
         <form onSubmit={handleSubmit(onSubmit)}>
             <div style={{
