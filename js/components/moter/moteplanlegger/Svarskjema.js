@@ -22,6 +22,7 @@ import { BRUKER } from '../../../enums/moteplanleggerDeltakerTyper';
 import Motested from './Motested';
 import Alternativer from './Alternativer';
 import BesvarteTidspunkter from './BesvarteTidspunkter';
+import DeclinedMotebehov from './DeclinedMotebehov';
 
 const texts = {
     personvern: `
@@ -30,10 +31,6 @@ const texts = {
     `,
     lenke: 'Les om hvordan vi behandler personopplysningene dine.',
     husk: 'Husk at NAV skal ha mottatt en oppfølgingsplan senest en uke før møtet.',
-    konklusjon: `
-        Vi har konkludert med at det bør holdes dialogmøte selv om du tidligere har svart nei på behovet. 
-        Vi har sett på svarene fra deg og arbeidsgiveren din og på andre opplysninger vi har om sykefraværet.
-    `,
     cancel: 'Avbryt',
 };
 
@@ -76,23 +73,25 @@ export const Skjema = (
 
     const previous = () => {
         const oldPath = window.location.pathname.split('/');
-        const newPath = oldPath.slice(0, oldPath.length - 1).join('/');
+        const newPath = oldPath.slice(0, oldPath.length - 1)
+            .join('/');
         return newPath;
     };
 
+
+
     return (
         <form onSubmit={handleSubmit(onSubmit)}>
-            <div style={{ padding: '1rem', marginBottom: '1rem' }}>
+            <div style={{
+                padding: '1rem',
+                marginBottom: '1rem',
+            }}>
                 <p>{texts.personvern}</p>
                 <p><a href="https://www.nav.no/personvern">{texts.lenke}</a></p>
             </div>
             <div className="tidOgSted">
-                {motebehovReducer && motebehovReducer.data.find((behov) => { return !behov.motebehovSvar.harMotebehov; })
-                && (
-                    <div className="panel">
-                        {texts.konklusjon}
-                    </div>
-                )}
+                {motebehovReducer && <DeclinedMotebehov motebehovReducer={motebehovReducer} />}
+
                 <div className="panel tidOgSted__sted">
                     <Motested sted={deltaker.svar[0].sted} />
                 </div>
