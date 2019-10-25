@@ -24,8 +24,7 @@ const Svarside = (props) => {
             <header className="sidetopp">
                 <h1 className="sidetopp__tittel">{getLedetekst('mote.svarside.tittel')}</h1>
             </header>
-            { mote.status === BEKREFTET
-            && (
+            {mote.status === BEKREFTET && (
                 <div className="blokk panel">
                     <Alertstripe
                         type="info"
@@ -38,8 +37,7 @@ const Svarside = (props) => {
                         </span>
                     </Alertstripe>
                 </div>
-            )
-            }
+            )}
             <Svarskjema {...props} deltakertype={deltakertype} />
         </div>
     );

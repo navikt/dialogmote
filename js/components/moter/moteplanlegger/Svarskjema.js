@@ -118,8 +118,7 @@ export const Skjema = (
                     </div>
                 </div>
             </div>
-            {tidligereAlternativer.length > 0
-            && (
+            {tidligereAlternativer.length > 0 && (
                 <Utvidbar
                     tittel="Tidligere foreslåtte tidspunkter"
                     className="blokk"
@@ -132,8 +131,7 @@ export const Skjema = (
             )
             }
             <div aria-live="polite" role="alert">
-                {sendingFeilet
-                && (
+                {sendingFeilet && (
                     <Alertstripe type="advarsel">
                         <p className="sist">{getLedetekst('mote.skjema.innsending.feilet')}</p>
                     </Alertstripe>
