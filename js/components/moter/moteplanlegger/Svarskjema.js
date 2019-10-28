@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { FieldArray, reduxForm } from 'redux-form';
+import styled from 'styled-components';
 import Alertstripe from 'nav-frontend-alertstriper';
 import { Hovedknapp } from 'nav-frontend-knapper';
 import {
@@ -8,6 +9,7 @@ import {
     Utvidbar,
 } from '@navikt/digisyfo-npm';
 import Ikon from 'nav-frontend-ikoner-assets';
+import { Link } from 'react-router';
 import {
     motePt,
     moteplanleggerDeltakertypePt,
@@ -33,6 +35,21 @@ const texts = {
     husk: 'Husk at NAV skal ha mottatt en oppfølgingsplan senest en uke før møtet.',
     cancel: 'Avbryt',
 };
+
+const PrivacyInfo = styled.div`
+    padding: 1rem;
+    margin-bottom: 1rem;
+`;
+
+const AlertInfo = styled.div`
+    display: flex;
+    align-items: center;
+`;
+
+const AlertText = styled.span`
+    padding-left: 0.5em;
+    font-weight: bold;
+`;
 
 export function getData(values) {
     return values.alternativer.map((alternativ) => {
@@ -78,18 +95,18 @@ export const Skjema = (
         return newPath;
     };
 
+    const displayDeclinedMotebehov = motebehovReducer && motebehovReducer.data.find((behov) => {
+        return !behov.motebehovSvar.harMotebehov;
+    });
 
     return (
         <form onSubmit={handleSubmit(onSubmit)}>
-            <div style={{
-                padding: '1rem',
-                marginBottom: '1rem',
-            }}>
+            <PrivacyInfo>
                 <p>{texts.personvern}</p>
                 <p><a href="https://www.nav.no/personvern">{texts.lenke}</a></p>
-            </div>
+            </PrivacyInfo>
             <div className="tidOgSted">
-                {motebehovReducer && <DeclinedMotebehov motebehovReducer={motebehovReducer} />}
+                {displayDeclinedMotebehov && <DeclinedMotebehov />}
 
                 <div className="panel tidOgSted__sted">
                     <Motested sted={deltaker.svar[0].sted} />
@@ -104,18 +121,12 @@ export const Skjema = (
                         touch={touch}
                         autofill={autofill}
                     />
-                    <div style={{
-                        display: 'flex',
-                        alignItems: 'center',
-                    }}>
+                    <AlertInfo>
                         <Ikon kind="info-sirkel-fyll" />
-                        <span style={{
-                            paddingLeft: '0.5em',
-                            fontWeight: 'bold',
-                        }}>
+                        <AlertText>
                             {texts.husk}
-                        </span>
-                    </div>
+                        </AlertText>
+                    </AlertInfo>
                 </div>
             </div>
             {tidligereAlternativer.length > 0 && (
@@ -147,7 +158,7 @@ export const Skjema = (
                     {getLedetekst('mote.skjema.send-svar-knapp')}
                 </Hovedknapp>
                 <div>
-                    <a href={previous()}>{texts.cancel}</a>
+                    <Link href={previous()}>{texts.cancel}</Link>
                 </div>
             </div>
         </form>
