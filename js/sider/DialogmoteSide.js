@@ -56,14 +56,10 @@ export class Container extends Component {
     componentDidMount() {
         const {
             doHentMotebehov,
-            doHentOppfolgingsforlopsPerioder,
-            oppfolgingsforlopsPerioderReducerListe,
-            virksomhetsnrListe,
             doHentDineSykemeldinger,
         } = this.props;
         doHentMotebehov();
         doHentDineSykemeldinger();
-        finnOgHentManglendeOppfolgingsforlopsPerioder(doHentOppfolgingsforlopsPerioder, oppfolgingsforlopsPerioderReducerListe, virksomhetsnrListe);
     }
 
     componentWillReceiveProps(nextProps) {
@@ -186,8 +182,8 @@ export function mapStateToProps(state) {
         motebehovReducer,
         oppfolgingsforlopsPerioderReducerListe,
         virksomhetsnrListe,
-        henter: state.mote.henter && !forsoektHentetOppfolgingsPerioder(oppfolgingsforlopsPerioderReducerListe),
-        hentet: state.mote.hentet === true && forsoektHentetOppfolgingsPerioder(oppfolgingsforlopsPerioderReducerListe),
+        henter: state.mote.henter,
+        hentet: state.mote.hentet === true,
 
         hentingFeilet: state.mote.hentingFeilet
         || state.ledetekster.hentingFeilet
