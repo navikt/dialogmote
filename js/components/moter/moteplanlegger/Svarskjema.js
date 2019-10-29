@@ -25,6 +25,7 @@ import Motested from './Motested';
 import Alternativer from './Alternativer';
 import BesvarteTidspunkter from './BesvarteTidspunkter';
 import DeclinedMotebehov from './DeclinedMotebehov';
+import { skalViseMotebehovForOppfolgingsforlop } from '../../../utils/motebehovUtils';
 
 const texts = {
     personvern: `
@@ -77,6 +78,7 @@ export const Skjema = (
         touch,
         autofill,
         deltakertype = BRUKER,
+        oppfolgingsforlopsPerioderReducerListe,
     },
 ) => {
     const deltaker = mote.deltakere.filter((d) => {
@@ -89,10 +91,14 @@ export const Skjema = (
     const tidligereAlternativer = getTidligereAlternativer(mote, deltakertype);
 
     const previous = () => {
-        const oldPath = window.location.pathname.split('/');
-        const newPath = oldPath.slice(0, oldPath.length - 1)
-            .join('/');
-        return newPath;
+        if (!!oppfolgingsforlopsPerioderReducerListe.length && skalViseMotebehovForOppfolgingsforlop(oppfolgingsforlopsPerioderReducerListe[0])) {
+            const oldPath = window.location.pathname.split('/');
+            const newPath = oldPath.slice(0, oldPath.length - 1)
+                .join('/');
+            return newPath;
+        }
+
+        return '/sykefravaer';
     };
 
     const displayDeclinedMotebehov = motebehovReducer && motebehovReducer.data.find((behov) => {
@@ -169,6 +175,7 @@ Skjema.propTypes = {
     handleSubmit: PropTypes.func,
     mote: motePt,
     motebehovReducer: motebehovReducerPt,
+    oppfolgingsforlopsPerioderReducerListe: PropTypes.arrayOf(PropTypes.shape()),
     sendSvar: PropTypes.func,
     deltakertype: moteplanleggerDeltakertypePt,
     sender: PropTypes.bool,
