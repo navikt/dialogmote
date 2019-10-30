@@ -44,7 +44,7 @@ const mockSyforest = (server) => {
 
     server.get('/syforest/sykeforloep/siste/perioder', (req, res) => {
         res.setHeader('Content-Type', 'application/json');
-        res.send(JSON.stringify(getPerioder(OPPFOLGINGSFORLOP_TYPE.MOTEBEHOV_AKTIV)));
+        res.send(JSON.stringify(getPerioder(OPPFOLGINGSFORLOP_TYPE.MOTEBEHOV_INAKTIV)));
     });
 };
 

@@ -4,6 +4,7 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import {
     brodsmule as brodsmulePt,
+    motebehovReducerPt,
     moteplanleggerDeltakerPt,
     motePt,
 } from '../propTypes';
@@ -27,6 +28,15 @@ import {
 } from '../utils/moteUtils';
 import { BRUKER } from '../enums/moteplanleggerDeltakerTyper';
 import { sendSvar } from '../data/svar/svar_actions';
+import { hentMotebehov } from '../data/motebehov/motebehov_actions';
+import { hentOppfolgingsforlopsPerioder } from '../data/oppfolgingsforlopsperioder/oppfolgingsforlopsPerioder_actions';
+import {
+    finnOgHentManglendeOppfolgingsforlopsPerioder,
+    finnOppfolgingsforlopsPerioderForAktiveSykmeldinger,
+    finnVirksomheterMedAktivSykmelding,
+    hentOppfolgingsPerioderFeilet,
+} from '../utils/oppfolgingsforlopsperioderUtils';
+import { hentDineSykmeldinger } from '../sykmeldinger/data/dine-sykmeldinger/dineSykmeldingerActions';
 
 const tekster = {
     brodsmuler: {
@@ -40,6 +50,25 @@ export class Container extends Component {
     componentWillMount() {
         const { doHentMote } = this.props;
         doHentMote();
+    }
+
+    componentDidMount() {
+        const {
+            doHentMotebehov,
+            doHentDineSykemeldinger,
+        } = this.props;
+        doHentMotebehov();
+        doHentDineSykemeldinger();
+    }
+
+    componentWillReceiveProps(nextProps) {
+        const {
+            doHentOppfolgingsforlopsPerioder,
+            oppfolgingsforlopsPerioderReducerListe,
+            virksomhetsnrListe,
+        } = nextProps;
+
+        finnOgHentManglendeOppfolgingsforlopsPerioder(doHentOppfolgingsforlopsPerioder, oppfolgingsforlopsPerioderReducerListe, virksomhetsnrListe);
     }
 
     render() {
@@ -125,23 +154,39 @@ Container.propTypes = {
     brodsmuler: PropTypes.arrayOf(brodsmulePt),
     doHentMote: PropTypes.func,
     doSendSvar: PropTypes.func,
+    doHentMotebehov: PropTypes.func,
+    doHentOppfolgingsforlopsPerioder: PropTypes.func,
+    doHentDineSykemeldinger: PropTypes.func,
+    oppfolgingsforlopsPerioderReducerListe: PropTypes.arrayOf(PropTypes.shape()),
     hentingFeilet: PropTypes.bool,
     moteIkkeFunnet: PropTypes.bool,
     sender: PropTypes.bool,
     sendingFeilet: PropTypes.bool,
     mote: motePt,
+    motebehovReducer: motebehovReducerPt,
     hentet: PropTypes.bool,
+    virksomhetsnrListe: PropTypes.arrayOf(PropTypes.string),
 };
 
 export function mapStateToProps(state) {
+    const motebehovReducer = state.motebehov;
+    const ledereReducer = state.ledere;
+    const dineSykmeldingerReducer = state.dineSykmeldinger;
+    const virksomhetsnrListe = finnVirksomheterMedAktivSykmelding(dineSykmeldingerReducer.data, ledereReducer.data);
+    const oppfolgingsforlopsPerioderReducerListe = finnOppfolgingsforlopsPerioderForAktiveSykmeldinger(state, virksomhetsnrListe);
+    const hentOppfolgingsforlopsPerioderFeilet = hentOppfolgingsPerioderFeilet(oppfolgingsforlopsPerioderReducerListe);
     return {
         mote: state.mote.data,
         moteIkkeFunnet: state.mote.moteIkkeFunnet === true,
+        motebehovReducer,
+        oppfolgingsforlopsPerioderReducerListe,
+        virksomhetsnrListe,
         henter: state.mote.henter,
         hentet: state.mote.hentet === true,
+
         hentingFeilet: state.mote.hentingFeilet
         || state.ledetekster.hentingFeilet
-        || false,
+        || hentOppfolgingsforlopsPerioderFeilet,
         sender: state.svar.sender,
         sendingFeilet: state.svar.sendingFeilet,
         brodsmuler: [{
@@ -156,7 +201,10 @@ export function mapStateToProps(state) {
 
 const actionCreators = {
     doHentMote: hentMote,
+    doHentMotebehov: hentMotebehov,
     doSendSvar: sendSvar,
+    doHentDineSykemeldinger: hentDineSykmeldinger,
+    doHentOppfolgingsforlopsPerioder: hentOppfolgingsforlopsPerioder,
 };
 
 export default connect(mapStateToProps, actionCreators)(Container);

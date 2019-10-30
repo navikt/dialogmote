@@ -1,16 +1,19 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { FieldArray, reduxForm } from 'redux-form';
+import styled from 'styled-components';
 import Alertstripe from 'nav-frontend-alertstriper';
 import { Hovedknapp } from 'nav-frontend-knapper';
 import {
     getLedetekst,
-    getHtmlLedetekst,
     Utvidbar,
 } from '@navikt/digisyfo-npm';
+import Ikon from 'nav-frontend-ikoner-assets';
+import { Link } from 'react-router';
 import {
     motePt,
     moteplanleggerDeltakertypePt,
+    motebehovReducerPt,
 } from '../../../propTypes';
 import {
     SVARSKJEMANAVN,
@@ -21,14 +24,34 @@ import { BRUKER } from '../../../enums/moteplanleggerDeltakerTyper';
 import Motested from './Motested';
 import Alternativer from './Alternativer';
 import BesvarteTidspunkter from './BesvarteTidspunkter';
-import MinstEttTidspunktContainer from './MinstEttTidspunkt';
+import DeclinedMotebehov from './DeclinedMotebehov';
+import { skalViseMotebehovMedOppfolgingsforlopListe } from '../../../utils/motebehovUtils';
 
-export const hentPersonvernTekst = (deltakertype) => {
-    const personvernTekstNokkel = deltakertype === BRUKER
-        ? 'mote.moteInfoPersonvern.at'
-        : 'mote.moteInfoPersonvern.ag';
-    return getHtmlLedetekst(personvernTekstNokkel);
+const texts = {
+    personvern: `
+        Ifølge folketrygdloven kan NAV innkalle deg og arbeidsgiveren din til dialogmøte for å drøfte hvordan du kan komme tilbake til jobb. 
+        Her kan du svare på hvilke tidspunkter som passer for deg.
+    `,
+    personvernHref: 'https://www.nav.no/personvern',
+    lenke: 'Les om hvordan vi behandler personopplysningene dine.',
+    husk: 'Husk at NAV skal ha mottatt en oppfølgingsplan senest en uke før møtet.',
+    cancel: 'Avbryt',
 };
+
+const PrivacyInfo = styled.div`
+    padding: 1rem;
+    margin-bottom: 1rem;
+`;
+
+const AlertInfo = styled.div`
+    display: flex;
+    align-items: center;
+`;
+
+const AlertText = styled.span`
+    padding-left: 0.5em;
+    font-weight: bold;
+`;
 
 export function getData(values) {
     return values.alternativer.map((alternativ) => {
@@ -39,21 +62,24 @@ export function getData(values) {
             return alternativ.verdi;
         }
         return undefined;
-    }).filter((id) => {
-        return id !== undefined;
-    });
+    })
+        .filter((id) => {
+            return id !== undefined;
+        });
 }
 
 export const Skjema = (
     {
         handleSubmit,
         mote,
+        motebehovReducer,
         sendSvar,
         sender,
         sendingFeilet,
         touch,
         autofill,
         deltakertype = BRUKER,
+        oppfolgingsforlopsPerioderReducerListe,
     },
 ) => {
     const deltaker = mote.deltakere.filter((d) => {
@@ -65,18 +91,34 @@ export const Skjema = (
     };
     const tidligereAlternativer = getTidligereAlternativer(mote, deltakertype);
 
+    const previous = () => {
+        if (skalViseMotebehovMedOppfolgingsforlopListe(oppfolgingsforlopsPerioderReducerListe, motebehovReducer, mote)) {
+            const oldPath = window.location.pathname.split('/');
+            const newPath = oldPath.slice(0, oldPath.length - 1)
+                .join('/');
+            return newPath;
+        }
+
+        return '/sykefravaer';
+    };
+
+    const displayDeclinedMotebehov = motebehovReducer && motebehovReducer.data.find((behov) => {
+        return behov.motebehovSvar.harMotebehov === false;
+    });
+
     return (
-        <form className="panel" onSubmit={handleSubmit(onSubmit)}>
-            <h2 className="svarskjema__tittel">{getLedetekst('mote.skjema.alternativer.hvilke-alternativer-passer')}</h2>
-            <p
-                className="svarskjema__intro"
-                dangerouslySetInnerHTML={hentPersonvernTekst(deltakertype)}
-            />
+        <form onSubmit={handleSubmit(onSubmit)}>
+            <PrivacyInfo>
+                <p>{texts.personvern}</p>
+                <p><a href={texts.personvernHref}>{texts.lenke}</a></p>
+            </PrivacyInfo>
             <div className="tidOgSted">
-                <div className="tidOgSted__sted">
+                {displayDeclinedMotebehov && <DeclinedMotebehov />}
+
+                <div className="panel tidOgSted__sted">
                     <Motested sted={deltaker.svar[0].sted} />
                 </div>
-                <div className="tidOgSted__alternativer">
+                <div className="panel tidOgSted__alternativer">
                     <FieldArray
                         name="tidspunkter"
                         deltakertype={deltakertype}
@@ -86,35 +128,32 @@ export const Skjema = (
                         touch={touch}
                         autofill={autofill}
                     />
+                    <AlertInfo>
+                        <Ikon kind="info-sirkel-fyll" />
+                        <AlertText>
+                            {texts.husk}
+                        </AlertText>
+                    </AlertInfo>
                 </div>
             </div>
-            { tidligereAlternativer.length > 0
-        && (
-            <Utvidbar
-                tittel="Tidligere foreslåtte tidspunkter"
-                className="blokk"
-                visLukklenke={false}>
-                <BesvarteTidspunkter
-                    alternativer={tidligereAlternativer}
-                    mote={mote}
-                />
-            </Utvidbar>
-        )
-            }
-            { deltakertype === BRUKER && <MinstEttTidspunktContainer /> }
-            <div className="blokk">
-                <Alertstripe
-                    type="info">
-                    <div dangerouslySetInnerHTML={getHtmlLedetekst(`mote.skjema.konsekvens-ved-manglende-svar.${deltakertype.toLowerCase()}.v2`)} />
-                </Alertstripe>
-            </div>
-            <div aria-live="polite" role="alert">
-                { sendingFeilet
-            && (
-                <Alertstripe type="advarsel">
-                    <p className="sist">{getLedetekst('mote.skjema.innsending.feilet')}</p>
-                </Alertstripe>
+            {tidligereAlternativer.length > 0 && (
+                <Utvidbar
+                    tittel="Tidligere foreslåtte tidspunkter"
+                    className="blokk"
+                    visLukklenke={false}>
+                    <BesvarteTidspunkter
+                        alternativer={tidligereAlternativer}
+                        mote={mote}
+                    />
+                </Utvidbar>
             )
+            }
+            <div aria-live="polite" role="alert">
+                {sendingFeilet && (
+                    <Alertstripe type="advarsel">
+                        <p className="sist">{getLedetekst('mote.skjema.innsending.feilet')}</p>
+                    </Alertstripe>
+                )
                 }
             </div>
             <div className="knapperad">
@@ -126,6 +165,9 @@ export const Skjema = (
                     {getLedetekst('mote.skjema.send-svar-knapp')}
                 </Hovedknapp>
             </div>
+            <div className="knapperad">
+                <Link href={previous()}>{texts.cancel}</Link>
+            </div>
         </form>
     );
 };
@@ -133,6 +175,8 @@ export const Skjema = (
 Skjema.propTypes = {
     handleSubmit: PropTypes.func,
     mote: motePt,
+    motebehovReducer: motebehovReducerPt,
+    oppfolgingsforlopsPerioderReducerListe: PropTypes.arrayOf(PropTypes.shape()),
     sendSvar: PropTypes.func,
     deltakertype: moteplanleggerDeltakertypePt,
     sender: PropTypes.bool,

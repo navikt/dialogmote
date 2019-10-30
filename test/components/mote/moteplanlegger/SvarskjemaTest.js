@@ -30,6 +30,7 @@ describe('Svarskjema', () => {
                 touch,
                 meta: {},
                 handleSubmit,
+                oppfolgingsforlopsPerioderReducerListe: [],
             }, _props);
             return shallow(<Skjema {...props} />);
         };
