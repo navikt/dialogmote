@@ -103,7 +103,7 @@ export const Skjema = (
     };
 
     const displayDeclinedMotebehov = motebehovReducer && motebehovReducer.data.find((behov) => {
-        return !behov.motebehovSvar.harMotebehov;
+        return behov.motebehovSvar.harMotebehov === false;
     });
 
     return (
