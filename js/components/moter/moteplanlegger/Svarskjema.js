@@ -25,13 +25,14 @@ import Motested from './Motested';
 import Alternativer from './Alternativer';
 import BesvarteTidspunkter from './BesvarteTidspunkter';
 import DeclinedMotebehov from './DeclinedMotebehov';
-import { skalViseMotebehovForOppfolgingsforlop } from '../../../utils/motebehovUtils';
+import { skalViseMotebehovMedOppfolgingsforlopListe } from '../../../utils/motebehovUtils';
 
 const texts = {
     personvern: `
         Ifølge folketrygdloven kan NAV innkalle deg og arbeidsgiveren din til dialogmøte for å drøfte hvordan du kan komme tilbake til jobb. 
         Her kan du svare på hvilke tidspunkter som passer for deg.
     `,
+    personvernHref: 'https://www.nav.no/personvern',
     lenke: 'Les om hvordan vi behandler personopplysningene dine.',
     husk: 'Husk at NAV skal ha mottatt en oppfølgingsplan senest en uke før møtet.',
     cancel: 'Avbryt',
@@ -91,7 +92,7 @@ export const Skjema = (
     const tidligereAlternativer = getTidligereAlternativer(mote, deltakertype);
 
     const previous = () => {
-        if (!!oppfolgingsforlopsPerioderReducerListe.length && skalViseMotebehovForOppfolgingsforlop(oppfolgingsforlopsPerioderReducerListe[0])) {
+        if (skalViseMotebehovMedOppfolgingsforlopListe(oppfolgingsforlopsPerioderReducerListe, motebehovReducer, mote)) {
             const oldPath = window.location.pathname.split('/');
             const newPath = oldPath.slice(0, oldPath.length - 1)
                 .join('/');
@@ -109,7 +110,7 @@ export const Skjema = (
         <form onSubmit={handleSubmit(onSubmit)}>
             <PrivacyInfo>
                 <p>{texts.personvern}</p>
-                <p><a href="https://www.nav.no/personvern">{texts.lenke}</a></p>
+                <p><a href={texts.personvernHref}>{texts.lenke}</a></p>
             </PrivacyInfo>
             <div className="tidOgSted">
                 {displayDeclinedMotebehov && <DeclinedMotebehov />}
@@ -163,9 +164,9 @@ export const Skjema = (
                     spinner={sender}>
                     {getLedetekst('mote.skjema.send-svar-knapp')}
                 </Hovedknapp>
-                <div>
-                    <Link href={previous()}>{texts.cancel}</Link>
-                </div>
+            </div>
+            <div className="knapperad">
+                <Link href={previous()}>{texts.cancel}</Link>
             </div>
         </form>
     );
