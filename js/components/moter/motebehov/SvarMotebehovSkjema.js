@@ -15,7 +15,7 @@ export const tekstfeltRegex = new RegExp('.*<[^ ][^>]+[^ ]>.*');
 export const felterPt = PropTypes.shape({});
 
 const SVAR_MOTEBEHOV_SKJEMANAVN = 'svarMotebehov';
-
+const MAX_LENGTH = 1000;
 /* eslint-disable max-len */
 export const TEKSTER_INFORMASJON = {
     knappSend: 'Send svar',
@@ -108,6 +108,7 @@ export const MotebehovSkjemaTekstomraade = (
                 id={`${felt.navn}-input`}
                 aria-labelledby={felt.navn}
                 component={Tekstomraade}
+                maxLength={MAX_LENGTH}
                 placeholder="Skriv her"
                 rows="5"
             />
@@ -241,7 +242,6 @@ SvarMotebehovSkjemaKomponent.propTypes = {
 
 const validate = (values) => {
     const feilmeldinger = {};
-    const maksTekstLengde = 1000;
 
     if (!values.harMotebehov) {
         feilmeldinger.harMotebehov = 'Velg alternativ';
@@ -256,8 +256,8 @@ const validate = (values) => {
     }
 
     const forklaringLengde = values.forklaring ? values.forklaring.length : 0;
-    if (forklaringLengde > maksTekstLengde) {
-        feilmeldinger.forklaring = `Maks ${maksTekstLengde} tegn tillatt`;
+    if (forklaringLengde > MAX_LENGTH) {
+        feilmeldinger.forklaring = `Maks ${MAX_LENGTH} tegn tillatt`;
     }
     return feilmeldinger;
 };
