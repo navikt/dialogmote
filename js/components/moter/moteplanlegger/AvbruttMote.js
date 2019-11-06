@@ -3,33 +3,21 @@ import {
     getLedetekst,
     getHtmlLedetekst,
 } from '@navikt/digisyfo-npm';
-import {
-    motePt,
-    moteplanleggerDeltakertypePt,
-} from '../../../propTypes';
+import { motePt } from '../../../propTypes';
 import { visDato, visKlokkeslett } from '../../../utils/datoUtils';
-import { BRUKER } from '../../../enums/moteplanleggerDeltakerTyper';
 
-export const forklarendeTekst = (mote, deltakertype) => {
-    if (deltakertype === BRUKER) {
-        return mote.bekreftetTidspunkt
-            ? getHtmlLedetekst('mote.avbruttmote.sykmeldt.bekreftet_sa_avbrutt')
-            : getHtmlLedetekst('mote.avbruttmote.sykmeldt.avbrutt');
-    }
+export const forklarendeTekst = (mote) => {
     return mote.bekreftetTidspunkt
-        ? getHtmlLedetekst('mote.avbruttmote.arbeidsgiver.bekreftet_sa_avbrutt')
-        : getHtmlLedetekst('mote.avbruttmote.arbeidsgiver.avbrutt');
+        ? getHtmlLedetekst('mote.avbruttmote.sykmeldt.bekreftet_sa_avbrutt')
+        : getHtmlLedetekst('mote.avbruttmote.sykmeldt.avbrutt');
 };
 
 const AvbruttMote = (
     {
         mote,
-        deltakertype,
     },
 ) => {
-    const deltakertypeSuffix = deltakertype === BRUKER
-        ? 'arbeidstaker'
-        : 'arbeidsgiver';
+    const deltakertypeSuffix = 'arbeidstaker';
     const harDuSporsmalNokkel = `mote.avbruttmote.har_du_sporsmal.${deltakertypeSuffix}`;
     return (
         <div>
@@ -41,7 +29,7 @@ const AvbruttMote = (
                     <img className="illustrertTittel__img" src={`${process.env.REACT_APP_CONTEXT_ROOT}/img/svg/mote_avbrutt.svg`} alt="" />
                     <h2 className="illustrertTittel__tittel">{getLedetekst('mote.avbruttmote.undertittel')}</h2>
                 </div>
-                <div dangerouslySetInnerHTML={forklarendeTekst(mote, deltakertype)} />
+                <div dangerouslySetInnerHTML={forklarendeTekst(mote)} />
                 <div className="adskilt__blokk blokk">
                     <h3 className="typo-element">{getLedetekst('mote.avbruttmote.tidspunkter_det_gjelder')}</h3>
                     <div className="kvittering__svar blokk">
@@ -66,7 +54,6 @@ const AvbruttMote = (
 
 AvbruttMote.propTypes = {
     mote: motePt,
-    deltakertype: moteplanleggerDeltakertypePt,
 };
 
 export default AvbruttMote;

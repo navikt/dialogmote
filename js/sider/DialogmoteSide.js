@@ -126,7 +126,6 @@ export class Container extends Component {
                             return (
                                 <AvbruttMote
                                     mote={mote}
-                                    deltakertype={BRUKER}
                                 />
                             );
                         }
