@@ -1,9 +1,12 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { getLedetekst } from '@navikt/digisyfo-npm';
 import Sidetopp from '../Sidetopp';
 import DialogmoterInnholdLenke from './DialogmoterInnholdLenke';
 import MotebehovInnholdLenke from './MotebehovInnholdLenke';
+
+const texts = {
+    title: 'Dialogmøter',
+};
 
 const DialogmoterInnhold = (
     {
@@ -14,7 +17,7 @@ const DialogmoterInnhold = (
 ) => {
     return (
         <div className="dialogmoterInnhold">
-            <Sidetopp tittel={getLedetekst('mote.moter.sidetittel')} />
+            <Sidetopp tittel={texts.title} />
 
             { skalViseMotebehov
         && (
