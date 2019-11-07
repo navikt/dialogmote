@@ -15,12 +15,11 @@ const tekster = {
 };
 
 export const getVeienVidereTekst = (deltaker) => {
-    const nokkel = 'mote.kvittering.hva_skjer_videre.innhold.v2.arbeidstaker';
     return deltaker.svar.filter((svar) => {
         return svar.valgt;
     }).length === 0
         ? getHtmlLedetekst('mote.kvittering.hva_skjer_videre.innhold.ingenalternativpasser.v3.arbeidstaker')
-        : getHtmlLedetekst(nokkel);
+        : getHtmlLedetekst('mote.kvittering.hva_skjer_videre.innhold.v2.arbeidstaker');
 };
 
 const Kvittering = ({ mote }) => {
