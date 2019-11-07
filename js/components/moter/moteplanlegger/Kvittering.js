@@ -1,8 +1,5 @@
 import React from 'react';
-import {
-    getHtmlLedetekst,
-    Utvidbar,
-} from '@navikt/digisyfo-npm';
+import { Utvidbar } from '@navikt/digisyfo-npm';
 import {
     moteplanleggerDeltakerPt,
     motePt,
@@ -15,6 +12,16 @@ import Motested from './Motested';
 const tekster = {
     tittel: 'Kvittering',
     dineSvar: 'Se dine svar',
+};
+
+const TextConfirmation = () => {
+    return (
+        <React.Fragment>
+            Svaret ditt er sendt
+            <br />
+            – du hører fra oss
+        </React.Fragment>
+    );
 };
 
 /* eslint-disable max-len */
@@ -58,7 +65,9 @@ const Kvittering = ({ mote }) => {
                         alt=""
                     />
                     <h2 className="illustrertTittel__tittel">
-                        <div dangerouslySetInnerHTML={getHtmlLedetekst('mote.kvittering.svaret-ditt-er-sendt.v2')} />
+                        <div>
+                            <TextConfirmation />
+                        </div>
                     </h2>
                 </div>
                 <div className="redaksjonelt blokk">
