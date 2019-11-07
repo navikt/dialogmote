@@ -183,7 +183,6 @@ export function mapStateToProps(state) {
         hentet: state.mote.hentet === true,
 
         hentingFeilet: state.mote.hentingFeilet
-        || state.ledetekster.hentingFeilet
         || hentOppfolgingsforlopsPerioderFeilet,
         sender: state.svar.sender,
         sendingFeilet: state.svar.sendingFeilet,

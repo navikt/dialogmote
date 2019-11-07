@@ -178,8 +178,7 @@ export function mapStateToProps(state) {
 
     return {
         henter: !harForsoektHentetAlt,
-        hentingFeilet: state.ledetekster.hentingFeilet
-        || ledereReducer.hentingFeilet
+        hentingFeilet: ledereReducer.hentingFeilet
         || dineSykmeldingerReducer.hentingFeilet
         || dineSykmeldingerReducer.hentingFeilet
         || hentOppfolgingsforlopsPerioderFeilet

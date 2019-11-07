@@ -3,7 +3,6 @@ import React from 'react';
 import { shallow } from 'enzyme';
 import chaiEnzyme from 'chai-enzyme';
 import sinon from 'sinon';
-import ledetekster from '../mock/mockLedetekster';
 import AppSpinner from '../../js/components/AppSpinner';
 import Feilmelding from '../../js/components/Feilmelding';
 import Kvittering from '../../js/components/moter/moteplanlegger/Kvittering';
@@ -99,9 +98,6 @@ describe('DialogmoteSide', () => {
 
         beforeEach(() => {
             state = {
-                ledetekster: {
-                    data: ledetekster,
-                },
                 mote: {
                     data: null,
                 },
@@ -134,18 +130,6 @@ describe('DialogmoteSide', () => {
 
         it('Skal returnere hentingFeilet === false dersom henting av møte ikke feiler', () => {
             state.mote.hentingFeilet = false;
-            const props = mapStateToProps(state);
-            expect(props.hentingFeilet).to.equal(false);
-        });
-
-        it('Skal returnere hentingFeilet dersom henting av ledetekster feiler', () => {
-            state.ledetekster.hentingFeilet = true;
-            const props = mapStateToProps(state);
-            expect(props.hentingFeilet).to.equal(true);
-        });
-
-        it('Skal returnere hentingFeilet === false dersom henting av ledetekster ikke feiler', () => {
-            state.ledetekster.hentingFeilet = false;
             const props = mapStateToProps(state);
             expect(props.hentingFeilet).to.equal(false);
         });

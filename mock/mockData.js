@@ -14,7 +14,6 @@ const lastFilTilMinne = (filnavn) => {
 lastFilTilMinne(enums.MOTEBEHOV);
 lastFilTilMinne(enums.NAERMESTELEDERE);
 lastFilTilMinne(enums.SYKMELDINGER);
-lastFilTilMinne(enums.TEKSTER);
 lastFilTilMinne(enums.PERIODER);
 lastFilTilMinne(enums.SISTE);
 
