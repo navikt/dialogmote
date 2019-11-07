@@ -1,6 +1,5 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { getLedetekst } from '@navikt/digisyfo-npm';
 import {
     moteplanleggerDeltakerPt,
     moteplanleggerSvarPt,
@@ -9,6 +8,25 @@ import { getSvar, MULIGE_SVAR } from '../../../utils/moteUtils';
 import { ARBEIDSGIVER } from '../../../enums/moteplanleggerDeltakerTyper';
 
 const { PASSER, PASSER_IKKE } = MULIGE_SVAR;
+
+const text = {
+    veilederKanMote: 'Veilederen kan møte på dette tidspunktet',
+};
+
+const getSvartekst = (bruker, svar) => {
+    const svarstr = getSvar(svar, bruker.svartidspunkt);
+    switch (svarstr) {
+        case PASSER: {
+            return `${bruker.navn} kan møte på dette tidspunktet`;
+        }
+        case PASSER_IKKE: {
+            return `${bruker.navn} kan ikke møte på dette tidspunktet`;
+        }
+        default: {
+            return `${bruker.navn} har ikke svart ennå`;
+        }
+    }
+};
 
 const getIkonsti = (filnavn) => {
     return `${process.env.REACT_APP_CONTEXT_ROOT}/img/svg/${filnavn}`;
@@ -24,27 +42,6 @@ const Ikon = ({ ikon }) => {
 
 Ikon.propTypes = {
     ikon: PropTypes.string.isRequired,
-};
-
-const getSvartekst = (bruker, svar) => {
-    const svarstr = getSvar(svar, bruker.svartidspunkt);
-    switch (svarstr) {
-        case PASSER: {
-            return getLedetekst('mote.svar.status.kan-mote', {
-                '%NAVN%': bruker.navn,
-            });
-        }
-        case PASSER_IKKE: {
-            return getLedetekst('mote.svar.status.kan-ikke-mote', {
-                '%NAVN%': bruker.navn,
-            });
-        }
-        default: {
-            return getLedetekst('mote.svar.status.ikke-svart', {
-                '%NAVN%': bruker.navn,
-            });
-        }
-    }
 };
 
 const getIkonFilnavn = (bruker, svar) => {
@@ -88,9 +85,8 @@ export const NavKan = () => {
             <Ikon ikon="status--kan.svg" />
             <Svartekst
                 deltakertype="NAV"
-                tekst={getLedetekst('mote.svar.status.kan-mote', {
-                    '%NAVN%': 'Veilederen',
-                })} />
+                tekst={text.veilederKanMote}
+            />
         </li>
     );
 };
@@ -107,7 +103,11 @@ export const SvarMedIkon = (
     return (
         <li className="alternativsvar__svar js-annenssvar">
             <Ikon ikon={getIkonFilnavn(bruker, svar)} />
-            <Svartekst deltakertype={`${deltakertype}en`} navn={bruker.navn} tekst={getSvartekst(bruker, svar)} />
+            <Svartekst
+                deltakertype={`${deltakertype}en`}
+                navn={bruker.navn}
+                tekst={getSvartekst(bruker, svar)}
+            />
         </li>
     );
 };
