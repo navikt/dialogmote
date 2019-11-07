@@ -1,7 +1,4 @@
-import {
-    ledetekster,
-    timeout,
-} from '@navikt/digisyfo-npm';
+import { timeout } from '@navikt/digisyfo-npm';
 import { reducer as formReducer } from 'redux-form';
 import brukerinfo from './brukerinfo/brukerinfo';
 import dineSykmeldinger from '../sykmeldinger/data/dine-sykmeldinger/dineSykmeldinger';
@@ -18,7 +15,6 @@ const reducers = {
     dineSykmeldinger,
     history,
     ledere,
-    ledetekster,
     mote,
     motebehov,
     motebehovSvar,
