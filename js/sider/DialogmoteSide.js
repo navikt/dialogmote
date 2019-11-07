@@ -105,7 +105,7 @@ export class Container extends Component {
                             );
                         }
                         if (erMotePassert(mote)) {
-                            return <MotePassert deltakertype={BRUKER} />;
+                            return <MotePassert />;
                         }
                         if (modus === BEKREFTET) {
                             return (
