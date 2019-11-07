@@ -1,11 +1,7 @@
 import React from 'react';
 import Alertstripe from 'nav-frontend-alertstriper';
-import { getLedetekst } from '@navikt/digisyfo-npm';
 import Svarskjema from './Svarskjema';
-import {
-    motePt,
-    moteplanleggerDeltakerPt,
-} from '../../../propTypes';
+import { motePt } from '../../../propTypes';
 import { BRUKER } from '../../../enums/moteplanleggerDeltakerTyper';
 import {
     BEKREFTET,
@@ -13,39 +9,48 @@ import {
 } from '../../../utils/moteUtils';
 import { visKortDato } from '../../../utils/datoUtils';
 
+const texts = {
+    title: 'Tidspunkt for dialogmøte',
+    info: 'Du har blitt tilsendt nye tidspunkter for dialogmøte',
+};
+
+const getTextConfirmation = (mote) => {
+    const dateBekreftet = visKortDato(finnNyesteAlternativ(mote.alternativer).created);
+    return `Sendt: ${dateBekreftet}`;
+};
+
 const Svarside = (props) => {
     const {
         mote,
-        deltakertype = BRUKER,
     } = props;
 
     return (
         <div>
             <header className="sidetopp">
-                <h1 className="sidetopp__tittel">{getLedetekst('mote.svarside.tittel')}</h1>
+                <h1 className="sidetopp__tittel">{texts.title}</h1>
             </header>
             {mote.status === BEKREFTET && (
                 <div className="blokk panel">
                     <Alertstripe
                         type="info"
                         className="panel">
-                        <p className="uthevet">{getLedetekst('mote.svarside.tidligere.bekreftet.info')}</p>
+                        <p className="uthevet">{texts.info}</p>
                         <span>
-                            {getLedetekst('mote.svarside.tidligere.bekreftet.sendtdato', {
-                                '%BEKREFTET_DATO%': visKortDato(finnNyesteAlternativ(mote.alternativer).created),
-                            })}
+                            {getTextConfirmation(mote)}
                         </span>
                     </Alertstripe>
                 </div>
             )}
-            <Svarskjema {...props} deltakertype={deltakertype} />
+            <Svarskjema
+                {...props}
+                deltakertype={BRUKER}
+            />
         </div>
     );
 };
 
 Svarside.propTypes = {
     mote: motePt,
-    deltakertype: moteplanleggerDeltakerPt,
 };
 
 export default Svarside;

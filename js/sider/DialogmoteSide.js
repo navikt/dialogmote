@@ -133,7 +133,6 @@ export class Container extends Component {
                             return (
                                 <Svarside
                                     {...this.props}
-                                    deltakertype={BRUKER}
                                     sendSvar={doSendSvar}
                                 />
                             );
