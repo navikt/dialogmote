@@ -1,8 +1,5 @@
 import React from 'react';
-import {
-    motePt,
-    moteplanleggerDeltakertypePt,
-} from '../../../propTypes';
+import { motePt } from '../../../propTypes';
 import {
     visDato,
     visKlokkeslett,
@@ -23,12 +20,11 @@ const getTextParagraphIntro = (tidsted) => {
 const Kvittering = (
     {
         mote,
-        deltakertype = BRUKER,
     },
 ) => {
     const tidsted = `${visDato(mote.bekreftetAlternativ.tid).toLowerCase()} kl. ${visKlokkeslett(mote.bekreftetAlternativ.tid)} i ${mote.bekreftetAlternativ.sted}`;
     const innloggetBruker = mote.deltakere.filter((deltaker) => {
-        return deltaker.type === deltakertype;
+        return deltaker.type === BRUKER;
     })[0];
     return (
         <div>
@@ -53,7 +49,6 @@ const Kvittering = (
 
 Kvittering.propTypes = {
     mote: motePt,
-    deltakertype: moteplanleggerDeltakertypePt,
 };
 
 export default Kvittering;

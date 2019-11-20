@@ -26,7 +26,6 @@ import {
     erMotePassert,
     getSvarsideModus,
 } from '../utils/moteUtils';
-import { BRUKER } from '../enums/moteplanleggerDeltakerTyper';
 import { sendSvar } from '../data/svar/svar_actions';
 import { hentMotebehov } from '../data/motebehov/motebehov_actions';
 import { hentOppfolgingsforlopsPerioder } from '../data/oppfolgingsforlopsperioder/oppfolgingsforlopsPerioder_actions';
@@ -111,7 +110,6 @@ export class Container extends Component {
                             return (
                                 <BekreftetKvittering
                                     mote={mote}
-                                    deltakertype={BRUKER}
                                 />
                             );
                         }
