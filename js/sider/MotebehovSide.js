@@ -42,7 +42,7 @@ const tekster = {
         dittSykefravaer: 'Ditt sykefravær',
         dialogmote: 'Dialogmøte',
     },
-    sideTittel: 'Dialogmøte',
+    sideTittel: 'Dialogmøtebehov',
 };
 
 class Container extends Component {
