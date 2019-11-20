@@ -109,7 +109,9 @@ export const Skjema = (
         <form onSubmit={handleSubmit(onSubmit)}>
             <PrivacyInfo>
                 <p>{texts.personvern}</p>
-                <p><a href={texts.personvernHref}>{texts.lenke}</a></p>
+                <p className="svarskjema__intro">
+                    <a target="_blank" href={texts.personvernHref}>{texts.lenke}</a>
+                </p>
             </PrivacyInfo>
             <div className="tidOgSted">
                 {displayDeclinedMotebehov && <DeclinedMotebehov />}
