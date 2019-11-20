@@ -61,5 +61,4 @@ export const motePt = PropTypes.shape({
 export const moteplanleggerDeltakertypePt = PropTypes.oneOf([
     moteplanleggerDeltakertyper.BRUKER,
     moteplanleggerDeltakertyper.ARBEIDSGIVER,
-    moteplanleggerDeltakertyper.NAV_VEILEDER,
 ]);

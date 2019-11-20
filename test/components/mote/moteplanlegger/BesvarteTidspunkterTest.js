@@ -11,9 +11,8 @@ import {
     moteBesvartTrueAvArbeidsgiver,
 } from '../../../mock/mockMote';
 import {
-    BRUKER,
-    NAV_VEILEDER,
     ARBEIDSGIVER,
+    BRUKER,
 } from '../../../../js/enums/moteplanleggerDeltakerTyper';
 
 chai.use(chaiEnzyme());
@@ -89,8 +88,6 @@ describe('BesvarteTidspunkter', () => {
             comp = mount(<BesvarteTidspunkter
                 mote={mote}
                 alternativer={moteBesvartTrueAvArbeidsgiver.alternativer}
-                deltakertype={NAV_VEILEDER}
-                fnr="123"
             />);
         });
     });
@@ -105,8 +102,6 @@ describe('BesvarteTidspunkter', () => {
             comp = mount(<BesvarteTidspunkter
                 mote={mote}
                 alternativer={moteBesvartTrueAvArbeidsgiver.alternativer}
-                deltakertype={NAV_VEILEDER}
-                fnr="123"
             />);
         });
     });
