@@ -11,7 +11,9 @@ const { expect } = chai;
 describe('timeout', () => {
     let clock;
     beforeEach(() => {
-        clock = sinon.useFakeTimers(new Date('2017-01-16'));
+        const today = new Date('2017-01-16');
+        today.setHours(0);
+        clock = sinon.useFakeTimers(today.getTime());
     });
 
     afterEach(() => {
@@ -26,7 +28,7 @@ describe('timeout', () => {
         const action = actions.forlengInnloggetSesjon();
         const nextState = timeout(initialState, action);
         expect(nextState).to.deep.equal({
-            erInnloggetTil: new Date(2017, 0, 16, 1, 30, 0),
+            erInnloggetTil: new Date(2017, 0, 16, 0, 30, 0),
             brukerSnartUtlogget: false,
         });
     });
