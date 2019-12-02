@@ -11,9 +11,7 @@ import {
 import { Provider } from 'react-redux';
 import createSagaMiddleware from 'redux-saga';
 import {
-    forlengInnloggetSesjon,
     setPerformOnHttpCalls,
-    sjekkInnloggingssesjon,
 } from '@navikt/digisyfo-npm';
 import AppRouter from './routers/AppRouter';
 import history from './history';
@@ -21,6 +19,10 @@ import rootSaga from './data/rootSaga';
 import '../styles/styles.less';
 import setPerformOnOppDialogHttpCalls from './oppfolgingsdialogNpm/setPerformOnOppDialogHttpCalls';
 import reducers from './data/reducers';
+import {
+    forlengInnloggetSesjon,
+    sjekkInnloggingssesjon,
+} from './timeout/timeout_actions';
 
 const rootReducer = combineReducers(reducers);
 

@@ -7,7 +7,7 @@ import { describe } from 'mocha';
 import Feilmelding from '../../js/components/Feilmelding';
 import { SideComponent, Utlogget } from '../../js/sider/Side';
 import Brodsmuler from '../../js/components/Brodsmuler';
-import TimeoutBox from '../../js/components/timeout/TimeoutBox';
+import TimeoutBox from '../../js/timeout/TimeoutBox';
 
 const DocumentTitle = require('react-document-title');
 

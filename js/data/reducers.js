@@ -1,4 +1,3 @@
-import { timeout } from '@navikt/digisyfo-npm';
 import { reducer as formReducer } from 'redux-form';
 import brukerinfo from './brukerinfo/brukerinfo';
 import dineSykmeldinger from '../sykmeldinger/data/dine-sykmeldinger/dineSykmeldinger';
@@ -9,6 +8,7 @@ import svar from './svar/svar';
 import motebehov from './motebehov/motebehov';
 import motebehovSvar from './motebehov-svar/motebehovSvar';
 import history from '../history';
+import timeout from '../timeout/timeout';
 
 const reducers = {
     brukerinfo,
