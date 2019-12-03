@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 /* eslint-disable */
 import Modal from 'nav-frontend-modal';
-import { forlengInnloggetSesjon } from '@navikt/digisyfo-npm';
+import { forlengInnloggetSesjon } from './timeout_actions';
 
 const texts = {
     title: 'Jobber du fortsatt på denne?',
