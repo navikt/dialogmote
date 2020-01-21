@@ -46,7 +46,7 @@ jobs:
 
 
   deploy-dev:
-    name: Deploy to NAIS Dev-fss
+    name: Deploy to NAIS Dev-sbs
     needs: build
     runs-on: ubuntu-latest
     steps:
@@ -54,11 +54,11 @@ jobs:
       - uses: nais/deploy/actions/deploy@v1
         env:
           APIKEY: ${{ secrets.NAIS_DEPLOY_APIKEY }}
-          CLUSTER: dev-fss
+          CLUSTER: dev-sbs
           RESOURCE: naiserator-dev.yaml
 
   deploy-prod:
-    name: Deploy to NAIS Prod-fss
+    name: Deploy to NAIS Prod-sbs
     needs: deploy-dev
     runs-on: ubuntu-latest
     steps:
@@ -66,7 +66,7 @@ jobs:
       - uses: nais/deploy/actions/deploy@v1
         env:
           APIKEY: ${{ secrets.NAIS_DEPLOY_APIKEY }}
-          CLUSTER: prod-fss
+          CLUSTER: prod-sbs
           RESOURCE: naiserator-prod.yaml
 
   pling:
