@@ -8,6 +8,7 @@ import {
     finnNyesteAlternativ,
 } from '../../../utils/moteUtils';
 import { visKortDato } from '../../../utils/datoUtils';
+import KoronaInfoboks, { MOTEPLANLEGGER } from '../../../sider/KoronaInfoboks';
 
 const texts = {
     title: 'Tidspunkt for dialogmøte',
@@ -26,6 +27,7 @@ const Svarside = (props) => {
 
     return (
         <div>
+            <KoronaInfoboks type={MOTEPLANLEGGER} />
             <header className="sidetopp">
                 <h1 className="sidetopp__tittel">{texts.title}</h1>
             </header>

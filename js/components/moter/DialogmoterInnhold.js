@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import Sidetopp from '../Sidetopp';
 import DialogmoterInnholdLenke from './DialogmoterInnholdLenke';
 import MotebehovInnholdLenke from './MotebehovInnholdLenke';
+import KoronaInfoboks, { MOTEBEHOV } from '../../sider/KoronaInfoboks';
 
 const texts = {
     title: 'Dialogmøter',
@@ -17,6 +18,7 @@ const DialogmoterInnhold = (
 ) => {
     return (
         <div className="dialogmoterInnhold">
+            <KoronaInfoboks type={MOTEBEHOV} />
             <Sidetopp tittel={texts.title} />
 
             { skalViseMotebehov

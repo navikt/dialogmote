@@ -11,6 +11,7 @@ import MotebehovKvittering from './motebehov/MotebehovKvittering';
 import {
     finnNyesteMotebehovForVirksomhetListeIOppfolgingsforlop,
 } from '../../utils/motebehovUtils';
+import KoronaInfoboks, { MOTEBEHOV } from '../../sider/KoronaInfoboks';
 
 const texts = {
     title: 'Behov for dialogmøte',
@@ -42,6 +43,7 @@ const MotebehovInnhold = (
         );
     return (
         <div className="motebehovSideInnhold">
+            <KoronaInfoboks type={MOTEBEHOV} />
             <Sidetopp tittel={texts.title} />
 
             { innhold }

@@ -8,7 +8,8 @@ import { tilLesbarDatoMedArstallOgUkedag } from '../../../utils/datoUtils';
 const tekster = {
     motebehovKvittering: {
         tittel: 'Svaret ditt er sendt',
-        tekst: 'Vi vil bruke svaret ditt når vi vurderer om det er nødvendig med dialogmøte. Hører du fra oss, mener vi det er behov for å møtes.',
+        // eslint-disable-next-line max-len
+        tekst: 'Når det endelige tidspunktet er avklart, vil du få en innkalling i posten med mer informasjon om møtet. Har du behov for kontakt med NAV, kan du ringe oss på tlf: 55 55 33 36',
     },
     motebehovKvitteringUtvidbar: {
         tittel: 'Se ditt svar',
