@@ -8,6 +8,7 @@ import { BRUKER } from '../../../enums/moteplanleggerDeltakerTyper';
 import { finnDeltakerByType } from '../../../utils/moteUtils';
 import BesvarteTidspunkter from './BesvarteTidspunkter';
 import Motested from './Motested';
+import KoronaInfoboks, { MOTEPLANLEGGER_KVITTERING } from '../../../sider/KoronaInfoboks';
 
 const tekster = {
     tittel: 'Kvittering',
@@ -54,6 +55,7 @@ const Kvittering = ({ mote }) => {
     const deltaker = finnDeltakerByType(mote.deltakere, BRUKER);
     return (
         <div>
+            <KoronaInfoboks type={MOTEPLANLEGGER_KVITTERING} />
             <header className="sidetopp">
                 <h1 className="sidetopp__tittel">{tekster.tittel}</h1>
             </header>
