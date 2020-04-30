@@ -1,5 +1,5 @@
 import { parseSykmelding } from '@navikt/digisyfo-npm';
-import { BRUKER_ER_UTLOGGET } from '../../../data/brukerinfo/brukerinfo_actions';
+import { BRUKER_ER_UTLOGGET } from '../brukerinfo/brukerinfo_actions';
 import {
     HENT_DINE_SYKMELDINGER_FEILET,
     HENTER_DINE_SYKMELDINGER,

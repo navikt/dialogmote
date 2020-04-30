@@ -1,7 +1,7 @@
 import { reducer as formReducer } from 'redux-form';
 import brukerinfo from './brukerinfo/brukerinfo';
-import dineSykmeldinger from '../sykmeldinger/data/dine-sykmeldinger/dineSykmeldinger';
-import ledere from '../landingsside/data/ledere/ledere';
+import dineSykmeldinger from './dine-sykmeldinger/dineSykmeldinger';
+import ledere from './ledere/ledere';
 import oppfolgingsforlopsPerioder from './oppfolgingsforlopsperioder/oppfolgingsforlopsPerioder';
 import mote from './moter/mote';
 import svar from './svar/svar';

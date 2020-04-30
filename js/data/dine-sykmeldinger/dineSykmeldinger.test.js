@@ -3,7 +3,7 @@ import deepFreeze from 'deep-freeze';
 
 import dineSykmeldinger from './dineSykmeldinger';
 import * as actions from './dineSykmeldingerActions';
-import * as brukerActions from '../../../data/brukerinfo/brukerinfo_actions';
+import * as brukerActions from '../brukerinfo/brukerinfo_actions';
 
 
 export function getSykmelding(soknad = {}) {

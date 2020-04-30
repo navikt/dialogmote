@@ -35,7 +35,7 @@ import {
     finnVirksomheterMedAktivSykmelding,
     hentOppfolgingsPerioderFeilet,
 } from '../utils/oppfolgingsforlopsperioderUtils';
-import { hentDineSykmeldinger } from '../sykmeldinger/data/dine-sykmeldinger/dineSykmeldingerActions';
+import { hentDineSykmeldinger } from '../data/dine-sykmeldinger/dineSykmeldingerActions';
 
 const tekster = {
     brodsmuler: {

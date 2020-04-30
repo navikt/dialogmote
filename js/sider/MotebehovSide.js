@@ -15,8 +15,8 @@ import {
     forsoektHentetDineSykmeldinger,
     henterEllerHarHentetLedere,
 } from '../utils/reducerUtils';
-import { hentDineSykmeldinger } from '../sykmeldinger/data/dine-sykmeldinger/dineSykmeldingerActions';
-import { hentLedere } from '../landingsside/data/ledere/ledereActions';
+import { hentDineSykmeldinger } from '../data/dine-sykmeldinger/dineSykmeldingerActions';
+import { hentLedere } from '../data/ledere/ledereActions';
 import { hentMote } from '../data/moter/mote_actions';
 import {
     hentMotebehov,

@@ -12,8 +12,8 @@ import {
     brodsmule as brodsmulePt,
     motebehovReducerPt,
 } from '../propTypes';
-import { hentDineSykmeldinger } from '../sykmeldinger/data/dine-sykmeldinger/dineSykmeldingerActions';
-import { hentLedere } from '../landingsside/data/ledere/ledereActions';
+import { hentDineSykmeldinger } from '../data/dine-sykmeldinger/dineSykmeldingerActions';
+import { hentLedere } from '../data/ledere/ledereActions';
 import { hentMote } from '../data/moter/mote_actions';
 import { hentMotebehov } from '../data/motebehov/motebehov_actions';
 import { hentOppfolgingsforlopsPerioder } from '../data/oppfolgingsforlopsperioder/oppfolgingsforlopsPerioder_actions';
