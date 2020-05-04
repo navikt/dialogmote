@@ -5,10 +5,8 @@ import {
     put,
     takeEvery,
 } from 'redux-saga/effects';
-import {
-    getAjax,
-    log,
-} from '@navikt/digisyfo-npm';
+import { getAjax } from '@navikt/digisyfo-npm';
+import { log } from '../../logging/log';
 import * as actions from './brukerinfo_actions';
 
 export function* sjekkInnlogging() {

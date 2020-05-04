@@ -1,5 +1,5 @@
-import { log } from '@navikt/digisyfo-npm';
 import ponyfill from 'fetch-ponyfill';
+import { log } from '../../logging/log';
 import { MANGLER_OIDC_TOKEN } from '../../enums/exceptionMessages';
 
 const ponyfills = ponyfill();

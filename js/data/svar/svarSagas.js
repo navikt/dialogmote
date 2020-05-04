@@ -1,7 +1,7 @@
 import {
     call, fork, put, takeEvery,
 } from 'redux-saga/effects';
-import { log } from '@navikt/digisyfo-npm';
+import { log } from '../../logging/log';
 import { API_NAVN, hentSyfoApiUrl, post } from '../gateway-api/gatewayApi';
 import {
     SEND_SVAR_FORESPURT, senderSvar, sendSvarFeilet, svarSendt,

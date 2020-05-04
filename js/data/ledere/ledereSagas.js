@@ -5,10 +5,8 @@ import {
     put,
     takeEvery,
 } from 'redux-saga/effects';
-import {
-    get,
-    log,
-} from '@navikt/digisyfo-npm';
+import { get } from '@navikt/digisyfo-npm';
+import { log } from '../../logging/log';
 import * as actions from './ledereActions';
 
 export function* hentLedere() {
