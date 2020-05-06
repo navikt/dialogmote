@@ -2,10 +2,6 @@ import {
     hentDagerMellomDatoer,
     leggTilDagerPaaDato,
 } from './datoUtils';
-import {
-    finnOppfolgingsforlopsPerioderForAktiveSykmeldinger,
-    finnVirksomheterMedAktivSykmelding,
-} from './oppfolgingsforlopsperioderUtils';
 
 const isDefined = (value) => {
     return value !== undefined;
@@ -212,15 +208,4 @@ export const skalViseMotebehovMedOppfolgingsforlopListe = (oppfolgingsforlopsPer
     } catch (e) {
         return false;
     }
-};
-
-export const erMotebehovTilgjengeligForOppfolgingsforlop = (state) => {
-    const virksomhetsnrListe = finnVirksomheterMedAktivSykmelding(state.dineSykmeldinger.data, state.ledere.data);
-    const oppfolgingsforlopsPerioderReducerListe = finnOppfolgingsforlopsPerioderForAktiveSykmeldinger(state, virksomhetsnrListe);
-
-    return skalViseMotebehovMedOppfolgingsforlopListe(oppfolgingsforlopsPerioderReducerListe, state.motebehov, state.mote);
-};
-
-export const harMotebehovSvar = (state) => {
-    return state.motebehov.data.length > 0;
 };

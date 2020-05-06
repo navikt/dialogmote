@@ -26,22 +26,6 @@ export const lagHeltall = (streng) => {
     return strengMedDesimaler.split(',')[0];
 };
 
-export const getObjectValueByString = (o, s) => {
-    // o = objekt
-    // s = string
-    let string = s.replace(/\[(\w+)\]/g, '.$1'); // convert indexes to properties
-    string = string.replace(/^\./, ''); // strip a leading dot
-    const keys = string.split('.');
-    let obj = { ...o };
-    for (let i = 0, n = keys.length; i < n; i += 1) {
-        const key = keys[i];
-        if (key in obj) {
-            obj = obj[key];
-        }
-    }
-    return obj;
-};
-
 export const Vis = ({ hvis, children, render }) => {
     return hvis && render
         ? render()
@@ -53,14 +37,4 @@ export const Vis = ({ hvis, children, render }) => {
 Vis.propTypes = {
     hvis: PropTypes.bool,
     children: childEllerChildren,
-};
-
-export const formaterOrgnr = (orgnr) => {
-    return orgnr.replace(/(...)(...)(...)/g, '$1 $2 $3');
-};
-
-export const tilStorForbokstav = (streng) => {
-    return streng.replace(/^\w/, (c) => {
-        return c.toUpperCase();
-    });
 };

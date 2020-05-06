@@ -7,8 +7,6 @@ import {
     erOppfoelgingsdatoNyereEnn132DagerForProdsetting,
     erOppfoelgingsdatoPassertMed16UkerOgIkke26Uker,
     skalViseMotebehovMedOppfolgingsforlopListe,
-    erMotebehovTilgjengeligForOppfolgingsforlop,
-    harMotebehovSvar,
     hentOppfolgingsforlopStartdato,
     hentOppfolgingsforlopSluttdato,
     OPPFOLGINGSFORLOP_MOTEBEHOV_SLUTT_DAGER,
@@ -16,7 +14,6 @@ import {
 } from '../../js/utils/motebehovUtils';
 import { getMotebehov } from '../mock/mockMotebehov';
 import { leggTilDagerPaaDato } from '../testUtils';
-import { hentSykmeldingAktiv } from '../mock/mockSykmeldinger';
 
 const { expect } = chai;
 
@@ -416,106 +413,6 @@ describe('motebehovUtils', () => {
         });
     });
 
-    describe('erMotebehovTilgjengeligForOppfolgingsforlop', () => {
-        let state;
-        let dineSykmeldingerReducer;
-        let orgnummer;
-        let sykmeldingAktiv;
-        let ledereReducer;
-        beforeEach(() => {
-            orgnummer = '110110110';
-            sykmeldingAktiv = {
-                ...hentSykmeldingAktiv(new Date()),
-                orgnummer,
-            };
-            ledereReducer = {
-                data: [{ orgnummer }],
-            };
-            dineSykmeldingerReducer = {
-                data: [sykmeldingAktiv],
-            };
-            state = {
-                dineSykmeldinger: dineSykmeldingerReducer,
-                ledere: ledereReducer,
-            };
-        });
-
-        it('skal returnere false, dersom oppfolgingsdato ikke er passert med 16uker', () => {
-            state = {
-                ...state,
-                oppfolgingsforlopsPerioder: {
-                    [orgnummer]: {
-                        data: [
-                            { fom: leggTilDagerPaaDato(new Date(), -(OPPFOLGINGSFORLOP_MOTEBEHOV_START_DAGER - 1)) },
-                        ],
-                    },
-                },
-            };
-            expect(erMotebehovTilgjengeligForOppfolgingsforlop(state)).to.equal(false);
-        });
-
-        it('skal returnere true, dersom oppfolgingsdato er passert med 16uker', () => {
-            state = {
-                ...state,
-                oppfolgingsforlopsPerioder: {
-                    [orgnummer]: {
-                        data: [
-                            { fom: leggTilDagerPaaDato(new Date(), -OPPFOLGINGSFORLOP_MOTEBEHOV_START_DAGER) },
-                        ],
-                    },
-                },
-            };
-            expect(erMotebehovTilgjengeligForOppfolgingsforlop(state)).to.equal(true);
-        });
-
-        it('skal returnere true, dersom oppfolgingsdato er passert med 16 uker og ikke 26 uker', () => {
-            state = {
-                ...state,
-                oppfolgingsforlopsPerioder: {
-                    [orgnummer]: {
-                        data: [
-                            { fom: leggTilDagerPaaDato(new Date(), -(OPPFOLGINGSFORLOP_MOTEBEHOV_SLUTT_DAGER - 1)) },
-                        ],
-                    },
-                },
-            };
-            expect(erMotebehovTilgjengeligForOppfolgingsforlop(state)).to.equal(true);
-        });
-
-        it('skal returnere false, dersom oppfolgingsdato er passert med 16 uker og 26 uker', () => {
-            state = {
-                ...state,
-                oppfolgingsforlopsPerioder: {
-                    [orgnummer]: {
-                        data: [
-                            { fom: leggTilDagerPaaDato(new Date(), -OPPFOLGINGSFORLOP_MOTEBEHOV_SLUTT_DAGER) },
-                        ],
-                    },
-                },
-            };
-            expect(erMotebehovTilgjengeligForOppfolgingsforlop(state)).to.equal(false);
-        });
-
-        describe('hentingForbudt', () => {
-            it('skal returnere false, henting av motebehov er forbudt fra syfomotebehov', () => {
-                state = {
-                    ...state,
-                    motebehov: {
-                        hentingForbudt: true,
-                    },
-                    oppfolgingsforlopsPerioder: {
-                        [orgnummer]: {
-                            data: [
-                                { fom: leggTilDagerPaaDato(new Date(), -(OPPFOLGINGSFORLOP_MOTEBEHOV_SLUTT_DAGER - 1)) },
-                            ],
-                        },
-                    },
-                };
-                expect(erMotebehovTilgjengeligForOppfolgingsforlop(state)).to.equal(false);
-            });
-        });
-    });
-
     describe('erOppfoelgingsdatoNyereEnn132DagerForProdsetting', () => {
         let oppfoelgingsdato;
 
@@ -529,35 +426,6 @@ describe('motebehovUtils', () => {
         it('skal returnere true dersom oppfoelgingsdato er nyere enn 132 dager for prodsetting av motebehov ', () => {
             oppfoelgingsdato = new Date('2018-10-31');
             const resultat = erOppfoelgingsdatoNyereEnn132DagerForProdsetting(oppfoelgingsdato);
-            const forventet = true;
-            expect(resultat).to.equal(forventet);
-        });
-    });
-
-    describe('harMotebehovSvar', () => {
-        let state = {};
-
-        it('skal returnere false', () => {
-            state = {
-                motebehov: {
-                    data: [],
-                },
-            };
-            const resultat = harMotebehovSvar(state);
-            const forventet = false;
-            expect(resultat).to.equal(forventet);
-        });
-
-        it('skal returnere true', () => {
-            const motebehovSvarIkkeUtgaatt = {
-                opprettetDato: leggTilDagerPaaDato(new Date(), -1),
-            };
-            state = {
-                motebehov: {
-                    data: [motebehovSvarIkkeUtgaatt],
-                },
-            };
-            const resultat = harMotebehovSvar(state);
             const forventet = true;
             expect(resultat).to.equal(forventet);
         });
