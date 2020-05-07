@@ -1,13 +1,23 @@
-const mockData = require('./mockData');
-const enums = require('./mockDataEnums');
+const motebehovStatus = {
+    visMotebehov: true,
+    skjemaType: 'SVAR_BEHOV',
+    motebehov: {
+        arbeidstakerFnr: '02020212345',
+        opprettetAv: '',
+        virksomhetsnummer: '000111222',
+        motebehovSvar: {
+            harMotebehov: true,
+        },
+    },
+};
 
 function mockPilotEndepunkterForLokalmiljo(server) {
-    server.get('/syfomotebehov/api/motebehov', (req, res) => {
+    server.get('/syfomotebehov/api/v2/arbeidstaker/motebehov', (req, res) => {
         res.setHeader('Content-Type', 'application/json');
-        res.send(JSON.stringify(mockData[enums.MOTEBEHOV]));
+        res.send(JSON.stringify(motebehovStatus));
     });
 
-    server.post('/syfomotebehov/api/motebehov', (req, res) => {
+    server.post('/syfomotebehov/api/v2/arbeidstaker/motebehov', (req, res) => {
         const nyttMotebehov = req.body;
 
         res.setHeader('Content-Type', 'application/json');

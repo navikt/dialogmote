@@ -27,10 +27,10 @@ describe('Svarskjema', () => {
             mote = getMote(_mote);
             const props = Object.assign({}, {
                 mote,
+                motebehovReducer: {},
                 touch,
                 meta: {},
                 handleSubmit,
-                oppfolgingsforlopsPerioderReducerListe: [],
             }, _props);
             return shallow(<Skjema {...props} />);
         };

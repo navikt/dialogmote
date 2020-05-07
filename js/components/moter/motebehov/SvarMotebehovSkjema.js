@@ -5,7 +5,6 @@ import { Field, reduxForm, getFormValues } from 'redux-form';
 import { Link } from 'react-router';
 import { Hovedknapp } from 'nav-frontend-knapper';
 import Alertstripe from 'nav-frontend-alertstriper';
-import { harSvarMotebehovSender } from '../../../utils/motebehovUtils';
 import { motebehovSvarReducerPt } from '../../../propTypes';
 import Tekstomraade from '../../skjema/Tekstomraade';
 import Radioknapper from '../../skjema/Radioknapper';
@@ -150,8 +149,8 @@ export const TekstOpplysning = () => {
     );
 };
 
-export const Knapper = ({ motebehovSvarReducerListe }) => {
-    const sender = harSvarMotebehovSender(motebehovSvarReducerListe);
+export const Knapper = ({ motebehovSvarReducer }) => {
+    const { sender } = motebehovSvarReducer;
     return (
         <Fragment>
             <div className="knapperad">
@@ -172,7 +171,7 @@ export const Knapper = ({ motebehovSvarReducerListe }) => {
     );
 };
 Knapper.propTypes = {
-    motebehovSvarReducerListe: PropTypes.arrayOf(motebehovSvarReducerPt),
+    motebehovSvarReducer: motebehovSvarReducerPt,
 };
 
 export const AlertstripeNei = () => {
@@ -192,17 +191,14 @@ export class SvarMotebehovSkjemaKomponent extends Component {
     handleSubmit(values) {
         const {
             svarMotebehov,
-            virksomhetsnrListe,
         } = this.props;
-        virksomhetsnrListe.forEach((virksomhetsnr) => {
-            svarMotebehov(values, virksomhetsnr);
-        });
+        svarMotebehov(values);
     }
 
     render() {
         const {
             harMotebehov,
-            motebehovSvarReducerListe,
+            motebehovSvarReducer,
             handleSubmit,
         } = this.props;
         return (
@@ -226,7 +222,7 @@ export class SvarMotebehovSkjemaKomponent extends Component {
 
                 <TekstOpplysning />
 
-                <Knapper motebehovSvarReducerListe={motebehovSvarReducerListe} />
+                <Knapper motebehovSvarReducer={motebehovSvarReducer} />
             </form>
         );
     }
@@ -235,8 +231,7 @@ export class SvarMotebehovSkjemaKomponent extends Component {
 SvarMotebehovSkjemaKomponent.propTypes = {
     harMotebehov: PropTypes.string,
     handleSubmit: PropTypes.func,
-    virksomhetsnrListe: PropTypes.arrayOf(PropTypes.string),
-    motebehovSvarReducerListe: PropTypes.arrayOf(motebehovSvarReducerPt),
+    motebehovSvarReducer: motebehovSvarReducerPt,
     svarMotebehov: PropTypes.func,
 };
 

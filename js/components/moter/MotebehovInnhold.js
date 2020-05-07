@@ -3,14 +3,10 @@ import PropTypes from 'prop-types';
 import {
     motebehovReducerPt,
     motebehovSvarReducerPt,
-    sykeforloepPt,
 } from '../../propTypes';
 import Sidetopp from '../Sidetopp';
 import MotebehovSvar from './motebehov/MotebehovSvar';
 import MotebehovKvittering from './motebehov/MotebehovKvittering';
-import {
-    finnNyesteMotebehovForVirksomhetListeIOppfolgingsforlop,
-} from '../../utils/motebehovUtils';
 
 const texts = {
     title: 'Behov for dialogmøte',
@@ -20,12 +16,10 @@ const MotebehovInnhold = (
     {
         actions,
         motebehovReducer,
-        motebehovSvarReducerListe,
-        oppfolgingsforlopsPerioderReducerListe,
-        virksomhetnrMedMotebehovListe,
+        motebehovSvarReducer,
     },
 ) => {
-    const motebehov = finnNyesteMotebehovForVirksomhetListeIOppfolgingsforlop(motebehovReducer, virksomhetnrMedMotebehovListe, oppfolgingsforlopsPerioderReducerListe);
+    const motebehov = motebehovReducer.data && motebehovReducer.data.motebehov;
 
     const innhold = motebehov
         ? (
@@ -35,8 +29,7 @@ const MotebehovInnhold = (
         )
         : (
             <MotebehovSvar
-                virksomhetsnrListe={virksomhetnrMedMotebehovListe}
-                motebehovSvarReducerListe={motebehovSvarReducerListe}
+                motebehovSvarReducer={motebehovSvarReducer}
                 svarMotebehov={actions.svarMotebehov}
             />
         );
@@ -54,9 +47,7 @@ MotebehovInnhold.propTypes = {
         svarMotebehov: PropTypes.func,
     }),
     motebehovReducer: motebehovReducerPt,
-    motebehovSvarReducerListe: PropTypes.arrayOf(motebehovSvarReducerPt),
-    oppfolgingsforlopsPerioderReducerListe: PropTypes.arrayOf(sykeforloepPt),
-    virksomhetnrMedMotebehovListe: PropTypes.arrayOf(PropTypes.string),
+    motebehovSvarReducer: motebehovSvarReducerPt,
 };
 
 export default MotebehovInnhold;

@@ -11,10 +11,6 @@ const lastFilTilMinne = (filnavn) => {
     });
 };
 
-lastFilTilMinne(enums.MOTEBEHOV);
-lastFilTilMinne(enums.NAERMESTELEDERE);
-lastFilTilMinne(enums.SYKMELDINGER);
-lastFilTilMinne(enums.PERIODER);
 lastFilTilMinne(enums.SISTE);
 
 module.exports = mockData;

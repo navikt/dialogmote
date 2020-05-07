@@ -6,21 +6,13 @@ import {
     SVAR_MOTEBEHOV_SENDT,
 } from './motebehov_actions';
 
-export const sorterMotebehovEtterNyeste = (motebehovListe) => {
-    return [...motebehovListe].filter((element) => {
-        return element.aktorId === element.opprettetAv;
-    }).sort((t1, t2) => {
-        return t2.opprettetDato - t1.opprettetDato;
-    });
-};
-
 const initiellState = {
     henter: false,
     hentet: false,
     hentingFeilet: false,
     hentingForbudt: false,
     hentingForsokt: false,
-    data: [],
+    data: {},
 };
 
 export default function motebehov(state = initiellState, action = {}) {
@@ -33,7 +25,7 @@ export default function motebehov(state = initiellState, action = {}) {
                 hentingFeilet: false,
                 hentingForbudt: false,
                 hentingForsokt: false,
-                data: [],
+                data: {},
             };
         }
         case HENT_MOTEBEHOV_HENTET: {
@@ -42,7 +34,7 @@ export default function motebehov(state = initiellState, action = {}) {
                 henter: false,
                 hentet: true,
                 hentingForsokt: true,
-                data: action.data.length > 0 ? sorterMotebehovEtterNyeste(action.data) : [],
+                data: action.data,
             };
         }
         case HENT_MOTEBEHOV_FEILET: {
@@ -63,13 +55,16 @@ export default function motebehov(state = initiellState, action = {}) {
         }
         case SVAR_MOTEBEHOV_SENDT: {
             const nyttMotebehov = {
-                ...action.svar,
+                motebehovSvar: action.svar,
                 virksomhetsnummer: action.virksomhetsnummer,
                 opprettetDato: new Date(),
             };
             return {
                 ...state,
-                data: [nyttMotebehov, ...state.data],
+                data: {
+                    ...state.data,
+                    motebehov: nyttMotebehov,
+                },
             };
         }
         default:
