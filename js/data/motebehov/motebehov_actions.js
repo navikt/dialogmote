@@ -9,10 +9,9 @@ export const SVAR_MOTEBEHOV_SENDER = 'SVAR_MOTEBEHOV_SENDER';
 export const SVAR_MOTEBEHOV_SENDT = 'SVAR_MOTEBEHOV_SENDT';
 export const SVAR_MOTEBEHOV_FEILET = 'SVAR_MOTEBEHOV_FEILET';
 
-export function hentMotebehov(virksomhetsnummer) {
+export function hentMotebehov() {
     return {
         type: HENT_MOTEBEHOV_FORESPURT,
-        virksomhetsnummer,
     };
 }
 
@@ -41,32 +40,28 @@ export function hentMotebehovForbudt() {
     };
 }
 
-export function svarMotebehov(svar, virksomhetsnummer) {
+export function svarMotebehov(svar) {
     return {
         type: SVAR_MOTEBEHOV_FORESPURT,
         svar,
-        virksomhetsnummer,
     };
 }
 
-export function svarMotebehovSender(virksomhetsnummer) {
+export function svarMotebehovSender() {
     return {
         type: SVAR_MOTEBEHOV_SENDER,
-        virksomhetsnummer,
     };
 }
 
-export function svarMotebehovSendt(svar, virksomhetsnummer) {
+export function svarMotebehovSendt(svar) {
     return {
         type: SVAR_MOTEBEHOV_SENDT,
         svar,
-        virksomhetsnummer,
     };
 }
 
-export function svarMotebehovFeilet(virksomhetsnummer) {
+export function svarMotebehovFeilet() {
     return {
         type: SVAR_MOTEBEHOV_FEILET,
-        virksomhetsnummer,
     };
 }

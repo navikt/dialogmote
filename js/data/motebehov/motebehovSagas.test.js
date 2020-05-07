@@ -21,11 +21,10 @@ import {
 } from './motebehov_actions';
 
 describe('motebehovSagas', () => {
-    const virksomhetsnummer = '123456789';
     let apiUrlBase;
 
     describe('hentMotebehov', () => {
-        apiUrlBase = hentSyfoApiUrl(API_NAVN.SYFOMOTEBEHOV);
+        apiUrlBase = `${hentSyfoApiUrl(API_NAVN.SYFOMOTEBEHOV)}/v2/arbeidstaker`;
         const generator = hentMotebehov({
             id: 1,
         });
@@ -38,7 +37,7 @@ describe('motebehovSagas', () => {
         });
 
         it('Skal dernest kalle resttjenesten', () => {
-            const nextCall = call(get, `${apiUrlBase}/motebehov?fnr=${''}&virksomhetsnummer=${''}`);
+            const nextCall = call(get, `${apiUrlBase}/motebehov`);
             expect(generator.next().value).to.deep.equal(nextCall);
         });
 
@@ -61,25 +60,19 @@ describe('motebehovSagas', () => {
                 harMotebehov: 'true',
                 forklaring: 'forklaring',
             },
-            virksomhetsnummer,
         });
 
         it(`Skal dispatche ${SVAR_MOTEBEHOV_SENDER}`, () => {
             const nextPut = put({
                 type: SVAR_MOTEBEHOV_SENDER,
-                virksomhetsnummer,
             });
             expect(generator.next().value).to.deep.equal(nextPut);
         });
 
         it('Skal dernest kalle resttjenesten', () => {
-            const nextCall = call(post, `${apiUrlBase}/motebehov?fnr=${''}`, {
-                virksomhetsnummer,
-                arbeidstakerFnr: '',
-                motebehovSvar: {
-                    harMotebehov: true,
-                    forklaring: 'forklaring',
-                },
+            const nextCall = call(post, `${apiUrlBase}/motebehov`, {
+                harMotebehov: true,
+                forklaring: 'forklaring',
             });
             expect(generator.next().value).to.deep.equal(nextCall);
         });
@@ -88,14 +81,9 @@ describe('motebehovSagas', () => {
             const nextPut = put({
                 type: SVAR_MOTEBEHOV_SENDT,
                 svar: {
-                    arbeidstakerFnr: '',
-                    virksomhetsnummer,
-                    motebehovSvar: {
-                        harMotebehov: true,
-                        forklaring: 'forklaring',
-                    },
+                    harMotebehov: true,
+                    forklaring: 'forklaring',
                 },
-                virksomhetsnummer,
             });
             expect(generator.next().value).to.deep.equal(nextPut);
         });

@@ -22,7 +22,7 @@ import Motested from './Motested';
 import Alternativer from './Alternativer';
 import BesvarteTidspunkter from './BesvarteTidspunkter';
 import DeclinedMotebehov from './DeclinedMotebehov';
-import { skalViseMotebehovMedOppfolgingsforlopListe } from '../../../utils/motebehovUtils';
+import { erMotebehovTilgjengelig } from '../../../utils/motebehovUtils';
 
 const texts = {
     error: 'Beklager, det oppstod en feil!',
@@ -78,7 +78,6 @@ export const Skjema = (
         touch,
         autofill,
         deltakertype = BRUKER,
-        oppfolgingsforlopsPerioderReducerListe,
     },
 ) => {
     const deltaker = mote.deltakere.filter((d) => {
@@ -91,7 +90,7 @@ export const Skjema = (
     const tidligereAlternativer = getTidligereAlternativer(mote, deltakertype);
 
     const previous = () => {
-        if (skalViseMotebehovMedOppfolgingsforlopListe(oppfolgingsforlopsPerioderReducerListe, motebehovReducer, mote)) {
+        if (erMotebehovTilgjengelig(motebehovReducer)) {
             const oldPath = window.location.pathname.split('/');
             const newPath = oldPath.slice(0, oldPath.length - 1)
                 .join('/');
@@ -101,9 +100,9 @@ export const Skjema = (
         return '/sykefravaer';
     };
 
-    const displayDeclinedMotebehov = motebehovReducer && motebehovReducer.data.find((behov) => {
-        return behov.motebehovSvar.harMotebehov === false;
-    });
+    const displayDeclinedMotebehov = motebehovReducer.data
+        && motebehovReducer.data.motebehov
+        && motebehovReducer.data.motebehov.motebehovSvar.harMotebehov === false;
 
     return (
         <form onSubmit={handleSubmit(onSubmit)}>
@@ -177,7 +176,6 @@ Skjema.propTypes = {
     handleSubmit: PropTypes.func,
     mote: motePt,
     motebehovReducer: motebehovReducerPt,
-    oppfolgingsforlopsPerioderReducerListe: PropTypes.arrayOf(PropTypes.shape()),
     sendSvar: PropTypes.func,
     deltakertype: moteplanleggerDeltakertypePt,
     sender: PropTypes.bool,

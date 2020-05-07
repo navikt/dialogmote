@@ -7,8 +7,7 @@ import FolketrygdlovenTekst from './FolketrygdlovenTekst';
 
 const MotebehovSvar = (
     {
-        virksomhetsnrListe,
-        motebehovSvarReducerListe,
+        motebehovSvarReducer,
         svarMotebehov,
     },
 ) => {
@@ -19,16 +18,14 @@ const MotebehovSvar = (
             <MotebehovInfoForSvar />
 
             <SvarMotebehovSkjema
-                virksomhetsnrListe={virksomhetsnrListe}
-                motebehovSvarReducerListe={motebehovSvarReducerListe}
+                motebehovSvarReducer={motebehovSvarReducer}
                 svarMotebehov={svarMotebehov}
             />
         </div>
     );
 };
 MotebehovSvar.propTypes = {
-    virksomhetsnrListe: PropTypes.arrayOf(PropTypes.string),
-    motebehovSvarReducerListe: PropTypes.arrayOf(motebehovSvarReducerPt),
+    motebehovSvarReducer: motebehovSvarReducerPt,
     svarMotebehov: PropTypes.func,
 };
 

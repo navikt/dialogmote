@@ -28,14 +28,6 @@ import {
 } from '../utils/moteUtils';
 import { sendSvar } from '../data/svar/svar_actions';
 import { hentMotebehov } from '../data/motebehov/motebehov_actions';
-import { hentOppfolgingsforlopsPerioder } from '../data/oppfolgingsforlopsperioder/oppfolgingsforlopsPerioder_actions';
-import {
-    finnOgHentManglendeOppfolgingsforlopsPerioder,
-    finnOppfolgingsforlopsPerioderForAktiveSykmeldinger,
-    finnVirksomheterMedAktivSykmelding,
-    hentOppfolgingsPerioderFeilet,
-} from '../utils/oppfolgingsforlopsperioderUtils';
-import { hentDineSykmeldinger } from '../data/dine-sykmeldinger/dineSykmeldingerActions';
 
 const tekster = {
     brodsmuler: {
@@ -54,20 +46,8 @@ export class Container extends Component {
     componentDidMount() {
         const {
             doHentMotebehov,
-            doHentDineSykemeldinger,
         } = this.props;
         doHentMotebehov();
-        doHentDineSykemeldinger();
-    }
-
-    componentWillReceiveProps(nextProps) {
-        const {
-            doHentOppfolgingsforlopsPerioder,
-            oppfolgingsforlopsPerioderReducerListe,
-            virksomhetsnrListe,
-        } = nextProps;
-
-        finnOgHentManglendeOppfolgingsforlopsPerioder(doHentOppfolgingsforlopsPerioder, oppfolgingsforlopsPerioderReducerListe, virksomhetsnrListe);
     }
 
     render() {
@@ -151,9 +131,6 @@ Container.propTypes = {
     doHentMote: PropTypes.func,
     doSendSvar: PropTypes.func,
     doHentMotebehov: PropTypes.func,
-    doHentOppfolgingsforlopsPerioder: PropTypes.func,
-    doHentDineSykemeldinger: PropTypes.func,
-    oppfolgingsforlopsPerioderReducerListe: PropTypes.arrayOf(PropTypes.shape()),
     hentingFeilet: PropTypes.bool,
     moteIkkeFunnet: PropTypes.bool,
     sender: PropTypes.bool,
@@ -161,27 +138,17 @@ Container.propTypes = {
     mote: motePt,
     motebehovReducer: motebehovReducerPt,
     hentet: PropTypes.bool,
-    virksomhetsnrListe: PropTypes.arrayOf(PropTypes.string),
 };
 
 export function mapStateToProps(state) {
     const motebehovReducer = state.motebehov;
-    const ledereReducer = state.ledere;
-    const dineSykmeldingerReducer = state.dineSykmeldinger;
-    const virksomhetsnrListe = finnVirksomheterMedAktivSykmelding(dineSykmeldingerReducer.data, ledereReducer.data);
-    const oppfolgingsforlopsPerioderReducerListe = finnOppfolgingsforlopsPerioderForAktiveSykmeldinger(state, virksomhetsnrListe);
-    const hentOppfolgingsforlopsPerioderFeilet = hentOppfolgingsPerioderFeilet(oppfolgingsforlopsPerioderReducerListe);
     return {
         mote: state.mote.data,
         moteIkkeFunnet: state.mote.moteIkkeFunnet === true,
         motebehovReducer,
-        oppfolgingsforlopsPerioderReducerListe,
-        virksomhetsnrListe,
         henter: state.mote.henter,
         hentet: state.mote.hentet === true,
-
-        hentingFeilet: state.mote.hentingFeilet
-        || hentOppfolgingsforlopsPerioderFeilet,
+        hentingFeilet: state.mote.hentingFeilet,
         sender: state.svar.sender,
         sendingFeilet: state.svar.sendingFeilet,
         brodsmuler: [{
@@ -198,8 +165,6 @@ const actionCreators = {
     doHentMote: hentMote,
     doHentMotebehov: hentMotebehov,
     doSendSvar: sendSvar,
-    doHentDineSykemeldinger: hentDineSykmeldinger,
-    doHentOppfolgingsforlopsPerioder: hentOppfolgingsforlopsPerioder,
 };
 
 export default connect(mapStateToProps, actionCreators)(Container);
