@@ -1,9 +1,9 @@
 import React, { Fragment } from 'react';
-import { Link } from 'react-router';
 import { Utvidbar } from '@navikt/digisyfo-npm';
 import { motebehovPt } from '../../../../propTypes';
 import { FELTER } from './SvarMotebehovSkjema';
 import { tilLesbarDatoMedArstallOgUkedag } from '../../../../utils/datoUtils';
+import MotebehovKvitteringSideButtonBack from '../MotebehovKvitteringSideButtonBack';
 
 const tekster = {
     motebehovKvittering: {
@@ -85,11 +85,7 @@ const MotebehovKvittering = (
 
                 <MotebehovKvitteringUtvidbar motebehov={motebehov} />
             </div>
-            <div className="knapperad">
-                <Link className="lenke" to="/dialogmote">
-                Tilbake
-                </Link>
-            </div>
+            <MotebehovKvitteringSideButtonBack />
         </Fragment>
     );
 };
