@@ -7,7 +7,7 @@ import {
 import { skalViseMotebehovKvittering } from '../../utils/motebehovUtils';
 import Sidetopp from '../Sidetopp';
 import MotebehovSvar from './motebehov/svarmotebehov/MotebehovSvar';
-import SvarMotebehovKvittering from './motebehov/svarmotebehov/SvarMotebehovKvittering';
+import SvarMotebehovKvitteringSide from './motebehov/svarmotebehov/SvarMotebehovKvitteringSide';
 
 const texts = {
     title: {
@@ -31,7 +31,7 @@ const MotebehovInnhold = (
         : texts.title.default;
     const innhold = motebehov
         ? (
-            <SvarMotebehovKvittering
+            <SvarMotebehovKvitteringSide
                 motebehov={motebehov}
             />
         )

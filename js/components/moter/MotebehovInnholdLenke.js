@@ -5,9 +5,10 @@ import styled from 'styled-components';
 
 const TEKSTER = {
     tittel: 'Trenger dere et dialogmøte med NAV?',
-    undertekst: 'I møtet går vi gjennom situasjonen sammen og ser på muligheter.',
     knappKvittering: 'Se Kvittering',
-    knappBehov: 'Vurder behov for møte',
+    svarBehov: {
+        knappBehov: 'Vurder behov for møte',
+    },
 };
 
 const MotebehovInnholdLenkeStyled = styled.div`
@@ -21,7 +22,7 @@ const MotebehovInnholdLenke = (
 ) => {
     const knappTekstNokkel = skalViseKvittering
         ? TEKSTER.knappKvittering
-        : TEKSTER.knappBehov;
+        : TEKSTER.svarBehov.knappBehov;
     return (
         <MotebehovInnholdLenkeStyled className="motebehovInnholdLenke panel">
             <h2 className="panel__tittel">{TEKSTER.tittel}</h2>

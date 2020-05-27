@@ -3,7 +3,6 @@ import { Utvidbar } from '@navikt/digisyfo-npm';
 import { motebehovPt } from '../../../../propTypes';
 import { FELTER } from './SvarMotebehovSkjema';
 import { tilLesbarDatoMedArstallOgUkedag } from '../../../../utils/datoUtils';
-import MotebehovKvitteringSideButtonBack from '../MotebehovKvitteringSideButtonBack';
 
 const tekster = {
     motebehovKvittering: {
@@ -68,25 +67,22 @@ const SvarMotebehovKvittering = (
     },
 ) => {
     return (
-        <Fragment>
-            <div className="panel motebehovKvittering">
-                <div className="illustrertTittel">
-                    <img
-                        className="illustrertTittel__img"
-                        src={`${process.env.REACT_APP_CONTEXT_ROOT}/img/svg/hake-groenn--lys.svg`}
-                        alt="hake"
-                    />
-                    <h2 className="illustrertTittel__tittel">
-                        {tekster.motebehovKvittering.tittel}
-                    </h2>
-                </div>
-
-                <p>{tekster.motebehovKvittering.tekst}</p>
-
-                <MotebehovKvitteringUtvidbar motebehov={motebehov} />
+        <div className="panel motebehovKvittering">
+            <div className="illustrertTittel">
+                <img
+                    className="illustrertTittel__img"
+                    src={`${process.env.REACT_APP_CONTEXT_ROOT}/img/svg/hake-groenn--lys.svg`}
+                    alt="hake"
+                />
+                <h2 className="illustrertTittel__tittel">
+                    {tekster.motebehovKvittering.tittel}
+                </h2>
             </div>
-            <MotebehovKvitteringSideButtonBack />
-        </Fragment>
+
+            <p>{tekster.motebehovKvittering.tekst}</p>
+
+            <MotebehovKvitteringUtvidbar motebehov={motebehov} />
+        </div>
     );
 };
 SvarMotebehovKvittering.propTypes = {
