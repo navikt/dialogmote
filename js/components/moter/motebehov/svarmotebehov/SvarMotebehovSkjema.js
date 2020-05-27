@@ -1,13 +1,12 @@
-import React, { Component, Fragment } from 'react';
+import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { Field, reduxForm, getFormValues } from 'redux-form';
-import { Link } from 'react-router';
-import { Hovedknapp } from 'nav-frontend-knapper';
 import Alertstripe from 'nav-frontend-alertstriper';
 import { motebehovSvarReducerPt } from '../../../../propTypes';
 import Tekstomraade from '../../../skjema/Tekstomraade';
 import Radioknapper from '../../../skjema/Radioknapper';
+import MotebehovSkjemaKnapper from '../MotebehovSkjemaKnapper';
 
 export const tekstfeltRegex = new RegExp('.*<[^ ][^>]+[^ ]>.*');
 
@@ -17,7 +16,6 @@ const SVAR_MOTEBEHOV_SKJEMANAVN = 'svarMotebehov';
 const MAX_LENGTH = 1000;
 /* eslint-disable max-len */
 export const TEKSTER_INFORMASJON = {
-    knappSend: 'Send svar',
     sensitiv: 'Ikke skriv sensitiv informasjon, for eksempel detaljerte opplysninger om helsen din.',
     svarNeiAlert: 'Selv om du svarer nei, kan det hende vi likevel kommer til at det er nødvendig med et møte. Svaret ditt brukes når vi vurderer behovet.',
 };
@@ -149,31 +147,6 @@ export const TekstOpplysning = () => {
     );
 };
 
-export const Knapper = ({ motebehovSvarReducer }) => {
-    const { sender } = motebehovSvarReducer;
-    return (
-        <Fragment>
-            <div className="knapperad">
-                <Hovedknapp
-                    type="submit"
-                    disabled={sender}
-                    spinner={sender}
-                >
-                    {TEKSTER_INFORMASJON.knappSend}
-                </Hovedknapp>
-            </div>
-            <div className="knapperad">
-                <Link className="lenke" to="/dialogmote">
-                Avbryt
-                </Link>
-            </div>
-        </Fragment>
-    );
-};
-Knapper.propTypes = {
-    motebehovSvarReducer: motebehovSvarReducerPt,
-};
-
 export const AlertstripeNei = () => {
     return (
         <Alertstripe className="alertstripeNei" type="info">
@@ -218,11 +191,10 @@ export class SvarMotebehovSkjemaKomponent extends Component {
                         felt={FELTER.forklaring}
                         harMotebehov={harMotebehov}
                     />
+                    <MotebehovSkjemaKnapper sender={motebehovSvarReducer.sender} />
                 </div>
 
                 <TekstOpplysning />
-
-                <Knapper motebehovSvarReducer={motebehovSvarReducer} />
             </form>
         );
     }
