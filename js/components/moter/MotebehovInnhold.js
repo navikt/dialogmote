@@ -5,8 +5,8 @@ import {
     motebehovSvarReducerPt,
 } from '../../propTypes';
 import Sidetopp from '../Sidetopp';
-import MotebehovSvar from './motebehov/MotebehovSvar';
-import MotebehovKvittering from './motebehov/MotebehovKvittering';
+import MotebehovSvar from './motebehov/svarmotebehov/MotebehovSvar';
+import MotebehovKvittering from './motebehov/svarmotebehov/MotebehovKvittering';
 
 const texts = {
     title: 'Behov for dialogmøte',

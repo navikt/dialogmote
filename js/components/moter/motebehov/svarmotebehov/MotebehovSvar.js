@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { motebehovSvarReducerPt } from '../../../propTypes';
+import { motebehovSvarReducerPt } from '../../../../propTypes';
 import SvarMotebehovSkjema from './SvarMotebehovSkjema';
 import MotebehovInfoForSvar from './MotebehovInfoForSvar';
 import FolketrygdlovenTekst from './FolketrygdlovenTekst';

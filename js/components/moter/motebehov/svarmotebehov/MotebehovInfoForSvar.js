@@ -1,5 +1,5 @@
 import React from 'react';
-import { erPaaHeroku } from '../../../utils/urlUtils';
+import { erPaaHeroku } from '../../../../utils/urlUtils';
 
 /* eslint-disable max-len */
 export const TEKSTER = {

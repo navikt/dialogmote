@@ -1,9 +1,9 @@
 import React, { Fragment } from 'react';
 import { Link } from 'react-router';
 import { Utvidbar } from '@navikt/digisyfo-npm';
-import { motebehovPt } from '../../../propTypes';
+import { motebehovPt } from '../../../../propTypes';
 import { FELTER } from './SvarMotebehovSkjema';
-import { tilLesbarDatoMedArstallOgUkedag } from '../../../utils/datoUtils';
+import { tilLesbarDatoMedArstallOgUkedag } from '../../../../utils/datoUtils';
 
 const tekster = {
     motebehovKvittering: {

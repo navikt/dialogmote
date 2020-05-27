@@ -5,9 +5,9 @@ import { Field, reduxForm, getFormValues } from 'redux-form';
 import { Link } from 'react-router';
 import { Hovedknapp } from 'nav-frontend-knapper';
 import Alertstripe from 'nav-frontend-alertstriper';
-import { motebehovSvarReducerPt } from '../../../propTypes';
-import Tekstomraade from '../../skjema/Tekstomraade';
-import Radioknapper from '../../skjema/Radioknapper';
+import { motebehovSvarReducerPt } from '../../../../propTypes';
+import Tekstomraade from '../../../skjema/Tekstomraade';
+import Radioknapper from '../../../skjema/Radioknapper';
 
 export const tekstfeltRegex = new RegExp('.*<[^ ][^>]+[^ ]>.*');
 
