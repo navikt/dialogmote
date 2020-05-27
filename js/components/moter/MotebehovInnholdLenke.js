@@ -27,7 +27,7 @@ const MotebehovInnholdLenke = (
             <h2 className="panel__tittel">{TEKSTER.tittel}</h2>
             <p>{TEKSTER.undertekst}</p>
             <Link
-                className="knapp knapp--hoved"
+                className="knapp"
                 to="/dialogmote/behov"
             >
                 {knappTekstNokkel}
