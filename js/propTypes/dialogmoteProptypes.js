@@ -11,11 +11,17 @@ export const motebehovPt = PropTypes.shape({
     }),
 });
 
+export const motebehovStatusPt = PropTypes.shape({
+    visMotebehov: PropTypes.bool,
+    skjemaType: PropTypes.string,
+    motebehovSvar: motebehovPt,
+});
+
 export const motebehovReducerPt = PropTypes.shape({
     henter: PropTypes.bool,
     hentet: PropTypes.bool,
     hentingFeilet: PropTypes.bool,
-    data: PropTypes.arrayOf(motebehovPt),
+    data: motebehovStatusPt,
 });
 
 export const motebehovSvarReducerPt = PropTypes.shape({
