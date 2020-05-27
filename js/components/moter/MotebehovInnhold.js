@@ -4,12 +4,16 @@ import {
     motebehovReducerPt,
     motebehovSvarReducerPt,
 } from '../../propTypes';
+import { skalViseMotebehovKvittering } from '../../utils/motebehovUtils';
 import Sidetopp from '../Sidetopp';
 import MotebehovSvar from './motebehov/svarmotebehov/MotebehovSvar';
 import MotebehovKvittering from './motebehov/svarmotebehov/MotebehovKvittering';
 
 const texts = {
-    title: 'Behov for dialogmøte',
+    title: {
+        default: 'Behov for dialogmøte',
+        receipt: 'Kvittering',
+    },
 };
 
 const MotebehovInnhold = (
@@ -21,6 +25,10 @@ const MotebehovInnhold = (
 ) => {
     const motebehov = motebehovReducer.data && motebehovReducer.data.motebehov;
 
+    const isKvittering = skalViseMotebehovKvittering(motebehovReducer);
+    const title = isKvittering
+        ? texts.title.receipt
+        : texts.title.default;
     const innhold = motebehov
         ? (
             <MotebehovKvittering
@@ -35,7 +43,7 @@ const MotebehovInnhold = (
         );
     return (
         <div className="motebehovSideInnhold">
-            <Sidetopp tittel={texts.title} />
+            <Sidetopp tittel={title} />
 
             { innhold }
         </div>
