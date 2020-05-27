@@ -62,7 +62,7 @@ MotebehovKvitteringUtvidbar.propTypes = {
     motebehov: motebehovPt,
 };
 
-const MotebehovKvittering = (
+const SvarMotebehovKvittering = (
     {
         motebehov,
     },
@@ -89,8 +89,8 @@ const MotebehovKvittering = (
         </Fragment>
     );
 };
-MotebehovKvittering.propTypes = {
+SvarMotebehovKvittering.propTypes = {
     motebehov: motebehovPt,
 };
 
-export default MotebehovKvittering;
+export default SvarMotebehovKvittering;
