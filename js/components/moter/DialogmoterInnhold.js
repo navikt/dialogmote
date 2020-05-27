@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import Sidetopp from '../Sidetopp';
 import DialogmoterInnholdLenke from './DialogmoterInnholdLenke';
+import DialogmoteVideo from './DialogmoteVideo';
 import MotebehovInnholdLenke from './MotebehovInnholdLenke';
 
 const texts = {
@@ -28,6 +29,8 @@ const DialogmoterInnhold = (
             }
 
             { harMote && <DialogmoterInnholdLenke /> }
+
+            <DialogmoteVideo />
         </div>
     );
 };
