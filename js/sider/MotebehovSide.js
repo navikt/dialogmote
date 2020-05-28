@@ -8,7 +8,7 @@ import {
     motebehovSvarReducerPt,
 } from '../propTypes';
 import Side from './Side';
-import MotebehovInnhold from '../components/moter/MotebehovInnhold';
+import MotebehovInnhold from '../components/moter/motebehov/MotebehovInnhold';
 import AppSpinner from '../components/AppSpinner';
 import Feilmelding from '../components/Feilmelding';
 import {

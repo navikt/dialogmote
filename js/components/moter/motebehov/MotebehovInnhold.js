@@ -3,11 +3,11 @@ import PropTypes from 'prop-types';
 import {
     motebehovReducerPt,
     motebehovSvarReducerPt,
-} from '../../propTypes';
-import { skalViseMotebehovKvittering } from '../../utils/motebehovUtils';
-import Sidetopp from '../Sidetopp';
-import MotebehovSvar from './motebehov/svarmotebehov/MotebehovSvar';
-import SvarMotebehovKvitteringSide from './motebehov/svarmotebehov/SvarMotebehovKvitteringSide';
+} from '../../../propTypes';
+import { skalViseMotebehovKvittering } from '../../../utils/motebehovUtils';
+import Sidetopp from '../../Sidetopp';
+import MotebehovSvar from './svarmotebehov/MotebehovSvar';
+import SvarMotebehovKvitteringSide from './svarmotebehov/SvarMotebehovKvitteringSide';
 
 const texts = {
     title: {
