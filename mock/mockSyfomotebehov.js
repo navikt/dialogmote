@@ -7,6 +7,17 @@ const motebehovSvar = {
     },
 };
 
+const motebehovStatusMeldBehov = {
+    visMotebehov: true,
+    skjemaType: 'MELD_BEHOV',
+    motebehov: null,
+};
+const motebehovStatusMeldBehovSvar = {
+    visMotebehov: true,
+    skjemaType: 'MELD_BEHOV',
+    motebehov: motebehovSvar,
+};
+
 const motebehovStatusSvarUnavailable = {
     visMotebehov: true,
     skjemaType: 'SVAR_BEHOV',
@@ -31,6 +42,12 @@ const motebehovStatusEnum = {
 
 function getMotebehovStatus(type) {
     switch (type) {
+        case motebehovStatusEnum.MELD_BEHOV: {
+            return motebehovStatusMeldBehov;
+        }
+        case motebehovStatusEnum.MELD_BEHOV_SVAR: {
+            return motebehovStatusMeldBehovSvar;
+        }
         case motebehovStatusEnum.SVAR_BEHOV: {
             return motebehovStatusSvarBehov;
         }
@@ -46,7 +63,7 @@ function getMotebehovStatus(type) {
 function mockPilotEndepunkterForLokalmiljo(server) {
     server.get('/syfomotebehov/api/v2/arbeidstaker/motebehov', (req, res) => {
         res.setHeader('Content-Type', 'application/json');
-        res.send(JSON.stringify(getMotebehovStatus(motebehovStatusEnum.SVAR_BEHOV)));
+        res.send(JSON.stringify(getMotebehovStatus(motebehovStatusEnum.MELD_BEHOV)));
     });
 
     server.post('/syfomotebehov/api/v2/arbeidstaker/motebehov', (req, res) => {

@@ -3,9 +3,10 @@ import PropTypes from 'prop-types';
 import { Utvidbar } from '@navikt/digisyfo-npm';
 import { motebehovReducerPt } from '../../../propTypes';
 import { FELTER as SVAR_MOTEBEHOV_FELTER } from './svarmotebehov/SvarMotebehovSkjema';
+import { FELTER as MELDMOTEBEHOV_FELTER } from './meldbehov/MeldMotebehovSkjema';
 import { tilLesbarDatoMedArstallOgUkedag } from '../../../utils/datoUtils';
 
-const texts = {
+const tekster = {
     motebehovKvitteringUtvidbar: {
         tittel: 'Se svaret ditt',
     },
@@ -27,11 +28,21 @@ const getHarBehovKvittering = (harBehovSvar, harBehovSporsmal) => {
 };
 
 const KvitteringForklaring = (forklaring) => {
+    const isLegeRequestPresent = forklaring.includes(MELDMOTEBEHOV_FELTER.lege.tekst);
     const label = (
         <h5 className="skjemaelement__sporsmal">
             {SVAR_MOTEBEHOV_FELTER.forklaring.spoersmaal}
         </h5>
     );
+    if (isLegeRequestPresent) {
+        return (
+            <React.Fragment>
+                <p>{MELDMOTEBEHOV_FELTER.lege.tekst}</p>
+                {label}
+                <p>{forklaring.replace(MELDMOTEBEHOV_FELTER.lege.tekst, '').trim()}</p>
+            </React.Fragment>
+        );
+    }
     return (
         <React.Fragment>
             {label}
@@ -42,24 +53,23 @@ const KvitteringForklaring = (forklaring) => {
 
 const MotebehovKvitteringUtvidbar = (
     {
-        motebehov,
+        motebehovReducer,
         harBehovSporsmal,
         harBehovSvar,
     },
 ) => {
-    const motebehovet = motebehov;
-    const { motebehovSvar } = motebehovet;
+    const { motebehov } = motebehovReducer.data;
+    const { motebehovSvar } = motebehov;
     return (
         <Utvidbar
             className="motebehovKvitteringUtvidbar"
-            tittel={texts.motebehovKvitteringUtvidbar.tittel}>
+            tittel={tekster.motebehovKvitteringUtvidbar.tittel}>
             <div>
-                { motebehovet.opprettetDato
-                    && <h4>{tilLesbarDatoMedArstallOgUkedag(motebehovet.opprettetDato)}</h4>
+                { motebehov.opprettetDato
+                    && <h4>{tilLesbarDatoMedArstallOgUkedag(motebehov.opprettetDato)}</h4>
                 }
                 { motebehovSvar.harMotebehov !== undefined
-                    && getHarBehovKvittering(harBehovSvar, harBehovSporsmal)
-                }
+                    && getHarBehovKvittering(harBehovSvar, harBehovSporsmal) }
                 { motebehovSvar.forklaring
                     && KvitteringForklaring(motebehovSvar.forklaring)
                 }
@@ -68,7 +78,7 @@ const MotebehovKvitteringUtvidbar = (
     );
 };
 MotebehovKvitteringUtvidbar.propTypes = {
-    motebehov: motebehovReducerPt,
+    motebehovReducer: motebehovReducerPt,
     harBehovSporsmal: PropTypes.string,
     harBehovSvar: PropTypes.string,
 };

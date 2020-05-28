@@ -1,24 +1,24 @@
 import React from 'react';
 import { motebehovReducerPt } from '../../../../propTypes';
-import SvarMotebehovKvittering from './SvarMotebehovKvittering';
+import MeldMotebehovKvittering from './MeldMotebehovKvittering';
 import MotebehovKvitteringSideButtonBack from '../MotebehovKvitteringSideButtonBack';
 
-const SvarMotebehovKvitteringSide = (
+const MeldMotebehovKvitteringSide = (
     {
         motebehovReducer,
     },
 ) => {
     return (
         <div>
-            <SvarMotebehovKvittering
+            <MeldMotebehovKvittering
                 motebehovReducer={motebehovReducer}
             />
             <MotebehovKvitteringSideButtonBack />
         </div>
     );
 };
-SvarMotebehovKvitteringSide.propTypes = {
+MeldMotebehovKvitteringSide.propTypes = {
     motebehovReducer: motebehovReducerPt,
 };
 
-export default SvarMotebehovKvitteringSide;
+export default MeldMotebehovKvitteringSide;

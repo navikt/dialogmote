@@ -1,3 +1,5 @@
+import { FELTER as MELDMOTEBEHOV_FELTER } from '../components/moter/motebehov/meldbehov/MeldMotebehovSkjema';
+
 const isDefined = (value) => {
     return value !== undefined;
 };
@@ -21,8 +23,13 @@ export const input2RSLagreMotebehov = (motebehov) => {
             rsMotebehovSvar.harMotebehov = motebehov.harMotebehov;
         }
     }
-    if (isDefined(motebehov.forklaring)) {
-        rsMotebehovSvar.forklaring = motebehov.forklaring;
+    if (isDefined(motebehov.forklaring) && isDefined(motebehov.lege)) {
+        const separator = ' ';
+        rsMotebehovSvar.forklaring = `${MELDMOTEBEHOV_FELTER.lege.tekst}${separator}${motebehov.forklaring.trim()}`;
+    } else if (isDefined(motebehov.forklaring)) {
+        rsMotebehovSvar.forklaring = motebehov.forklaring.trim();
+    } else if (isDefined(motebehov.lege)) {
+        rsMotebehovSvar.forklaring = MELDMOTEBEHOV_FELTER.lege.tekst;
     }
     return rsMotebehovSvar;
 };
@@ -34,7 +41,18 @@ export const erMotebehovTilgjengelig = (motebehovReducer) => {
     return motebehovReducer
         && motebehovReducer.data
         && motebehovReducer.data.visMotebehov
-        && motebehovReducer.data.skjemaType === MOTEBEHOV_SKJEMATYPE.SVAR_BEHOV;
+        && (
+            motebehovReducer.data.skjemaType === MOTEBEHOV_SKJEMATYPE.MELD_BEHOV
+            || motebehovReducer.data.skjemaType === MOTEBEHOV_SKJEMATYPE.SVAR_BEHOV
+        );
+};
+
+export const isMeldBehov = (motebehovReducer) => {
+    return motebehovReducer.data && motebehovReducer.data.skjemaType === MOTEBEHOV_SKJEMATYPE.MELD_BEHOV;
+};
+
+export const isSvarBehov = (motebehovReducer) => {
+    return motebehovReducer.data && motebehovReducer.data.skjemaType === MOTEBEHOV_SKJEMATYPE.SVAR_BEHOV;
 };
 
 export const skalViseMotebehovKvittering = (motebehovReducer) => {

@@ -16,10 +16,7 @@ import { hentMote } from '../data/moter/mote_actions';
 import { hentMotebehov } from '../data/motebehov/motebehov_actions';
 import { forsoktHentetMote } from '../utils/reducerUtils';
 import { getMote } from '../utils/moteUtils';
-import {
-    skalViseMotebehovKvittering,
-    erMotebehovTilgjengelig,
-} from '../utils/motebehovUtils';
+import { erMotebehovTilgjengelig } from '../utils/motebehovUtils';
 
 const tekster = {
     brodsmuler: {
@@ -92,7 +89,6 @@ Container.propTypes = {
     motebehovReducer: motebehovReducerPt,
     harMote: PropTypes.bool,
     harForsoektHentetAlt: PropTypes.bool,
-    skalViseKvittering: PropTypes.bool,
     skalViseMotebehov: PropTypes.bool,
     actions: PropTypes.shape({
         hentMote: PropTypes.func,
@@ -118,7 +114,6 @@ export function mapStateToProps(state) {
     const harMote = !!getMote(state);
 
     const skalViseMotebehov = erMotebehovTilgjengelig(motebehovReducer);
-    const skalViseKvittering = skalViseMotebehovKvittering(motebehovReducer);
 
     const harForsoektHentetAlt = forsoktHentetMote(moteReducer)
         && (!skalViseMotebehov || motebehovReducer.hentingForsokt);
@@ -130,7 +125,6 @@ export function mapStateToProps(state) {
         motebehovReducer,
         harMote,
         harForsoektHentetAlt,
-        skalViseKvittering,
         skalViseMotebehov,
         brodsmuler: [{
             tittel: tekster.brodsmuler.dittSykefravaer,

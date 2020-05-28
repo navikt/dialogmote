@@ -1,5 +1,5 @@
 import React from 'react';
-import { motebehovPt } from '../../../../propTypes';
+import { motebehovReducerPt } from '../../../../propTypes';
 import { FELTER } from './SvarMotebehovSkjema';
 import MotebehovKvitteringUtvidbar from '../MotebehovKvitteringUtvidbar';
 
@@ -8,35 +8,25 @@ const tekster = {
         tittel: 'Svaret ditt er sendt',
         tekst: 'Vi vil bruke svaret ditt når vi vurderer om det er nødvendig med dialogmøte. Hører du fra oss, mener vi det er behov for å møtes.',
     },
-    motebehovKvitteringUtvidbar: {
-        tittel: 'Se svaret ditt',
-    },
 };
 
 const SvarMotebehovKvittering = (
     {
-        motebehov,
+        motebehovReducer,
     },
 ) => {
     return (
         <div className="panel motebehovKvittering">
-            <div className="illustrertTittel">
-                <img
-                    className="illustrertTittel__img"
-                    src={`${process.env.REACT_APP_CONTEXT_ROOT}/img/svg/hake-groenn--lys.svg`}
-                    alt="hake"
-                />
-                <h2 className="illustrertTittel__tittel">
-                    {tekster.motebehovKvittering.tittel}
-                </h2>
-            </div>
+            <h2 className="motebehovKvittering_tittel">
+                {tekster.motebehovKvittering.tittel}
+            </h2>
 
             <p>{tekster.motebehovKvittering.tekst}</p>
 
             <MotebehovKvitteringUtvidbar
-                motebehov={motebehov}
+                motebehovReducer={motebehovReducer}
                 harBehovSporsmal={FELTER.harMotebehov.spoersmaal}
-                harBehovSvar={`${motebehov.motebehovSvar.harMotebehov
+                harBehovSvar={`${motebehovReducer.data.motebehov.motebehovSvar.harMotebehov
                     ? FELTER.harMotebehov.svar[0].tekst
                     : FELTER.harMotebehov.svar[1].tekst
                 }`}
@@ -45,7 +35,7 @@ const SvarMotebehovKvittering = (
     );
 };
 SvarMotebehovKvittering.propTypes = {
-    motebehov: motebehovPt,
+    motebehovReducer: motebehovReducerPt,
 };
 
 export default SvarMotebehovKvittering;
