@@ -4,17 +4,9 @@ import {
     motebehovReducerPt,
     motebehovSvarReducerPt,
 } from '../../../propTypes';
-import { skalViseMotebehovKvittering } from '../../../utils/motebehovUtils';
-import Sidetopp from '../../Sidetopp';
-import MotebehovSvar from './svarmotebehov/MotebehovSvar';
-import SvarMotebehovKvitteringSide from './svarmotebehov/SvarMotebehovKvitteringSide';
-
-const texts = {
-    title: {
-        default: 'Behov for dialogmøte',
-        receipt: 'Kvittering',
-    },
-};
+import { MOTEBEHOV_SKJEMATYPE } from '../../../utils/motebehovUtils';
+import MeldMotebehovInnhold from './meldbehov/MeldMotebehovInnhold';
+import SvarMotebehovInnhold from './svarmotebehov/SvarMotebehovInnhold';
 
 const MotebehovInnhold = (
     {
@@ -23,29 +15,28 @@ const MotebehovInnhold = (
         motebehovSvarReducer,
     },
 ) => {
-    const motebehov = motebehovReducer.data && motebehovReducer.data.motebehov;
-
-    const isKvittering = skalViseMotebehovKvittering(motebehovReducer);
-    const title = isKvittering
-        ? texts.title.receipt
-        : texts.title.default;
-    const innhold = motebehov
-        ? (
-            <SvarMotebehovKvitteringSide
-                motebehov={motebehov}
-            />
-        )
-        : (
-            <MotebehovSvar
-                motebehovSvarReducer={motebehovSvarReducer}
+    const { skjemaType } = motebehovReducer.data;
+    let content = React.Fragment;
+    if (skjemaType === MOTEBEHOV_SKJEMATYPE.MELD_BEHOV) {
+        content = (
+            <MeldMotebehovInnhold
                 svarMotebehov={actions.svarMotebehov}
+                motebehovReducer={motebehovReducer}
+                motebehovSvarReducer={motebehovSvarReducer}
             />
         );
+    } else if (skjemaType === MOTEBEHOV_SKJEMATYPE.SVAR_BEHOV) {
+        content = (
+            <SvarMotebehovInnhold
+                svarMotebehov={actions.svarMotebehov}
+                motebehovReducer={motebehovReducer}
+                motebehovSvarReducer={motebehovSvarReducer}
+            />
+        );
+    }
     return (
         <div className="motebehovSideInnhold">
-            <Sidetopp tittel={title} />
-
-            { innhold }
+            { content }
         </div>
     );
 };

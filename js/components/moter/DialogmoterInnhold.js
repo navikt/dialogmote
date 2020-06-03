@@ -8,6 +8,7 @@ import { MOTEBEHOV_SKJEMATYPE, skalViseMotebehovKvittering } from '../../utils/m
 import SvarMotebehovKvittering from './motebehov/svarmotebehov/SvarMotebehovKvittering';
 import DialogmoterInnholdVeileder from './DialogmoterInnholdVeileder';
 import { motebehovReducerPt } from '../../propTypes';
+import MeldMotebehovKvittering from './motebehov/meldbehov/MeldMotebehovKvittering';
 
 const texts = {
     title: 'Dialogmøter',
@@ -16,16 +17,21 @@ const texts = {
 const MotebehovInnholdKvittering = (
     {
         motebehovReducer,
-        skalViseKvittering,
     },
 ) => {
     const isKvittering = skalViseMotebehovKvittering(motebehovReducer);
     const { skjemaType } = motebehovReducer.data;
     let content = React.Fragment;
     if (isKvittering) {
-        if (skjemaType === MOTEBEHOV_SKJEMATYPE.SVAR_BEHOV) {
+        if (skjemaType === MOTEBEHOV_SKJEMATYPE.MELD_BEHOV) {
             content = (
-                <SvarMotebehovKvittering motebehov={motebehovReducer.data.motebehov} />
+                <MeldMotebehovKvittering
+                    motebehovReducer={motebehovReducer}
+                />
+            );
+        } else if (skjemaType === MOTEBEHOV_SKJEMATYPE.SVAR_BEHOV) {
+            content = (
+                <SvarMotebehovKvittering motebehovReducer={motebehovReducer} />
             );
         }
     } else {
@@ -33,7 +39,7 @@ const MotebehovInnholdKvittering = (
             <React.Fragment>
                 <DialogmoterInnholdVeileder />
                 <MotebehovInnholdLenke
-                    skalViseKvittering={skalViseKvittering}
+                    motebehov={motebehovReducer}
                 />
             </React.Fragment>
         );
@@ -49,7 +55,6 @@ const DialogmoterInnhold = (
     {
         harMote,
         motebehovReducer,
-        skalViseKvittering,
         skalViseMotebehov,
     },
 ) => {
@@ -61,7 +66,6 @@ const DialogmoterInnhold = (
         && (
             <MotebehovInnholdKvittering
                 motebehovReducer={motebehovReducer}
-                skalViseKvittering={skalViseKvittering}
             />
         )
             }
@@ -75,7 +79,6 @@ const DialogmoterInnhold = (
 DialogmoterInnhold.propTypes = {
     harMote: PropTypes.bool,
     motebehovReducer: motebehovReducerPt,
-    skalViseKvittering: PropTypes.bool,
     skalViseMotebehov: PropTypes.bool,
 };
 

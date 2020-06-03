@@ -44,11 +44,22 @@ describe('motebehovUtils', () => {
             expect(erMotebehovTilgjengelig(motebehovReducer)).to.equal(false);
         });
 
+        it('skal returnere false, om visMotebehov er true og skjemaType=MELD_BEHOV', () => {
+            motebehovReducer = {
+                data: {
+                    visMotebehov: true,
+                    skjemaType: MOTEBEHOV_SKJEMATYPE.MELD_BEHOV,
+                    motebehov: null,
+                },
+            };
+            expect(erMotebehovTilgjengelig(motebehovReducer)).to.equal(true);
+        });
+
         it('skal returnere false, om visMotebehov er true og skjemaType!=SVAR_BEHOV', () => {
             motebehovReducer = {
                 data: {
                     visMotebehov: true,
-                    skjemaType: 'MELD_BEHOV',
+                    skjemaType: null,
                     motebehov: null,
                 },
             };
@@ -102,17 +113,31 @@ describe('motebehovUtils', () => {
             expect(resultat).to.equal(forventet);
         });
 
-        it('skal returnere false, om visMotevehov=true, skjemaType!=SVAR_BEHOV med motebehovSvar', () => {
+        it('skal returnere false, om visMotevehov=true, skjemaType=MELD_BEHOV med motebehovSvar', () => {
             const motebehovReducer = {
                 data: {
                     visMotebehov: true,
-                    skjemaType: 'MELD_BEHOV',
+                    skjemaType: MOTEBEHOV_SKJEMATYPE.MELD_BEHOV,
                     motebehov: {
                         opprettetDato: new Date(),
                         aktorId: 'sykmeldtAktorId',
                         opprettetAv: 'veilederAktorId',
                         motebehovSvar,
                     },
+                },
+            };
+
+            const resultat = skalViseMotebehovKvittering(motebehovReducer);
+            const forventet = true;
+            expect(resultat).to.equal(forventet);
+        });
+
+        it('skal returnere false, om visMotevehov=true, skjemaType=MELD_BEHOV uten motebehovSvar', () => {
+            const motebehovReducer = {
+                data: {
+                    visMotebehov: true,
+                    skjemaType: MOTEBEHOV_SKJEMATYPE.MELD_BEHOV,
+                    motebehov: null,
                 },
             };
 
