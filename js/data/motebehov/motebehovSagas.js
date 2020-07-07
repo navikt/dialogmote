@@ -6,9 +6,7 @@ import {
     all,
     select,
 } from 'redux-saga/effects';
-import {
-    log,
-} from '@navikt/digisyfo-npm';
+import { log } from '../../logging/log';
 import {
     API_NAVN,
     hentSyfoApiUrl,
@@ -22,7 +20,7 @@ import { input2RSLagreMotebehov } from '../../utils/motebehovUtils';
 export function* hentMotebehov() {
     yield put(actions.hentMotebehovHenter());
     try {
-        const url = `${hentSyfoApiUrl(API_NAVN.SYFOMOTEBEHOV)}/motebehov?fnr=${''}&virksomhetsnummer=${''}`;
+        const url = `${hentSyfoApiUrl(API_NAVN.SYFOMOTEBEHOV)}/v2/arbeidstaker/motebehov`;
         const data = yield call(get, url);
         yield put(actions.hentMotebehovHentet(data));
     } catch (e) {
@@ -43,16 +41,15 @@ export function* hentMotebehovHvisIkkeHentet() {
 }
 
 export function* svarMotebehov(action) {
-    const { virksomhetsnummer } = action;
-    const body = input2RSLagreMotebehov(action.svar, action.virksomhetsnummer);
-    yield put(actions.svarMotebehovSender(virksomhetsnummer));
+    const body = input2RSLagreMotebehov(action.svar);
+    yield put(actions.svarMotebehovSender());
     try {
-        const url = `${hentSyfoApiUrl(API_NAVN.SYFOMOTEBEHOV)}/motebehov?fnr=${''}`;
+        const url = `${hentSyfoApiUrl(API_NAVN.SYFOMOTEBEHOV)}/v2/arbeidstaker/motebehov`;
         yield call(post, url, body);
-        yield put(actions.svarMotebehovSendt(body, virksomhetsnummer));
+        yield put(actions.svarMotebehovSendt(body));
     } catch (e) {
         log(e);
-        yield put(actions.svarMotebehovFeilet(virksomhetsnummer));
+        yield put(actions.svarMotebehovFeilet());
     }
 }
 

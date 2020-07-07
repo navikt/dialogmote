@@ -4,10 +4,7 @@ import { FieldArray, reduxForm } from 'redux-form';
 import styled from 'styled-components';
 import Alertstripe from 'nav-frontend-alertstriper';
 import { Hovedknapp } from 'nav-frontend-knapper';
-import {
-    getLedetekst,
-    Utvidbar,
-} from '@navikt/digisyfo-npm';
+import { Utvidbar } from '@navikt/digisyfo-npm';
 import Ikon from 'nav-frontend-ikoner-assets';
 import { Link } from 'react-router';
 import {
@@ -25,9 +22,11 @@ import Motested from './Motested';
 import Alternativer from './Alternativer';
 import BesvarteTidspunkter from './BesvarteTidspunkter';
 import DeclinedMotebehov from './DeclinedMotebehov';
-import { skalViseMotebehovMedOppfolgingsforlopListe } from '../../../utils/motebehovUtils';
+import { erMotebehovTilgjengelig } from '../../../utils/motebehovUtils';
 
 const texts = {
+    error: 'Beklager, det oppstod en feil!',
+    submitButton: 'Send svar',
     personvern: `
         Ifølge folketrygdloven kan NAV innkalle deg og arbeidsgiveren din til dialogmøte for å drøfte hvordan du kan komme tilbake til jobb. 
         Her kan du svare på hvilke tidspunkter som passer for deg.
@@ -79,7 +78,6 @@ export const Skjema = (
         touch,
         autofill,
         deltakertype = BRUKER,
-        oppfolgingsforlopsPerioderReducerListe,
     },
 ) => {
     const deltaker = mote.deltakere.filter((d) => {
@@ -92,7 +90,7 @@ export const Skjema = (
     const tidligereAlternativer = getTidligereAlternativer(mote, deltakertype);
 
     const previous = () => {
-        if (skalViseMotebehovMedOppfolgingsforlopListe(oppfolgingsforlopsPerioderReducerListe, motebehovReducer, mote)) {
+        if (erMotebehovTilgjengelig(motebehovReducer)) {
             const oldPath = window.location.pathname.split('/');
             const newPath = oldPath.slice(0, oldPath.length - 1)
                 .join('/');
@@ -102,15 +100,17 @@ export const Skjema = (
         return '/sykefravaer';
     };
 
-    const displayDeclinedMotebehov = motebehovReducer && motebehovReducer.data.find((behov) => {
-        return behov.motebehovSvar.harMotebehov === false;
-    });
+    const displayDeclinedMotebehov = motebehovReducer.data
+        && motebehovReducer.data.motebehov
+        && motebehovReducer.data.motebehov.motebehovSvar.harMotebehov === false;
 
     return (
         <form onSubmit={handleSubmit(onSubmit)}>
             <PrivacyInfo>
                 <p>{texts.personvern}</p>
-                <p><a href={texts.personvernHref}>{texts.lenke}</a></p>
+                <p className="svarskjema__intro">
+                    <a target="_blank" rel="noopener noreferrer" href={texts.personvernHref}>{texts.lenke}</a>
+                </p>
             </PrivacyInfo>
             <div className="tidOgSted">
                 {displayDeclinedMotebehov && <DeclinedMotebehov />}
@@ -150,8 +150,8 @@ export const Skjema = (
             }
             <div aria-live="polite" role="alert">
                 {sendingFeilet && (
-                    <Alertstripe type="advarsel">
-                        <p className="sist">{getLedetekst('mote.skjema.innsending.feilet')}</p>
+                    <Alertstripe type="feil">
+                        <p className="sist">{texts.error}</p>
                     </Alertstripe>
                 )
                 }
@@ -162,7 +162,7 @@ export const Skjema = (
                     htmlType="submit"
                     disabled={sender}
                     spinner={sender}>
-                    {getLedetekst('mote.skjema.send-svar-knapp')}
+                    {texts.submitButton}
                 </Hovedknapp>
             </div>
             <div className="knapperad">
@@ -176,7 +176,6 @@ Skjema.propTypes = {
     handleSubmit: PropTypes.func,
     mote: motePt,
     motebehovReducer: motebehovReducerPt,
-    oppfolgingsforlopsPerioderReducerListe: PropTypes.arrayOf(PropTypes.shape()),
     sendSvar: PropTypes.func,
     deltakertype: moteplanleggerDeltakertypePt,
     sender: PropTypes.bool,

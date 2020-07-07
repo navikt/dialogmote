@@ -1,9 +1,9 @@
 import React from 'react';
+import { Utvidbar } from '@navikt/digisyfo-npm';
 import {
-    getHtmlLedetekst,
-    Utvidbar,
-} from '@navikt/digisyfo-npm';
-import { motePt } from '../../../propTypes';
+    moteplanleggerDeltakerPt,
+    motePt,
+} from '../../../propTypes';
 import { BRUKER } from '../../../enums/moteplanleggerDeltakerTyper';
 import { finnDeltakerByType } from '../../../utils/moteUtils';
 import BesvarteTidspunkter from './BesvarteTidspunkter';
@@ -14,13 +14,40 @@ const tekster = {
     dineSvar: 'Se dine svar',
 };
 
-export const getVeienVidereTekst = (deltaker) => {
-    const nokkel = 'mote.kvittering.hva_skjer_videre.innhold.v2.arbeidstaker';
-    return deltaker.svar.filter((svar) => {
+const TextConfirmation = () => {
+    return (
+        <React.Fragment>
+            Svaret ditt er sendt
+            <br />
+            – du hører fra oss
+        </React.Fragment>
+    );
+};
+
+/* eslint-disable max-len */
+export const VeienVidereTekst = ({ deltaker }) => {
+    const harDeltakerIkkeValgtSvar = deltaker.svar.filter((svar) => {
         return svar.valgt;
-    }).length === 0
-        ? getHtmlLedetekst('mote.kvittering.hva_skjer_videre.innhold.ingenalternativpasser.v3.arbeidstaker')
-        : getHtmlLedetekst(nokkel);
+    }).length === 0;
+    if (harDeltakerIkkeValgtSvar) {
+        return (
+            <React.Fragment>
+                <p>Du har krysset av på at ingen av tidspunktene passer.</p>
+                <ul>
+                    <li>NAV kan likevel innkalle deg til et av tidspunktene hvis fraværsgrunnen din ikke blir vurdert som gyldig.</li>
+                    <li>Du kan også få nye tidspunkter å velge mellom hvis det er aktuelt.</li>
+                </ul>
+                <p>Har du behov for kontakt med NAV, kan du ringe oss på 55 55 33 33</p>
+            </React.Fragment>
+        );
+    }
+    return (
+        <p>Når det endelige tidspunktet er avklart, vil du få en innkalling i posten med mer informasjon om møtet. Har du behov for kontakt med NAV, kan du ringe oss på tlf: 55 55 33 33</p>
+    );
+};
+/* eslint-enable max-len */
+VeienVidereTekst.propTypes = {
+    deltaker: moteplanleggerDeltakerPt,
 };
 
 const Kvittering = ({ mote }) => {
@@ -38,13 +65,14 @@ const Kvittering = ({ mote }) => {
                         alt=""
                     />
                     <h2 className="illustrertTittel__tittel">
-                        <div dangerouslySetInnerHTML={getHtmlLedetekst('mote.kvittering.svaret-ditt-er-sendt.v2')} />
+                        <div>
+                            <TextConfirmation />
+                        </div>
                     </h2>
                 </div>
-                <div
-                    dangerouslySetInnerHTML={getVeienVidereTekst(deltaker)}
-                    className="redaksjonelt blokk"
-                />
+                <div className="redaksjonelt blokk">
+                    <VeienVidereTekst deltaker={deltaker} />
+                </div>
                 <Utvidbar tittel={tekster.dineSvar}>
                     <div>
                         <div className="blokk">

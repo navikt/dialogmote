@@ -4,32 +4,33 @@ import {
     SVAR_MOTEBEHOV_FEILET,
 } from '../motebehov/motebehov_actions';
 
-const initiellState = {};
+const initiellState = {
+    sender: false,
+    sendt: false,
+    sendingFeilet: false,
+};
 
-export default function motebehovSvar(state = initiellState, action = {}) {
-    const virksomhet = {};
+export default function momtebehovSvar(state = initiellState, action = {}) {
     switch (action.type) {
         case SVAR_MOTEBEHOV_SENDER:
-            virksomhet[action.virksomhetsnummer] = {
+            return {
+                ...state,
                 sender: true,
                 sendt: false,
                 sendingFeilet: false,
             };
-            return { ...state, ...virksomhet };
         case SVAR_MOTEBEHOV_SENDT:
-            virksomhet[action.virksomhetsnummer] = {
+            return {
+                ...state,
                 sender: false,
                 sendt: true,
-                sendingFeilet: false,
             };
-            return { ...state, ...virksomhet };
         case SVAR_MOTEBEHOV_FEILET:
-            virksomhet[action.virksomhetsnummer] = {
+            return {
+                ...state,
                 sender: false,
-                sendt: false,
                 sendingFeilet: true,
             };
-            return { ...state, ...virksomhet };
         default:
             return state;
     }

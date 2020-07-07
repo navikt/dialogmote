@@ -11,10 +11,7 @@ import {
 import { Provider } from 'react-redux';
 import createSagaMiddleware from 'redux-saga';
 import {
-    forlengInnloggetSesjon,
-    hentLedetekster,
     setPerformOnHttpCalls,
-    sjekkInnloggingssesjon,
 } from '@navikt/digisyfo-npm';
 import AppRouter from './routers/AppRouter';
 import history from './history';
@@ -22,6 +19,10 @@ import rootSaga from './data/rootSaga';
 import '../styles/styles.less';
 import setPerformOnOppDialogHttpCalls from './oppfolgingsdialogNpm/setPerformOnOppDialogHttpCalls';
 import reducers from './data/reducers';
+import {
+    forlengInnloggetSesjon,
+    sjekkInnloggingssesjon,
+} from './timeout/timeout_actions';
 
 const rootReducer = combineReducers(reducers);
 
@@ -35,7 +36,6 @@ const store = createStore(rootReducer, /* preloadedState, */ composeEnhancers(
 sagaMiddleware.run(rootSaga);
 
 // <OBS>: Minimer antall kall som gjøres her!
-store.dispatch(hentLedetekster());
 store.dispatch(forlengInnloggetSesjon());
 // </OBS>
 
@@ -49,12 +49,6 @@ setPerformOnOppDialogHttpCalls(() => {
 setInterval(() => {
     store.dispatch(sjekkInnloggingssesjon());
 }, 5000);
-
-if (window.location.href.indexOf('visLedetekster=true') > -1) {
-    window.VIS_LEDETEKSTNOKLER = true;
-} else if (window.location.href.indexOf('visLedetekster=false') > -1) {
-    window.VIS_LEDETEKSTNOKLER = false;
-}
 
 render(
     <Provider store={store}>

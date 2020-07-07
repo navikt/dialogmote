@@ -2,11 +2,11 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { TimeoutBox } from '@navikt/digisyfo-npm';
 import cn from 'classnames';
 import AppSpinner from '../components/AppSpinner';
 import Brodsmuler from '../components/Brodsmuler';
 import Feilmelding from '../components/Feilmelding';
+import TimeoutBox from '../timeout/TimeoutBox';
 import * as actions from '../data/brukerinfo/brukerinfo_actions';
 import { brodsmule as brodsmulePt } from '../propTypes';
 import { toggleHeleAppen } from '../toggles';

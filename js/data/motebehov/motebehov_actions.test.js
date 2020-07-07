@@ -2,17 +2,13 @@ import { expect } from 'chai';
 import * as actions from './motebehov_actions';
 
 describe('actions', () => {
-    let virksomhetsnummer;
-
     beforeEach(() => {
-        virksomhetsnummer = '1234';
         window = window || {};
     });
 
     it('Skal ha en hentMotebehov()-funksjon som returnerer riktig action', () => {
-        expect(actions.hentMotebehov(virksomhetsnummer)).to.deep.equal({
+        expect(actions.hentMotebehov()).to.deep.equal({
             type: actions.HENT_MOTEBEHOV_FORESPURT,
-            virksomhetsnummer,
         });
     });
 
@@ -44,33 +40,29 @@ describe('actions', () => {
 
     it('Skal ha en svarMotebehov()-funksjon som returnerer riktig action', () => {
         const svar = {};
-        expect(actions.svarMotebehov(svar, virksomhetsnummer)).to.deep.equal({
+        expect(actions.svarMotebehov(svar)).to.deep.equal({
             type: actions.SVAR_MOTEBEHOV_FORESPURT,
             svar,
-            virksomhetsnummer,
         });
     });
 
     it('Skal ha en svarMotebehovSender()-funksjon som returnerer riktig action', () => {
-        expect(actions.svarMotebehovSender(virksomhetsnummer)).to.deep.equal({
+        expect(actions.svarMotebehovSender()).to.deep.equal({
             type: actions.SVAR_MOTEBEHOV_SENDER,
-            virksomhetsnummer,
         });
     });
 
     it('har en svarMotebehovSendt()-funksjon som returnerer riktig action', () => {
         const svar = {};
-        expect(actions.svarMotebehovSendt(svar, virksomhetsnummer)).to.deep.equal({
+        expect(actions.svarMotebehovSendt(svar)).to.deep.equal({
             type: actions.SVAR_MOTEBEHOV_SENDT,
             svar,
-            virksomhetsnummer,
         });
     });
 
     it('Skal ha en svarMotebehovFeilet()-funksjon som returnerer riktig action', () => {
-        expect(actions.svarMotebehovFeilet(virksomhetsnummer)).to.deep.equal({
+        expect(actions.svarMotebehovFeilet()).to.deep.equal({
             type: actions.SVAR_MOTEBEHOV_FEILET,
-            virksomhetsnummer,
         });
     });
 });

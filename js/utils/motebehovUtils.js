@@ -1,37 +1,19 @@
-import {
-    hentDagerMellomDatoer,
-    leggTilDagerPaaDato,
-} from './datoUtils';
-import {
-    finnOppfolgingsforlopsPerioderForAktiveSykmeldinger,
-    finnVirksomheterMedAktivSykmelding,
-} from './oppfolgingsforlopsperioderUtils';
+import { FELTER as MELDMOTEBEHOV_FELTER } from '../components/moter/motebehov/meldbehov/MeldMotebehovSkjema';
 
 const isDefined = (value) => {
     return value !== undefined;
 };
 
-export const harSvarMotebehovSender = (motebehovSvarReducerListe) => {
-    return motebehovSvarReducerListe.filter((reducer) => {
-        return reducer.sender;
-    }).length > 0;
+export const MOTEBEHOV_SKJEMATYPE = {
+    MELD_BEHOV: 'MELD_BEHOV',
+    SVAR_BEHOV: 'SVAR_BEHOV',
 };
 
-export const harSvarMotebehovFeilet = (motebehovSvarReducerListe) => {
-    return motebehovSvarReducerListe.filter((reducer) => {
-        return reducer.sendingFeilet;
-    }).length > 0;
-};
-
-export const input2RSLagreMotebehov = (motebehov, virksomhetsnummer, fnr) => {
-    const rsLagreMotebehov = {};
+export const input2RSLagreMotebehov = (motebehov) => {
     const rsMotebehovSvar = {};
     if (!isDefined(motebehov)) {
-        return rsLagreMotebehov;
+        return rsMotebehovSvar;
     }
-    rsLagreMotebehov.virksomhetsnummer = virksomhetsnummer || '';
-    rsLagreMotebehov.arbeidstakerFnr = fnr || '';
-
     if (isDefined(motebehov.harMotebehov)) {
         if (motebehov.harMotebehov === 'true') {
             rsMotebehovSvar.harMotebehov = true;
@@ -41,186 +23,42 @@ export const input2RSLagreMotebehov = (motebehov, virksomhetsnummer, fnr) => {
             rsMotebehovSvar.harMotebehov = motebehov.harMotebehov;
         }
     }
-    if (isDefined(motebehov.friskmeldingForventning)) {
-        rsMotebehovSvar.friskmeldingForventning = motebehov.friskmeldingForventning;
+    if (isDefined(motebehov.forklaring) && isDefined(motebehov.lege)) {
+        const separator = ' ';
+        rsMotebehovSvar.forklaring = `${MELDMOTEBEHOV_FELTER.lege.tekst}${separator}${motebehov.forklaring.trim()}`;
+    } else if (isDefined(motebehov.forklaring)) {
+        rsMotebehovSvar.forklaring = motebehov.forklaring.trim();
+    } else if (isDefined(motebehov.lege)) {
+        rsMotebehovSvar.forklaring = MELDMOTEBEHOV_FELTER.lege.tekst;
     }
-    if (isDefined(motebehov.tiltak)) {
-        rsMotebehovSvar.tiltak = motebehov.tiltak;
-    }
-    if (isDefined(motebehov.tiltakResultat)) {
-        rsMotebehovSvar.tiltakResultat = motebehov.tiltakResultat;
-    }
-    if (isDefined(motebehov.forklaring)) {
-        rsMotebehovSvar.forklaring = motebehov.forklaring;
-    }
-    rsLagreMotebehov.motebehovSvar = rsMotebehovSvar;
-
-    return rsLagreMotebehov;
+    return rsMotebehovSvar;
 };
 
-export const MOTEBEHOVSVAR_GYLDIG_VARIGHET_DAGER = 10 * 7;
-export const OPPFOLGINGSFORLOP_MOTEBEHOV_START_DAGER = 16 * 7;
-export const OPPFOLGINGSFORLOP_MOTEBEHOV_SLUTT_DAGER = 26 * 7;
-
-
-export const erOppfoelgingsdatoNyereEnn132DagerForProdsetting = (oppfoelgingsdato) => {
-    const antallDagerMellomGrensedatoOgProddato = 132;
-    // Dato for prodsetting av motebehov
-    const motebehovPilotProdDato = new Date('2019-03-11');
-    // Dato hvor alle tidligere oppfoelgingsdatoer ikke skal vises motebehov for
-    const grenseDato = leggTilDagerPaaDato(motebehovPilotProdDato, -antallDagerMellomGrensedatoOgProddato);
-
-    return oppfoelgingsdato.getTime() > grenseDato.getTime();
-};
-
-export const erOppfoelgingsdatoPassertMed16UkerOgIkke26Uker = (startOppfolgingsdato) => {
-    const oppfoelgingstilfelleStartDato = new Date(startOppfolgingsdato);
-    oppfoelgingstilfelleStartDato.setHours(0, 0, 0, 0);
-    const dagensDato = new Date();
-    dagensDato.setHours(0, 0, 0, 0);
-
-    const antallDagerSidenOppfoelgingsTilfelleStart = hentDagerMellomDatoer(oppfoelgingstilfelleStartDato, dagensDato);
-
-    return antallDagerSidenOppfoelgingsTilfelleStart >= OPPFOLGINGSFORLOP_MOTEBEHOV_START_DAGER
-        && antallDagerSidenOppfoelgingsTilfelleStart < OPPFOLGINGSFORLOP_MOTEBEHOV_SLUTT_DAGER;
-};
-
-export const erOppfolgingstilfelleSluttDatoPassert = (sluttOppfolgingsdato) => {
-    const oppfolgingstilfelleSluttDato = new Date(sluttOppfolgingsdato);
-    oppfolgingstilfelleSluttDato.setHours(0, 0, 0, 0);
-    const dagensDato = new Date();
-    dagensDato.setHours(0, 0, 0, 0);
-
-    return dagensDato > oppfolgingstilfelleSluttDato;
-};
-
-export const hentOppfolgingsforlopStartdato = (oppfolgingsforlopsPeriodeData) => {
-    return oppfolgingsforlopsPeriodeData.length > 0 && new Date(Math.min.apply(null, oppfolgingsforlopsPeriodeData.map((periode) => {
-        return new Date(periode.fom);
-    })));
-};
-
-export const hentOppfolgingsforlopSluttdato = (oppfolgingsforlopsPeriodeData) => {
-    return oppfolgingsforlopsPeriodeData.length > 0 && new Date(Math.max.apply(null, oppfolgingsforlopsPeriodeData.map((periode) => {
-        return new Date(periode.tom);
-    })));
-};
-
-export const skalViseMotebehovForOppfolgingsforlop = (oppfolgingsforlopsPerioderReducer) => {
-    const startOppfolgingsdato = oppfolgingsforlopsPerioderReducer.data && hentOppfolgingsforlopStartdato(oppfolgingsforlopsPerioderReducer.data);
-    const sluttOppfolgingsdato = oppfolgingsforlopsPerioderReducer.data && hentOppfolgingsforlopSluttdato(oppfolgingsforlopsPerioderReducer.data);
-
-    return (startOppfolgingsdato && sluttOppfolgingsdato)
-        && !erOppfolgingstilfelleSluttDatoPassert(sluttOppfolgingsdato)
-        && erOppfoelgingsdatoPassertMed16UkerOgIkke26Uker(startOppfolgingsdato)
-        && erOppfoelgingsdatoNyereEnn132DagerForProdsetting(startOppfolgingsdato);
-};
-
-export const finnVirksomhetnrListeMedSkalViseMotebehov = (oppfolgingsforlopsPerioderReducerListe) => {
-    const liste = [];
-    oppfolgingsforlopsPerioderReducerListe.forEach((oppfolgingsforlopsPerioderReducer) => {
-        if (skalViseMotebehovForOppfolgingsforlop(oppfolgingsforlopsPerioderReducer)) {
-            liste.push(oppfolgingsforlopsPerioderReducer.virksomhetsnummer);
-        }
-    });
-    return liste;
-};
-
-export const orgnummerFraMote = (moteReducer) => {
-    const moteData = moteReducer.data;
-    const deltakerMedOrgnummer = moteData.deltakere && moteData.deltakere.find((deltaker) => {
-        return !!deltaker.orgnummer;
-    });
-    return deltakerMedOrgnummer.orgnummer;
-};
-
-export const oppfolgingsforlopsPerioderReducerForOrgnummer = (oppfolgingsforlopsPerioderReducerListe, orgnummer) => {
-    return oppfolgingsforlopsPerioderReducerListe.find((periodeReducer) => {
-        return periodeReducer.virksomhetsnummer === orgnummer;
-    });
-};
-
-export const erMoteOpprettetIOppfolgingsforlop = (moteReducer, oppfolgingsforlopsPerioderReducerListe) => {
-    const orgnummer = moteReducer && orgnummerFraMote(moteReducer);
-    const oppfolgingsforlopsPerioderReducer = oppfolgingsforlopsPerioderReducerForOrgnummer(oppfolgingsforlopsPerioderReducerListe, orgnummer);
-
-    const startOppfolgingsdato = oppfolgingsforlopsPerioderReducer.data && hentOppfolgingsforlopStartdato(oppfolgingsforlopsPerioderReducer.data);
-    const sluttOppfolgingsdato = oppfolgingsforlopsPerioderReducer.data && hentOppfolgingsforlopSluttdato(oppfolgingsforlopsPerioderReducer.data);
-    const moteOpprettetDato = new Date(moteReducer.data.opprettetTidspunkt);
-
-    return startOppfolgingsdato <= moteOpprettetDato && moteOpprettetDato <= sluttOppfolgingsdato;
-};
-
-export const erMoteplanleggerBruktIOppfolgingsforlop = (moteReducer, oppfolgingsforlopsPerioderReducerListe) => {
-    if (!moteReducer || !moteReducer.data) {
+export const erMotebehovTilgjengelig = (motebehovReducer) => {
+    if (motebehovReducer && motebehovReducer.hentingForbudt === true) {
         return false;
     }
-
-    return erMoteOpprettetIOppfolgingsforlop(moteReducer, oppfolgingsforlopsPerioderReducerListe);
+    return motebehovReducer
+        && motebehovReducer.data
+        && motebehovReducer.data.visMotebehov
+        && (
+            motebehovReducer.data.skjemaType === MOTEBEHOV_SKJEMATYPE.MELD_BEHOV
+            || motebehovReducer.data.skjemaType === MOTEBEHOV_SKJEMATYPE.SVAR_BEHOV
+        );
 };
 
-export const erDatoInnenforEtOppfolgingsforlop = (dato, oppfolgingsforlopsPerioderReducerListe) => {
-    return oppfolgingsforlopsPerioderReducerListe.findIndex((perioderReducer) => {
-        const startOppfolgingsdato = perioderReducer.data && hentOppfolgingsforlopStartdato(perioderReducer.data);
-        const sluttOppfolgingsdato = perioderReducer.data && hentOppfolgingsforlopSluttdato(perioderReducer.data);
-        return startOppfolgingsdato <= dato && dato <= sluttOppfolgingsdato;
-    }) > -1;
+export const isMeldBehov = (motebehovReducer) => {
+    return motebehovReducer.data && motebehovReducer.data.skjemaType === MOTEBEHOV_SKJEMATYPE.MELD_BEHOV;
 };
 
-export const finnNyesteMotebehovForVirksomhetListeIOppfolgingsforlop = (motebehovReducer, virksomhetsnrListe, oppfolgingsforlopsPerioderReducerListe) => {
-    const nyesteMotebehov = motebehovReducer.data.filter((motebehov) => {
-        return virksomhetsnrListe.filter((virksomhetsnr) => {
-            return motebehov.virksomhetsnummer === virksomhetsnr;
-        }).length > 0;
-    }).sort((m1, m2) => {
-        return m2.opprettetDato - m1.opprettetDato;
-    })[0];
-
-    return nyesteMotebehov && erDatoInnenforEtOppfolgingsforlop(new Date(nyesteMotebehov.opprettetDato), oppfolgingsforlopsPerioderReducerListe)
-        ? nyesteMotebehov
-        : undefined;
+export const isSvarBehov = (motebehovReducer) => {
+    return motebehovReducer.data && motebehovReducer.data.skjemaType === MOTEBEHOV_SKJEMATYPE.SVAR_BEHOV;
 };
 
-export const skalViseMotebehovKvittering = (motebehovReducer, virksomhetsnrListe, oppfolgingsforlopsPerioderReducerListe) => {
-    return !!finnNyesteMotebehovForVirksomhetListeIOppfolgingsforlop(motebehovReducer, virksomhetsnrListe, oppfolgingsforlopsPerioderReducerListe);
-};
-
-export const harSykmeldtSvartPaaMotebehovIOppfolgingsforlop = (motebehovReducer, oppfolgingsforlopsPerioderReducerListe) => {
-    return motebehovReducer.data && motebehovReducer.data.findIndex((motebehov) => {
-        return motebehov.aktorId === motebehov.opprettetAv && erDatoInnenforEtOppfolgingsforlop(new Date(motebehov.opprettetDato), oppfolgingsforlopsPerioderReducerListe);
-    }) > -1;
-};
-
-export const skalViseMotebehovMedOppfolgingsforlopListe = (oppfolgingsforlopsPerioderReducerListe, motebehovReducer, moteReducer) => {
-    try {
-        if (motebehovReducer && motebehovReducer.hentingForbudt === true) {
-            return false;
-        }
-
-        const oppfolgingsforlopMedMotebehovVisning = oppfolgingsforlopsPerioderReducerListe.filter((oppfolgingsforlopsPerioderReducer) => {
-            return skalViseMotebehovForOppfolgingsforlop(oppfolgingsforlopsPerioderReducer);
-        });
-        if (oppfolgingsforlopMedMotebehovVisning.length === 0) {
-            return false;
-        }
-
-        if (motebehovReducer && harSykmeldtSvartPaaMotebehovIOppfolgingsforlop(motebehovReducer, oppfolgingsforlopsPerioderReducerListe)) {
-            return true;
-        }
-
-        return !erMoteplanleggerBruktIOppfolgingsforlop(moteReducer, oppfolgingsforlopsPerioderReducerListe);
-    } catch (e) {
-        return false;
+export const skalViseMotebehovKvittering = (motebehovReducer) => {
+    const skalVise = erMotebehovTilgjengelig(motebehovReducer);
+    if (skalVise) {
+        return !!motebehovReducer.data.motebehov;
     }
-};
-
-export const erMotebehovTilgjengeligForOppfolgingsforlop = (state) => {
-    const virksomhetsnrListe = finnVirksomheterMedAktivSykmelding(state.dineSykmeldinger.data, state.ledere.data);
-    const oppfolgingsforlopsPerioderReducerListe = finnOppfolgingsforlopsPerioderForAktiveSykmeldinger(state, virksomhetsnrListe);
-
-    return skalViseMotebehovMedOppfolgingsforlopListe(oppfolgingsforlopsPerioderReducerListe, state.motebehov, state.mote);
-};
-
-export const harMotebehovSvar = (state) => {
-    return state.motebehov.data.length > 0;
+    return false;
 };

@@ -6,7 +6,6 @@ import chai from 'chai';
 import chaiEnzyme from 'chai-enzyme';
 import Alternativer, { Label } from '../../../../js/components/moter/moteplanlegger/Alternativer';
 import { SvarMedIkon, NavKan } from '../../../../js/components/moter/moteplanlegger/SvarMedIkon';
-import ledetekster from '../../../mock/mockLedetekster';
 import getMote, { moteIkkeBesvart } from '../../../mock/mockMote';
 
 chai.use(chaiEnzyme());
@@ -28,7 +27,6 @@ describe('Alternativer', () => {
                 alternativer: mote.alternativer,
                 autofill,
                 touch,
-                ledetekster,
                 meta: {},
                 deltakertype: 'Bruker',
             }, _props);
