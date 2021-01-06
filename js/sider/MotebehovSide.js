@@ -15,23 +15,39 @@ import {
     hentMotebehov,
     svarMotebehov,
 } from '../data/motebehov/motebehov_actions';
-import { erMotebehovTilgjengelig } from '../utils/motebehovUtils';
+import {
+    erMotebehovTilgjengelig,
+    skalViseMotebehovKvittering,
+} from '../utils/motebehovUtils';
 
 const tekster = {
-    brodsmuler: {
-        dittSykefravaer: 'Ditt sykefravær',
-        dialogmote: 'Dialogmøte',
-    },
-    sideTittel: 'Dialogmøtebehov',
+    brodsmuleBase: 'Ditt sykefravær',
+    tittler: {
+        meldBehov: 'Meld behov for møte',
+        kvittering: 'Kvittering for møtebehov'
+    }
 };
 
 class Container extends Component {
+    constructor(props) {
+        super(props);
+        this.state = { currentTitle: tekster.tittler.meldBehov }
+    }
+
     componentDidMount() {
         const {
             actions,
         } = this.props;
 
         actions.hentMotebehov();
+    }
+
+    componentDidUpdate() {
+        const { motebehovReducer } = this.props;
+        const kvitteringsside = skalViseMotebehovKvittering(motebehovReducer);
+        if (kvitteringsside) {
+            this.setTitle(tekster.tittler.kvittering);
+        }
     }
 
     render() {
@@ -44,8 +60,8 @@ class Container extends Component {
         } = this.props;
         return (
             <Side
-                tittel={tekster.sideTittel}
-                brodsmuler={brodsmuler}
+                tittel={this.state.currentTitle}
+                brodsmuler={[ ...brodsmuler, { tittel: this.state.currentTitle } ]}
                 laster={henter}>
                 {
                     (() => {
@@ -70,6 +86,12 @@ class Container extends Component {
                 }
             </Side>
         );
+    }
+
+    setTitle(title) {
+        if (this.state.currentTitle !== title) {
+            this.setState({ currentTitle: title });
+        }
     }
 }
 Container.propTypes = {
@@ -112,11 +134,9 @@ export function mapStateToProps(state) {
         motebehovReducer,
         motebehovSvarReducer,
         brodsmuler: [{
-            tittel: tekster.brodsmuler.dittSykefravaer,
+            tittel: tekster.brodsmuleBase,
             sti: '/sykefravaer',
             erKlikkbar: true,
-        }, {
-            tittel: tekster.brodsmuler.dialogmote,
         }],
     };
 }
