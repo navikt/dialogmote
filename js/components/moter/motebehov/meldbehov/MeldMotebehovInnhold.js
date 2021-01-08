@@ -11,8 +11,8 @@ import MeldMotebehovKvitteringSide from './MeldMotebehovSide';
 
 const texts = {
     title: {
-        default: 'Behov for dialogmøte',
-        receipt: 'Kvittering',
+        default: 'Meld behov for møte',
+        receipt: 'Kvittering for møtebehov',
     },
 };
 

@@ -15,14 +15,17 @@ import {
     hentMotebehov,
     svarMotebehov,
 } from '../data/motebehov/motebehov_actions';
-import { erMotebehovTilgjengelig } from '../utils/motebehovUtils';
+import {
+    erMotebehovTilgjengelig,
+    skalViseMotebehovKvittering,
+} from '../utils/motebehovUtils';
 
 const tekster = {
-    brodsmuler: {
-        dittSykefravaer: 'Ditt sykefravær',
-        dialogmote: 'Dialogmøte',
-    },
-    sideTittel: 'Dialogmøtebehov',
+    brodsmuleBase: 'Ditt sykefravær',
+    titler: {
+        meldBehov: 'Meld behov for møte',
+        kvittering: 'Kvittering for møtebehov'
+    }
 };
 
 class Container extends Component {
@@ -41,11 +44,17 @@ class Container extends Component {
             sendingFeilet,
             skalViseMotebehov,
             brodsmuler,
+            motebehovReducer,
         } = this.props;
+        const visKvittering = skalViseMotebehovKvittering(motebehovReducer);
+        const sideTittel = visKvittering
+            ? tekster.titler.kvittering
+            : tekster.titler.meldBehov;
+
         return (
             <Side
-                tittel={tekster.sideTittel}
-                brodsmuler={brodsmuler}
+                tittel={sideTittel}
+                brodsmuler={[ ...brodsmuler, { tittel: sideTittel } ]}
                 laster={henter}>
                 {
                     (() => {
@@ -112,11 +121,9 @@ export function mapStateToProps(state) {
         motebehovReducer,
         motebehovSvarReducer,
         brodsmuler: [{
-            tittel: tekster.brodsmuler.dittSykefravaer,
+            tittel: tekster.brodsmuleBase,
             sti: '/sykefravaer',
             erKlikkbar: true,
-        }, {
-            tittel: tekster.brodsmuler.dialogmote,
         }],
     };
 }

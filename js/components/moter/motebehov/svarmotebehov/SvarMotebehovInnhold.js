@@ -11,8 +11,8 @@ import Sidetopp from '../../../Sidetopp';
 
 const texts = {
     title: {
-        default: 'Behov for dialogmøte',
-        receipt: 'Kvittering',
+        default: 'Meld behov for møte',
+        receipt: 'Kvittering for møtebehov',
     },
 };
 
