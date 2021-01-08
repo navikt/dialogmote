@@ -22,32 +22,19 @@ import {
 
 const tekster = {
     brodsmuleBase: 'Ditt sykefravær',
-    tittler: {
+    titler: {
         meldBehov: 'Meld behov for møte',
         kvittering: 'Kvittering for møtebehov'
     }
 };
 
 class Container extends Component {
-    constructor(props) {
-        super(props);
-        this.state = { currentTitle: tekster.tittler.meldBehov }
-    }
-
     componentDidMount() {
         const {
             actions,
         } = this.props;
 
         actions.hentMotebehov();
-    }
-
-    componentDidUpdate() {
-        const { motebehovReducer } = this.props;
-        const kvitteringsside = skalViseMotebehovKvittering(motebehovReducer);
-        if (kvitteringsside) {
-            this.setTitle(tekster.tittler.kvittering);
-        }
     }
 
     render() {
@@ -57,11 +44,17 @@ class Container extends Component {
             sendingFeilet,
             skalViseMotebehov,
             brodsmuler,
+            motebehovReducer,
         } = this.props;
+        const visKvittering = skalViseMotebehovKvittering(motebehovReducer);
+        const sideTittel = visKvittering
+            ? tekster.titler.kvittering
+            : tekster.titler.meldBehov;
+
         return (
             <Side
-                tittel={this.state.currentTitle}
-                brodsmuler={[ ...brodsmuler, { tittel: this.state.currentTitle } ]}
+                tittel={sideTittel}
+                brodsmuler={[ ...brodsmuler, { tittel: sideTittel } ]}
                 laster={henter}>
                 {
                     (() => {
@@ -86,12 +79,6 @@ class Container extends Component {
                 }
             </Side>
         );
-    }
-
-    setTitle(title) {
-        if (this.state.currentTitle !== title) {
-            this.setState({ currentTitle: title });
-        }
     }
 }
 Container.propTypes = {
