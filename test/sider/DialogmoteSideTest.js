@@ -36,6 +36,7 @@ describe('DialogmoteSide', () => {
 
         it('Skal vise AppSpinner hvis henter = true', () => {
             const comp = shallow(<Container
+                brodsmuler={[]}
                 doHentMotebehov={doHentMotebehov}
                 doHentDineSykemeldinger={doHentDineSykemeldinger}
                 doHentMote={doHentMote}
@@ -46,6 +47,7 @@ describe('DialogmoteSide', () => {
 
         it('Skal vise en feilmelding hvis hentingFeilet = true', () => {
             const comp = shallow(<Container
+                brodsmuler={[]}
                 doHentMotebehov={doHentMotebehov}
                 doHentDineSykemeldinger={doHentDineSykemeldinger}
                 doHentMote={doHentMote}
@@ -56,6 +58,7 @@ describe('DialogmoteSide', () => {
 
         it('Skal sende alle props videre til Svarside', () => {
             const comp = shallow(<Container
+                brodsmuler={[]}
                 doHentMotebehov={doHentMotebehov}
                 doHentDineSykemeldinger={doHentDineSykemeldinger}
                 mote={mote}
@@ -71,6 +74,7 @@ describe('DialogmoteSide', () => {
 
         it('Skal sende sendSvar videre til Svarside', () => {
             const comp = shallow(<Container
+                brodsmuler={[]}
                 doHentMotebehov={doHentMotebehov}
                 doHentDineSykemeldinger={doHentDineSykemeldinger}
                 mote={mote}
@@ -83,6 +87,7 @@ describe('DialogmoteSide', () => {
             it('Skal vise Kvittering', () => {
                 mote = moteBesvartAlleAlternativer;
                 const component = shallow(<Container
+                    brodsmuler={[]}
                     doHentDineSykemeldinger={doHentDineSykemeldinger}
                     doHentMotebehov={doHentMotebehov}
                     doHentMote={doHentMote}
