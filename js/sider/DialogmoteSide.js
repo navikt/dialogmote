@@ -129,9 +129,9 @@ export class Container extends Component {
         const titler = tekster.titler;
         switch (modus) {
             case SKJEMA:
+            case AVBRUTT:
                 return titler.tidspunkt;
             case MOTESTATUS:
-            case AVBRUTT:
                 return titler.svart;
             case BEKREFTET:
                 return titler.bekreftet;
