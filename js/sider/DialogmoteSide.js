@@ -23,6 +23,7 @@ import {
     AVBRUTT,
     BEKREFTET,
     MOTESTATUS,
+    SKJEMA,
     erMotePassert,
     getSvarsideModus,
 } from '../utils/moteUtils';
@@ -30,11 +31,12 @@ import { sendSvar } from '../data/svar/svar_actions';
 import { hentMotebehov } from '../data/motebehov/motebehov_actions';
 
 const tekster = {
-    brodsmuler: {
-        dittSykefravaer: 'Ditt sykefravær',
-        dialogmote: 'Dialogmøte',
-    },
-    sideTittel: 'Dialogmøte',
+    brodsmuleBase: 'Ditt sykefravær',
+    titler: {
+        tidspunkt: 'Tidspunkt for dialogmøte',
+        svart: 'Svaret ditt på tidspunkt for dialogmøte',
+        bekreftet: 'Møtebekreftelse',
+    }
 };
 
 export class Container extends Component {
@@ -61,10 +63,11 @@ export class Container extends Component {
             doSendSvar,
         } = this.props;
         const modus = getSvarsideModus(mote);
+        const tittel = this.hentTittelTekstFraModus(modus);
         return (
             <Side
-                tittel={tekster.sideTittel}
-                brodsmuler={brodsmuler}
+                tittel={tittel}
+                brodsmuler={[...brodsmuler, {tittel: tittel}]}
                 laster={henter || !hentet}
             >
                 {
@@ -121,6 +124,22 @@ export class Container extends Component {
             </Side>
         );
     }
+
+    hentTittelTekstFraModus(modus) {
+        const titler = tekster.titler;
+        switch (modus) {
+            case SKJEMA:
+            case AVBRUTT:
+                return titler.tidspunkt;
+            case MOTESTATUS:
+                return titler.svart;
+            case BEKREFTET:
+                return titler.bekreftet;
+            default:
+                return titler.tidspunkt;
+        }
+    }
+
 }
 
 Container.propTypes = {
@@ -152,11 +171,9 @@ export function mapStateToProps(state) {
         sender: state.svar.sender,
         sendingFeilet: state.svar.sendingFeilet,
         brodsmuler: [{
-            tittel: tekster.brodsmuler.dittSykefravaer,
+            tittel: tekster.brodsmuleBase,
             sti: '/sykefravaer',
             erKlikkbar: true,
-        }, {
-            tittel: tekster.brodsmuler.dialogmote,
         }],
     };
 }
