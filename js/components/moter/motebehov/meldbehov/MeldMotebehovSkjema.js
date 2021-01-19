@@ -9,6 +9,7 @@ import { motebehovSvarReducerPt } from '../../../../propTypes';
 import Tekstomraade from '../../../skjema/Tekstomraade';
 import CheckboxSelvstendig from '../../../skjema/CheckboxSelvstendig';
 import MotebehovSkjemaKnapper from '../MotebehovSkjemaKnapper';
+import ObligatoriskeFelterInfotekst from "../ObligatoriskeFelterInfotekst";
 
 export const tekstfeltRegex = new RegExp('.*<[^ ][^>]+[^ ]>.*');
 
@@ -123,6 +124,7 @@ export class MeldMotebehovSkjemaKomponent extends Component {
             <form
                 className="svarMotebehovSkjema"
                 onSubmit={handleSubmit(this.handleSubmit)}>
+                <ObligatoriskeFelterInfotekst/>
                 <div className="panel">
                     <Field
                         id={FELTER.harMotebehov.navn}
