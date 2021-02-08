@@ -118,10 +118,6 @@ export class MeldMotebehovSkjemaKomponent extends Component {
         this.handleSubmit = this.handleSubmit.bind(this);
     }
 
-    componentWillReceiveProps(nextProps) {
-        console.log(nextProps)
-    }
-
     handleSubmit(values) {
         const {
             svarMotebehov,
