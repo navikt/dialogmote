@@ -216,19 +216,23 @@ export class MeldMotebehovSkjemaKomponent extends Component {
                 onSubmit={handleSubmit(this.handleSubmit)}>
                 <ObligatoriskeFelterInfotekst/>
                 <div className="panel">
-                    <Field
-                        id={FELTER.harMotebehov.id}
-                        name={FELTER.harMotebehov.navn}
-                        component={CheckboxSelvstendig}
-                        label={FELTER.harMotebehov.svar.tekst}
-                        validate={this.state.isFormSubmitted ? this.validateHarMoteBehov : undefined}
-                    />
-                    <Field
-                        id={FELTER.lege.id}
-                        name={FELTER.lege.navn}
-                        component={CheckboxSelvstendig}
-                        label={FELTER.lege.tekst}
-                    />
+                    <div className={'skjema__checkbox-container'}>
+                        <Field
+                            id={FELTER.harMotebehov.id}
+                            name={FELTER.harMotebehov.navn}
+                            component={CheckboxSelvstendig}
+                            label={FELTER.harMotebehov.svar.tekst}
+                            validate={this.state.isFormSubmitted ? this.validateHarMoteBehov : undefined}
+                        />
+                    </div>
+                    <div className={'skjema__checkbox-container'}>
+                        <Field
+                            id={FELTER.lege.id}
+                            name={FELTER.lege.navn}
+                            component={CheckboxSelvstendig}
+                            label={FELTER.lege.tekst}
+                        />
+                    </div>
                     <MotebehovSkjemaTekstomraade
                         felt={FELTER.forklaring}
                         isFormSubmitted={this.state.isFormSubmitted}
