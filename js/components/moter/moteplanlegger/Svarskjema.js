@@ -1,4 +1,3 @@
-import { Feiloppsummering } from 'nav-frontend-skjema';
 import React from 'react';
 import PropTypes from 'prop-types';
 import { FieldArray, reduxForm } from 'redux-form';
