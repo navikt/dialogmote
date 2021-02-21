@@ -13,7 +13,11 @@ Du må ha Node installert.
     - `$ npm install`
     - `$ npm run dev`
     - I et annet vindu `$ npm run start-local`
+    - Gå til `http://localhost:8080/` 
     - Eventuelt kan komandoene kjøres fra `package.json` i intellij.
+    - Data til dialogmøte kan bli endret i `siste.json`
+    - Møtebehovstatus kan bli endret i `mockSyfomotebehov.js`: bytt verdi av `motebehovStatusEnum` i `mockPilotEndepunkterForLokalmiljo(...)`
+
 * Kjør tester med `npm test` eller `npm test:watch`
 * Lint JS-kode med `npm run lint` eller `npm run lint:fix`
 
