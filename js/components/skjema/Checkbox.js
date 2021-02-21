@@ -12,7 +12,7 @@ const Checkbox = (
 ) => {
     return (
         <div className="checkboksContainer" id={`cb-${id}`}>
-            <div className="skjemaelement skjema__input-container">
+            <div className="skjemaelement">
                 <input
                     id={id}
                     type="checkbox"

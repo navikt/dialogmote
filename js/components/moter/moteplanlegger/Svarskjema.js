@@ -1,3 +1,4 @@
+import { Feiloppsummering } from 'nav-frontend-skjema';
 import React from 'react';
 import PropTypes from 'prop-types';
 import { FieldArray, reduxForm } from 'redux-form';
@@ -45,6 +46,7 @@ const PrivacyInfo = styled.div`
 const AlertInfo = styled.div`
     display: flex;
     align-items: center;
+    padding-top: 0.7rem;
 `;
 
 const AlertText = styled.span`
@@ -83,6 +85,7 @@ export const Skjema = (
     const deltaker = mote.deltakere.filter((d) => {
         return d.type === deltakertype;
     })[0];
+
     const onSubmit = (values) => {
         const data = getData(values);
         sendSvar(mote.moteUuid, deltakertype, data);

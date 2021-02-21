@@ -27,7 +27,7 @@ export const Radioknapp = ({
             </div>
         ) : label;
     return (
-        <div>
+        <div className="skjema__radiobutton-container">
             <Radio
                 id={getId(id)}
                 type="radio"
