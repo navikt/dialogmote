@@ -38,8 +38,8 @@ export const Radioknapp = ({
                 label={labelMedSekundaerlabel}
                 onBlur={() => {
                     input.onBlur();
-                }} />
-            { (input.value === value || disabled || visUndertekst) && children }
+                }}/>
+            {(input.value === value || disabled || visUndertekst) && children}
         </div>
     );
 };
@@ -66,9 +66,9 @@ const Radioknapper = ({
         <Feilomrade {...meta} id={input.name}>
             <div className={`${hjelpetekst ? 'medHjelpetekst' : ''}`}>
                 <Overskrift className="skjema__sporsmal">{spoersmal}</Overskrift>
-                { hjelpetekst }
+                {hjelpetekst}
             </div>
-            { hjelpelinje }
+            {hjelpelinje}
             <div className={horisontal ? 'inputgruppe inputgruppe--horisontal' : 'inputgruppe'}>
                 {
                     children.map((radioknapp, index) => {

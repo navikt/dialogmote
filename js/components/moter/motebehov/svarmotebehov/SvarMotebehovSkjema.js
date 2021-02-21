@@ -8,7 +8,7 @@ import { motebehovSvarReducerPt } from '../../../../propTypes';
 import Tekstomraade from '../../../skjema/Tekstomraade';
 import Radioknapper from '../../../skjema/Radioknapper';
 import MotebehovSkjemaKnapper from '../MotebehovSkjemaKnapper';
-import ObligatoriskeFelterInfotekst from "../ObligatoriskeFelterInfotekst";
+import ObligatoriskeFelterInfotekst from '../ObligatoriskeFelterInfotekst';
 
 export const tekstfeltRegex = new RegExp('.*<[^ ][^>]+[^ ]>.*');
 
@@ -45,8 +45,6 @@ export const FELTER = {
         spoersmaal: 'Begrunnelse',
     },
 };
-
-
 
 export const VilHaMoteSvarKnapper = (
     {
@@ -112,7 +110,7 @@ export const MotebehovSkjemaTekstomraade = (
             >
                 {sporsmaalTekst}
             </h3>
-            <TekstSensitiv />
+            <TekstSensitiv/>
             <Field
                 className="input--fullbredde"
                 name={felt.navn}
@@ -177,7 +175,7 @@ export class SvarMotebehovSkjemaKomponent extends Component {
         super(props);
         this.state = {
             errorList: [],
-        }
+        };
         this.handleSubmit = this.handleSubmit.bind(this);
     }
 
@@ -197,7 +195,7 @@ export class SvarMotebehovSkjemaKomponent extends Component {
     componentWillReceiveProps(nextProps) {
         const {harMotebehov, forklaring} = nextProps;
         if (harMotebehov && harMotebehov !== this.props.harMotebehov && this.state.isFormSubmitted) {
-            if (harMotebehov === 'false'){
+            if (harMotebehov === 'false') {
                 this.validateHarMoteBehov(harMotebehov);
                 this.validateForklaring(forklaring);
             } else if (harMotebehov === 'true') {
@@ -259,11 +257,11 @@ export class SvarMotebehovSkjemaKomponent extends Component {
             errorList.splice(i, 1);
             this.setState({
                 errorlist: errorList,
-            })
+            });
         } else if (i === -1 && feilmelding !== undefined) {
-            errorList.push({skjemaelementId: elementId, feilmelding: feilmelding})
+            errorList.push({skjemaelementId: elementId, feilmelding: feilmelding});
         }
-    }
+    };
 
     validateHarMoteBehov = (value) => {
         let feilmelding = undefined;
@@ -296,14 +294,14 @@ export class SvarMotebehovSkjemaKomponent extends Component {
 
         this.updateFeilOppsummeringState(feilmelding, FELTER.forklaring.id);
         return feilmelding;
-    }
+    };
 
     validateAllFields = (values) => {
         return {
             harMotebehov: this.validateHarMoteBehov(values.harMotebehov),
             forklaring: this.validateForklaring(values.forklaring),
-        }
-    }
+        };
+    };
 
     render() {
         const {
@@ -322,8 +320,8 @@ export class SvarMotebehovSkjemaKomponent extends Component {
                         handleOptionChange={this.setHarBehovSvar}
                         validate={this.state.isFormSubmitted ? this.validateHarMoteBehov : undefined}
                     />
-                    { harMotebehov === 'false'
-                    && <AlertstripeNei />
+                    {harMotebehov === 'false'
+                    && <AlertstripeNei/>
                     }
                     <MotebehovSkjemaTekstomraade
                         felt={FELTER.forklaring}
@@ -337,10 +335,10 @@ export class SvarMotebehovSkjemaKomponent extends Component {
                         feil={this.state.errorList}
                     />
                     }
-                    <MotebehovSkjemaKnapper sender={motebehovSvarReducer.sender} />
+                    <MotebehovSkjemaKnapper sender={motebehovSvarReducer.sender}/>
                 </div>
 
-                <TekstOpplysning />
+                <TekstOpplysning/>
             </form>
         );
     }
@@ -359,8 +357,8 @@ const mapStateToProps = state => {
     return {
         harMotebehov: valueSelector(state, 'harMotebehov'),
         forklaring: valueSelector(state, 'forklaring'),
-    }
-}
+    };
+};
 
 const SvarMotebehovSkjema = reduxForm({
     form: SVAR_MOTEBEHOV_SKJEMANAVN,

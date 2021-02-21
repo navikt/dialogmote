@@ -29,7 +29,7 @@ const Feilomrade = (
     return (
         <div className={submitFailed && error ? 'skjema__feilomrade skjema__feilomrade--feil' : 'skjema__feilomrade'}>
             {children}
-            <Feilmelding submitFailed={submitFailed} error={error} />
+            <Feilmelding submitFailed={submitFailed} error={error}/>
         </div>
     );
 };
