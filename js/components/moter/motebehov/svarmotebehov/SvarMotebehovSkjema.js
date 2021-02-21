@@ -269,10 +269,6 @@ export class SvarMotebehovSkjemaKomponent extends Component {
             feilmelding = 'Velg alternativ';
         }
         this.state.harMotebehov = value;
-        //
-        // this.setState({
-        //     harMotebehov: value
-        // })
         this.updateFeilOppsummeringState(feilmelding, FELTER.harMotebehov.id);
         return feilmelding;
     };
