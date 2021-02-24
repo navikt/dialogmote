@@ -9,18 +9,15 @@ Applikasjonen har en mock som kan brukes lokalt. Her mockes diverse endepunkter,
 
 Du må ha Node installert.
 
-Du må også konfigurere npm som følger:
-
-```bash
-$ npm config set @types:registry "http://a34apvl062.devillo.no:8082/repository/npm-all"
-$ npm config set @babel:registry "http://a34apvl062.devillo.no:8082/repository/npm-all"
-```
-
 * For å kjøre koden lokalt: 
     - `$ npm install`
     - `$ npm run dev`
     - I et annet vindu `$ npm run start-local`
+    - Gå til `http://localhost:8080/` 
     - Eventuelt kan komandoene kjøres fra `package.json` i intellij.
+    - Data til dialogmøte kan bli endret i `siste.json`
+    - Møtebehovstatus kan bli endret i `mockSyfomotebehov.js`: bytt verdi av `motebehovStatusEnum` i `mockPilotEndepunkterForLokalmiljo(...)`
+
 * Kjør tester med `npm test` eller `npm test:watch`
 * Lint JS-kode med `npm run lint` eller `npm run lint:fix`
 

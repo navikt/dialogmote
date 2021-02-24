@@ -45,6 +45,7 @@ const PrivacyInfo = styled.div`
 const AlertInfo = styled.div`
     display: flex;
     align-items: center;
+    padding-top: 0.7rem;
 `;
 
 const AlertText = styled.span`
@@ -62,9 +63,9 @@ export function getData(values) {
         }
         return undefined;
     })
-        .filter((id) => {
-            return id !== undefined;
-        });
+                 .filter((id) => {
+                     return id !== undefined;
+                 });
 }
 
 export const Skjema = (
@@ -83,6 +84,7 @@ export const Skjema = (
     const deltaker = mote.deltakere.filter((d) => {
         return d.type === deltakertype;
     })[0];
+
     const onSubmit = (values) => {
         const data = getData(values);
         sendSvar(mote.moteUuid, deltakertype, data);
@@ -93,7 +95,7 @@ export const Skjema = (
         if (erMotebehovTilgjengelig(motebehovReducer)) {
             const oldPath = window.location.pathname.split('/');
             const newPath = oldPath.slice(0, oldPath.length - 1)
-                .join('/');
+                                   .join('/');
             return newPath;
         }
 
@@ -113,10 +115,10 @@ export const Skjema = (
                 </p>
             </PrivacyInfo>
             <div className="tidOgSted">
-                {displayDeclinedMotebehov && <DeclinedMotebehov />}
+                {displayDeclinedMotebehov && <DeclinedMotebehov/>}
 
                 <div className="panel tidOgSted__sted">
-                    <Motested sted={deltaker.svar[0].sted} />
+                    <Motested sted={deltaker.svar[0].sted}/>
                 </div>
                 <div className="panel tidOgSted__alternativer">
                     <FieldArray
@@ -129,7 +131,7 @@ export const Skjema = (
                         autofill={autofill}
                     />
                     <AlertInfo>
-                        <Ikon kind="info-sirkel-fyll" />
+                        <Ikon kind="info-sirkel-fyll"/>
                         <AlertText>
                             {texts.husk}
                         </AlertText>

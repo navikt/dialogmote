@@ -19,7 +19,7 @@ const Tekstomraade = (props) => {
         <Textarea
             maxLength={maxLength}
             id={id}
-            feil={feilmelding}
+            feil={feilmelding ? feilmelding.feilmelding : undefined}
             {...input} />
     );
 };

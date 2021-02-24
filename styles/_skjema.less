@@ -12,11 +12,6 @@ label.skjema__sporsmal {
   outline: none;
 }
 
-.skjema__feilomrade--harFeil:focus {
-  outline: none;
-  box-shadow: 0 0 0 8px @pinkErrorBg, 0 0 0 11px @orangeFocus;
-}
-
 .skjema__legend {
   display: block;
 }
@@ -27,15 +22,23 @@ label.skjema__sporsmal {
   padding: 0;
 }
 
-.inputPanelGruppe--horisontal {
-    margin-bottom: 1.25rem;
+.skjema__checkbox-container {
+  padding-bottom: 0.7em;
+}
 
-    @media (min-width: 450px) {
-      .inputPanelGruppe__inner {
+.skjema__radiobutton-container {
+  padding-bottom: 0.7em;
+}
+
+.inputPanelGruppe--horisontal {
+  margin-bottom: 1.25rem;
+
+  @media (min-width: 450px) {
+    .inputPanelGruppe__inner {
       display: flex;
     }
 
-    .radioPanel {
+    .radioPanel  {
       flex: 1;
       margin-left: .5rem;
       margin-right: .5rem;

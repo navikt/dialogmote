@@ -8,7 +8,7 @@ const Feilmelding = (
     },
 ) => {
     return (
-        <p className="skjema__feilmelding" aria-live="polite">
+        <p className="skjema__feilmelding typo-feilmelding" aria-live="polite">
             {submitFailed && error}
         </p>
     );
@@ -29,7 +29,7 @@ const Feilomrade = (
     return (
         <div className={submitFailed && error ? 'skjema__feilomrade skjema__feilomrade--feil' : 'skjema__feilomrade'}>
             {children}
-            <Feilmelding submitFailed={submitFailed} error={error} />
+            <Feilmelding submitFailed={submitFailed} error={error}/>
         </div>
     );
 };
