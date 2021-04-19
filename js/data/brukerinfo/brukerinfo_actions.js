@@ -7,31 +7,31 @@ export const HENTER_SYKMELDTINFODATA = 'HENTER_SYKMELDTINFODATA';
 export const HENT_SYKMELDTINFODATA_FEILET = 'HENT_SYKMELDTINFODATA_FEILET';
 
 export function setErInnlogget() {
-    return {
-        type: BRUKER_ER_INNLOGGET,
-    };
+  return {
+    type: BRUKER_ER_INNLOGGET,
+  };
 }
 
 export function setErUtlogget() {
-    return {
-        type: BRUKER_ER_UTLOGGET,
-    };
+  return {
+    type: BRUKER_ER_UTLOGGET,
+  };
 }
 
 export function sjekkerInnlogging() {
-    return {
-        type: SJEKKER_INNLOGGING,
-    };
+  return {
+    type: SJEKKER_INNLOGGING,
+  };
 }
 
 export function sjekkInnlogging() {
-    return {
-        type: SJEKK_INNLOGGING_FORESPURT,
-    };
+  return {
+    type: SJEKK_INNLOGGING_FORESPURT,
+  };
 }
 
 export function sjekkInnloggingFeilet() {
-    return {
-        type: SJEKK_INNLOGGING_FEILET,
-    };
+  return {
+    type: SJEKK_INNLOGGING_FEILET,
+  };
 }

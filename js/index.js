@@ -2,36 +2,24 @@ import 'whatwg-fetch';
 import 'babel-polyfill';
 import { render } from 'react-dom';
 import React from 'react';
-import {
-    applyMiddleware,
-    combineReducers,
-    compose,
-    createStore,
-} from 'redux';
+import { applyMiddleware, combineReducers, compose, createStore } from 'redux';
 import { Provider } from 'react-redux';
 import createSagaMiddleware from 'redux-saga';
-import {
-    setPerformOnHttpCalls,
-} from '@navikt/digisyfo-npm';
+import { setPerformOnHttpCalls } from '@navikt/digisyfo-npm';
 import AppRouter from './routers/AppRouter';
 import history from './history';
 import rootSaga from './data/rootSaga';
 import '../styles/styles.less';
 import setPerformOnOppDialogHttpCalls from './oppfolgingsdialogNpm/setPerformOnOppDialogHttpCalls';
 import reducers from './data/reducers';
-import {
-    forlengInnloggetSesjon,
-    sjekkInnloggingssesjon,
-} from './timeout/timeout_actions';
+import { forlengInnloggetSesjon, sjekkInnloggingssesjon } from './timeout/timeout_actions';
 
 const rootReducer = combineReducers(reducers);
 
 const sagaMiddleware = createSagaMiddleware();
 
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
-const store = createStore(rootReducer, /* preloadedState, */ composeEnhancers(
-    applyMiddleware(sagaMiddleware),
-));
+const store = createStore(rootReducer, /* preloadedState, */ composeEnhancers(applyMiddleware(sagaMiddleware)));
 
 sagaMiddleware.run(rootSaga);
 
@@ -40,24 +28,21 @@ store.dispatch(forlengInnloggetSesjon());
 // </OBS>
 
 setPerformOnHttpCalls(() => {
-    store.dispatch(forlengInnloggetSesjon());
+  store.dispatch(forlengInnloggetSesjon());
 });
 setPerformOnOppDialogHttpCalls(() => {
-    store.dispatch(forlengInnloggetSesjon());
+  store.dispatch(forlengInnloggetSesjon());
 });
 
 setInterval(() => {
-    store.dispatch(sjekkInnloggingssesjon());
+  store.dispatch(sjekkInnloggingssesjon());
 }, 5000);
 
 render(
-    <Provider store={store}>
-        <AppRouter history={history} />
-    </Provider>,
-    document.getElementById('maincontent'),
+  <Provider store={store}>
+    <AppRouter history={history} />
+  </Provider>,
+  document.getElementById('maincontent')
 );
 
-export {
-    store,
-    history,
-};
+export { store, history };

@@ -5,28 +5,20 @@ import SvarMotebehovSkjema from './SvarMotebehovSkjema';
 import MotebehovInfoForSvar from './MotebehovInfoForSvar';
 import FolketrygdlovenTekst from './FolketrygdlovenTekst';
 
-const MotebehovSvar = (
-    {
-        motebehovSvarReducer,
-        svarMotebehov,
-    },
-) => {
-    return (
-        <div className="motebehovSvar">
-            <FolketrygdlovenTekst />
+const MotebehovSvar = ({ motebehovSvarReducer, svarMotebehov }) => {
+  return (
+    <div className="motebehovSvar">
+      <FolketrygdlovenTekst />
 
-            <MotebehovInfoForSvar />
+      <MotebehovInfoForSvar />
 
-            <SvarMotebehovSkjema
-                motebehovSvarReducer={motebehovSvarReducer}
-                svarMotebehov={svarMotebehov}
-            />
-        </div>
-    );
+      <SvarMotebehovSkjema motebehovSvarReducer={motebehovSvarReducer} svarMotebehov={svarMotebehov} />
+    </div>
+  );
 };
 MotebehovSvar.propTypes = {
-    motebehovSvarReducer: motebehovSvarReducerPt,
-    svarMotebehov: PropTypes.func,
+  motebehovSvarReducer: motebehovSvarReducerPt,
+  svarMotebehov: PropTypes.func,
 };
 
 export default MotebehovSvar;
