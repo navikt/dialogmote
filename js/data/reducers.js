@@ -8,14 +8,14 @@ import history from '../history';
 import timeout from '../timeout/timeout';
 
 const reducers = {
-    brukerinfo,
-    history,
-    mote,
-    motebehov,
-    motebehovSvar,
-    svar,
-    timeout,
-    form: formReducer,
+  brukerinfo,
+  history,
+  mote,
+  motebehov,
+  motebehovSvar,
+  svar,
+  timeout,
+  form: formReducer,
 };
 
 export default reducers;

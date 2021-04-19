@@ -10,58 +10,58 @@ export const SVAR_MOTEBEHOV_SENDT = 'SVAR_MOTEBEHOV_SENDT';
 export const SVAR_MOTEBEHOV_FEILET = 'SVAR_MOTEBEHOV_FEILET';
 
 export function hentMotebehov() {
-    return {
-        type: HENT_MOTEBEHOV_FORESPURT,
-    };
+  return {
+    type: HENT_MOTEBEHOV_FORESPURT,
+  };
 }
 
 export function hentMotebehovHenter() {
-    return {
-        type: HENT_MOTEBEHOV_HENTER,
-    };
+  return {
+    type: HENT_MOTEBEHOV_HENTER,
+  };
 }
 
 export function hentMotebehovHentet(data = []) {
-    return {
-        type: HENT_MOTEBEHOV_HENTET,
-        data,
-    };
+  return {
+    type: HENT_MOTEBEHOV_HENTET,
+    data,
+  };
 }
 
 export function hentMotebehovFeilet() {
-    return {
-        type: HENT_MOTEBEHOV_FEILET,
-    };
+  return {
+    type: HENT_MOTEBEHOV_FEILET,
+  };
 }
 
 export function hentMotebehovForbudt() {
-    return {
-        type: HENT_MOTEBEHOV_FORBUDT,
-    };
+  return {
+    type: HENT_MOTEBEHOV_FORBUDT,
+  };
 }
 
 export function svarMotebehov(svar) {
-    return {
-        type: SVAR_MOTEBEHOV_FORESPURT,
-        svar,
-    };
+  return {
+    type: SVAR_MOTEBEHOV_FORESPURT,
+    svar,
+  };
 }
 
 export function svarMotebehovSender() {
-    return {
-        type: SVAR_MOTEBEHOV_SENDER,
-    };
+  return {
+    type: SVAR_MOTEBEHOV_SENDER,
+  };
 }
 
 export function svarMotebehovSendt(svar) {
-    return {
-        type: SVAR_MOTEBEHOV_SENDT,
-        svar,
-    };
+  return {
+    type: SVAR_MOTEBEHOV_SENDT,
+    svar,
+  };
 }
 
 export function svarMotebehovFeilet() {
-    return {
-        type: SVAR_MOTEBEHOV_FEILET,
-    };
+  return {
+    type: SVAR_MOTEBEHOV_FEILET,
+  };
 }
