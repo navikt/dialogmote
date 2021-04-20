@@ -101,6 +101,51 @@ export class MeldMotebehovSkjemaKomponent extends Component {
     this.handleSubmit = this.handleSubmit.bind(this);
   }
 
+  updateFeilOppsummeringState = (feilmelding, elementId) => {
+    const { errorList } = this.state;
+    const i = errorList.findIndex((obj) => obj.skjemaelementId === elementId);
+
+    if (i > -1 && feilmelding === undefined) {
+      errorList.splice(i, 1);
+      this.setState({
+        errorList,
+      });
+    } else if (i === -1 && feilmelding !== undefined) {
+      errorList.push({ skjemaelementId: elementId, feilmelding });
+    }
+  };
+
+  validateHarMoteBehov = (value) => {
+    let feilmelding;
+    if (!value) {
+      feilmelding = 'Velg alternativ';
+    }
+    this.updateFeilOppsummeringState(feilmelding, FELTER.harMotebehov.id);
+    return feilmelding;
+  };
+
+  validateForklaring = (value) => {
+    let feilmelding;
+    const isForklaringPresent = value && value.trim().length > 0;
+    if (isForklaringPresent && value.match(tekstfeltRegex)) {
+      feilmelding = 'Ugyldig spesialtegn er oppgitt';
+    }
+
+    const forklaringLengde = value ? value.length : 0;
+    if (forklaringLengde > MAX_LENGTH) {
+      feilmelding = `Maks ${MAX_LENGTH} tegn tillatt`;
+    }
+    this.updateFeilOppsummeringState(feilmelding, FELTER.forklaring.id);
+    return feilmelding;
+  };
+
+  validateAllFields = (values) => {
+    return {
+      harMotebehov: this.validateHarMoteBehov(values.harMotebehov),
+      forklaring: this.validateForklaring(values.forklaring),
+    };
+  };
+
   handleSubmit(values) {
     const { svarMotebehov } = this.props;
 
@@ -141,67 +186,24 @@ export class MeldMotebehovSkjemaKomponent extends Component {
     svarMotebehov(values);
   }
 
-  updateFeilOppsummeringState = (feilmelding, elementId) => {
-    const i = this.state.errorList.findIndex((obj) => obj.skjemaelementId === elementId);
-    let errorList = this.state.errorList;
-
-    if (i > -1 && feilmelding === undefined) {
-      errorList.splice(i, 1);
-      this.setState({
-        errorlist: errorList,
-      });
-    } else if (i === -1 && feilmelding !== undefined) {
-      errorList.push({ skjemaelementId: elementId, feilmelding: feilmelding });
-    }
-  };
-
-  validateHarMoteBehov = (value) => {
-    let feilmelding = undefined;
-    if (!value) {
-      feilmelding = 'Velg alternativ';
-    }
-    this.updateFeilOppsummeringState(feilmelding, FELTER.harMotebehov.id);
-    return feilmelding;
-  };
-
-  validateForklaring = (value) => {
-    let feilmelding = undefined;
-    const isForklaringPresent = value && value.trim().length > 0;
-    if (isForklaringPresent && value.match(tekstfeltRegex)) {
-      feilmelding = 'Ugyldig spesialtegn er oppgitt';
-    }
-
-    const forklaringLengde = value ? value.length : 0;
-    if (forklaringLengde > MAX_LENGTH) {
-      feilmelding = `Maks ${MAX_LENGTH} tegn tillatt`;
-    }
-    this.updateFeilOppsummeringState(feilmelding, FELTER.forklaring.id);
-    return feilmelding;
-  };
-
-  validateAllFields = (values) => {
-    return {
-      harMotebehov: this.validateHarMoteBehov(values.harMotebehov),
-      forklaring: this.validateForklaring(values.forklaring),
-    };
-  };
-
   render() {
     const { motebehovSvarReducer, handleSubmit } = this.props;
+    const { isFormSubmitted, errorList } = this.state;
+
     return (
       <form className="svarMotebehovSkjema" onSubmit={handleSubmit(this.handleSubmit)}>
         <ObligatoriskeFelterInfotekst />
         <div className="panel">
-          <div className={'skjema__checkbox-container'}>
+          <div className="skjema__checkbox-container">
             <Field
               id={FELTER.harMotebehov.id}
               name={FELTER.harMotebehov.navn}
               component={CheckboxSelvstendig}
               label={FELTER.harMotebehov.svar.tekst}
-              validate={this.state.isFormSubmitted ? this.validateHarMoteBehov : undefined}
+              validate={isFormSubmitted ? this.validateHarMoteBehov : undefined}
             />
           </div>
-          <div className={'skjema__checkbox-container'}>
+          <div className="skjema__checkbox-container">
             <Field
               id={FELTER.lege.id}
               name={FELTER.lege.navn}
@@ -211,12 +213,12 @@ export class MeldMotebehovSkjemaKomponent extends Component {
           </div>
           <MotebehovSkjemaTekstomraade
             felt={FELTER.forklaring}
-            isFormSubmitted={this.state.isFormSubmitted}
+            isFormSubmitted={isFormSubmitted}
             validateForklaring={this.validateForklaring}
           />
 
-          {this.state.errorList.length > 0 && (
-            <Feiloppsummering tittel="For å gå videre må du rette opp følgende:" feil={this.state.errorList} />
+          {errorList.length > 0 && (
+            <Feiloppsummering tittel="For å gå videre må du rette opp følgende:" feil={errorList} />
           )}
           <MotebehovSkjemaKnapper sender={motebehovSvarReducer.sender} />
         </div>
@@ -241,7 +243,7 @@ const mapStateToProps = (state) => {
   };
 };
 
-let MeldMotebehovSkjema = reduxForm({
+const MeldMotebehovSkjema = reduxForm({
   form: SVAR_MOTEBEHOV_SKJEMANAVN,
 })(MeldMotebehovSkjemaKomponent);
 

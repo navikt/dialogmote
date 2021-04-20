@@ -3,17 +3,6 @@ import deepFreeze from 'deep-freeze';
 import * as brukerinfoActions from './brukerinfo_actions';
 import brukerinfo from './brukerinfo';
 
-// eslint-disable-next-line no-unused-vars
-let item;
-
-window.localStorage = {};
-window.localStorage.getItem = (i) => {
-  return i;
-};
-window.localStorage.setItem = (_item) => {
-  item = _item;
-};
-
 describe('brukerinfo', () => {
   let initiellState;
 

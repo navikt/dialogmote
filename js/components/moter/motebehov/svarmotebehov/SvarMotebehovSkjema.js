@@ -2,7 +2,7 @@ import { Feiloppsummering } from 'nav-frontend-skjema';
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { Field, reduxForm, getFormValues, SubmissionError, formValueSelector } from 'redux-form';
+import { Field, reduxForm, SubmissionError, formValueSelector } from 'redux-form';
 import Alertstripe from 'nav-frontend-alertstriper';
 import { motebehovSvarReducerPt } from '../../../../propTypes';
 import Tekstomraade from '../../../skjema/Tekstomraade';
@@ -150,24 +150,12 @@ export class SvarMotebehovSkjemaKomponent extends Component {
     this.handleSubmit = this.handleSubmit.bind(this);
   }
 
-  removeError = (id) => {
-    const errors = Object.assign(this.state.errorList);
-    const i = errors.findIndex((e) => {
-      return e.skjemaelementId === id;
-    });
-
-    if (i !== -1) {
-      errors.splice(i, 1);
-    }
-
-    this.setState({
-      errorList: errors,
-    });
-  };
-
   componentWillReceiveProps(nextProps) {
     const { harMotebehov, forklaring } = nextProps;
-    if (harMotebehov && harMotebehov !== this.props.harMotebehov && this.state.isFormSubmitted) {
+    const { harMotebehov: harMotebehovProp } = this.props;
+    const { isFormSubmitted } = this.state;
+
+    if (harMotebehov && harMotebehov !== harMotebehovProp && isFormSubmitted) {
       if (harMotebehov === 'false') {
         this.validateHarMoteBehov(harMotebehov);
         this.validateForklaring(forklaring);
@@ -178,6 +166,73 @@ export class SvarMotebehovSkjemaKomponent extends Component {
       }
     }
   }
+
+  removeError = (id) => {
+    const { errorList } = this.state;
+
+    const i = errorList.findIndex((e) => {
+      return e.skjemaelementId === id;
+    });
+
+    if (i !== -1) {
+      errorList.splice(i, 1);
+    }
+
+    this.setState({
+      errorList,
+    });
+  };
+
+  updateFeilOppsummeringState = (feilmelding, elementId) => {
+    const { errorList } = this.state;
+    const i = errorList.findIndex((obj) => obj.skjemaelementId === elementId);
+
+    if (i > -1 && feilmelding === undefined) {
+      errorList.splice(i, 1);
+      this.setState({
+        errorList,
+      });
+    } else if (i === -1 && feilmelding !== undefined) {
+      errorList.push({ skjemaelementId: elementId, feilmelding });
+    }
+  };
+
+  validateHarMoteBehov = (value) => {
+    let feilmelding;
+    if (!value) {
+      feilmelding = 'Velg alternativ';
+    }
+    this.state.harMotebehov = value;
+    this.updateFeilOppsummeringState(feilmelding, FELTER.harMotebehov.id);
+    return feilmelding;
+  };
+
+  validateForklaring = (value) => {
+    const { harMotebehov } = this.state;
+    let feilmelding;
+    if (harMotebehov === 'false') {
+      if (!value || value.trim().length === 0) {
+        feilmelding = 'Fyll inn tekst';
+      } else if (value.match(tekstfeltRegex)) {
+        feilmelding = 'Ugyldig spesialtegn er oppgitt';
+      }
+    }
+
+    const forklaringLengde = value ? value.length : 0;
+    if (forklaringLengde > MAX_LENGTH) {
+      feilmelding = `Maks ${MAX_LENGTH} tegn tillatt`;
+    }
+
+    this.updateFeilOppsummeringState(feilmelding, FELTER.forklaring.id);
+    return feilmelding;
+  };
+
+  validateAllFields = (values) => {
+    return {
+      harMotebehov: this.validateHarMoteBehov(values.harMotebehov),
+      forklaring: this.validateForklaring(values.forklaring),
+    };
+  };
 
   handleSubmit(values) {
     const { svarMotebehov } = this.props;
@@ -220,58 +275,9 @@ export class SvarMotebehovSkjemaKomponent extends Component {
     svarMotebehov(values);
   }
 
-  updateFeilOppsummeringState = (feilmelding, elementId) => {
-    const i = this.state.errorList.findIndex((obj) => obj.skjemaelementId === elementId);
-    let errorList = this.state.errorList;
-
-    if (i > -1 && feilmelding === undefined) {
-      errorList.splice(i, 1);
-      this.setState({
-        errorlist: errorList,
-      });
-    } else if (i === -1 && feilmelding !== undefined) {
-      errorList.push({ skjemaelementId: elementId, feilmelding: feilmelding });
-    }
-  };
-
-  validateHarMoteBehov = (value) => {
-    let feilmelding = undefined;
-    if (!value) {
-      feilmelding = 'Velg alternativ';
-    }
-    this.state.harMotebehov = value;
-    this.updateFeilOppsummeringState(feilmelding, FELTER.harMotebehov.id);
-    return feilmelding;
-  };
-
-  validateForklaring = (value) => {
-    let feilmelding = undefined;
-    if (this.state.harMotebehov === 'false') {
-      if (!value || value.trim().length === 0) {
-        feilmelding = 'Fyll inn tekst';
-      } else if (value.match(tekstfeltRegex)) {
-        feilmelding = 'Ugyldig spesialtegn er oppgitt';
-      }
-    }
-
-    const forklaringLengde = value ? value.length : 0;
-    if (forklaringLengde > MAX_LENGTH) {
-      feilmelding = `Maks ${MAX_LENGTH} tegn tillatt`;
-    }
-
-    this.updateFeilOppsummeringState(feilmelding, FELTER.forklaring.id);
-    return feilmelding;
-  };
-
-  validateAllFields = (values) => {
-    return {
-      harMotebehov: this.validateHarMoteBehov(values.harMotebehov),
-      forklaring: this.validateForklaring(values.forklaring),
-    };
-  };
-
   render() {
     const { harMotebehov, motebehovSvarReducer, handleSubmit } = this.props;
+    const { isFormSubmitted, errorList } = this.state;
     return (
       <form className="svarMotebehovSkjema" onSubmit={handleSubmit(this.handleSubmit)}>
         <ObligatoriskeFelterInfotekst />
@@ -279,17 +285,17 @@ export class SvarMotebehovSkjemaKomponent extends Component {
           <VilHaMoteSvarKnapper
             felt={FELTER.harMotebehov}
             handleOptionChange={this.setHarBehovSvar}
-            validate={this.state.isFormSubmitted ? this.validateHarMoteBehov : undefined}
+            validate={isFormSubmitted ? this.validateHarMoteBehov : undefined}
           />
           {harMotebehov === 'false' && <AlertstripeNei />}
           <MotebehovSkjemaTekstomraade
             felt={FELTER.forklaring}
             harMotebehov={harMotebehov}
-            isFormSubmitted={this.state.isFormSubmitted}
+            isFormSubmitted={isFormSubmitted}
             validateForklaring={this.validateForklaring}
           />
-          {this.state.errorList.length > 0 && (
-            <Feiloppsummering tittel="For å gå videre må du rette opp følgende:" feil={this.state.errorList} />
+          {errorList.length > 0 && (
+            <Feiloppsummering tittel="For å gå videre må du rette opp følgende:" feil={errorList} />
           )}
           <MotebehovSkjemaKnapper sender={motebehovSvarReducer.sender} />
         </div>
@@ -305,6 +311,7 @@ SvarMotebehovSkjemaKomponent.propTypes = {
   handleSubmit: PropTypes.func,
   motebehovSvarReducer: motebehovSvarReducerPt,
   svarMotebehov: PropTypes.func,
+  forklaring: PropTypes.string,
 };
 
 const valueSelector = formValueSelector(SVAR_MOTEBEHOV_SKJEMANAVN);
