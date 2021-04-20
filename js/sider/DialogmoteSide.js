@@ -25,6 +25,21 @@ const tekster = {
   },
 };
 
+const hentTittelTekstFraModus = (modus) => {
+  const { titler } = tekster;
+  switch (modus) {
+    case SKJEMA:
+    case AVBRUTT:
+      return titler.tidspunkt;
+    case MOTESTATUS:
+      return titler.svart;
+    case BEKREFTET:
+      return titler.bekreftet;
+    default:
+      return titler.tidspunkt;
+  }
+};
+
 export class Container extends Component {
   componentWillMount() {
     const { doHentMote } = this.props;
@@ -39,9 +54,9 @@ export class Container extends Component {
   render() {
     const { henter, hentet, mote, brodsmuler, hentingFeilet, moteIkkeFunnet, doSendSvar } = this.props;
     const modus = getSvarsideModus(mote);
-    const tittel = this.hentTittelTekstFraModus(modus);
+    const tittel = hentTittelTekstFraModus(modus);
     return (
-      <Side tittel={tittel} brodsmuler={[...brodsmuler, { tittel: tittel }]} laster={henter || !hentet}>
+      <Side tittel={tittel} brodsmuler={[...brodsmuler, { tittel }]} laster={henter || !hentet}>
         {(() => {
           if (henter) {
             return <AppSpinner />;
@@ -76,21 +91,6 @@ export class Container extends Component {
         })()}
       </Side>
     );
-  }
-
-  hentTittelTekstFraModus(modus) {
-    const titler = tekster.titler;
-    switch (modus) {
-      case SKJEMA:
-      case AVBRUTT:
-        return titler.tidspunkt;
-      case MOTESTATUS:
-        return titler.svart;
-      case BEKREFTET:
-        return titler.bekreftet;
-      default:
-        return titler.tidspunkt;
-    }
   }
 }
 
