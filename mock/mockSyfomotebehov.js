@@ -60,7 +60,7 @@ function getMotebehovStatus(type) {
   }
 }
 
-function mockPilotEndepunkterForLokalmiljo(server) {
+function mockSyfomotebehov(server) {
   server.get('/syfomotebehov/api/v2/arbeidstaker/motebehov', (req, res) => {
     res.setHeader('Content-Type', 'application/json');
     res.send(JSON.stringify(getMotebehovStatus(motebehovStatusEnum.MELD_BEHOV)));
@@ -72,21 +72,6 @@ function mockPilotEndepunkterForLokalmiljo(server) {
     res.setHeader('Content-Type', 'application/json');
     res.send(JSON.stringify(nyttMotebehov));
   });
-}
-
-function mockPilotEndepunkterForOpplaeringsmiljo(server) {
-  server.get('/syfomotebehov/api/motebehov', (req, res) => {
-    res.status(403);
-    res.send();
-  });
-}
-
-function mockSyfomotebehov(server, erLokal) {
-  if (erLokal) {
-    mockPilotEndepunkterForLokalmiljo(server);
-  } else {
-    mockPilotEndepunkterForOpplaeringsmiljo(server);
-  }
 }
 
 module.exports = mockSyfomotebehov;

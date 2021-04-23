@@ -17,7 +17,10 @@ import DeclinedMotebehov from './DeclinedMotebehov';
 import { erMotebehovTilgjengelig } from '../../../utils/motebehovUtils';
 
 const texts = {
-  error: 'Beklager, det oppstod en feil!',
+  error:
+    window.location.href.indexOf('heroku') === -1
+      ? 'Beklager, det oppstod en feil! Vennligst prøv igjen senere.'
+      : 'Denne funksjonen virker ikke på testsiden',
   submitButton: 'Send svar',
   personvern: `
         Ifølge folketrygdloven kan NAV innkalle deg og arbeidsgiveren din til dialogmøte for å drøfte hvordan du kan komme tilbake til jobb. 

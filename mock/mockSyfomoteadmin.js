@@ -1,13 +1,10 @@
-const mockData = require('./mockData');
-const enums = require('./mockDataEnums');
+const { siste } = require('./data/siste');
 
-function mockSyfomoteadmin(server, erLokal) {
-  if (erLokal) {
-    server.get('/syfomoteadmin/api/bruker/arbeidstaker/moter/siste', (req, res) => {
-      res.setHeader('Content-Type', 'application/json');
-      res.send(JSON.stringify(mockData[enums.SISTE]));
-    });
-  }
+function mockSyfomoteadmin(server) {
+  server.get('/syfomoteadmin/api/bruker/arbeidstaker/moter/siste', (req, res) => {
+    res.setHeader('Content-Type', 'application/json');
+    res.send(JSON.stringify(siste));
+  });
 }
 
 module.exports = mockSyfomoteadmin;
