@@ -47,7 +47,6 @@ jobs:
           echo ${IMAGE}
 
   deploy-dev:
-    if: github.ref == 'refs/heads/master'
     name: Deploy to NAIS Dev-sbs
     needs: build
     runs-on: ubuntu-latest
