@@ -68,3 +68,4 @@ jobs:
           SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
           MSG_MINIMAL: commit
           SLACK_COLOR: ${{ job.status }}
+          
