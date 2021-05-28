@@ -38,6 +38,8 @@ const motebehovStatusSvarBehovSvar = {
 const motebehovStatusEnum = {
   SVAR_BEHOV: 'SVAR_BEHOV',
   SVAR_BEHOV_SVAR: 'SVAR_BEHOV_SVAR',
+  MELD_BEHOV: 'MELD_BEHOV',
+  MELD_BEHOV_SVAR: 'MELD_BEHOV_SVAR',
 };
 
 function getMotebehovStatus(type) {
@@ -63,7 +65,7 @@ function getMotebehovStatus(type) {
 function mockPilotEndepunkterForLokalmiljo(server) {
   server.get('/syfomotebehov/api/v2/arbeidstaker/motebehov', (req, res) => {
     res.setHeader('Content-Type', 'application/json');
-    res.send(JSON.stringify(getMotebehovStatus(motebehovStatusEnum.MELD_BEHOV)));
+    res.send(JSON.stringify(getMotebehovStatus(motebehovStatusEnum.MELD_BEHOV_SVAR)));
   });
 
   server.post('/syfomotebehov/api/v2/arbeidstaker/motebehov', (req, res) => {

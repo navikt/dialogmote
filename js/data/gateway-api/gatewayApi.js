@@ -75,7 +75,38 @@ export function get(url, headers = null) {
     });
 }
 
-export const post = (url, body) => {
+export function getRaw(url, headers = null) {
+  const customFetch = getFetch();
+  const CustomHeaders = getHeaders();
+  const headersArg = headers || new CustomHeaders();
+  return customFetch(leggTilCacheBuster(url), {
+    credentials: 'include',
+    headers: headersArg,
+  })
+    .then((res) => {
+      if (res.status === 401) {
+        log(res, 'Redirect til login');
+        window.location.href = `${hentLoginUrl()}?redirect=${window.location.origin}/sykefravaer`;
+        throw new Error(MANGLER_OIDC_TOKEN);
+      } else if (res.status === 404) {
+        log(res);
+        throw new Error('404');
+      } else if (res.status === 403) {
+        log(res);
+        throw new Error('403');
+      } else if (res.status > 400) {
+        log(res);
+        throw new Error('Forespørsel feilet');
+      }
+      return res;
+    })
+    .catch((err) => {
+      log(err);
+      throw err;
+    });
+}
+
+export const post = (url, body, headers = {}) => {
   const customFetch = getFetch();
   const CustomHeaders = getHeaders();
   return customFetch(url, {
@@ -84,6 +115,7 @@ export const post = (url, body) => {
     body: JSON.stringify(body),
     headers: new CustomHeaders({
       'Content-Type': 'application/json',
+      ...headers,
     }),
   })
     .then((res) => {
@@ -124,8 +156,24 @@ export const hentApiUrl = () => {
   return 'https://syfoapi-q.nav.no/syfosoknad/api';
 };
 
+export const API_NAVN = {
+  SYFOMOTEADMIN: 'syfomoteadmin',
+  SYFOMOTEBEHOV: 'syfomotebehov',
+  ISDIALOGMOTE: 'isdialogmote',
+};
+
 export const hentSyfoApiUrl = (appNavn) => {
   const url = window && window.location && window.location.href ? window.location.href : '';
+
+  if (appNavn === API_NAVN.ISDIALOGMOTE) {
+    // Lokalt
+    if (url.indexOf('localhost') > -1) {
+      return `/${appNavn}/api`;
+    }
+
+    return 'https://isdialogmote.dev.nav.no/api';
+  }
+
   if (url.indexOf('tjenester.nav') > -1) {
     // Prod
     return `https://syfoapi.nav.no/${appNavn}/api`;
@@ -136,9 +184,4 @@ export const hentSyfoApiUrl = (appNavn) => {
   }
   // Preprod
   return `https://syfoapi-q.nav.no/${appNavn}/api`;
-};
-
-export const API_NAVN = {
-  SYFOMOTEADMIN: 'syfomoteadmin',
-  SYFOMOTEBEHOV: 'syfomotebehov',
 };

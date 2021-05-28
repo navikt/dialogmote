@@ -68,3 +68,24 @@ export const moteplanleggerDeltakertypePt = PropTypes.oneOf([
   moteplanleggerDeltakertyper.BRUKER,
   moteplanleggerDeltakertyper.ARBEIDSGIVER,
 ]);
+
+export const documentComponentPtMVP = PropTypes.shape({
+  type: PropTypes.string,
+  title: PropTypes.string,
+  texts: PropTypes.array,
+});
+
+export const motePtMVP = PropTypes.shape({
+  uuid: PropTypes.string,
+  deltakerUuid: PropTypes.string,
+  createdAt: PropTypes.string,
+  brevType: PropTypes.string,
+  digitalt: PropTypes.bool,
+  lestDato: PropTypes.string,
+  fritekst: PropTypes.string,
+  tid: PropTypes.string,
+  sted: PropTypes.string,
+  videoLink: PropTypes.string,
+  document: PropTypes.arrayOf(documentComponentPtMVP),
+  virksomhetsnummer: PropTypes.string,
+});
