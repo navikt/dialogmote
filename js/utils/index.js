@@ -21,6 +21,12 @@ export const lagDesimaltall = (streng) => {
   return s;
 };
 
+export function getCookie(name) {
+  const re = new RegExp(`${name}=([^;]+)`);
+  const match = re.exec(document.cookie);
+  return match !== null ? match[1] : '';
+}
+
 export const lagHeltall = (streng) => {
   const strengMedDesimaler = lagDesimaltall(streng);
   return strengMedDesimaler.split(',')[0];
