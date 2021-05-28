@@ -1,17 +1,24 @@
-html, body {
+html,
+body {
   height: 100%;
 }
 
 body {
   background-color: #efefef;
   color: #3e3832;
-  font-family: Arial,sans-serif;
+  font-family: Arial, sans-serif;
   line-height: 1.42857143;
   margin: 0;
 }
 
+.appWrapper {
+  display: flex;
+  flex-flow: column;
+  height: 100%;
+}
+
 .app {
-  min-height: 70vh;
+  flex: 1 1 auto;
 }
 
 .vekk {

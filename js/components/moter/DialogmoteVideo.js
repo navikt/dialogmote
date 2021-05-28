@@ -13,10 +13,10 @@ const texts = {
 
 const DialogmoteVideo = () => {
   return (
-    <div className="panel">
+    <React.Fragment>
       <h2 className="panel__tittel">{texts.title}</h2>
       <Video film={DIALOGMOTE_FILM_FILES} />
-    </div>
+    </React.Fragment>
   );
 };
 
