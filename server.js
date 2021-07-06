@@ -1,14 +1,18 @@
+/* eslint-disable object-shorthand */
 require('dotenv').config();
 
 const express = require('express');
 const path = require('path');
 const mustacheExpress = require('mustache-express');
 const Promise = require('promise');
-const getDecorator = require('./decorator');
 const prometheus = require('prom-client');
 
+const proxy = require('express-http-proxy');
+const cookieParser = require('cookie-parser');
+const getDecorator = require('./decorator');
+
 // Prometheus metrics
-const collectDefaultMetrics = prometheus.collectDefaultMetrics;
+const { collectDefaultMetrics } = prometheus;
 collectDefaultMetrics({ timeout: 5000 });
 
 const httpRequestDurationMicroseconds = new prometheus.Histogram({
@@ -47,6 +51,28 @@ function nocache(req, res, next) {
 }
 
 const startServer = (html) => {
+  server.use(
+    '/dialogmote/api/v1/arbeidstaker/brev',
+    cookieParser(),
+    proxy('isdialogmote.dev.intern.nav.no', {
+      https: true,
+      parseReqBody: false,
+      proxyReqOptDecorator(proxyReqOpts, srcReq) {
+        const token = srcReq.cookies['selvbetjening-idtoken'];
+        proxyReqOpts.headers.Authorization = `Bearer ${token}`;
+        proxyReqOpts.headers['Content-Type'] = 'application/json';
+        return proxyReqOpts;
+      },
+      proxyReqPathResolver(req) {
+        return '/api/v1/arbeidstaker/brev';
+      },
+      proxyErrorHandler(err, res, next) {
+        console.log('Error in proxy for isdialogmote', err.message);
+        next(err);
+      },
+    })
+  );
+
   server.use('/dialogmote/resources', express.static(path.resolve(__dirname, 'dist/resources')));
 
   server.use('/dialogmote/img', express.static(path.resolve(__dirname, 'dist/resources/img')));

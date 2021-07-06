@@ -1,6 +1,6 @@
 import { API_NAVN, hentSyfoApiUrl } from '../../data/gateway-api/gatewayApi';
 
-export const ISDIALOGMOTE_API_BASE_URL = `${hentSyfoApiUrl(API_NAVN.ISDIALOGMOTE)}/v1/arbeidstaker/brev`;
+export const ISDIALOGMOTE_API_BASE_URL = `/dialogmote/api/v1/arbeidstaker/brev`;
 
 export const LANDING_URL = `${process.env.REACT_APP_CONTEXT_ROOT}`;
 
