@@ -52,28 +52,6 @@ function nocache(req, res, next) {
 
 const startServer = (html) => {
   server.use(
-    '/dialogmote/api/v1/arbeidstaker/brev',
-    cookieParser(),
-    proxy('isdialogmote.dev.nav.no', {
-      https: true,
-      parseReqBody: false,
-      proxyReqOptDecorator(proxyReqOpts, srcReq) {
-        const token = srcReq.cookies['selvbetjening-idtoken'];
-        proxyReqOpts.headers.Authorization = `Bearer ${token}`;
-        proxyReqOpts.headers['Content-Type'] = 'application/json';
-        return proxyReqOpts;
-      },
-      proxyReqPathResolver() {
-        return '/api/v1/arbeidstaker/brev';
-      },
-      proxyErrorHandler(err, res, next) {
-        console.log('Error in proxy for isdialogmote', err.message);
-        next(err);
-      },
-    })
-  );
-
-  server.use(
     '/dialogmote/api/v1/arbeidstaker/brev/:uuid/les',
     cookieParser(),
     proxy('isdialogmote.dev.nav.no', {
@@ -113,6 +91,28 @@ const startServer = (html) => {
         const { uuid } = req;
         console.log('uuid: ', uuid);
         return `/api/v1/arbeidstaker/brev/${uuid}/pdf`;
+      },
+      proxyErrorHandler(err, res, next) {
+        console.log('Error in proxy for isdialogmote', err.message);
+        next(err);
+      },
+    })
+  );
+
+  server.use(
+    '/dialogmote/api/v1/arbeidstaker/brev',
+    cookieParser(),
+    proxy('isdialogmote.dev.nav.no', {
+      https: true,
+      parseReqBody: false,
+      proxyReqOptDecorator(proxyReqOpts, srcReq) {
+        const token = srcReq.cookies['selvbetjening-idtoken'];
+        proxyReqOpts.headers.Authorization = `Bearer ${token}`;
+        proxyReqOpts.headers['Content-Type'] = 'application/json';
+        return proxyReqOpts;
+      },
+      proxyReqPathResolver() {
+        return '/api/v1/arbeidstaker/brev';
       },
       proxyErrorHandler(err, res, next) {
         console.log('Error in proxy for isdialogmote', err.message);

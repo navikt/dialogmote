@@ -70,7 +70,7 @@ const Moteinnkallelse = () => {
       {isDateInPast(tid) && <AlertStripeStyled type="advarsel">{texts.pastDateAlertBox}</AlertStripeStyled>}
 
       <DocumentContainer document={innkallelse.document}>
-        {!isDateInPast(tid) && (
+        {isDateInPast(tid) && (
           <LestInnkallelseCheckbox type={brevType} varselUuid={uuid} isRead={!!innkallelse.lestDato} />
         )}
       </DocumentContainer>
@@ -82,7 +82,7 @@ const Moteinnkallelse = () => {
         </InfoStripeStyled>
       )}
 
-      <ButtonLenke mini to="/">
+      <ButtonLenke mini to="/mvp">
         rompe
       </ButtonLenke>
 

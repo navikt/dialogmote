@@ -16,6 +16,7 @@ const AppRouter = ({ history }) => {
       <Route path={`${process.env.REACT_APP_CONTEXT_ROOT}/mote`} component={DialogmoteSide} />
       <Route path={`${process.env.REACT_APP_CONTEXT_ROOT}/mvp/mote`} component={Moteinnkallelse} />
       <Route path={`${process.env.REACT_APP_CONTEXT_ROOT}/referat(/:date)`} component={Motereferat} />
+      <Route path={`${process.env.REACT_APP_CONTEXT_ROOT}/mvp`} component={Landing} />
       <Route path="*" component={Landing} />
     </Router>
   );
