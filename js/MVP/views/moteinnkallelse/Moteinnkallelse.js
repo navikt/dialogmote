@@ -63,19 +63,19 @@ const Moteinnkallelse = () => {
   }
 
   const innkallelse = data[0];
-  const { tid, uuid, varselType } = innkallelse;
+  const { tid, uuid, brevType } = innkallelse;
 
   return (
-    <DialogmoteContainer title={title()} breadcrumb={innkallelseBreadcrumb(breadcrumbTitle(varselType))}>
+    <DialogmoteContainer title={title()} breadcrumb={innkallelseBreadcrumb(breadcrumbTitle(brevType))}>
       {isDateInPast(tid) && <AlertStripeStyled type="advarsel">{texts.pastDateAlertBox}</AlertStripeStyled>}
 
       <DocumentContainer document={innkallelse.document}>
         {!isDateInPast(tid) && (
-          <LestInnkallelseCheckbox type={varselType} varselUuid={uuid} isRead={!!innkallelse.lestDato} />
+          <LestInnkallelseCheckbox type={brevType} varselUuid={uuid} isRead={!!innkallelse.lestDato} />
         )}
       </DocumentContainer>
 
-      {(varselType === INNKALLELSE || varselType === ENDRING) && (
+      {(brevType === INNKALLELSE || brevType === ENDRING) && (
         <InfoStripeStyled>
           {texts.infoBox}
           <Lenke>{texts.infoBoxUrl}</Lenke>

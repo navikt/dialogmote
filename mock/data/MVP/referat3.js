@@ -2,7 +2,7 @@ const referat = {
   uuid: 'mock-uuid6',
   deltakerUuid: 'mock-deltaker-uuid3',
   createdAt: '2009-11-08T12:35:37.669+01:00',
-  varselType: 'REFERAT', // TODO: temporary
+  brevType: 'REFERAT', // TODO: temporary
   lestDato: null,
   digitalt: true,
   fritekst: 'Fri tekst',

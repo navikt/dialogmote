@@ -21,7 +21,7 @@ const Landing = () => {
   // const head = data[0];
   const tail = data.slice(1);
 
-  const previousReferater = tail.filter((hendelse) => hendelse.varselType === REFERAT);
+  const previousReferater = tail.filter((hendelse) => hendelse.brevType === REFERAT);
 
   const previousReferatDates = previousReferater.map(({ tid }) => getShortDate(tid));
 

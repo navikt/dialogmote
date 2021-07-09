@@ -27,7 +27,7 @@ const reducer = (acc, curr) => {
 };
 
 const getReferat = (varsler, date) => {
-  const referater = varsler.filter((hendelse) => hendelse.varselType === REFERAT);
+  const referater = varsler.filter((hendelse) => hendelse.brevType === REFERAT);
 
   if (referater.length === 0) {
     // TODO

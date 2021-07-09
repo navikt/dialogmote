@@ -79,7 +79,7 @@ export const motePtMVP = PropTypes.shape({
   uuid: PropTypes.string,
   deltakerUuid: PropTypes.string,
   createdAt: PropTypes.string,
-  varselType: PropTypes.string,
+  brevType: PropTypes.string,
   digitalt: PropTypes.bool,
   lestDato: PropTypes.string,
   fritekst: PropTypes.string,
