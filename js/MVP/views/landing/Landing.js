@@ -1,4 +1,5 @@
 import React from 'react';
+import { konverterTid } from '../../../utils/moteUtils';
 import DialogmoteContainer from '../../containers/DialogmoteContainer';
 import VeilederLanding from './components/VeilederLanding';
 import MotebehovPanel from './components/MotebehovPanel';
@@ -29,7 +30,8 @@ const Landing = () => {
   const DialogmoteFeaturePanel = () => {
     if (!brevHead) return null;
 
-    // TODO add møteplanlegger <MoteplanleggerPanel />
+    // TODO : logikk for visning MoteinnkallelsePanel vs MoteplanleggerPanel
+    return <MoteplanleggerPanel mote={konverterTid(moteplanlegger.data)} />;
 
     if (brevHead.brevType === brevTypes.REFERAT) {
       const date = getLongMonthDateFormat(brevHead.tid);
