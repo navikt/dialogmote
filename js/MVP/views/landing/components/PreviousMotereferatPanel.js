@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import DialogmotePanel from '../../../containers/DialogmotePanel';
 import RouterLenke from '../../../components/RouterLenke';
 import { MOTEREFERAT_URL } from '../../../globals/paths';
-import { getLongMonthDateFormat, getProgrammaticDateFormat } from '../../../utils';
+import { getLongDateFormat, getProgrammaticDateFormat } from '../../../utils';
 
 const DialogmotePanelStyled = styled(DialogmotePanel)`
   margin-top: 32px;
@@ -31,7 +31,7 @@ const MotereferatList = ({ referatDates }) => {
     <ListStyled>
       {referatDates.map((date) => {
         const programmaticDate = getProgrammaticDateFormat(date);
-        const formattedDate = getLongMonthDateFormat(date);
+        const formattedDate = getLongDateFormat(date);
 
         return (
           <RouterLenke
