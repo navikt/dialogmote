@@ -69,6 +69,7 @@ const Panel = ({ title, text, icon, buttonText, setIsModalOpen, isModalOpen, mot
           {buttonText}
         </ButtonLenke>
       )}
+
       <Modal
         setIsOpen={setIsModalOpen}
         isOpen={isModalOpen}
