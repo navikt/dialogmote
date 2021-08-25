@@ -33,6 +33,7 @@ const getMotePlanleggingsKvitteringInnhold = (modus, mote) => {
   if (modus === MOTESTATUS) {
     return <SvarKvittering mote={mote} />;
   }
+  return null;
 };
 
 const Modal = ({ isOpen, setIsOpen, content }) => {
