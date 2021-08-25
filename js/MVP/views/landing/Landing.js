@@ -1,5 +1,5 @@
 import React from 'react';
-import { konverterTid } from '../../../utils/moteUtils';
+import { AVBRUTT, konverterTid } from '../../../utils/moteUtils';
 import DialogmoteContainer from '../../containers/DialogmoteContainer';
 import VeilederLanding from './components/VeilederLanding';
 import MotebehovPanel from './components/MotebehovPanel';
@@ -27,18 +27,39 @@ const Landing = () => {
   const brevHead = brev.data[0];
   const brevTail = brev.data.slice(1);
 
-  const DialogmoteFeaturePanel = () => {
-    if (!brevHead) return null;
-
-    // TODO : logikk for visning MoteinnkallelsePanel vs MoteplanleggerPanel
-    return <MoteplanleggerPanel mote={konverterTid(moteplanlegger.data)} />;
-
-    if (brevHead.brevType === brevTypes.REFERAT) {
-      const date = getLongMonthDateFormat(brevHead.tid);
-      return <MotereferatPanel date={date} />;
+  const isInnkallelseFlyt = () => {
+    if (!brevHead) {
+      return false;
     }
 
-    return <MoteinnkallelsePanel innkallelse={brevHead} />;
+    const motedata = moteplanlegger.data;
+    const innkallelser = brevTail.filter((hendelse) => hendelse.brevType === brevTypes.INNKALLELSE);
+
+    if (motedata.status === AVBRUTT && innkallelser.length > 0) {
+      return true;
+    }
+
+    if (motedata.status !== AVBRUTT && innkallelser.length > 0) {
+      const innkalelseDatoArraySorted = innkallelser.map((i) => new Date(i.createdAt)).sort((a, b) => b - a);
+      const sistOpprettetInnkallelse = innkalelseDatoArraySorted[0];
+      const sistOpprettetMoteplanleggerMoteTidspunkt = new Date(motedata.opprettetTidspunkt);
+
+      return sistOpprettetInnkallelse > sistOpprettetMoteplanleggerMoteTidspunkt;
+    }
+
+    return false;
+  };
+
+  const DialogmoteFeaturePanel = () => {
+    if (isInnkallelseFlyt()) {
+      if (brevHead.brevType === brevTypes.REFERAT) {
+        const date = getLongMonthDateFormat(brevHead.tid);
+        return <MotereferatPanel date={date} />;
+      }
+      return <MoteinnkallelsePanel innkallelse={brevHead} />;
+    }
+
+    return <MoteplanleggerPanel mote={konverterTid(moteplanlegger.data)} />;
   };
 
   const previousReferater = brevTail.filter((hendelse) => hendelse.brevType === brevTypes.REFERAT);
