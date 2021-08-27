@@ -1,6 +1,8 @@
 import React from 'react';
-import { AVBRUTT, konverterTid } from '../../../utils/moteUtils';
+import { BRUKER } from '../../../enums/moteplanleggerDeltakerTyper';
+import { AVBRUTT, BEKREFTET, getSvarsideModus, konverterTid, MOTESTATUS } from '../../../utils/moteUtils';
 import DialogmoteContainer from '../../containers/DialogmoteContainer';
+import MoteplanleggerPanel from './components/MoteplanleggerPanel';
 import VeilederLanding from './components/VeilederLanding';
 import MotebehovPanel from './components/MotebehovPanel';
 import MoteinnkallelsePanel from './components/MoteinnkallelsePanel';
@@ -13,7 +15,7 @@ import { useMoteplanlegger } from '../../hooks/moteplanlegger';
 import AppSpinner from '../../../components/AppSpinner';
 import { brevTypes } from '../../globals/constants';
 import { getLongMonthDateFormat } from '../../utils';
-import MoteplanleggerPanel from './components/MoteplanleggerPanel';
+import MoteplanleggerKvitteringPanel from './components/MoteplanleggerKvitteringPanel';
 
 const Landing = () => {
   const brev = useBrev();
@@ -46,7 +48,6 @@ const Landing = () => {
 
       return sistOpprettetInnkallelse > sistOpprettetMoteplanleggerMoteTidspunkt;
     }
-
     return false;
   };
 
@@ -59,7 +60,13 @@ const Landing = () => {
       return <MoteinnkallelsePanel innkallelse={brevHead} />;
     }
 
-    return <MoteplanleggerPanel mote={konverterTid(moteplanlegger.data)} />;
+    const modus = getSvarsideModus(moteplanlegger.data, BRUKER);
+    const convertedMotedata = konverterTid(moteplanlegger.data);
+
+    if (modus === BEKREFTET || modus === MOTESTATUS) {
+      return <MoteplanleggerKvitteringPanel mote={convertedMotedata} modus={modus} />;
+    }
+    return <MoteplanleggerPanel mote={convertedMotedata} />;
   };
 
   const previousReferater = brevTail.filter((hendelse) => hendelse.brevType === brevTypes.REFERAT);
