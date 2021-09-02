@@ -3,6 +3,7 @@ import Lenke from 'nav-frontend-lenker';
 import styled from 'styled-components';
 import Veileder from 'nav-frontend-veileder';
 import VeilederAvatar from '../../../../components/svg/VeilederAvatar';
+import { getSykefravaerUrl } from '../../../../utils/urlUtils';
 
 const VeilederStyled = styled(Veileder)`
   max-width: 576px;
@@ -18,19 +19,22 @@ const texts = {
   veilederLink2: 'kontakte oss.',
 };
 
+const tidslinjeURL = getSykefravaerUrl('/sykefravaer/tidslinjen');
+
 const VeilederContent = () => {
+  console.log(tidslinjeURL);
   return (
     <React.Fragment>
       {texts.veilederText1}
       <br />
       {texts.veilederText2}
-      <Lenke href="www.vg.no" target="_blank">
+      <Lenke href={tidslinjeURL} target="_blank">
         {texts.veilederLink1}
       </Lenke>
       <br />
       <br />
       {texts.veilederText3}
-      <Lenke href="www.vg.no" target="_blank">
+      <Lenke href="https://www.nav.no/person/kontakt-oss/nb/skriv-til-oss" target="_blank">
         {texts.veilederLink2}
       </Lenke>
     </React.Fragment>
