@@ -22,6 +22,7 @@ const texts = {
 const tidslinjeURL = getSykefravaerUrl('/sykefravaer/tidslinjen');
 
 const VeilederContent = () => {
+  // eslint-disable-next-line no-console
   console.log(tidslinjeURL);
   return (
     <React.Fragment>

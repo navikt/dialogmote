@@ -57,6 +57,7 @@ const MeldMoteBehovContent = () => {
     <React.Fragment>
       <p>{texts.paragraph}</p>
       <DialogmotePanelStyled>
+        {/* eslint-disable-next-line no-console */}
         <form onSubmit={handleSubmit((d) => console.log(d))}>
           <CheckboxWrapper>
             <Controller
