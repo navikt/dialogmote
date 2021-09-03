@@ -11,6 +11,11 @@ const proxy = require('express-http-proxy');
 const cookieParser = require('cookie-parser');
 const getDecorator = require('./decorator');
 
+const isdialogmoteHosts = {
+  prod: 'isdialogmote.nav.no',
+  test: 'isdialogmote.dev.nav.no',
+};
+
 // Prometheus metrics
 const { collectDefaultMetrics } = prometheus;
 collectDefaultMetrics({ timeout: 5000 });
@@ -51,14 +56,16 @@ function nocache(req, res, next) {
 }
 
 const startServer = (html) => {
+  let isdialogmoteHost = isdialogmoteHosts.prod;
   if (env === 'opplaering' || env === 'local') {
+    isdialogmoteHost = isdialogmoteHosts.test;
     require('./mock/mockEndepunkter')(server, env === 'local');
   }
 
   server.use(
     '/dialogmote/api/v1/arbeidstaker/brev/:uuid/les',
     cookieParser(),
-    proxy('isdialogmote.dev.nav.no', {
+    proxy(isdialogmoteHost, {
       https: true,
       parseReqBody: false,
       proxyReqOptDecorator(proxyReqOpts, srcReq) {
@@ -81,7 +88,7 @@ const startServer = (html) => {
   server.use(
     '/dialogmote/api/v1/arbeidstaker/brev/:uuid/pdf',
     cookieParser(),
-    proxy('isdialogmote.dev.nav.no', {
+    proxy(isdialogmoteHost, {
       https: true,
       parseReqBody: false,
       proxyReqOptDecorator(proxyReqOpts, srcReq) {
@@ -104,7 +111,7 @@ const startServer = (html) => {
   server.use(
     '/dialogmote/api/v1/arbeidstaker/brev',
     cookieParser(),
-    proxy('isdialogmote.dev.nav.no', {
+    proxy(isdialogmoteHost, {
       https: true,
       parseReqBody: false,
       proxyReqOptDecorator(proxyReqOpts, srcReq) {
