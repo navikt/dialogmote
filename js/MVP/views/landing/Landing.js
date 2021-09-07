@@ -30,7 +30,7 @@ const Landing = () => {
   const brevTail = brev.data.slice(1);
 
   const isInnkallelseFlyt = () => {
-    if (!brev || !brev.data) {
+    if (!brevHead) {
       return false;
     }
 
@@ -72,7 +72,7 @@ const Landing = () => {
       }
       return <MoteplanleggerPanel mote={convertedMotedata} />;
     }
-    return <React.Fragment />;
+    return null;
   };
 
   const previousReferater = brevTail.filter((hendelse) => hendelse.brevType === brevTypes.REFERAT);
