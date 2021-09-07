@@ -1,5 +1,6 @@
 import React from 'react';
 import AppSpinner from '../../../components/AppSpinner';
+import Feilmelding from "../../../components/Feilmelding";
 import { BRUKER } from '../../../enums/moteplanleggerDeltakerTyper';
 import { AVBRUTT, BEKREFTET, getSvarsideModus, konverterTid, MOTESTATUS } from '../../../utils/moteUtils';
 import DialogmoteContainer from '../../containers/DialogmoteContainer';
@@ -26,6 +27,10 @@ const Landing = () => {
     return <AppSpinner />;
   }
 
+  if (brev.isError || motebehov.isError || (moteplanlegger.isError && !(moteplanlegger.error.message === '404'))) {
+    // TODO: return <Feilmelding />;
+  }
+
   const brevHead = brev.data[0];
   const brevTail = brev.data.slice(1);
 
@@ -41,7 +46,6 @@ const Landing = () => {
     }
 
     if (!moteplanlegger.isError && moteplanlegger.data && innkallelser.length > 0) {
-      console.log("123", moteplanlegger)
       if (moteplanlegger.data.status !== AVBRUTT) {
         const innkalelseDatoArraySorted = innkallelser.map((i) => new Date(i.createdAt)).sort((a, b) => b - a);
         const sistOpprettetInnkallelse = innkalelseDatoArraySorted[0];
@@ -65,7 +69,7 @@ const Landing = () => {
       return <MoteinnkallelsePanel innkallelse={brevHead} />;
     }
 
-    if (moteplanlegger && moteplanlegger.data) {
+    if (!moteplanlegger.isError) {
       const modus = getSvarsideModus(moteplanlegger.data, BRUKER);
       const convertedMotedata = konverterTid(moteplanlegger.data);
       if (modus === BEKREFTET || modus === MOTESTATUS) {
