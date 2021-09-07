@@ -41,6 +41,7 @@ const Landing = () => {
     }
 
     if (!moteplanlegger.isError && moteplanlegger.data && innkallelser.length > 0) {
+      console.log("123", moteplanlegger)
       if (moteplanlegger.data.status !== AVBRUTT) {
         const innkalelseDatoArraySorted = innkallelser.map((i) => new Date(i.createdAt)).sort((a, b) => b - a);
         const sistOpprettetInnkallelse = innkalelseDatoArraySorted[0];
