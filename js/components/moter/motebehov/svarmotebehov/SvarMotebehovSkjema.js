@@ -125,6 +125,7 @@ export const TekstOpplysning = () => {
     <div className="svarMotebehovSkjema__tekstOpplysning">
       <p>
         {TEKSTER.tekstOpplysning.tekst}
+        <br />
         <a className="lenke" href="http://www.nav.no/personvern" title="Følg lenke">
           {TEKSTER.tekstOpplysning.lenke}
         </a>

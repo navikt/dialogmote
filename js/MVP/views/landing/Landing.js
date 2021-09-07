@@ -7,7 +7,7 @@ import { brevTypes } from '../../globals/constants';
 import { useBrev } from '../../hooks/brev';
 import { useMotebehov } from '../../hooks/motebehov';
 import { useMoteplanlegger } from '../../hooks/moteplanlegger';
-import { getLongMonthDateFormat } from '../../utils';
+import { getLongDateFormat } from '../../utils';
 import DialogmoteVideoPanel from './components/DialogmoteVideoPanel';
 import MotebehovPanel from './components/MotebehovPanel';
 import MoteinnkallelsePanel from './components/MoteinnkallelsePanel';
@@ -58,7 +58,7 @@ const Landing = () => {
   const DialogmoteFeaturePanel = () => {
     if (isInnkallelseFlyt()) {
       if (brevHead.brevType === brevTypes.REFERAT) {
-        const date = getLongMonthDateFormat(brevHead.tid);
+        const date = getLongDateFormat(brevHead.tid);
         return <MotereferatPanel date={date} />;
       }
       return <MoteinnkallelsePanel innkallelse={brevHead} />;
