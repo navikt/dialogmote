@@ -1,21 +1,21 @@
 import React from 'react';
+import AppSpinner from '../../../components/AppSpinner';
 import { BRUKER } from '../../../enums/moteplanleggerDeltakerTyper';
 import { AVBRUTT, BEKREFTET, getSvarsideModus, konverterTid, MOTESTATUS } from '../../../utils/moteUtils';
 import DialogmoteContainer from '../../containers/DialogmoteContainer';
-import MoteplanleggerPanel from './components/MoteplanleggerPanel';
-import VeilederLanding from './components/VeilederLanding';
-import MotebehovPanel from './components/MotebehovPanel';
-import MoteinnkallelsePanel from './components/MoteinnkallelsePanel';
-import DialogmoteVideoPanel from './components/DialogmoteVideoPanel';
-import MotereferatPanel from './components/MotereferatPanel';
-import PreviousMotereferatPanel from './components/PreviousMotereferatPanel';
+import { brevTypes } from '../../globals/constants';
 import { useBrev } from '../../hooks/brev';
 import { useMotebehov } from '../../hooks/motebehov';
 import { useMoteplanlegger } from '../../hooks/moteplanlegger';
-import AppSpinner from '../../../components/AppSpinner';
-import { brevTypes } from '../../globals/constants';
 import { getLongMonthDateFormat } from '../../utils';
+import DialogmoteVideoPanel from './components/DialogmoteVideoPanel';
+import MotebehovPanel from './components/MotebehovPanel';
+import MoteinnkallelsePanel from './components/MoteinnkallelsePanel';
 import MoteplanleggerKvitteringPanel from './components/MoteplanleggerKvitteringPanel';
+import MoteplanleggerPanel from './components/MoteplanleggerPanel';
+import MotereferatPanel from './components/MotereferatPanel';
+import PreviousMotereferatPanel from './components/PreviousMotereferatPanel';
+import VeilederLanding from './components/VeilederLanding';
 
 const Landing = () => {
   const brev = useBrev();
@@ -30,25 +30,29 @@ const Landing = () => {
   const brevTail = brev.data.slice(1);
 
   const isInnkallelseFlyt = () => {
-    if (!brevHead) {
+    if (!brev || !brev.data) {
       return false;
     }
 
-    const motedata = moteplanlegger.data;
-    const innkallelser = brevTail.filter((hendelse) => hendelse.brevType === brevTypes.INNKALLELSE);
+    const innkallelser = brev.data.filter((hendelse) => hendelse.brevType === brevTypes.INNKALLELSE);
 
-    if (motedata.status === AVBRUTT && innkallelser.length > 0) {
-      return true;
+    if (innkallelser.length < 1) {
+      return false;
     }
 
-    if (motedata.status !== AVBRUTT && innkallelser.length > 0) {
-      const innkalelseDatoArraySorted = innkallelser.map((i) => new Date(i.createdAt)).sort((a, b) => b - a);
-      const sistOpprettetInnkallelse = innkalelseDatoArraySorted[0];
-      const sistOpprettetMoteplanleggerMoteTidspunkt = new Date(motedata.opprettetTidspunkt);
+    if (moteplanlegger && moteplanlegger.data && innkallelser.length > 0) {
+      if (moteplanlegger.data.status !== AVBRUTT) {
+        const innkalelseDatoArraySorted = innkallelser.map((i) => new Date(i.createdAt)).sort((a, b) => b - a);
+        const sistOpprettetInnkallelse = innkalelseDatoArraySorted[0];
+        const sistOpprettetMoteplanleggerMoteTidspunkt = new Date(moteplanlegger.data.opprettetTidspunkt);
 
-      return sistOpprettetInnkallelse > sistOpprettetMoteplanleggerMoteTidspunkt;
+        return sistOpprettetInnkallelse > sistOpprettetMoteplanleggerMoteTidspunkt;
+      }
+      if (moteplanlegger.data.status === AVBRUTT) {
+        return true;
+      }
     }
-    return false;
+    return true;
   };
 
   const DialogmoteFeaturePanel = () => {
@@ -60,13 +64,15 @@ const Landing = () => {
       return <MoteinnkallelsePanel innkallelse={brevHead} />;
     }
 
-    const modus = getSvarsideModus(moteplanlegger.data, BRUKER);
-    const convertedMotedata = konverterTid(moteplanlegger.data);
-
-    if (modus === BEKREFTET || modus === MOTESTATUS) {
-      return <MoteplanleggerKvitteringPanel mote={convertedMotedata} modus={modus} />;
+    if (moteplanlegger && moteplanlegger.data) {
+      const modus = getSvarsideModus(moteplanlegger.data, BRUKER);
+      const convertedMotedata = konverterTid(moteplanlegger.data);
+      if (modus === BEKREFTET || modus === MOTESTATUS) {
+        return <MoteplanleggerKvitteringPanel mote={convertedMotedata} modus={modus} />;
+      }
+      return <MoteplanleggerPanel mote={convertedMotedata} />;
     }
-    return <MoteplanleggerPanel mote={convertedMotedata} />;
+    return <React.Fragment />;
   };
 
   const previousReferater = brevTail.filter((hendelse) => hendelse.brevType === brevTypes.REFERAT);
