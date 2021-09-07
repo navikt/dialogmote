@@ -11,7 +11,7 @@ import { useMotebehov } from '../../hooks/motebehov';
 import { useMoteplanlegger } from '../../hooks/moteplanlegger';
 import AppSpinner from '../../../components/AppSpinner';
 import { brevTypes } from '../../globals/constants';
-import { getLongMonthDateFormat } from '../../utils';
+import { getLongDateFormat } from '../../utils';
 import MoteplanleggerPanel from './components/MoteplanleggerPanel';
 
 const Landing = () => {
@@ -32,7 +32,7 @@ const Landing = () => {
     // TODO add møteplanlegger <MoteplanleggerPanel />
 
     if (brevHead.brevType === brevTypes.REFERAT) {
-      const date = getLongMonthDateFormat(brevHead.tid);
+      const date = getLongDateFormat(brevHead.tid);
       return <MotereferatPanel date={date} />;
     }
 

@@ -11,6 +11,9 @@ const tekster = {
   },
 };
 
+export const getBehovSvarText = (motebehov) =>
+  `${motebehov.motebehovSvar.harMotebehov ? FELTER.harMotebehov.svar[0].tekst : FELTER.harMotebehov.svar[1].tekst}`;
+
 const SvarMotebehovKvittering = ({ motebehovReducer }) => {
   return (
     <div className="panel motebehovKvittering">
@@ -21,11 +24,7 @@ const SvarMotebehovKvittering = ({ motebehovReducer }) => {
       <MotebehovKvitteringUtvidbar
         motebehovReducer={motebehovReducer}
         harBehovSporsmal={FELTER.harMotebehov.spoersmaal}
-        harBehovSvar={`${
-          motebehovReducer.data.motebehov.motebehovSvar.harMotebehov
-            ? FELTER.harMotebehov.svar[0].tekst
-            : FELTER.harMotebehov.svar[1].tekst
-        }`}
+        harBehovSvar={getBehovSvarText(motebehovReducer.data.motebehov)}
       />
     </div>
   );
