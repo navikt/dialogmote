@@ -9,6 +9,7 @@ import AppSpinner from '../components/AppSpinner';
 import Feilmelding from '../components/Feilmelding';
 import { hentMotebehov, svarMotebehov } from '../data/motebehov/motebehov_actions';
 import { erMotebehovTilgjengelig, skalViseMotebehovKvittering } from '../utils/motebehovUtils';
+import { dialogmoteBreadcrumb } from '../MVP/globals/paths';
 
 const tekster = {
   brodsmuleBase: 'Ditt sykefravær',
@@ -31,7 +32,7 @@ class Container extends Component {
     const sideTittel = visKvittering ? tekster.titler.kvittering : tekster.titler.meldBehov;
 
     return (
-      <Side tittel={sideTittel} brodsmuler={[...brodsmuler, { tittel: sideTittel }]} laster={henter}>
+      <Side tittel={sideTittel} brodsmuler={[...dialogmoteBreadcrumb, { tittel: sideTittel }]} laster={henter}>
         {(() => {
           if (henter) {
             return <AppSpinner />;

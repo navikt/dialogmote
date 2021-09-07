@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Utvidbar } from '@navikt/digisyfo-npm';
+import { UndertekstBold } from 'nav-frontend-typografi';
 import { motebehovReducerPt } from '../../../propTypes';
 import { FELTER as SVAR_MOTEBEHOV_FELTER } from './svarmotebehov/SvarMotebehovSkjema';
 import { FELTER as MELDMOTEBEHOV_FELTER } from './meldbehov/MeldMotebehovSkjema';
@@ -12,33 +13,31 @@ const tekster = {
   },
 };
 
-const getHarBehovKvittering = (harBehovSvar, harBehovSporsmal) => {
+export const getHarBehovKvittering = (harBehovSvar, harBehovSporsmal) => {
   return harBehovSporsmal
     ? [
-        <h5 className="skjemaelement__sporsmal" key={0}>
-          {SVAR_MOTEBEHOV_FELTER.harMotebehov.spoersmaal}
-        </h5>,
-        <p key={1}>{harBehovSvar}</p>,
+        <UndertekstBold key="harBehovSporsmal">{SVAR_MOTEBEHOV_FELTER.harMotebehov.spoersmaal}</UndertekstBold>,
+        <p key="harBehovTekst">{harBehovSvar}</p>,
       ]
-    : [<p key={1}>{harBehovSvar}</p>];
+    : [<p>{harBehovSvar}</p>];
 };
 
-const KvitteringForklaring = (forklaring) => {
+export const KvitteringForklaring = (forklaring) => {
   const isLegeRequestPresent = forklaring.includes(MELDMOTEBEHOV_FELTER.lege.tekst);
-  const label = <h5 className="skjemaelement__sporsmal">{SVAR_MOTEBEHOV_FELTER.forklaring.spoersmaal}</h5>;
+  const label = <UndertekstBold>{SVAR_MOTEBEHOV_FELTER.forklaring.spoersmaal}</UndertekstBold>;
   if (isLegeRequestPresent) {
     return (
       <React.Fragment>
         <p>{MELDMOTEBEHOV_FELTER.lege.tekst}</p>
         {label}
-        <p>{forklaring.replace(MELDMOTEBEHOV_FELTER.lege.tekst, '').trim()}</p>
+        {forklaring.replace(MELDMOTEBEHOV_FELTER.lege.tekst, '').trim()}
       </React.Fragment>
     );
   }
   return (
     <React.Fragment>
       {label}
-      <p>{forklaring}</p>
+      {forklaring}
     </React.Fragment>
   );
 };
