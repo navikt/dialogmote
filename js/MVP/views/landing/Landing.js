@@ -1,18 +1,22 @@
 import React from 'react';
+import AppSpinner from '../../../components/AppSpinner';
+import Feilmelding from "../../../components/Feilmelding";
+import { BRUKER } from '../../../enums/moteplanleggerDeltakerTyper';
+import { AVBRUTT, BEKREFTET, getSvarsideModus, konverterTid, MOTESTATUS } from '../../../utils/moteUtils';
 import DialogmoteContainer from '../../containers/DialogmoteContainer';
-import VeilederLanding from './components/VeilederLanding';
-import MotebehovPanel from './components/MotebehovPanel';
-import MoteinnkallelsePanel from './components/MoteinnkallelsePanel';
-import DialogmoteVideoPanel from './components/DialogmoteVideoPanel';
-import MotereferatPanel from './components/MotereferatPanel';
-import PreviousMotereferatPanel from './components/PreviousMotereferatPanel';
+import { brevTypes } from '../../globals/constants';
 import { useBrev } from '../../hooks/brev';
 import { useMotebehov } from '../../hooks/motebehov';
 import { useMoteplanlegger } from '../../hooks/moteplanlegger';
-import AppSpinner from '../../../components/AppSpinner';
-import { brevTypes } from '../../globals/constants';
 import { getLongDateFormat } from '../../utils';
+import DialogmoteVideoPanel from './components/DialogmoteVideoPanel';
+import MotebehovPanel from './components/MotebehovPanel';
+import MoteinnkallelsePanel from './components/MoteinnkallelsePanel';
+import MoteplanleggerKvitteringPanel from './components/MoteplanleggerKvitteringPanel';
 import MoteplanleggerPanel from './components/MoteplanleggerPanel';
+import MotereferatPanel from './components/MotereferatPanel';
+import PreviousMotereferatPanel from './components/PreviousMotereferatPanel';
+import VeilederLanding from './components/VeilederLanding';
 
 const Landing = () => {
   const brev = useBrev();
@@ -23,20 +27,54 @@ const Landing = () => {
     return <AppSpinner />;
   }
 
+  if (brev.isError || motebehov.isError || (moteplanlegger.isError && !(moteplanlegger.error.message === '404'))) {
+    // TODO: return <Feilmelding />;
+  }
+
   const brevHead = brev.data[0];
   const brevTail = brev.data.slice(1);
 
-  const DialogmoteFeaturePanel = () => {
-    if (!brevHead) return null;
-
-    // TODO add møteplanlegger <MoteplanleggerPanel />
-
-    if (brevHead.brevType === brevTypes.REFERAT) {
-      const date = getLongDateFormat(brevHead.tid);
-      return <MotereferatPanel date={date} />;
+  const isInnkallelseFlyt = () => {
+    if (!brevHead) {
+      return false;
     }
 
-    return <MoteinnkallelsePanel innkallelse={brevHead} />;
+    const innkallelser = brev.data.filter((hendelse) => hendelse.brevType === brevTypes.INNKALLELSE);
+
+    if (innkallelser.length < 1) {
+      return false;
+    }
+
+    if (!moteplanlegger.isError && moteplanlegger.data && innkallelser.length > 0) {
+      if (moteplanlegger.data.status !== AVBRUTT) {
+        const innkalelseDatoArraySorted = innkallelser.map((i) => new Date(i.createdAt)).sort((a, b) => b - a);
+        const sistOpprettetInnkallelse = innkalelseDatoArraySorted[0];
+        const sistOpprettetMoteplanleggerMoteTidspunkt = new Date(moteplanlegger.data.opprettetTidspunkt);
+
+        return sistOpprettetInnkallelse > sistOpprettetMoteplanleggerMoteTidspunkt;
+      }
+    }
+    return true;
+  };
+
+  const DialogmoteFeaturePanel = () => {
+    if (isInnkallelseFlyt()) {
+      if (brevHead.brevType === brevTypes.REFERAT) {
+        const date = getLongDateFormat(brevHead.tid);
+        return <MotereferatPanel date={date} />;
+      }
+      return <MoteinnkallelsePanel innkallelse={brevHead} />;
+    }
+
+    if (!moteplanlegger.isError) {
+      const modus = getSvarsideModus(moteplanlegger.data, BRUKER);
+      const convertedMotedata = konverterTid(moteplanlegger.data);
+      if (modus === BEKREFTET || modus === MOTESTATUS) {
+        return <MoteplanleggerKvitteringPanel mote={convertedMotedata} modus={modus} />;
+      }
+      return <MoteplanleggerPanel mote={convertedMotedata} />;
+    }
+    return null;
   };
 
   const previousReferater = brevTail.filter((hendelse) => hendelse.brevType === brevTypes.REFERAT);

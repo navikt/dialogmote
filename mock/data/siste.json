@@ -2,7 +2,7 @@
   "moteUuid": "7645eb7f-2e46-4b0d-a19c-8d9b43158eca",
   "status": "OPPRETTET",
   "fnr": "19026900010",
-  "opprettetTidspunkt": "2019-11-08T12:35:37.669+01:00",
+  "opprettetTidspunkt": "2021-11-09T12:35:37.669+01:00",
   "bekreftetTidspunkt": null,
   "deltakere": [
     {
@@ -94,18 +94,24 @@
       ]
     }
   ],
-  "bekreftetAlternativ": null,
+  "bekreftetAlternativ": {
+    "id": 11802,
+    "tid": "2021-11-22T10:00:00+01:00",
+    "created": "2021-11-08T12:35:37.693+01:00",
+    "sted": "Storgata 1",
+    "valgt": false
+  },
   "alternativer": [
     {
       "id": 11802,
-      "tid": "2022-11-22T10:00:00+01:00",
+      "tid": "2021-11-22T10:00:00+01:00",
       "created": "2019-11-08T12:35:37.693+01:00",
       "sted": "Storgata 1",
-      "valgt": false
+      "valgt": true
     },
     {
       "id": 11801,
-      "tid": "2022-11-14T12:00:00+01:00",
+      "tid": "2021-11-14T12:00:00+01:00",
       "created": "2019-11-08T12:35:37.687+01:00",
       "sted": "Storgata 1",
       "valgt": false
