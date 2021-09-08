@@ -53,9 +53,6 @@ const Landing = () => {
 
         return sistOpprettetInnkallelse > sistOpprettetMoteplanleggerMoteTidspunkt;
       }
-      if (moteplanlegger.data.status === AVBRUTT) {
-        return true;
-      }
     }
     return true;
   };
