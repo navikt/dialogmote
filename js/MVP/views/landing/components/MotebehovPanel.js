@@ -26,15 +26,14 @@ const AlertstripeStyled = styled(AlertStripe)`
 const texts = {
   title: 'Trenger dere et dialogmøte med NAV?',
   titleSvarBehov: 'Trenger dere et dialogmøte med NAV? SVAR BEHOV',
-  button: 'VURDER BEHOV FOR MØTE',
+  button: 'Vurder behov for møte',
   text1: `Målet med et dialogmøtet er å oppsummere hva som har skjedd til nå, og snakke om hva som kan hjelpe deg å komme tilbake til arbeid.`,
   text2: `Ønsker du å snakke med NAV om sykepenger eller noe annet, kan du `,
   link: 'gå hit for å kontakte oss på andre måter.',
-  titleSvart: 'Du har gitt svar om ditt møtebehov',
   titleSvartSvarBehov: 'Du har gitt svar om ditt møtebehov SVAR BEHOV',
-  buttonSvart: 'SE SVARET DITT',
-  textSvart:
-    'Vi vil bruke svaret ditt når vi vurderer om det er nødvendig med dialogmøte. Hører du fra oss, mener vi det er behov for møtes.',
+  titleSvart: 'Du har svart på om du ønsker et møte',
+  buttonSvart: 'Se svaret ditt',
+  textSvart: 'Vi vil bruke svaret ditt når vi vurderer om det er nødvendig med dialogmøte.',
   alertstripe: 'Husk å dele oppfølgingsplanen med NAV før møtet.',
   oppfolgingsplanlink: 'Gå til oppfølgingsplanen.',
 };

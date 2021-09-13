@@ -12,7 +12,7 @@ const VeilederStyled = styled(Veileder)`
 
 const texts = {
   veileder:
-    'I et dialogmøte går vi gjennom situasjonen og planlegger veien videre. De som deltar, er du, lederen din og en veileder fra NAV-kontoret, eventuelt også den som sykmelder deg. ',
+    'I et dialogmøte oppsummerer vi hva som har skjedd mens du har vært sykmeldt, og vi planlegger veien videre. De som deltar, er du, lederen din og en veileder fra NAV-kontoret, eventuelt også den som sykmelder deg. ',
   veilederUrl: 'Les mer om dialogmøter',
 };
 
@@ -20,7 +20,6 @@ const VeilederContent = () => {
   return (
     <React.Fragment>
       {texts.veileder}
-      <br />
       <Lenke href="" target="_blank">
         {texts.veilederUrl}
       </Lenke>

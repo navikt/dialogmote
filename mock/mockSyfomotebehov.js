@@ -83,7 +83,7 @@ function getMotebehovStatus(type, res) {
 function mockPilotEndepunkterForLokalmiljo(server) {
   server.get('/syfomotebehov/api/v2/arbeidstaker/motebehov', (req, res) => {
     res.setHeader('Content-Type', 'application/json');
-    res.send(JSON.stringify(getMotebehovStatus(motebehovStatusEnum.SVAR_BEHOV_SVAR, res)));
+    res.send(JSON.stringify(getMotebehovStatus(motebehovStatusEnum.MELD_BEHOV_SVAR, res)));
   });
 
   server.post('/syfomotebehov/api/v2/arbeidstaker/motebehov', (req, res) => {

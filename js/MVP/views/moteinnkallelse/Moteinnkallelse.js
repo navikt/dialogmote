@@ -64,7 +64,8 @@ const Moteinnkallelse = () => {
     return (
       <DialogmoteContainer title={title()} breadcrumb={innkallelseBreadcrumb(breadcrumbTitle())}>
         <AlertStripeStyled type="feil">
-          Vi har tekniske problemer så det mangler noe her. Du kan prøve igjen senere.
+          Akkurat nå mangler det noe her. Vi har tekniske problemer som vi jobber med å løse. Prøv gjerne igjen om en
+          stund.
         </AlertStripeStyled>
       </DialogmoteContainer>
     );

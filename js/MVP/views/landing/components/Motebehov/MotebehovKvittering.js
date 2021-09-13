@@ -10,7 +10,7 @@ import { skjemaTypes } from '../../../../globals/constants';
 import { getBehovSvarText } from '../../../../../components/moter/motebehov/svarmotebehov/SvarMotebehovKvittering';
 
 const texts = {
-  heading: 'Svaret ditt om møtebehov',
+  heading: 'Svaret ditt om behov for møte',
 };
 
 const Content = (data) => {

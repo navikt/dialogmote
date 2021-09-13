@@ -11,8 +11,8 @@ const SectionStyled = styled.section`
 
 const texts = {
   title: 'Tidspunkt for dialogmøte',
-  text: 'Her er forslag til tidspunkt for dialogmøte. Sjekk om det passer og svar på forslaget.',
-  button: 'SJEKK FORSLAGET',
+  text: 'Her er vårt forslag til tidspunkt for dialogmøte.',
+  button: 'Svar på om det passer',
 };
 
 const Panel = ({ title, text, icon, buttonText }) => {

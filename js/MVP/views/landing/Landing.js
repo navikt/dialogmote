@@ -43,7 +43,8 @@ const Landing = () => {
     if (brev.isError || motebehov.isError || (moteplanlegger.isError && !(moteplanlegger.error.message === '404'))) {
       return (
         <AlertStripeStyled type="feil">
-          Vi har tekniske problemer så det mangler noe her. Du kan prøve igjen senere.
+          Akkurat nå mangler det noe her. Vi har tekniske problemer som vi jobber med å løse. Prøv gjerne igjen om en
+          stund.
         </AlertStripeStyled>
       );
     }
@@ -73,7 +74,7 @@ const Landing = () => {
   const displayMotebehov = () => {
     if (motebehov.isError || !motebehov.data.visMotebehov) return false;
     if (!moteplanlegger.isError && !displayBrev() && !erMotePassert(moteplanlegger.data)) return false;
-    if (!brev.isError) {
+    if (!brev.isError && brev.data[0]) {
       const brevHead = brev.data[0];
       if (brevHead.brevType === brevTypes.INNKALLELSE || brevHead.brevType === brevTypes.ENDRING) return false;
     }
