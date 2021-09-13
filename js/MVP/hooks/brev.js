@@ -5,14 +5,14 @@ const MOTEINNKALLELSE = 'moteinnkallelse';
 
 export const useBrev = () => {
   return useQuery(MOTEINNKALLELSE, getBrev, {
-    staleTime: 10000,
+    retry: 0,
   });
 };
 
 const setLestDatoForVarsel = (uuid) => {
   return (varsel) => {
     if (varsel.uuid === uuid) {
-      return { ...varsel, lestDato: '123' };
+      return { ...varsel, lestDato: true };
     }
 
     return varsel;

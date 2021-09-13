@@ -32,15 +32,7 @@ export const datoMedKlokkeslett = (dato) => {
 };
 
 export const newDate = () => {
-  const now = new Date();
-  return new Date(
-    now.getUTCFullYear(),
-    now.getUTCMonth(),
-    now.getUTCDate(),
-    now.getHours(),
-    now.getUTCMinutes(),
-    now.getUTCSeconds()
-  );
+  return new Date();
 };
 
 export const erGyldigDato = (dato) => {

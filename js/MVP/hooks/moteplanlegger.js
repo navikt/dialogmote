@@ -4,5 +4,7 @@ import { getMoteadmin } from '../services/moteadmin';
 const MOTEPLANLEGGER = 'moteplanlegger';
 
 export const useMoteplanlegger = () => {
-  return useQuery(MOTEPLANLEGGER, getMoteadmin);
+  return useQuery(MOTEPLANLEGGER, getMoteadmin, {
+    retry: 0,
+  });
 };

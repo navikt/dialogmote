@@ -53,9 +53,10 @@ const motebehovStatusEnum = {
   SVAR_BEHOV_SVAR: 'SVAR_BEHOV_SVAR',
   MELD_BEHOV: 'MELD_BEHOV',
   MELD_BEHOV_SVAR: 'MELD_BEHOV_SVAR',
+  BAD_REQUEST: 'BAD_REQUEST',
 };
 
-function getMotebehovStatus(type) {
+function getMotebehovStatus(type, res) {
   switch (type) {
     case motebehovStatusEnum.MELD_BEHOV: {
       return motebehovStatusMeldBehov;
@@ -69,6 +70,10 @@ function getMotebehovStatus(type) {
     case motebehovStatusEnum.SVAR_BEHOV_SVAR: {
       return motebehovStatusSvarBehovSvar;
     }
+    case motebehovStatusEnum.BAD_REQUEST: {
+      res.status(400);
+      return 'Bad request';
+    }
     default: {
       return motebehovStatusSvarUnavailable;
     }
@@ -78,7 +83,7 @@ function getMotebehovStatus(type) {
 function mockPilotEndepunkterForLokalmiljo(server) {
   server.get('/syfomotebehov/api/v2/arbeidstaker/motebehov', (req, res) => {
     res.setHeader('Content-Type', 'application/json');
-    res.send(JSON.stringify(getMotebehovStatus(motebehovStatusEnum.MELD_BEHOV_SVAR)));
+    res.send(JSON.stringify(getMotebehovStatus(motebehovStatusEnum.SVAR_BEHOV_SVAR, res)));
   });
 
   server.post('/syfomotebehov/api/v2/arbeidstaker/motebehov', (req, res) => {

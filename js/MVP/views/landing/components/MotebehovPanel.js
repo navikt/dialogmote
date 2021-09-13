@@ -9,6 +9,7 @@ import { MOTEBEHOV_URL, OPPFOLGINGSPLANER_URL } from '../../../globals/paths';
 import ButtonLenke from '../../../components/ButtonLenke';
 import DialogmotePanel from '../../../containers/DialogmotePanel';
 import MotebehovKvittering from './Motebehov/MotebehovKvittering';
+import { skjemaTypes } from '../../../globals/constants';
 
 const DialogmotePanelStyled = styled(DialogmotePanel)`
   margin-bottom: 32px;
@@ -24,11 +25,13 @@ const AlertstripeStyled = styled(AlertStripe)`
 
 const texts = {
   title: 'Trenger dere et dialogmøte med NAV?',
+  titleSvarBehov: 'Trenger dere et dialogmøte med NAV? SVAR BEHOV',
   button: 'VURDER BEHOV FOR MØTE',
   text1: `Målet med et dialogmøtet er å oppsummere hva som har skjedd til nå, og snakke om hva som kan hjelpe deg å komme tilbake til arbeid.`,
   text2: `Ønsker du å snakke med NAV om sykepenger eller noe annet, kan du `,
   link: 'gå hit for å kontakte oss på andre måter.',
   titleSvart: 'Du har gitt svar om ditt møtebehov',
+  titleSvartSvarBehov: 'Du har gitt svar om ditt møtebehov SVAR BEHOV',
   buttonSvart: 'SE SVARET DITT',
   textSvart:
     'Vi vil bruke svaret ditt når vi vurderer om det er nødvendig med dialogmøte. Hører du fra oss, mener vi det er behov for møtes.',
@@ -43,7 +46,7 @@ const text = () => {
       <br />
       <br />
       {texts.text2}
-      <Lenke href="www.vg.no" target="_blank">
+      <Lenke href="" target="_blank">
         {texts.link}
       </Lenke>
     </TekstomradeStyled>
@@ -57,8 +60,41 @@ const MotebehovPanel = ({ motebehov }) => {
   const modalStyle = { padding: '2rem 2.5rem', maxWidth: '576px' };
 
   if (data.motebehov) {
+    if (data.skjemaType === skjemaTypes.MELD_BEHOV) {
+      return (
+        <DialogmotePanelStyled title={texts.titleSvart} icon="behov">
+          <TekstomradeStyled>{texts.textSvart}</TekstomradeStyled>
+
+          <ModalWrapper
+            isOpen={isModalOpen}
+            onRequestClose={() => setIsModalOpen(false)}
+            closeButton
+            contentLabel="Møtebehov modal"
+            onAfterOpen={() => {
+              document.getElementsByClassName('lukknapp')[0].focus();
+            }}
+            appElement={document.getElementsByClassName('app')[0]}
+          >
+            <div style={modalStyle}>
+              <MotebehovKvittering motebehov={data} />
+            </div>
+          </ModalWrapper>
+
+          <AlertstripeStyled type="info">
+            {texts.alertstripe}
+            <br />
+            <Lenke href={OPPFOLGINGSPLANER_URL}>{texts.oppfolgingsplanlink}</Lenke>
+          </AlertstripeStyled>
+
+          <Knapp mini onClick={() => setIsModalOpen(true)}>
+            {texts.buttonSvart}
+          </Knapp>
+        </DialogmotePanelStyled>
+      );
+    }
+
     return (
-      <DialogmotePanelStyled title={texts.titleSvart} icon="behov">
+      <DialogmotePanelStyled title={texts.titleSvartSvarBehov} icon="behov">
         <TekstomradeStyled>{texts.textSvart}</TekstomradeStyled>
 
         <ModalWrapper
@@ -89,8 +125,19 @@ const MotebehovPanel = ({ motebehov }) => {
     );
   }
 
+  if (data.skjemaType === skjemaTypes.MELD_BEHOV) {
+    return (
+      <DialogmotePanelStyled title={texts.title} icon="behov">
+        {text()}
+        <ButtonLenke mini to={MOTEBEHOV_URL}>
+          {texts.button}
+        </ButtonLenke>
+      </DialogmotePanelStyled>
+    );
+  }
+
   return (
-    <DialogmotePanelStyled title={texts.title} icon="behov">
+    <DialogmotePanelStyled title={texts.titleSvarBehov} icon="behov">
       {text()}
       <ButtonLenke mini to={MOTEBEHOV_URL}>
         {texts.button}

@@ -63,7 +63,7 @@ export function get(url, headers = null) {
       } else if (res.status === 403) {
         log(res);
         throw new Error('403');
-      } else if (res.status > 400) {
+      } else if (res.status >= 400) {
         log(res);
         throw new Error('Forespørsel feilet');
       }
@@ -94,7 +94,7 @@ export function getRaw(url, headers = null) {
       } else if (res.status === 403) {
         log(res);
         throw new Error('403');
-      } else if (res.status > 400) {
+      } else if (res.status >= 400) {
         log(res);
         throw new Error('Forespørsel feilet');
       }
@@ -124,7 +124,7 @@ export const post = (url, body, headers = {}) => {
         window.location.href = `${hentLoginUrl()}?redirect=${window.location.href}`;
         return null;
       }
-      if (res.status > 400) {
+      if (res.status >= 400) {
         log(res);
         throw new Error(`Forespørsel feilet. Statuskode: ${res.status}`);
       } else {

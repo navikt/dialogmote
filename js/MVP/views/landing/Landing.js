@@ -1,8 +1,16 @@
 import React from 'react';
+import AlertStripe from 'nav-frontend-alertstriper';
+import styled from 'styled-components';
 import AppSpinner from '../../../components/AppSpinner';
-import Feilmelding from "../../../components/Feilmelding";
 import { BRUKER } from '../../../enums/moteplanleggerDeltakerTyper';
-import { AVBRUTT, BEKREFTET, getSvarsideModus, konverterTid, MOTESTATUS } from '../../../utils/moteUtils';
+import {
+  AVBRUTT,
+  BEKREFTET,
+  erMotePassert,
+  getSvarsideModus,
+  konverterTid,
+  MOTESTATUS,
+} from '../../../utils/moteUtils';
 import DialogmoteContainer from '../../containers/DialogmoteContainer';
 import { brevTypes } from '../../globals/constants';
 import { useBrev } from '../../hooks/brev';
@@ -18,6 +26,10 @@ import MotereferatPanel from './components/MotereferatPanel';
 import PreviousMotereferatPanel from './components/PreviousMotereferatPanel';
 import VeilederLanding from './components/VeilederLanding';
 
+const AlertStripeStyled = styled(AlertStripe)`
+  margin-bottom: 32px;
+`;
+
 const Landing = () => {
   const brev = useBrev();
   const motebehov = useMotebehov();
@@ -27,27 +39,28 @@ const Landing = () => {
     return <AppSpinner />;
   }
 
-  if (brev.isError || motebehov.isError || (moteplanlegger.isError && !(moteplanlegger.error.message === '404'))) {
-    // TODO: return <Feilmelding />;
-  }
+  const FetchFailedError = () => {
+    if (brev.isError || motebehov.isError || (moteplanlegger.isError && !(moteplanlegger.error.message === '404'))) {
+      return (
+        <AlertStripeStyled type="feil">
+          Vi har tekniske problemer så det mangler noe her. Du kan prøve igjen senere.
+        </AlertStripeStyled>
+      );
+    }
 
-  const brevHead = brev.data[0];
-  const brevTail = brev.data.slice(1);
+    return null;
+  };
 
-  const isInnkallelseFlyt = () => {
-    if (!brevHead) {
+  const displayBrev = () => {
+    if (brev.isError || brev.data.length === 0) {
       return false;
     }
 
     const innkallelser = brev.data.filter((hendelse) => hendelse.brevType === brevTypes.INNKALLELSE);
 
-    if (innkallelser.length < 1) {
-      return false;
-    }
-
     if (!moteplanlegger.isError && moteplanlegger.data && innkallelser.length > 0) {
       if (moteplanlegger.data.status !== AVBRUTT) {
-        const innkalelseDatoArraySorted = innkallelser.map((i) => new Date(i.createdAt)).sort((a, b) => b - a);
+        const innkalelseDatoArraySorted = innkallelser.map((i) => new Date(i.tid)).sort((a, b) => b - a);
         const sistOpprettetInnkallelse = innkalelseDatoArraySorted[0];
         const sistOpprettetMoteplanleggerMoteTidspunkt = new Date(moteplanlegger.data.opprettetTidspunkt);
 
@@ -57,40 +70,66 @@ const Landing = () => {
     return true;
   };
 
-  const DialogmoteFeaturePanel = () => {
-    if (isInnkallelseFlyt()) {
-      if (brevHead.brevType === brevTypes.REFERAT) {
-        const date = getLongDateFormat(brevHead.tid);
-        return <MotereferatPanel date={date} />;
-      }
-      return <MoteinnkallelsePanel innkallelse={brevHead} />;
+  const displayMotebehov = () => {
+    if (motebehov.isError || !motebehov.data.visMotebehov) return false;
+    if (!moteplanlegger.isError && !displayBrev() && !erMotePassert(moteplanlegger.data)) return false;
+    if (!brev.isError) {
+      const brevHead = brev.data[0];
+      if (brevHead.brevType === brevTypes.INNKALLELSE || brevHead.brevType === brevTypes.ENDRING) return false;
     }
 
-    if (!moteplanlegger.isError) {
-      const modus = getSvarsideModus(moteplanlegger.data, BRUKER);
-      const convertedMotedata = konverterTid(moteplanlegger.data);
-      if (modus === BEKREFTET || modus === MOTESTATUS) {
-        return <MoteplanleggerKvitteringPanel mote={convertedMotedata} modus={modus} />;
-      }
-      return <MoteplanleggerPanel mote={convertedMotedata} />;
+    return true;
+  };
+
+  const BrevPanel = () => {
+    const brevHead = brev.data[0];
+
+    if (brevHead.brevType === brevTypes.REFERAT) {
+      const date = getLongDateFormat(brevHead.tid);
+      return <MotereferatPanel date={date} />;
+    }
+    return <MoteinnkallelsePanel innkallelse={brevHead} />;
+  };
+
+  const PlanleggerPanel = () => {
+    const modus = getSvarsideModus(moteplanlegger.data, BRUKER);
+    const convertedMotedata = konverterTid(moteplanlegger.data);
+    if (modus === BEKREFTET || modus === MOTESTATUS) {
+      return <MoteplanleggerKvitteringPanel mote={convertedMotedata} modus={modus} />;
+    }
+    return <MoteplanleggerPanel mote={convertedMotedata} />;
+  };
+
+  const DialogmoteFeaturePanel = () => {
+    if (displayBrev()) {
+      return BrevPanel();
+    }
+    if (!moteplanlegger.isError && !erMotePassert(moteplanlegger.data)) {
+      return PlanleggerPanel();
     }
     return null;
   };
 
-  const previousReferater = brevTail.filter((hendelse) => hendelse.brevType === brevTypes.REFERAT);
+  const PreviousMotereferatFeaturePanel = () => {
+    if (brev.isError || brev.data.length < 2) return null;
 
-  const previousReferatDates = previousReferater.map(({ tid }) => tid);
+    const currentBrev = displayBrev() ? brev.data.slice(1) : brev.data;
+    const previousReferater = currentBrev.filter((hendelse) => hendelse.brevType === brevTypes.REFERAT);
+    const previousReferatDates = previousReferater.map(({ tid }) => tid);
+
+    return <PreviousMotereferatPanel previousReferatDates={previousReferatDates} />;
+  };
 
   return (
     <DialogmoteContainer title="Dialogmøter">
       <VeilederLanding />
 
-      {motebehov.data.visMotebehov && <MotebehovPanel motebehov={motebehov} />}
+      <FetchFailedError />
+
+      {displayMotebehov() && <MotebehovPanel motebehov={motebehov} />}
 
       <DialogmoteFeaturePanel />
-
-      <PreviousMotereferatPanel previousReferatDates={previousReferatDates} />
-
+      <PreviousMotereferatFeaturePanel />
       <DialogmoteVideoPanel />
     </DialogmoteContainer>
   );

@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { Knapp } from 'nav-frontend-knapper';
 import styled from 'styled-components';
+import AlertStripe from 'nav-frontend-alertstriper';
 import DialogmoteContainer from '../../containers/DialogmoteContainer';
 import DocumentContainer from '../../containers/DocumentContainer';
 import LinkInfoBox from './components/LinkInfoBox';
@@ -13,6 +14,10 @@ import VeilederReferat from './components/VeilederReferat';
 import { motereferatBreadcrumb } from '../../globals/paths';
 import Icon from '../../components/Icon';
 import NoReferatAlert from './components/NoReferatAlert';
+
+const AlertStripeStyled = styled(AlertStripe)`
+  margin-bottom: 32px;
+`;
 
 const KnappStyled = styled(Knapp)`
   margin-top: 32px;
@@ -50,8 +55,22 @@ const getDocumentKeys = (document) => {
 };
 
 const Motereferat = ({ params }) => {
-  const { data, status } = useBrev();
+  const { data, isLoading, isError } = useBrev();
   const [downloadingPDF, setDownloadingPDF] = useState(false);
+
+  if (isLoading) {
+    return <AppSpinner />;
+  }
+
+  if (isError) {
+    return (
+      <DialogmoteContainer title={texts.title} breadcrumb={motereferatBreadcrumb} displayTilbakeknapp>
+        <AlertStripeStyled type="feil">
+          Vi har tekniske problemer så det mangler noe her. Du kan prøve igjen senere.
+        </AlertStripeStyled>
+      </DialogmoteContainer>
+    );
+  }
 
   const handleClick = async (uuid) => {
     setDownloadingPDF(true);
@@ -61,10 +80,6 @@ const Motereferat = ({ params }) => {
       setDownloadingPDF(false);
     }
   };
-
-  if (status === 'loading') {
-    return <AppSpinner />;
-  }
 
   const dateParam = params.date;
   const referat = getReferat(data, dateParam);
@@ -91,7 +106,7 @@ const Motereferat = ({ params }) => {
   }
 
   return (
-    <DialogmoteContainer title={texts.title} breadcrumb={motereferatBreadcrumb}>
+    <DialogmoteContainer title={texts.title} breadcrumb={motereferatBreadcrumb} displayTilbakeknapp>
       {content}
     </DialogmoteContainer>
   );
