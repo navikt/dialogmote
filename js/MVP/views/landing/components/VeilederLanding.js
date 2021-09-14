@@ -20,7 +20,10 @@ const VeilederContent = () => {
   return (
     <React.Fragment>
       {texts.veileder}
-      <Lenke href="" target="_blank">
+      <Lenke
+        href="https://www.nav.no/no/bedrift/oppfolging/sykmeldt-arbeidstaker/relatert-informasjon/slik-folger-du-opp-sykmeldte/dialogmote-2-og-3-nav_kap"
+        target="_blank"
+      >
         {texts.veilederUrl}
       </Lenke>
     </React.Fragment>

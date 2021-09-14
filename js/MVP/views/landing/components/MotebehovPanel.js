@@ -45,7 +45,7 @@ const text = () => {
       <br />
       <br />
       {texts.text2}
-      <Lenke href="" target="_blank">
+      <Lenke href="https://www.nav.no/person/kontakt-oss/nb/skriv-til-oss" target="_blank">
         {texts.link}
       </Lenke>
     </TekstomradeStyled>
