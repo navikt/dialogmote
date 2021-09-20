@@ -12,16 +12,15 @@ const SectionStyled = styled.section`
 `;
 
 const texts = {
-  title: 'Innkalling til dialogmøte',
-  text:
-    'I innkallingen kan du lese om når møtet vil finne sted, om hva dere skal snakke om i møtet, og om hva du bør gjøre før møtet.',
-  button: 'LES INNKALLINGEN',
-  titleEndring: 'Endring av dialogmøte',
-  textEndring: 'Et dialogmøte du er innkalt til, har fått nytt tidspunkt eller lokasjon.',
-  titleAvlysning: 'Avlysning av dialogmøte',
-  textAvlysning:
-    'Et dialogmøte du var innkalt til er blitt avlyst. Du kan lese om detaljene i avlysningsbrevet. (skriv bedre tekst her)',
-  buttonAvlysning: 'LES AVLYSNINGEN',
+  title: 'Du er innkalt til dialogmøte',
+  text: 'Sjekk om tidspunktet passer og hva du bør gjøre før møtet.',
+  buttonInnkallingen: 'Se innkallingen',
+  titleEndring: 'Dialogmøtet er flyttet',
+  textEndring: 'Dialogmøtet du er innkalt til, har fått nytt tidspunkt eller sted.',
+  buttonEndring: 'Se endringen',
+  titleAvlysning: 'Dialogmøtet er avlyst',
+  textAvlysning: 'Dialogmøtet du er innkalt til, er avlyst.',
+  buttonAvlysning: 'Se avlysningen',
 };
 
 const Panel = ({ title, text, icon, buttonText }) => {
@@ -56,11 +55,18 @@ const MoteinnkallelsePanel = ({ innkallelse }) => {
 
   if (innkallelse.brevType === brevTypes.ENDRING) {
     return (
-      <Panel title={texts.titleEndring} text={texts.textEndring} icon="kalender-innkalling" buttonText={texts.button} />
+      <Panel
+        title={texts.titleEndring}
+        text={texts.textEndring}
+        icon="kalender-innkalling"
+        buttonText={texts.buttonEndring}
+      />
     );
   }
 
-  return <Panel title={texts.title} text={texts.text} icon="kalender-innkalling" buttonText={texts.button} />;
+  return (
+    <Panel title={texts.title} text={texts.text} icon="kalender-innkalling" buttonText={texts.buttonInnkallingen} />
+  );
 };
 
 MoteinnkallelsePanel.propTypes = { innkallelse: motePtMVP };

@@ -26,8 +26,8 @@ const FeiloppsummeringStyled = styled(Feiloppsummering)`
 const texts = {
   paragraph: 'Alle felt må fylles ut, bortsett fra de som er markert som valgfrie.',
   checkbox1: 'Jeg har behov for et møte med NAV.',
-  checkbox2: 'Jeg ønsker at den som sykmelder meg, også skal delta i møtet.',
-  textAreaLabel: 'Begrunnelse (valgfritt)',
+  checkbox2: 'Jeg ønsker at den som sykmelder meg, også skal delta i møtet (valgfri).',
+  textAreaLabel: 'Begrunnelse (valgfri)',
   textAreaDescription: 'Ikke skriv sensitiv informasjon, for eksempel detaljerte opplysninger om helsen din.',
 };
 

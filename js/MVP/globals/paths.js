@@ -5,8 +5,8 @@ export const MOTEBEHOV_API = `${hentSyfoApiUrl(API_NAVN.SYFOMOTEBEHOV)}/v2/arbei
 export const MOTEADMIN_API = `${hentSyfoApiUrl(API_NAVN.SYFOMOTEADMIN)}/bruker/arbeidstaker/moter/siste`;
 
 export const LANDING_URL = `${process.env.REACT_APP_CONTEXT_ROOT}`;
-export const MOTEINNKALLING_URL = `${process.env.REACT_APP_CONTEXT_ROOT}/mvp/mote`;
-export const MOTEPLANLEGGINGSSTATUS_URL = `${process.env.REACT_APP_CONTEXT_ROOT}/mvp/moteplanleggingsstatus`;
+export const MOTEINNKALLING_URL = `${process.env.REACT_APP_CONTEXT_ROOT}/moteinnkallelse`;
+export const MOTEPLANLEGGER_URL = `${process.env.REACT_APP_CONTEXT_ROOT}/mote`;
 export const MOTEBEHOV_URL = `${process.env.REACT_APP_CONTEXT_ROOT}/behov`;
 export const MOTEREFERAT_URL = `${process.env.REACT_APP_CONTEXT_ROOT}/referat`;
 

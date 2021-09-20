@@ -10,11 +10,6 @@ const DialogmotePanelStyled = styled(DialogmotePanel)`
   margin-top: 32px;
 `;
 
-const SectionStyled = styled.section`
-  margin-top: 32px;
-  margin-bottom: 8px;
-`;
-
 const ListStyled = styled.div`
   display: flex;
   flex-direction: column;
@@ -23,7 +18,6 @@ const ListStyled = styled.div`
 
 const texts = {
   title: 'Referat fra tidligere dialogmøter',
-  text: 'Her finner du referat fra tidligere dialogmøter du har hatt med NAV.',
 };
 
 const MotereferatList = ({ referatDates }) => {
@@ -51,7 +45,6 @@ const PreviousMotereferatPanel = ({ previousReferatDates }) => {
 
   return (
     <DialogmotePanelStyled title={texts.title} icon="dokument">
-      <SectionStyled>{texts.text}</SectionStyled>
       <MotereferatList referatDates={previousReferatDates} />
     </DialogmotePanelStyled>
   );

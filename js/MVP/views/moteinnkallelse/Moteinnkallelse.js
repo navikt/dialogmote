@@ -14,7 +14,7 @@ import { isDateInPast } from '../../utils';
 import NoInnkallelseAlert from './components/NoInnkallelseAlert';
 
 const AlertStripeStyled = styled(AlertStripe)`
-  margin-top: 32px;
+  margin-bottom: 32px;
 `;
 
 const InfoStripeStyled = styled(AlertStripeInfo)`
@@ -54,10 +54,21 @@ const breadcrumbTitle = (type) => {
 };
 
 const Moteinnkallelse = () => {
-  const { data, status } = useBrev();
+  const { data, isLoading, isError } = useBrev();
 
-  if (status !== 'success') {
+  if (isLoading) {
     return <AppSpinner />;
+  }
+
+  if (isError) {
+    return (
+      <DialogmoteContainer title={title()} breadcrumb={innkallelseBreadcrumb(breadcrumbTitle())}>
+        <AlertStripeStyled type="feil">
+          Akkurat nå mangler det noe her. Vi har tekniske problemer som vi jobber med å løse. Prøv gjerne igjen om en
+          stund.
+        </AlertStripeStyled>
+      </DialogmoteContainer>
+    );
   }
 
   const innkallelse = data[0];
@@ -81,7 +92,11 @@ const Moteinnkallelse = () => {
   }
 
   return (
-    <DialogmoteContainer title={title(brevType)} breadcrumb={innkallelseBreadcrumb(breadcrumbTitle(brevType))}>
+    <DialogmoteContainer
+      title={title(brevType)}
+      breadcrumb={innkallelseBreadcrumb(breadcrumbTitle(brevType))}
+      displayTilbakeknapp
+    >
       {isDateInPast(tid) && <AlertStripeStyled type="advarsel">{texts.pastDateAlertBox}</AlertStripeStyled>}
 
       <DocumentContainer document={innkallelse.document}>

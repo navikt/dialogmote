@@ -21,7 +21,7 @@ export const erMotePassert = (mote) => {
   if (!mote) {
     return false;
   }
-  if (mote.bekreftetAlternativ && mote.bekreftetAlternativ.tid <= newDate()) {
+  if (mote.bekreftetAlternativ && new Date(mote.bekreftetAlternativ.tid) <= newDate()) {
     return true;
   }
   const antallAlternativer = mote.alternativer.length;
