@@ -15,9 +15,7 @@ const texts = {
   textSvart: 'Når tidspunktet er avklart, vil du få en innkalling i posten med mer informasjon om møtet.',
   buttonSvart: 'Se svaret ditt',
 
-  titleBekreftet: 'Bekreftelse på et tidspunkt for dialogmøte',
-  textBekreftet: 'Tid og sted for dialogmøtet er avklart. Du vil mottea en innkalling i posten med mer informasjon.',
-  buttonBekreftet: 'Se bekreftelsen',
+  titleBekreftet: 'Tid og sted for dialogmøtet er klart',
 };
 
 const DialogmotePanelStyled = styled(DialogmotePanel)`
@@ -33,21 +31,7 @@ const MoteplanleggerKvitteringPanel = ({ mote, modus }) => {
   if (modus === BEKREFTET) {
     return (
       <DialogmotePanelStyled title={texts.titleBekreftet} icon="kalender-innkalling">
-        <TekstomradeStyled>{texts.textBekreftet}</TekstomradeStyled>
-        <ModalWrapper
-          isOpen={isModalOpen}
-          onRequestClose={() => setIsModalOpen(false)}
-          closeButton
-          contentLabel="Møteplanlegger kvittering"
-        >
-          <div style={{ padding: '2rem 2.5rem', width: '31rem' }}>
-            <BekreftelseKvittering mote={mote} />
-          </div>
-        </ModalWrapper>
-
-        <Knapp mini onClick={() => setIsModalOpen(true)}>
-          {texts.buttonBekreftet}
-        </Knapp>
+        <BekreftelseKvittering mote={mote} />
       </DialogmotePanelStyled>
     );
   }
