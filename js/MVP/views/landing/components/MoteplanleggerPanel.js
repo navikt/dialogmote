@@ -3,7 +3,7 @@ import React from 'react';
 import styled from 'styled-components';
 import ButtonLenke from '../../../components/ButtonLenke';
 import DialogmotePanel from '../../../containers/DialogmotePanel';
-import { MOTEPLANLEGGINGSSTATUS_URL } from '../../../globals/paths';
+import { MOTEPLANLEGGER_URL } from '../../../globals/paths';
 
 const SectionStyled = styled.section`
   margin: 32px 0;
@@ -11,15 +11,15 @@ const SectionStyled = styled.section`
 
 const texts = {
   title: 'Tidspunkt for dialogmøte',
-  text: 'Her er forslag til tidspunkt for dialogmøte. Sjekk om det passer og svar på forslaget.',
-  button: 'SJEKK FORSLAGET',
+  text: 'Her er vårt forslag til tidspunkt for dialogmøte.',
+  button: 'Svar på om det passer',
 };
 
 const Panel = ({ title, text, icon, buttonText }) => {
   return (
     <DialogmotePanel title={title} icon={icon}>
       <SectionStyled>{text}</SectionStyled>
-      <ButtonLenke mini to={MOTEPLANLEGGINGSSTATUS_URL}>
+      <ButtonLenke mini to={MOTEPLANLEGGER_URL}>
         {buttonText}
       </ButtonLenke>
     </DialogmotePanel>

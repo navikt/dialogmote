@@ -15,18 +15,19 @@ const TekstomradeStyled = styled(Tekstomrade)`
 `;
 
 const texts = {
-  text: 'Referatet oppsummerer det dere snakket om i dialogmøtet. (Skriv bedre tekst her)',
-  button: 'LES REFERATET',
+  title: 'Referat fra siste dialogmøte',
+  text: 'Referatet oppsummerer det dere snakket om i dialogmøtet ',
+  button: 'Les referatet',
 };
 
-const title = (date) => {
-  return `Referat fra dialogmøtet ${date}`;
+const text = (date) => {
+  return `Referatet oppsummerer det dere snakket om i dialogmøtet ${date}`;
 };
 
 const MotereferatPanel = ({ date }) => {
   return (
-    <DialogmotePanelStyled title={title(date)} icon="dokument">
-      <TekstomradeStyled>{texts.text}</TekstomradeStyled>
+    <DialogmotePanelStyled title={texts.title} icon="dokument">
+      <TekstomradeStyled>{text(date)}</TekstomradeStyled>
       <ButtonLenke mini to={MOTEREFERAT_URL}>
         {texts.button}
       </ButtonLenke>

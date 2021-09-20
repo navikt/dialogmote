@@ -12,13 +12,12 @@ import SvarKvittering from '../../moteplanlegger/components/SvarKvittering';
 
 const texts = {
   titleSvart: 'Du har svart på tidspunkt for dialogmøte',
-  textSvart:
-    'Når det endelige tidspunktet er avklart, vil du få en innkalling i posten med mer informasjon om møtet. Har du behov for kontakt med NAV, kan du ???',
-  buttonSvart: 'SE SVARET DITT',
+  textSvart: 'Når tidspunktet er avklart, vil du få en innkalling i posten med mer informasjon om møtet.',
+  buttonSvart: 'Se svaret ditt',
 
   titleBekreftet: 'Bekreftelse på et tidspunkt for dialogmøte',
   textBekreftet: 'Tid og sted for dialogmøtet er avklart. Du vil mottea en innkalling i posten med mer informasjon.',
-  buttonBekreftet: 'SE BEKREFTELSEN',
+  buttonBekreftet: 'Se bekreftelsen',
 };
 
 const DialogmotePanelStyled = styled(DialogmotePanel)`
