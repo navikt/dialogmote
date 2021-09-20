@@ -57,15 +57,13 @@ const Landing = () => {
       return false;
     }
 
-    const innkallelser = brev.data.filter((hendelse) => hendelse.brevType === brevTypes.INNKALLELSE);
-
-    if (!moteplanlegger.isError && moteplanlegger.data && innkallelser.length > 0) {
+    if (!moteplanlegger.isError && moteplanlegger.data) {
       if (moteplanlegger.data.status !== AVBRUTT) {
-        const innkalelseDatoArraySorted = innkallelser.map((i) => new Date(i.tid)).sort((a, b) => b - a);
-        const sistOpprettetInnkallelse = innkalelseDatoArraySorted[0];
+        const brevDatoArraySorted = brev.data.map((i) => new Date(i.createdAt)).sort((a, b) => b - a);
+        const sistOpprettetBrev = brevDatoArraySorted[0];
         const sistOpprettetMoteplanleggerMoteTidspunkt = new Date(moteplanlegger.data.opprettetTidspunkt);
 
-        return sistOpprettetInnkallelse > sistOpprettetMoteplanleggerMoteTidspunkt;
+        return sistOpprettetBrev > sistOpprettetMoteplanleggerMoteTidspunkt;
       }
     }
     return true;
@@ -73,7 +71,8 @@ const Landing = () => {
 
   const displayMotebehov = () => {
     if (motebehov.isError || !motebehov.data.visMotebehov) return false;
-    if (!moteplanlegger.isError && !displayBrev() && !erMotePassert(moteplanlegger.data)) return false;
+    if (!moteplanlegger.isError && moteplanlegger.data.status !== AVBRUTT && !erMotePassert(moteplanlegger.data))
+      return false;
     if (!brev.isError && brev.data[0]) {
       const brevHead = brev.data[0];
       if (brevHead.brevType === brevTypes.INNKALLELSE || brevHead.brevType === brevTypes.ENDRING) return false;

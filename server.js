@@ -11,20 +11,14 @@ const proxy = require('express-http-proxy');
 const cookieParser = require('cookie-parser');
 const getDecorator = require('./decorator');
 
-const envVar = ({ name, defaultValue }) => {
-  const fromEnv = process.env[name];
+const isdalogmoteEnvVar = () => {
+  const fromEnv = process.env.ISDIALOGMOTE_HOST;
   if (fromEnv) {
     return fromEnv;
   }
-  if (typeof defaultValue === 'string') {
-    return defaultValue;
-  }
-  throw new Error(`Missing required environment variable ${name}`);
-};
 
-const isdialogmoteHost = envVar({
-  name: 'ISDIALOGMOTE_HOST',
-});
+  throw new Error(`Missing required environment variable ISDIALOGMOTE_HOST`);
+};
 
 // Prometheus metrics
 const { collectDefaultMetrics } = prometheus;
@@ -69,6 +63,7 @@ const startServer = (html) => {
   if (env === 'opplaering' || env === 'local') {
     require('./mock/mockEndepunkter')(server, env === 'local');
   } else {
+    const isdialogmoteHost = isdalogmoteEnvVar();
     server.use(
       '/dialogmote/api/v1/arbeidstaker/brev/:uuid/les',
       cookieParser(),
