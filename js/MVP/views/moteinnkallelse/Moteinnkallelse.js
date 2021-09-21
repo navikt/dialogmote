@@ -33,7 +33,7 @@ const texts = {
 
 const title = (type) => {
   switch (type) {
-    case brevTypes.AVLYSNING:
+    case brevTypes.AVLYST:
       return 'Avlysning av dialogmøte';
     case brevTypes.ENDRING:
       return 'Endret dialogmøte';
@@ -44,7 +44,7 @@ const title = (type) => {
 
 const breadcrumbTitle = (type) => {
   switch (type) {
-    case brevTypes.AVLYSNING:
+    case brevTypes.AVLYST:
       return 'Avlysning av dialogmøte';
     case brevTypes.ENDRING:
       return 'Endret dialogmøte';
@@ -83,7 +83,7 @@ const Moteinnkallelse = () => {
 
   const { tid, uuid, brevType } = innkallelse;
 
-  if (brevType === brevTypes.AVLYSNING) {
+  if (brevType === brevTypes.AVLYST) {
     return (
       <DialogmoteContainer title={title(brevType)} breadcrumb={innkallelseBreadcrumb(breadcrumbTitle(brevType))}>
         <AvlystDocumentContainerStyled document={innkallelse.document} />
