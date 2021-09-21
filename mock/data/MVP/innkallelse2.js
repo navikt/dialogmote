@@ -2,7 +2,7 @@ const innkallelse = {
   uuid: 'mock-uuid3',
   deltakerUuid: 'mock-deltaker-uuid2',
   createdAt: '2019-11-08T12:35:37.669+01:00',
-  brevType: 'INNKALLELSE', // TODO: temporary
+  brevType: 'INNKALT', // TODO: temporary
   digitalt: true,
   lestDato: null,
   fritekst: 'Fri tekst',

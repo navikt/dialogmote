@@ -77,7 +77,7 @@ const startServer = (html) => {
           return proxyReqOpts;
         },
         proxyReqPathResolver(req) {
-          const { uuid } = req;
+          const { uuid } = req.params;
           return `/api/v1/arbeidstaker/brev/${uuid}/les`;
         },
         proxyErrorHandler(err, res, next) {

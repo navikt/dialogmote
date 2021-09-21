@@ -42,7 +42,7 @@ Panel.propTypes = {
 };
 
 const MoteinnkallelsePanel = ({ innkallelse }) => {
-  if (innkallelse.brevType === brevTypes.AVLYSNING) {
+  if (innkallelse.brevType === brevTypes.AVLYST) {
     return (
       <Panel
         title={texts.titleAvlysning}
