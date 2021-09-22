@@ -75,7 +75,7 @@ const Landing = () => {
       return false;
     if (!brev.isError && brev.data[0]) {
       const brevHead = brev.data[0];
-      if (brevHead.brevType === brevTypes.INNKALLELSE || brevHead.brevType === brevTypes.ENDRING) return false;
+      if (brevHead.brevType === brevTypes.INNKALT || brevHead.brevType === brevTypes.ENDRING) return false;
     }
 
     return true;
