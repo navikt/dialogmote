@@ -45,9 +45,16 @@ const ListUrls = ({ documentKeys }) => {
 ListUrls.propTypes = { documentKeys: PropTypes.arrayOf(PropTypes.string) };
 
 const LinkInfoBox = ({ documentKeys = [] }) => {
+  const infoKeys = Object.keys(infoUrls);
   const documentKeysFiltered = documentKeys.filter((key) => !!key);
+  console.log('documentKeysFiltered', documentKeysFiltered);
+  console.log('documentKeys', documentKeys);
 
   if (documentKeysFiltered.length === 0) {
+    return null;
+  }
+
+  if (!documentKeysFiltered.some((key) => infoKeys.includes(key))) {
     return null;
   }
 
