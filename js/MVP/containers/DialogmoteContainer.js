@@ -55,7 +55,7 @@ const DialogmoteContainer = ({ title, breadcrumb = dialogmoteBreadcrumb, display
         {displayTilbakeknapp && <TilbakeknappStyled onClick={browserHistory.goBack} />}
         <BottomInfoStyled>
           <Normaltekst>{texts.bottomText}</Normaltekst>
-          <Lenke href="http://www.nav.no/personvern" target="_blank">
+          <Lenke href="http://www.nav.no/personvern">
             {texts.bottomUrl}
           </Lenke>
         </BottomInfoStyled>
