@@ -1,9 +1,7 @@
 /* eslint arrow-body-style: ["error", "as-needed"] */
-import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { brodsmule as brodsmulePt, motebehovReducerPt, moteplanleggerDeltakerPt, motePt } from '../propTypes';
-import Side from './Side';
 import AppSpinner from '../components/AppSpinner';
 import Feilmelding from '../components/Feilmelding';
 import AvbruttMote from '../components/moter/moteplanlegger/AvbruttMote';
@@ -11,10 +9,12 @@ import BekreftetKvittering from '../components/moter/moteplanlegger/BekreftetKvi
 import Kvittering from '../components/moter/moteplanlegger/Kvittering';
 import MotePassert from '../components/moter/moteplanlegger/MotePassert';
 import Svarside from '../components/moter/moteplanlegger/Svarside';
-import { hentMote } from '../data/moter/mote_actions';
-import { AVBRUTT, BEKREFTET, MOTESTATUS, SKJEMA, erMotePassert, getSvarsideModus } from '../utils/moteUtils';
-import { sendSvar } from '../data/svar/svar_actions';
 import { hentMotebehov } from '../data/motebehov/motebehov_actions';
+import { hentMote } from '../data/moter/mote_actions';
+import { sendSvar } from '../data/svar/svar_actions';
+import { brodsmule as brodsmulePt, motebehovReducerPt, moteplanleggerDeltakerPt, motePt } from '../propTypes';
+import { AVBRUTT, BEKREFTET, erMotePassert, getSvarsideModus, MOTESTATUS, SKJEMA } from '../utils/moteUtils';
+import Side from './Side';
 
 const tekster = {
   brodsmuleBase: 'Ditt sykefravær',
@@ -55,6 +55,7 @@ export class Container extends Component {
     const { henter, hentet, mote, brodsmuler, hentingFeilet, moteIkkeFunnet, doSendSvar } = this.props;
     const modus = getSvarsideModus(mote);
     const tittel = hentTittelTekstFraModus(modus);
+
     return (
       <Side tittel={tittel} brodsmuler={[...brodsmuler, { tittel }]} laster={henter || !hentet}>
         {(() => {
@@ -126,6 +127,11 @@ export function mapStateToProps(state) {
       {
         tittel: tekster.brodsmuleBase,
         sti: '/sykefravaer',
+        erKlikkbar: true,
+      },
+      {
+        tittel: 'Dialogmøter',
+        sti: '/',
         erKlikkbar: true,
       },
     ],
