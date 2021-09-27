@@ -1,15 +1,15 @@
+import AlertStripe from 'nav-frontend-alertstriper';
+import { Knapp } from 'nav-frontend-knapper';
+import Lenke from 'nav-frontend-lenker';
+import ModalWrapper from 'nav-frontend-modal';
+import PropTypes from 'prop-types';
 import React, { useState } from 'react';
 import styled from 'styled-components';
-import PropTypes from 'prop-types';
-import { Knapp } from 'nav-frontend-knapper';
-import ModalWrapper from 'nav-frontend-modal';
-import AlertStripe from 'nav-frontend-alertstriper';
-import Lenke from 'nav-frontend-lenker';
-import { MOTEBEHOV_URL, OPPFOLGINGSPLANER_URL } from '../../../globals/paths';
 import ButtonLenke from '../../../components/ButtonLenke';
 import DialogmotePanel from '../../../containers/DialogmotePanel';
-import MotebehovKvittering from './Motebehov/MotebehovKvittering';
 import { skjemaTypes } from '../../../globals/constants';
+import { MOTEBEHOV_URL, OPPFOLGINGSPLANER_URL, statiskeURLer } from '../../../globals/paths';
+import MotebehovKvittering from './Motebehov/MotebehovKvittering';
 
 const DialogmotePanelStyled = styled(DialogmotePanel)`
   margin-bottom: 32px;
@@ -45,7 +45,7 @@ const text = () => {
       <br />
       <br />
       {texts.text2}
-      <Lenke href="https://www.nav.no/person/kontakt-oss/nb/skriv-til-oss" target="_blank">
+      <Lenke href={statiskeURLer.KONTAKT_INFO_URL} target="_blank">
         {texts.link}
       </Lenke>
     </TekstomradeStyled>

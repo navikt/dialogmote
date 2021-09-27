@@ -6,7 +6,7 @@ import PropTypes from 'prop-types';
 import { Tilbakeknapp } from 'nav-frontend-ikonknapper';
 import { browserHistory } from 'react-router';
 import Brodsmuler from '../../components/Brodsmuler';
-import { dialogmoteBreadcrumb } from '../globals/paths';
+import { dialogmoteBreadcrumb, statiskeURLer } from '../globals/paths';
 
 const WrappperStyled = styled.div`
   display: flex;
@@ -55,7 +55,7 @@ const DialogmoteContainer = ({ title, breadcrumb = dialogmoteBreadcrumb, display
         {displayTilbakeknapp && <TilbakeknappStyled onClick={browserHistory.goBack} />}
         <BottomInfoStyled>
           <Normaltekst>{texts.bottomText}</Normaltekst>
-          <Lenke href="http://www.nav.no/personvern">{texts.bottomUrl}</Lenke>
+          <Lenke href={statiskeURLer.PERSONVERN_URL}>{texts.bottomUrl}</Lenke>
         </BottomInfoStyled>
       </ContentStyled>
     </WrappperStyled>
