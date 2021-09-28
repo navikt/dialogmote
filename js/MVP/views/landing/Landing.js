@@ -97,7 +97,7 @@ const Landing = () => {
     if (modus === BEKREFTET || modus === MOTESTATUS) {
       return <MoteplanleggerKvitteringPanel mote={convertedMotedata} modus={modus} />;
     }
-    return <MoteplanleggerPanel mote={convertedMotedata} />;
+    return <MoteplanleggerPanel modus={modus} />;
   };
 
   const DialogmoteFeaturePanel = () => {
