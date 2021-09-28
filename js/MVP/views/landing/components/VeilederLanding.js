@@ -3,6 +3,7 @@ import Veileder from 'nav-frontend-veileder';
 import styled from 'styled-components';
 import React from 'react';
 import VeilederAvatar from '../../../../components/svg/VeilederAvatar';
+import { statiskeURLer } from '../../../globals/paths';
 
 const VeilederStyled = styled(Veileder)`
   max-width: 576px;
@@ -20,10 +21,7 @@ const VeilederContent = () => {
   return (
     <React.Fragment>
       {texts.veileder}
-      <Lenke
-        href="https://www.nav.no/no/bedrift/oppfolging/sykmeldt-arbeidstaker/relatert-informasjon/slik-folger-du-opp-sykmeldte/dialogmote-2-og-3-nav_kap"
-        target="_blank"
-      >
+      <Lenke href={statiskeURLer.DIALOGMOTE_INFO_URL} target="_blank">
         {texts.veilederUrl}
       </Lenke>
     </React.Fragment>

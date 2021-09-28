@@ -3,6 +3,7 @@ import Veileder from 'nav-frontend-veileder';
 import styled from 'styled-components';
 import Lenke from 'nav-frontend-lenker';
 import VeilederAvatar from '../../../../components/svg/VeilederAvatar';
+import { statiskeURLer } from '../../../globals/paths';
 
 const VeilederStyled = styled(Veileder)`
   max-width: 576px;
@@ -12,14 +13,14 @@ const VeilederStyled = styled(Veileder)`
 
 const texts = {
   veileder: 'Du kan lese mer om dialogmøter og hva som ellers skjer i løpet av sykefraværet på ',
-  veilederUrl: 'www.nav.no/sykmeldt.',
+  veilederUrl: statiskeURLer.SYKMELDT_URL,
 };
 
 const VeilederContent = () => {
   return (
     <React.Fragment>
       {texts.veileder}
-      <Lenke href="www.nav.no/sykmeldt" target="_blank">
+      <Lenke href={statiskeURLer.SYKMELDT_URL} target="_blank">
         {texts.veilederUrl}
       </Lenke>
     </React.Fragment>

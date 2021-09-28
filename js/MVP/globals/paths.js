@@ -12,6 +12,15 @@ export const MOTEREFERAT_URL = `${process.env.REACT_APP_CONTEXT_ROOT}/referat`;
 
 export const OPPFOLGINGSPLANER_URL = `${process.env.REACT_APP_OPPFOLGINGSPLAN_CONTEXT_ROOT}/oppfolgingsplaner`;
 
+// Statiske URLer
+export const statiskeURLer = {
+  KONTAKT_INFO_URL: 'https://www.nav.no/person/kontakt-oss/nb/skriv-til-oss',
+  PERSONVERN_URL: 'http://www.nav.no/personvern',
+  SYKMELDT_URL: 'www.nav.no/sykmeldt',
+  DIALOGMOTE_INFO_URL:
+    'https://www.nav.no/no/bedrift/oppfolging/sykmeldt-arbeidstaker/relatert-informasjon/slik-folger-du-opp-sykmeldte/dialogmote-2-og-3-nav_kap',
+};
+
 // Breadcrumbs
 const dittSykefravarBreadcrumb = [
   {
