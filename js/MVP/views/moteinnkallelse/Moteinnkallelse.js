@@ -71,9 +71,9 @@ const Moteinnkallelse = () => {
     );
   }
 
-  const innkallelse = data[0];
+  const { tid, uuid, brevType, document, lestDato } = data[0];
 
-  if (!innkallelse) {
+  if (!data[0] || brevType === brevTypes.REFERAT) {
     return (
       <DialogmoteContainer title={title()} breadcrumb={innkallelseBreadcrumb(breadcrumbTitle())}>
         <NoInnkallelseAlert />;
@@ -81,12 +81,10 @@ const Moteinnkallelse = () => {
     );
   }
 
-  const { tid, uuid, brevType } = innkallelse;
-
   if (brevType === brevTypes.AVLYST) {
     return (
       <DialogmoteContainer title={title(brevType)} breadcrumb={innkallelseBreadcrumb(breadcrumbTitle(brevType))}>
-        <AvlystDocumentContainerStyled document={innkallelse.document} />
+        <AvlystDocumentContainerStyled document={document} />
       </DialogmoteContainer>
     );
   }
@@ -99,10 +97,8 @@ const Moteinnkallelse = () => {
     >
       {isDateInPast(tid) && <AlertStripeStyled type="advarsel">{texts.pastDateAlertBox}</AlertStripeStyled>}
 
-      <DocumentContainer document={innkallelse.document}>
-        {!isDateInPast(tid) && (
-          <LestInnkallelseCheckbox type={brevType} varselUuid={uuid} isRead={!!innkallelse.lestDato} />
-        )}
+      <DocumentContainer document={document}>
+        {!isDateInPast(tid) && <LestInnkallelseCheckbox type={brevType} varselUuid={uuid} isRead={!!lestDato} />}
       </DocumentContainer>
 
       <InfoStripeStyled>
