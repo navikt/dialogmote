@@ -39,7 +39,7 @@ const fields = {
 
 const MAX_LENGTH = 1000;
 
-const MeldMoteBehovContent = () => {
+const MeldMotebehovContent = () => {
   const [textInput, setTextInput] = useState('');
   const { register, handleSubmit, formState, control, setValue } = useForm({
     resolver: zodResolver(postMeldMotebehovSchema(MAX_LENGTH)),
@@ -110,6 +110,6 @@ const MeldMoteBehovContent = () => {
   );
 };
 
-MeldMoteBehovContent.propTypes = {};
+MeldMotebehovContent.propTypes = {};
 
-export default MeldMoteBehovContent;
+export default MeldMotebehovContent;

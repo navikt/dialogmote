@@ -9,7 +9,7 @@ import AppSpinner from '../../../components/AppSpinner';
 import DocumentContainer from '../../containers/DocumentContainer';
 import VeilederInnkallelse from './components/VeilederInnkallelse';
 import LestInnkallelseCheckbox from './components/LestInnkallelseCheckbox';
-import { innkallelseBreadcrumb } from '../../globals/paths';
+import { innkallelseBreadcrumb, statiskeURLer } from '../../globals/paths';
 import { isDateInPast } from '../../utils';
 import NoInnkallelseAlert from './components/NoInnkallelseAlert';
 
@@ -103,7 +103,7 @@ const Moteinnkallelse = () => {
 
       <InfoStripeStyled>
         {texts.infoBox}
-        <Lenke>{texts.infoBoxUrl}</Lenke>
+        <Lenke href={statiskeURLer.KONTAKT_INFO_URL}>{texts.infoBoxUrl}</Lenke>
       </InfoStripeStyled>
 
       <VeilederInnkallelse />
