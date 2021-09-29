@@ -52,17 +52,24 @@ const Landing = () => {
     return null;
   };
 
+  const harSammeAvlysningsstatus = (brevType, moteplanleggerStatus) => {
+    return (
+      (brevType === brevTypes.AVLYST && moteplanleggerStatus === AVBRUTT) ||
+      (brevType !== brevTypes.AVLYST && moteplanleggerStatus !== AVBRUTT)
+    );
+  };
+
   const displayBrev = () => {
     if (brev.isError || brev.data.length === 0) {
       return false;
     }
 
     if (!moteplanlegger.isError && moteplanlegger.data) {
-      if (moteplanlegger.data.status !== AVBRUTT) {
-        const brevDatoArraySorted = brev.data.map((i) => new Date(i.createdAt)).sort((a, b) => b - a);
-        const sistOpprettetBrev = brevDatoArraySorted[0];
-        const sistOpprettetMoteplanleggerMoteTidspunkt = new Date(moteplanlegger.data.opprettetTidspunkt);
+      const brevDatoArraySorted = brev.data.map((i) => new Date(i.createdAt)).sort((a, b) => b - a);
+      const sistOpprettetBrev = brevDatoArraySorted[0];
+      const sistOpprettetMoteplanleggerMoteTidspunkt = new Date(moteplanlegger.data.opprettetTidspunkt);
 
+      if (harSammeAvlysningsstatus(sistOpprettetBrev.brevType, moteplanlegger.data.status)) {
         return sistOpprettetBrev > sistOpprettetMoteplanleggerMoteTidspunkt;
       }
     }
@@ -97,7 +104,7 @@ const Landing = () => {
     if (modus === BEKREFTET || modus === MOTESTATUS) {
       return <MoteplanleggerKvitteringPanel mote={convertedMotedata} modus={modus} />;
     }
-    return <MoteplanleggerPanel mote={convertedMotedata} />;
+    return <MoteplanleggerPanel modus={modus} />;
   };
 
   const DialogmoteFeaturePanel = () => {
