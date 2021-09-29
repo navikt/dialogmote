@@ -1,6 +1,7 @@
 import PropTypes from 'prop-types';
 import React from 'react';
 import styled from 'styled-components';
+import { AVBRUTT } from '../../../../utils/moteUtils';
 import ButtonLenke from '../../../components/ButtonLenke';
 import DialogmotePanel from '../../../containers/DialogmotePanel';
 import { MOTEPLANLEGGER_URL } from '../../../globals/paths';
@@ -13,6 +14,9 @@ const texts = {
   title: 'Tidspunkt for dialogmøte',
   text: 'Her er vårt forslag til tidspunkt for dialogmøte.',
   button: 'Svar på om det passer',
+  titleAvbrutt: 'En forespørsel om møte er avbrutt',
+  textAvbrutt: 'Vi sendte deg tidligere en forespørsel om tid og sted til et dialogmøte, dette er avbrutt.',
+  buttonAvbrutt: 'Se detaljer',
 };
 
 const Panel = ({ title, text, icon, buttonText }) => {
@@ -33,10 +37,20 @@ Panel.propTypes = {
   buttonText: PropTypes.string,
 };
 
-const MoteplanleggerPanel = () => {
+const MoteplanleggerPanel = ({ modus }) => {
+  if (modus === AVBRUTT) {
+    return (
+      <Panel
+        title={texts.titleAvbrutt}
+        text={texts.textAvbrutt}
+        icon="kalender-innkalling_avlyst"
+        buttonText={texts.buttonAvbrutt}
+      />
+    );
+  }
   return <Panel title={texts.title} text={texts.text} icon="kalender-innkalling" buttonText={texts.button} />;
 };
 
-MoteplanleggerPanel.propTypes = {};
+MoteplanleggerPanel.propTypes = { modus: PropTypes.string };
 
 export default MoteplanleggerPanel;
