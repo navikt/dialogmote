@@ -63,14 +63,15 @@ const Landing = () => {
     if (brev.isError || brev.data.length === 0) {
       return false;
     }
-
     if (!moteplanlegger.isError && moteplanlegger.data) {
-      const brevDatoArraySorted = brev.data.map((i) => new Date(i.createdAt)).sort((a, b) => b - a);
-      const sistOpprettetBrev = brevDatoArraySorted[0];
+      const brevArraySorted = brev.data.sort((a, b) => b.createdAt - a.createdAt);
+      const sistOpprettetBrev = brevArraySorted[0];
+
+      const sistOpprettetBrevTidspunkt = new Date(sistOpprettetBrev.createdAt);
       const sistOpprettetMoteplanleggerMoteTidspunkt = new Date(moteplanlegger.data.opprettetTidspunkt);
 
       if (harSammeAvlysningsstatus(sistOpprettetBrev.brevType, moteplanlegger.data.status)) {
-        return sistOpprettetBrev > sistOpprettetMoteplanleggerMoteTidspunkt;
+        return sistOpprettetBrevTidspunkt > sistOpprettetMoteplanleggerMoteTidspunkt;
       }
     }
     return true;
