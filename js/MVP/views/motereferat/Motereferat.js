@@ -26,6 +26,7 @@ const KnappStyled = styled(Knapp)`
 
 const texts = {
   title: 'Referat fra dialogmøte',
+  downloadButton: 'LAST NED PDF',
 };
 
 const getReferat = (brev, date) => {
@@ -97,7 +98,7 @@ const Motereferat = ({ params }) => {
 
         <KnappStyled onClick={() => handleClick(uuid)} autoDisableVedSpinner spinner={downloadingPDF} mini>
           <Icon icon="download" rightPadding="8px" />
-          LAST NED PDF
+          {texts.downloadButton}
         </KnappStyled>
 
         <LinkInfoBox documentKeys={getDocumentKeys(document)} />

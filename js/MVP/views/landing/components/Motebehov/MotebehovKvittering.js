@@ -11,11 +11,10 @@ import { getBehovSvarText } from '../../../../../components/moter/motebehov/svar
 
 const texts = {
   heading: 'Svaret ditt om behov for møte',
+  content: 'Jeg har behov for et møte med NAV.',
 };
 
-const Content = (data) => {
-  const { skjemaType } = data;
-  const { motebehov } = data;
+const Content = ({ skjemaType, motebehov }) => {
   const { opprettetDato } = motebehov;
   const { forklaring } = motebehov.motebehovSvar;
 
@@ -32,7 +31,7 @@ const Content = (data) => {
     return (
       <React.Fragment>
         {dateElement()}
-        <p>Jeg har behov for et møte med NAV.</p>
+        <p>{texts.content}</p>
         {KvitteringForklaring(forklaring)}
       </React.Fragment>
     );
@@ -48,6 +47,8 @@ const Content = (data) => {
     </React.Fragment>
   );
 };
+
+Content.propTypes = { skjemaType: PropTypes.string, motebehov: PropTypes.object };
 
 const MotebehovKvittering = ({ motebehov }) => {
   const content = Content(motebehov);
