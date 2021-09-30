@@ -6,6 +6,8 @@ import { applyMiddleware, combineReducers, compose, createStore } from 'redux';
 import { Provider } from 'react-redux';
 import createSagaMiddleware from 'redux-saga';
 import { setPerformOnHttpCalls } from '@navikt/digisyfo-npm';
+import { QueryClient, QueryClientProvider } from 'react-query';
+import { ReactQueryDevtools } from 'react-query/devtools';
 import AppRouter from './routers/AppRouter';
 import history from './history';
 import rootSaga from './data/rootSaga';
@@ -13,6 +15,17 @@ import '../styles/styles.less';
 import setPerformOnOppDialogHttpCalls from './oppfolgingsdialogNpm/setPerformOnOppDialogHttpCalls';
 import reducers from './data/reducers';
 import { forlengInnloggetSesjon, sjekkInnloggingssesjon } from './timeout/timeout_actions';
+import { minutesToMillis } from './MVP/utils';
+
+const queryClient = new QueryClient({
+  defaultOptions: {
+    queries: {
+      refetchOnWindowFocus: false,
+      cacheTime: minutesToMillis(60),
+      staleTime: minutesToMillis(30),
+    },
+  },
+});
 
 const rootReducer = combineReducers(reducers);
 
@@ -39,9 +52,12 @@ setInterval(() => {
 }, 5000);
 
 render(
-  <Provider store={store}>
-    <AppRouter history={history} />
-  </Provider>,
+  <QueryClientProvider client={queryClient}>
+    <Provider store={store}>
+      <AppRouter history={history} />
+    </Provider>
+    <ReactQueryDevtools initialIsOpen={false} />
+  </QueryClientProvider>,
   document.getElementById('maincontent')
 );
 
