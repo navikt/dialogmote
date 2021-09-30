@@ -64,7 +64,7 @@ const Landing = () => {
       return false;
     }
     if (!moteplanlegger.isError && moteplanlegger.data) {
-      const brevArraySorted = brev.data.sort((a, b) => b.createdAt - a.createdAt);
+      const brevArraySorted = brev.data.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
       const sistOpprettetBrev = brevArraySorted[0];
 
       const sistOpprettetBrevTidspunkt = new Date(sistOpprettetBrev.createdAt);
