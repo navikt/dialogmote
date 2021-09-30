@@ -5,9 +5,7 @@ import { getMotebehov } from '../services/motebehov';
 const MOTEBEHOV = 'motebehov';
 
 export const useMotebehov = () => {
-  return useQuery(MOTEBEHOV, getMotebehov, {
-    retry: 0,
-  });
+  return useQuery(MOTEBEHOV, getMotebehov);
 };
 
 export const useFeiloppsumeringList = (formState) => {
