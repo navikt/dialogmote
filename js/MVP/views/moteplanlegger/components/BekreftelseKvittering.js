@@ -14,16 +14,14 @@ const BekreftelseKvittering = ({ mote }) => {
   )}`;
 
   return (
-    <React.Fragment>
-      <p>
-        {texts.tid} {tid}
-        <br />
-        {texts.sted} {mote.bekreftetAlternativ.sted}
-        <br />
-        <br />
-        {texts.info}
-      </p>
-    </React.Fragment>
+    <p>
+      {texts.tid} {tid}
+      <br />
+      {texts.sted} {mote.bekreftetAlternativ.sted}
+      <br />
+      <br />
+      {texts.info}
+    </p>
   );
 };
 

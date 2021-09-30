@@ -38,7 +38,7 @@ const texts = {
   oppfolgingsplanlink: 'Gå til oppfølgingsplanen.',
 };
 
-const text = () => {
+const ContactInfo = () => {
   return (
     <TekstomradeStyled>
       {texts.text1}
@@ -127,7 +127,7 @@ const MotebehovPanel = ({ motebehov }) => {
   if (data.skjemaType === skjemaTypes.MELD_BEHOV) {
     return (
       <DialogmotePanelStyled title={texts.title} icon="behov">
-        {text()}
+        <ContactInfo />
         <ButtonLenke mini to={MOTEBEHOV_URL}>
           {texts.button}
         </ButtonLenke>
@@ -137,7 +137,7 @@ const MotebehovPanel = ({ motebehov }) => {
 
   return (
     <DialogmotePanelStyled title={texts.titleSvarBehov} icon="behov">
-      {text()}
+      <ContactInfo />
       <ButtonLenke mini to={MOTEBEHOV_URL}>
         {texts.button}
       </ButtonLenke>
