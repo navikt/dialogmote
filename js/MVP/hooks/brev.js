@@ -1,12 +1,10 @@
 import { useMutation, useQuery, useQueryClient } from 'react-query';
 import { getBrev, postLestBrev } from '../services/brev';
 
-const MOTEINNKALLELSE = 'moteinnkallelse';
+const BREV = 'brev';
 
 export const useBrev = () => {
-  return useQuery(MOTEINNKALLELSE, getBrev, {
-    retry: 0,
-  });
+  return useQuery(BREV, getBrev);
 };
 
 const setLestDatoForVarsel = (uuid) => {
@@ -24,7 +22,7 @@ export const useMutatebrevLest = () => {
 
   return useMutation(({ uuid }) => postLestBrev(uuid), {
     onSuccess: (_data, variables) => {
-      queryClient.setQueryData([MOTEINNKALLELSE], (old) => {
+      queryClient.setQueryData(BREV, (old) => {
         return old.map(setLestDatoForVarsel(variables.uuid));
       });
     },

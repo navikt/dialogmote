@@ -15,8 +15,17 @@ import '../styles/styles.less';
 import setPerformOnOppDialogHttpCalls from './oppfolgingsdialogNpm/setPerformOnOppDialogHttpCalls';
 import reducers from './data/reducers';
 import { forlengInnloggetSesjon, sjekkInnloggingssesjon } from './timeout/timeout_actions';
+import { minutesToMillis } from './MVP/utils';
 
-const queryClient = new QueryClient();
+const queryClient = new QueryClient({
+  defaultOptions: {
+    queries: {
+      refetchOnWindowFocus: false,
+      cacheTime: minutesToMillis(60),
+      staleTime: minutesToMillis(30),
+    },
+  },
+});
 
 const rootReducer = combineReducers(reducers);
 
