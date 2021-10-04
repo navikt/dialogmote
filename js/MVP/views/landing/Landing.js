@@ -71,7 +71,10 @@ const Landing = () => {
       const sistOpprettetMoteplanleggerMoteTidspunkt = new Date(moteplanlegger.data.opprettetTidspunkt);
 
       if (harSammeAvlysningsstatus(sistOpprettetBrev.brevType, moteplanlegger.data.status)) {
-        return sistOpprettetBrevTidspunkt > sistOpprettetMoteplanleggerMoteTidspunkt;
+        return sistOpprettetBrevTidspunkt > sistOpprettetMoteplanleggerMoteTidspunkt; // Viser enten siste avvlysning eller sist opprettet møte
+      }
+      if (sistOpprettetBrev.brevType === brevTypes.AVLYST && moteplanlegger.data.status !== AVBRUTT && !erMotePassert(moteplanlegger.data)){
+        return false;
       }
     }
     return true;
