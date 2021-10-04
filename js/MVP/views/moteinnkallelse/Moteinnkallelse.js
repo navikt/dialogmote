@@ -74,15 +74,17 @@ const Moteinnkallelse = () => {
     );
   }
 
-  const { tid, uuid, brevType, document, lestDato } = data[0];
+  const brevHead = Array.isArray(data) ? data[0] : null;
 
-  if (!data[0] || brevType === brevTypes.REFERAT) {
+  if (!brevHead || brevHead.brevType === brevTypes.REFERAT) {
     return (
       <DialogmoteContainer title={title()} breadcrumb={innkallelseBreadcrumb(breadcrumbTitle())}>
-        <NoInnkallelseAlert />;
+        <NoInnkallelseAlert />
       </DialogmoteContainer>
     );
   }
+
+  const { tid, uuid, brevType, document, lestDato } = brevHead;
 
   if (brevType === brevTypes.AVLYST) {
     return (
