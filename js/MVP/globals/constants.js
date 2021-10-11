@@ -11,3 +11,8 @@ export const skjemaTypes = {
   SVAR_BEHOV: 'SVAR_BEHOV',
   MELD_BEHOV: 'MELD_BEHOV',
 };
+
+export const pdfTypes = {
+  REFERAT: 'referat',
+  BREV: 'brev',
+};
