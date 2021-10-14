@@ -7,6 +7,7 @@ import DialogmoteContainer from '../../containers/DialogmoteContainer';
 import { useBrev } from '../../hooks/brev';
 import AppSpinner from '../../../components/AppSpinner';
 import DocumentContainer from '../../containers/DocumentContainer';
+import { postLestBrev } from "../../services/brev";
 import VeilederInnkallelse from './components/VeilederInnkallelse';
 import LestInnkallelseCheckbox from './components/LestInnkallelseCheckbox';
 import { innkallelseBreadcrumb, statiskeURLer } from '../../globals/paths';
@@ -75,6 +76,11 @@ const Moteinnkallelse = () => {
   }
 
   const { tid, uuid, brevType, document, lestDato } = data[0];
+
+  if (brevType === brevTypes.AVLYST && lestDato === null) {
+    postLestBrev(uuid).then((r) => console.log(`Avlysning les status: ${r}`));
+  }
+
 
   if (!data[0] || brevType === brevTypes.REFERAT) {
     return (
