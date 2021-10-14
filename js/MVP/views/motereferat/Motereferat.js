@@ -5,6 +5,7 @@ import styled from 'styled-components';
 import AlertStripe from 'nav-frontend-alertstriper';
 import DialogmoteContainer from '../../containers/DialogmoteContainer';
 import DocumentContainer from '../../containers/DocumentContainer';
+import { postLestBrev } from '../../services/brev';
 import LinkInfoBox from './components/LinkInfoBox';
 import { useBrev } from '../../hooks/brev';
 import AppSpinner from '../../../components/AppSpinner';
@@ -83,8 +84,12 @@ const Motereferat = ({ params }) => {
     }
   };
 
-  const dateParam = params.date;
-  const referat = getReferat(data, dateParam);
+  const { date, uuid } = params;
+  const referat = getReferat(data, date);
+
+  if (referat.lestDato === null) {
+    postLestBrev(uuid).then((r) => console.log(`Referat les status: ${r}`));
+  }
 
   let content;
   if (!referat) {
