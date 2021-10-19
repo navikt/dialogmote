@@ -81,12 +81,7 @@ const Landing = () => {
     if (motebehov.isError || !motebehov.data.visMotebehov) return false;
     if (!moteplanlegger.isError && moteplanlegger.data.status !== AVBRUTT && !erMotePassert(moteplanlegger.data))
       return false;
-    if (!brev.isError && brev.data[0]) {
-      const brevHead = brev.data[0];
-      if (brevHead.brevType === brevTypes.INNKALT || brevHead.brevType === brevTypes.ENDRING) return false;
-    }
-
-    return true;
+    return !(!brev.isError && brev.data[0]);
   };
 
   const BrevPanel = () => {
