@@ -75,10 +75,10 @@ const Motereferat = ({ params }) => {
     );
   }
 
-  const handleClick = async (uuid) => {
+  const handleClick = async (uuid, dokumentDato) => {
     setDownloadingPDF(true);
     try {
-      await downloadBrevPdf(uuid);
+      await downloadBrevPdf(uuid, dokumentDato, pdfTypes.REFERAT);
     } finally {
       setDownloadingPDF(false);
     }
@@ -95,13 +95,13 @@ const Motereferat = ({ params }) => {
   if (!referat) {
     content = <NoReferatAlert />;
   } else {
-    const { uuid, document } = referat;
+    const { uuid, document, tid } = referat;
 
     content = (
       <React.Fragment>
         <DocumentContainer document={document} />
 
-        <KnappStyled onClick={() => handleClick(uuid)} autoDisableVedSpinner spinner={downloadingPDF} mini>
+        <KnappStyled onClick={() => handleClick(uuid, getProgrammaticDateFormat(tid))} autoDisableVedSpinner spinner={downloadingPDF} mini>
           <Icon icon="download" rightPadding="8px" />
           {texts.downloadButton}
         </KnappStyled>
