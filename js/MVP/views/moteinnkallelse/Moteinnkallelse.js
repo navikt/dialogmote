@@ -1,13 +1,12 @@
-import React from 'react';
+import React, { useEffect } from "react";
 import styled from 'styled-components';
 import AlertStripe, { AlertStripeInfo } from 'nav-frontend-alertstriper';
 import Lenke from 'nav-frontend-lenker';
 import { brevTypes } from '../../globals/constants';
 import DialogmoteContainer from '../../containers/DialogmoteContainer';
-import { useBrev } from '../../hooks/brev';
+import { useBrev, useMutateBrevLest } from "../../hooks/brev";
 import AppSpinner from '../../../components/AppSpinner';
 import DocumentContainer from '../../containers/DocumentContainer';
-import { postLestBrev } from "../../services/brev";
 import VeilederInnkallelse from './components/VeilederInnkallelse';
 import LestInnkallelseCheckbox from './components/LestInnkallelseCheckbox';
 import { innkallelseBreadcrumb, statiskeURLer } from '../../globals/paths';
@@ -58,13 +57,23 @@ const breadcrumbTitle = (type) => {
 };
 
 const Moteinnkallelse = () => {
-  const { data, isLoading, isError } = useBrev();
+  const brev = useBrev();
+  const mutation = useMutateBrevLest();
 
-  if (isLoading) {
+  const brevHead = Array.isArray(brev.data) ? brev.data[0] : null;
+  const { tid, uuid, brevType, document, lestDato } = brevHead;
+
+  useEffect(() => {
+    if (brevType === brevTypes.AVLYST && lestDato === null) {
+      mutation.mutate({ uuid });
+    }
+  }, []);
+
+  if (brev.isLoading) {
     return <AppSpinner />;
   }
 
-  if (isError) {
+  if (brev.isError) {
     return (
       <DialogmoteContainer title={title()} breadcrumb={innkallelseBreadcrumb(breadcrumbTitle())}>
         <AlertStripeStyled type="feil">
@@ -75,14 +84,7 @@ const Moteinnkallelse = () => {
     );
   }
 
-  const { tid, uuid, brevType, document, lestDato } = data[0];
-
-  if (brevType === brevTypes.AVLYST && lestDato === null) {
-    postLestBrev(uuid).then((r) => console.log(`Avlysning les status: ${r}`));
-  }
-
-
-  if (!data[0] || brevType === brevTypes.REFERAT) {
+  if (!brevHead || brevType === brevTypes.REFERAT) {
     return (
       <DialogmoteContainer title={title()} breadcrumb={innkallelseBreadcrumb(breadcrumbTitle())}>
         <NoInnkallelseAlert />;
