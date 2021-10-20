@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
 import { Knapp } from 'nav-frontend-knapper';
-import Icon from "../../../components/Icon";
+import Icon from '../../../components/Icon';
 import { useMutateBrevLest } from '../../../hooks/brev';
 import { pdfTypes } from '../../../globals/constants';
 import NoReferatAlert from './NoReferatAlert';
