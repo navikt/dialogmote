@@ -30,7 +30,7 @@ const MotereferatContent = ({ referat }) => {
 
   useEffect(() => {
     if (referat && referat.lestDato === null) {
-      const uuid = referat.uuid;
+      const { uuid } = referat;
       mutation.mutate({ uuid });
     }
   }, []);
