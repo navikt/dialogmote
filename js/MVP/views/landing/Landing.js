@@ -61,9 +61,20 @@ const Landing = () => {
   };
 
   const harIngenData = () => {
-    console.log('motebehov', motebehov);
-    console.log('brev', brev);
-    console.log('moteplanlegger', moteplanlegger);
+    console.log(' motebehov.isSuccess', motebehov.isSuccess);
+    console.log('!motebehov.data.visMotebehov', !motebehov.data.visMotebehov);
+    console.log(' brev.isSuccess', brev.isSuccess);
+    console.log(' !brev.data', !brev.data);
+    console.log(
+      ' ((moteplanlegger.isError && moteplanlegger.error.message === 404) || (moteplanlegger.isSuccess && !moteplanlegger.data))',
+      (moteplanlegger.isError && moteplanlegger.error.message === '404') ||
+        (moteplanlegger.isSuccess && !moteplanlegger.data)
+    );
+    console.log('================================');
+    console.log('moteplanlegger.isError', moteplanlegger.isError);
+    console.log(' moteplanlegger.error.message ===404', moteplanlegger.error.message === '404');
+    console.log(' moteplanlegger.isSuccess', moteplanlegger.isSuccess);
+    console.log('!moteplanlegger.data', !moteplanlegger.data);
 
     return (
       motebehov.isSuccess &&
