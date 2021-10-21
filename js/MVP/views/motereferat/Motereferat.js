@@ -96,7 +96,12 @@ const Motereferat = ({ params }) => {
       <React.Fragment>
         <DocumentContainer document={document} />
 
-        <KnappStyled onClick={() => handleClick(uuid, getProgrammaticDateFormat(tid))} autoDisableVedSpinner spinner={downloadingPDF} mini>
+        <KnappStyled
+          onClick={() => handleClick(uuid, getProgrammaticDateFormat(tid))}
+          autoDisableVedSpinner
+          spinner={downloadingPDF}
+          mini
+        >
           <Icon icon="download" rightPadding="8px" />
           {texts.downloadButton}
         </KnappStyled>
