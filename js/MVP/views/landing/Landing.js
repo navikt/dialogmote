@@ -62,13 +62,12 @@ const Landing = () => {
 
   const harIngenData = () => {
     return (
-      !motebehov.isError &&
-      !brev.isError &&
-      moteplanlegger.isError &&
-      moteplanlegger.error.message === '404' &&
+      motebehov.isSuccess &&
       !motebehov.data.visMotebehov &&
-      brev.data.length === 0 &&
-      (!moteplanlegger.data || moteplanlegger.data.length === 0)
+      brev.isSuccess &&
+      !brev.data &&
+      ((moteplanlegger.isError && moteplanlegger.error.message === '404') ||
+        (moteplanlegger.isSuccess && !moteplanlegger.data))
     );
   };
 
@@ -148,18 +147,28 @@ const Landing = () => {
     return <PreviousMotereferatPanel previousReferatDates={previousReferatDates} />;
   };
 
+  const displayContent = () => {
+    if (harIngenData()) {
+      return <IkkeSykmeldtLanding />;
+    }
+    return (
+      <>
+        {displayMotebehov() && <MotebehovPanel motebehov={motebehov} />}
+
+        <DialogmoteFeaturePanel />
+        <PreviousMotereferatFeaturePanel />
+      </>
+    );
+  };
+
   return (
     <DialogmoteContainer title="Dialogmøter">
       <VeilederLanding />
 
       <FetchFailedError />
 
-      {harIngenData() && <IkkeSykmeldtLanding />}
+      {displayContent()}
 
-      {displayMotebehov() && <MotebehovPanel motebehov={motebehov} />}
-
-      <DialogmoteFeaturePanel />
-      <PreviousMotereferatFeaturePanel />
       <DialogmoteVideoPanel />
     </DialogmoteContainer>
   );
