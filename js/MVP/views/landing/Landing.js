@@ -18,6 +18,7 @@ import { useMotebehov } from '../../hooks/motebehov';
 import { useMoteplanlegger } from '../../hooks/moteplanlegger';
 import { getLongDateFormat } from '../../utils';
 import DialogmoteVideoPanel from './components/DialogmoteVideoPanel';
+import IkkeSykmeldtLanding from './components/IkkeSykmeldtLanding';
 import MotebehovPanel from './components/MotebehovPanel';
 import MoteinnkallelsePanel from './components/MoteinnkallelsePanel';
 import MoteplanleggerKvitteringPanel from './components/MoteplanleggerKvitteringPanel';
@@ -56,6 +57,18 @@ const Landing = () => {
     return (
       (brevType === brevTypes.AVLYST && moteplanleggerStatus === AVBRUTT) ||
       (brevType !== brevTypes.AVLYST && moteplanleggerStatus !== AVBRUTT)
+    );
+  };
+
+  const harIngenData = () => {
+    return (
+      !motebehov.isError &&
+      !brev.isError &&
+      moteplanlegger.isError &&
+      moteplanlegger.error.message === '404' &&
+      !motebehov.data.visMotebehov &&
+      brev.data.length === 0 &&
+      (!moteplanlegger.data || moteplanlegger.data.length === 0)
     );
   };
 
@@ -140,6 +153,8 @@ const Landing = () => {
       <VeilederLanding />
 
       <FetchFailedError />
+
+      {harIngenData() && <IkkeSykmeldtLanding />}
 
       {displayMotebehov() && <MotebehovPanel motebehov={motebehov} />}
 
