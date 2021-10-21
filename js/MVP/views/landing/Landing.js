@@ -152,12 +152,12 @@ const Landing = () => {
       return <IkkeSykmeldtLanding />;
     }
     return (
-      <>
+      <React.Fragment>
         {displayMotebehov() && <MotebehovPanel motebehov={motebehov} />}
 
         <DialogmoteFeaturePanel />
         <PreviousMotereferatFeaturePanel />
-      </>
+      </React.Fragment>
     );
   };
 
