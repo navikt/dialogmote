@@ -65,7 +65,7 @@ const Moteinnkallelse = () => {
 
   if (isError) {
     return (
-      <DialogmoteContainer title={title()} breadcrumb={innkallelseBreadcrumb(breadcrumbTitle())}>
+      <DialogmoteContainer title={title()} breadcrumb={innkallelseBreadcrumb(breadcrumbTitle())} displayTilbakeknapp>
         <AlertStripeStyled type="feil">
           Akkurat nå mangler det noe her. Vi har tekniske problemer som vi jobber med å løse. Prøv gjerne igjen om en
           stund.
@@ -78,7 +78,7 @@ const Moteinnkallelse = () => {
 
   if (!data[0] || brevType === brevTypes.REFERAT) {
     return (
-      <DialogmoteContainer title={title()} breadcrumb={innkallelseBreadcrumb(breadcrumbTitle())}>
+      <DialogmoteContainer title={title()} breadcrumb={innkallelseBreadcrumb(breadcrumbTitle())} displayTilbakeknapp>
         <NoInnkallelseAlert />;
       </DialogmoteContainer>
     );
@@ -86,7 +86,11 @@ const Moteinnkallelse = () => {
 
   if (brevType === brevTypes.AVLYST) {
     return (
-      <DialogmoteContainer title={title(brevType)} breadcrumb={innkallelseBreadcrumb(breadcrumbTitle(brevType))}>
+      <DialogmoteContainer
+        title={title(brevType)}
+        breadcrumb={innkallelseBreadcrumb(breadcrumbTitle(brevType))}
+        displayTilbakeknapp
+      >
         <AvlystDocumentContainerStyled document={document} />
       </DialogmoteContainer>
     );
