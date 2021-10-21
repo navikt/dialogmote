@@ -61,6 +61,10 @@ const Landing = () => {
   };
 
   const harIngenData = () => {
+    console.log('motebehov', motebehov);
+    console.log('brev', brev);
+    console.log('moteplanlegger', moteplanlegger);
+
     return (
       motebehov.isSuccess &&
       !motebehov.data.visMotebehov &&
