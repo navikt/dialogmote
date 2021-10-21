@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Element, Innholdstittel, Normaltekst } from 'nav-frontend-typografi';
-import Lenke from 'nav-frontend-lenker';
+import { TrackedLenke } from '../../components/buttons/TrackedLenke';
 
 const DocumentTypes = {
   HEADER: 'HEADER',
@@ -27,9 +27,9 @@ const DocumentRenderer = ({ documentComponent }) => {
         <React.Fragment>
           {title && <Element>{title}</Element>}
           {texts.map((text, index) => (
-            <Lenke key={index} href={text}>
+            <TrackedLenke key={index} href={text}>
               {text}
-            </Lenke>
+            </TrackedLenke>
           ))}
         </React.Fragment>
       );

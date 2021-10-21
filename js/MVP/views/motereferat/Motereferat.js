@@ -56,7 +56,7 @@ const Motereferat = ({ params }) => {
     );
   }
 
-  const { date, uuid } = params;
+  const { date } = params;
   const referat = getReferat(data, date);
 
   return (

@@ -1,9 +1,9 @@
-import Lenke from 'nav-frontend-lenker';
 import Veileder from 'nav-frontend-veileder';
 import styled from 'styled-components';
 import React from 'react';
 import VeilederAvatar from '../../../../components/svg/VeilederAvatar';
 import { statiskeURLer } from '../../../globals/paths';
+import { TrackedLenke } from '../../../../components/buttons/TrackedLenke';
 
 const VeilederStyled = styled(Veileder)`
   max-width: 576px;
@@ -21,9 +21,9 @@ const VeilederContent = () => {
   return (
     <React.Fragment>
       {texts.veileder}
-      <Lenke href={statiskeURLer.DIALOGMOTE_INFO_URL} target="_blank">
+      <TrackedLenke href={statiskeURLer.DIALOGMOTE_INFO_URL} target="_blank">
         {texts.veilederUrl}
-      </Lenke>
+      </TrackedLenke>
     </React.Fragment>
   );
 };

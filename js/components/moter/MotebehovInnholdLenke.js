@@ -1,8 +1,8 @@
 import React from 'react';
-import { Link } from 'react-router';
 import styled from 'styled-components';
 import { isMeldBehov, isSvarBehov, skalViseMotebehovKvittering } from '../../utils/motebehovUtils';
 import { motebehovReducerPt } from '../../propTypes';
+import { TrackedLink } from '../buttons/TrackedLink';
 
 const TEKSTER = {
   tittel: 'Trenger dere et dialogmøte med NAV?',
@@ -35,9 +35,9 @@ const MotebehovInnholdLenke = ({ motebehov }) => {
     <MotebehovInnholdLenkeStyled className="motebehovInnholdLenke panel">
       <h2 className="panel__tittel">{TEKSTER.tittel}</h2>
       {isMeldBehov(motebehov) && <p>{TEKSTER.undertekst}</p>}
-      <Link className="knapp" to="/dialogmote/behov">
+      <TrackedLink className="knapp" to="/dialogmote/behov">
         {getTextLink(motebehov)}
-      </Link>
+      </TrackedLink>
     </MotebehovInnholdLenkeStyled>
   );
 };

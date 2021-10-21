@@ -16,6 +16,9 @@ import setPerformOnOppDialogHttpCalls from './oppfolgingsdialogNpm/setPerformOnO
 import reducers from './data/reducers';
 import { forlengInnloggetSesjon, sjekkInnloggingssesjon } from './timeout/timeout_actions';
 import { minutesToMillis } from './MVP/utils';
+import { initAmplitude } from './amplitude/amplitude';
+
+initAmplitude();
 
 const queryClient = new QueryClient({
   defaultOptions: {

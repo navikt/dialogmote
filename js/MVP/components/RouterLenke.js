@@ -1,15 +1,15 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Link } from 'react-router';
 import styled from 'styled-components';
+import { TrackedLink } from '../../components/buttons/TrackedLink';
 
-const LinkStyled = styled(Link)`
+const LinkStyled = styled(TrackedLink)`
   width: fit-content;
 `;
 
-function RouterLenke({ to, children }) {
+function RouterLenke({ to, children, trackingName }) {
   return (
-    <LinkStyled to={to} className="lenke">
+    <LinkStyled to={to} className="lenke" trackingName={trackingName}>
       {children}
     </LinkStyled>
   );
@@ -17,6 +17,7 @@ function RouterLenke({ to, children }) {
 
 RouterLenke.propTypes = {
   children: PropTypes.node,
+  trackingName: PropTypes.string,
   to: PropTypes.string,
 };
 
