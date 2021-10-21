@@ -65,6 +65,7 @@ const Landing = () => {
     console.log('!motebehov.data.visMotebehov', !motebehov.data.visMotebehov);
     console.log(' brev.isSuccess', brev.isSuccess);
     console.log(' !brev.data', !brev.data);
+    console.log(' brev.data', brev.data);
     console.log(
       ' ((moteplanlegger.isError && moteplanlegger.error.message === 404) || (moteplanlegger.isSuccess && !moteplanlegger.data))',
       (moteplanlegger.isError && moteplanlegger.error.message === '404') ||
