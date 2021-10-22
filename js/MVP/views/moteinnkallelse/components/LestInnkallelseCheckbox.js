@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { BekreftCheckboksPanel } from 'nav-frontend-skjema';
-import { useMutatebrevLest } from '../../../hooks/brev';
+import { useMutateBrevLest } from '../../../hooks/brev';
 import { brevTypes } from '../../../globals/constants';
 
 const texts = {
@@ -25,7 +25,7 @@ const handleChange = (mutation, isRead, varselUuid) => {
 };
 
 const LestInnkallelseCheckbox = ({ type, varselUuid, isRead }) => {
-  const mutation = useMutatebrevLest();
+  const mutation = useMutateBrevLest();
 
   return (
     <BekreftCheckboksPanel

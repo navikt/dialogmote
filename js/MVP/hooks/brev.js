@@ -17,7 +17,7 @@ const setLestDatoForVarsel = (uuid) => {
   };
 };
 
-export const useMutatebrevLest = () => {
+export const useMutateBrevLest = () => {
   const queryClient = useQueryClient();
 
   return useMutation(({ uuid }) => postLestBrev(uuid), {
