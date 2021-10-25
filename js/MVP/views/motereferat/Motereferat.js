@@ -1,32 +1,21 @@
-import React, { useState } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
-import { Knapp } from 'nav-frontend-knapper';
-import styled from 'styled-components';
 import AlertStripe from 'nav-frontend-alertstriper';
-import DialogmoteContainer from '../../containers/DialogmoteContainer';
-import DocumentContainer from '../../containers/DocumentContainer';
-import LinkInfoBox from './components/LinkInfoBox';
-import { useBrev } from '../../hooks/brev';
+import styled from 'styled-components';
 import AppSpinner from '../../../components/AppSpinner';
+import DialogmoteContainer from '../../containers/DialogmoteContainer';
 import { brevTypes } from '../../globals/constants';
-import { downloadBrevPdf, getProgrammaticDateFormat } from '../../utils';
-import VeilederReferat from './components/VeilederReferat';
 import { motereferatBreadcrumb } from '../../globals/paths';
-import Icon from '../../components/Icon';
-import NoReferatAlert from './components/NoReferatAlert';
+import { useBrev } from '../../hooks/brev';
+import { getProgrammaticDateFormat } from '../../utils';
+import MotereferatContent from './components/MotereferatContent';
 
 const AlertStripeStyled = styled(AlertStripe)`
   margin-bottom: 32px;
 `;
 
-const KnappStyled = styled(Knapp)`
-  margin-top: 32px;
-  width: fit-content;
-`;
-
 const texts = {
   title: 'Referat fra dialogmøte',
-  downloadButton: 'LAST NED PDF',
 };
 
 const getReferat = (brev, date) => {
@@ -49,15 +38,8 @@ const getReferat = (brev, date) => {
   return referat;
 };
 
-const getDocumentKeys = (document) => {
-  const documentKeys = document.filter(({ key }) => key).map(({ key }) => key);
-
-  return documentKeys;
-};
-
 const Motereferat = ({ params }) => {
   const { data, isLoading, isError } = useBrev();
-  const [downloadingPDF, setDownloadingPDF] = useState(false);
 
   if (isLoading) {
     return <AppSpinner />;
@@ -74,42 +56,12 @@ const Motereferat = ({ params }) => {
     );
   }
 
-  const handleClick = async (uuid, dokumentDato) => {
-    setDownloadingPDF(true);
-    try {
-      await downloadBrevPdf(uuid, dokumentDato, pdfTypes.REFERAT);
-    } finally {
-      setDownloadingPDF(false);
-    }
-  };
-
-  const dateParam = params.date;
-  const referat = getReferat(data, dateParam);
-
-  let content;
-  if (!referat) {
-    content = <NoReferatAlert />;
-  } else {
-    const { uuid, document, tid } = referat;
-
-    content = (
-      <React.Fragment>
-        <DocumentContainer document={document} />
-
-        <KnappStyled onClick={() => handleClick(uuid, getProgrammaticDateFormat(tid))} autoDisableVedSpinner spinner={downloadingPDF} mini>
-          <Icon icon="download" rightPadding="8px" />
-          {texts.downloadButton}
-        </KnappStyled>
-
-        <LinkInfoBox documentKeys={getDocumentKeys(document)} />
-        <VeilederReferat />
-      </React.Fragment>
-    );
-  }
+  const { date, uuid } = params;
+  const referat = getReferat(data, date);
 
   return (
     <DialogmoteContainer title={texts.title} breadcrumb={motereferatBreadcrumb} displayTilbakeknapp>
-      {content}
+      <MotereferatContent referat={referat} />
     </DialogmoteContainer>
   );
 };
