@@ -1,12 +1,12 @@
 import React from 'react';
-import { Link } from 'react-router';
+import { TrackedLink } from '../../buttons/TrackedLink';
 
 const MotebehovKvitteringSideButtonBack = () => {
   return (
     <div className="knapperad">
-      <Link className="lenke" to="/dialogmote">
+      <TrackedLink className="lenke" to="/dialogmote">
         Tilbake
-      </Link>
+      </TrackedLink>
     </div>
   );
 };

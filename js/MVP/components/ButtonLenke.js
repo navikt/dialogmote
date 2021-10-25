@@ -1,17 +1,17 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Link } from 'react-router';
+import { TrackedLink } from '../../components/buttons/TrackedLink';
 
 function ButtonLenke({ to, children }) {
   return (
-    <Link to={to} className="knapp knapp--hoved knapp--mini">
+    <TrackedLink to={to} className="knapp knapp--hoved knapp--mini">
       {children}
-    </Link>
+    </TrackedLink>
   );
 }
 
 ButtonLenke.propTypes = {
-  children: PropTypes.node,
+  children: PropTypes.string,
   to: PropTypes.string,
 };
 

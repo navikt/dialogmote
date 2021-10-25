@@ -1,8 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Hovedknapp } from 'nav-frontend-knapper';
-import { Link } from 'react-router';
 import styled from 'styled-components';
+import { TrackedHovedknapp } from '../../../../components/buttons/TrackedHovedknapp';
+import { TrackedLink } from '../../../../components/buttons/TrackedLink';
 
 const ButtonGroupStyled = styled.div`
   display: flex;
@@ -19,13 +19,13 @@ const texts = {
 const FormButtons = ({ isSubmitting }) => {
   return (
     <ButtonGroupStyled>
-      <Hovedknapp type="submit" disabled={isSubmitting} spinner={isSubmitting}>
+      <TrackedHovedknapp type="submit" disabled={isSubmitting} spinner={isSubmitting}>
         {texts.buttonSend}
-      </Hovedknapp>
+      </TrackedHovedknapp>
 
-      <Link className="lenke" to="/dialogmote">
+      <TrackedLink className="lenke" to="/dialogmote">
         {texts.buttonAbort}
-      </Link>
+      </TrackedLink>
     </ButtonGroupStyled>
   );
 };

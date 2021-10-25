@@ -1,4 +1,3 @@
-import { Knapp } from 'nav-frontend-knapper';
 import ModalWrapper from 'nav-frontend-modal';
 import Tekstomrade from 'nav-frontend-tekstomrade';
 import PropTypes from 'prop-types';
@@ -9,6 +8,7 @@ import { BEKREFTET, MOTESTATUS } from '../../../../utils/moteUtils';
 import DialogmotePanel from '../../../containers/DialogmotePanel';
 import BekreftelseKvittering from '../../moteplanlegger/components/BekreftelseKvittering';
 import SvarKvittering from '../../moteplanlegger/components/SvarKvittering';
+import { TrackedKnapp } from '../../../../components/buttons/TrackedKnapp';
 
 const texts = {
   titleSvart: 'Du har svart på tidspunkt for dialogmøte',
@@ -50,9 +50,9 @@ const MoteplanleggerKvitteringPanel = ({ mote, modus }) => {
           </div>
         </ModalWrapper>
 
-        <Knapp mini onClick={() => setIsModalOpen(true)}>
+        <TrackedKnapp mini onClick={() => setIsModalOpen(true)}>
           {texts.buttonSvart}
-        </Knapp>
+        </TrackedKnapp>
       </DialogmotePanelStyled>
     );
   }

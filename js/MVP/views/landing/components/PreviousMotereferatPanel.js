@@ -18,6 +18,7 @@ const ListStyled = styled.div`
 
 const texts = {
   title: 'Referat fra tidligere dialogmøter',
+  linkText: 'Referat fra møtet',
 };
 
 const MotereferatList = ({ referatDates }) => {
@@ -30,8 +31,9 @@ const MotereferatList = ({ referatDates }) => {
         return (
           <RouterLenke
             key={date}
+            trackingName={texts.linkText}
             to={`${MOTEREFERAT_URL}/${programmaticDate}`}
-          >{`Referat fra møtet ${formattedDate}`}</RouterLenke>
+          >{`${texts.linkText} ${formattedDate}`}</RouterLenke>
         );
       })}
     </ListStyled>

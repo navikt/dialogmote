@@ -1,9 +1,11 @@
 import React from 'react';
 import { Link } from 'react-router';
+import { trackOnClick } from '../../amplitude/amplitude';
 
 const texts = {
   panel: {
     title: 'Dialogmøte',
+    trackingName: 'Lenke til dialogmøte',
   },
 };
 
@@ -11,7 +13,7 @@ const DialogmoterInnholdLenke = () => {
   return (
     <div className="dialogmoterInnholdLenke blokk--l">
       <article aria-labelledby="dialogmoter-mote">
-        <Link className="inngangspanel" to="/dialogmote/mote">
+        <Link className="inngangspanel" to="/dialogmote/mote" onClick={() => trackOnClick(texts.trackingName)}>
           <span className="dialogmoterInnholdLenke__ikon">
             <img src={`${process.env.REACT_APP_CONTEXT_ROOT}/img/svg/kalender-bgblaa.svg`} alt="Kalender" />
           </span>

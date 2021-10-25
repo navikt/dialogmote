@@ -3,18 +3,18 @@ import PropTypes from 'prop-types';
 import { FieldArray, reduxForm } from 'redux-form';
 import styled from 'styled-components';
 import Alertstripe from 'nav-frontend-alertstriper';
-import { Hovedknapp } from 'nav-frontend-knapper';
 import { Utvidbar } from '@navikt/digisyfo-npm';
 import Ikon from 'nav-frontend-ikoner-assets';
-import { Link } from 'react-router';
-import { motePt, moteplanleggerDeltakertypePt, motebehovReducerPt } from '../../../propTypes';
-import { SVARSKJEMANAVN, getNyeAlternativer, getTidligereAlternativer } from '../../../utils/moteUtils';
+import { motebehovReducerPt, moteplanleggerDeltakertypePt, motePt } from '../../../propTypes';
+import { getNyeAlternativer, getTidligereAlternativer, SVARSKJEMANAVN } from '../../../utils/moteUtils';
 import { BRUKER } from '../../../enums/moteplanleggerDeltakerTyper';
 import Motested from './Motested';
 import Alternativer from './Alternativer';
 import BesvarteTidspunkter from './BesvarteTidspunkter';
 import DeclinedMotebehov from './DeclinedMotebehov';
 import { erMotebehovTilgjengelig } from '../../../utils/motebehovUtils';
+import { TrackedHovedknapp } from '../../buttons/TrackedHovedknapp';
+import { TrackedLink } from '../../buttons/TrackedLink';
 
 const texts = {
   error: 'Beklager, det oppstod en feil!',
@@ -139,12 +139,12 @@ export const Skjema = ({
         )}
       </div>
       <div className="knapperad">
-        <Hovedknapp className="js-submit" htmlType="submit" disabled={sender} spinner={sender}>
+        <TrackedHovedknapp className="js-submit" htmlType="submit" disabled={sender} spinner={sender}>
           {texts.submitButton}
-        </Hovedknapp>
+        </TrackedHovedknapp>
       </div>
       <div className="knapperad">
-        <Link href={previous()}>{texts.cancel}</Link>
+        <TrackedLink href={previous()}>{texts.cancel}</TrackedLink>
       </div>
     </form>
   );
