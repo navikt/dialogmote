@@ -85,10 +85,12 @@ const Landing = () => {
   };
 
   const displayMotebehov = () => {
+    const isMoteplanleggerMotePassert =
+      moteplanlegger.isSuccess && moteplanlegger.data.status !== AVBRUTT && erMotePassert(moteplanlegger.data);
+
     if (motebehov.isError || !motebehov.data.visMotebehov) return false;
-    if (!moteplanlegger.isError && moteplanlegger.data.status !== AVBRUTT && !erMotePassert(moteplanlegger.data))
-      return false;
-    return !(!brev.isError && brev.data[0]);
+    if (isMoteplanleggerMotePassert) return false;
+    return !(brev.isSuccess && brev.data[0]);
   };
 
   const BrevPanel = () => {
