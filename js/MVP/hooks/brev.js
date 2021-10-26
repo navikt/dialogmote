@@ -10,7 +10,7 @@ export const useBrev = () => {
 const setLestDatoForVarsel = (uuid) => {
   return (varsel) => {
     if (varsel.uuid === uuid) {
-      return { ...varsel, lestDato: true };
+      return { ...varsel, lestDato: new Date().toString() };
     }
 
     return varsel;
@@ -21,10 +21,13 @@ export const useMutateBrevLest = () => {
   const queryClient = useQueryClient();
 
   return useMutation(({ uuid }) => postLestBrev(uuid), {
-    onSuccess: (_data, variables) => {
+    onMutate: (variables) => {
       queryClient.setQueryData(BREV, (old) => {
         return old.map(setLestDatoForVarsel(variables.uuid));
       });
+    },
+    onSettled: () => {
+      queryClient.invalidateQueries(BREV);
     },
   });
 };
