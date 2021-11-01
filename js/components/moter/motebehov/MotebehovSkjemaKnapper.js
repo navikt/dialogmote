@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Link } from 'react-router';
-import { Hovedknapp } from 'nav-frontend-knapper';
+import { TrackedHovedknapp } from '../../buttons/TrackedHovedknapp';
+import { TrackedLink } from '../../buttons/TrackedLink';
 
 const texts = {
   buttonAbort: 'Avbryt',
@@ -12,14 +12,14 @@ const MotebehovSkjemaKnapper = ({ sender }) => {
   return (
     <div className="knapperad knapperad--justervenstre">
       <div className="knapperad__element">
-        <Hovedknapp type="submit" disabled={sender} spinner={sender}>
+        <TrackedHovedknapp type="submit" disabled={sender} spinner={sender}>
           {texts.buttonSend}
-        </Hovedknapp>
+        </TrackedHovedknapp>
       </div>
       <div className="knapperad__element">
-        <Link className="lenke" to="/dialogmote">
+        <TrackedLink className="lenke" to="/dialogmote">
           {texts.buttonAbort}
-        </Link>
+        </TrackedLink>
       </div>
     </div>
   );

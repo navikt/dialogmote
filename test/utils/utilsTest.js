@@ -1,6 +1,6 @@
 import chai from 'chai';
 import React from 'react';
-import { mount } from 'enzyme';
+import { shallow } from 'enzyme';
 import chaiEnzyme from 'chai-enzyme';
 import { lagDesimaltall, lagHeltall, Vis } from '../../js/utils';
 
@@ -129,7 +129,7 @@ describe('utils', () => {
           <p>Olsen</p>
         </Vis>
       );
-      const component = mount(toMount);
+      const component = shallow(toMount);
       expect(component.html()).to.equal('<p>Olsen</p>');
     });
 
@@ -139,7 +139,7 @@ describe('utils', () => {
           <p>Olsen</p>
         </Vis>
       );
-      const component = mount(toMount);
+      const component = shallow(toMount);
       expect(component.html()).to.equal(null);
     });
 
@@ -152,7 +152,7 @@ describe('utils', () => {
           }}
         />
       );
-      const component = mount(toMount);
+      const component = shallow(toMount);
       expect(component.html()).to.equal('<p>Olsen</p>');
     });
 
@@ -165,7 +165,7 @@ describe('utils', () => {
           }}
         />
       );
-      const component = mount(toMount);
+      const component = shallow(toMount);
       expect(component.html()).to.equal(null);
     });
   });

@@ -1,6 +1,4 @@
 import AlertStripe from 'nav-frontend-alertstriper';
-import { Knapp } from 'nav-frontend-knapper';
-import Lenke from 'nav-frontend-lenker';
 import ModalWrapper from 'nav-frontend-modal';
 import PropTypes from 'prop-types';
 import React, { useState } from 'react';
@@ -10,6 +8,8 @@ import DialogmotePanel from '../../../containers/DialogmotePanel';
 import { skjemaTypes } from '../../../globals/constants';
 import { MOTEBEHOV_URL, OPPFOLGINGSPLANER_URL, statiskeURLer } from '../../../globals/paths';
 import MotebehovKvittering from './Motebehov/MotebehovKvittering';
+import { TrackedKnapp } from '../../../../components/buttons/TrackedKnapp';
+import { TrackedLenke } from '../../../../components/buttons/TrackedLenke';
 
 const DialogmotePanelStyled = styled(DialogmotePanel)`
   margin-bottom: 32px;
@@ -45,9 +45,9 @@ const ContactInfo = () => {
       <br />
       <br />
       {texts.text2}
-      <Lenke href={statiskeURLer.KONTAKT_INFO_URL} target="_blank">
+      <TrackedLenke href={statiskeURLer.KONTAKT_INFO_URL} target="_blank">
         {texts.link}
-      </Lenke>
+      </TrackedLenke>
     </TekstomradeStyled>
   );
 };
@@ -82,12 +82,12 @@ const MotebehovPanel = ({ motebehov }) => {
           <AlertstripeStyled type="info">
             {texts.alertstripe}
             <br />
-            <Lenke href={OPPFOLGINGSPLANER_URL}>{texts.oppfolgingsplanlink}</Lenke>
+            <TrackedLenke href={OPPFOLGINGSPLANER_URL}>{texts.oppfolgingsplanlink}</TrackedLenke>
           </AlertstripeStyled>
 
-          <Knapp mini onClick={() => setIsModalOpen(true)}>
+          <TrackedKnapp mini onClick={() => setIsModalOpen(true)}>
             {texts.buttonSvart}
-          </Knapp>
+          </TrackedKnapp>
         </DialogmotePanelStyled>
       );
     }
@@ -114,12 +114,12 @@ const MotebehovPanel = ({ motebehov }) => {
         <AlertstripeStyled type="info">
           {texts.alertstripe}
           <br />
-          <Lenke href={OPPFOLGINGSPLANER_URL}>{texts.oppfolgingsplanlink}</Lenke>
+          <TrackedLenke href={OPPFOLGINGSPLANER_URL}>{texts.oppfolgingsplanlink}</TrackedLenke>
         </AlertstripeStyled>
 
-        <Knapp mini onClick={() => setIsModalOpen(true)}>
+        <TrackedKnapp mini onClick={() => setIsModalOpen(true)}>
           {texts.buttonSvart}
-        </Knapp>
+        </TrackedKnapp>
       </DialogmotePanelStyled>
     );
   }

@@ -1,7 +1,6 @@
 import React, { useEffect } from "react";
 import styled from 'styled-components';
 import AlertStripe, { AlertStripeInfo } from 'nav-frontend-alertstriper';
-import Lenke from 'nav-frontend-lenker';
 import { brevTypes } from '../../globals/constants';
 import DialogmoteContainer from '../../containers/DialogmoteContainer';
 import { useBrev, useMutateBrevLest } from "../../hooks/brev";
@@ -12,6 +11,7 @@ import LestInnkallelseCheckbox from './components/LestInnkallelseCheckbox';
 import { innkallelseBreadcrumb, statiskeURLer } from '../../globals/paths';
 import { isDateInPast } from '../../utils';
 import NoInnkallelseAlert from './components/NoInnkallelseAlert';
+import { TrackedLenke } from '../../../components/buttons/TrackedLenke';
 
 const AlertStripeStyled = styled(AlertStripe)`
   margin-bottom: 32px;
@@ -118,7 +118,7 @@ const Moteinnkallelse = () => {
 
       <InfoStripeStyled>
         {texts.infoBox}
-        <Lenke href={statiskeURLer.KONTAKT_INFO_URL}>{texts.infoBoxUrl}</Lenke>
+        <TrackedLenke href={statiskeURLer.KONTAKT_INFO_URL}>{texts.infoBoxUrl}</TrackedLenke>
       </InfoStripeStyled>
 
       <VeilederInnkallelse />

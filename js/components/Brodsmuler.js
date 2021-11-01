@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { Link } from 'react-router';
 import getContextRoot from '../utils/getContextRoot';
 import { brodsmule as brodsmuleProptype } from '../propTypes';
 import { getSykefravaerUrl } from '../utils/urlUtils';
+import { TrackedLink } from './buttons/TrackedLink';
 
 const Brodsmule = ({ sti, tittel, sisteSmule, erKlikkbar }) => {
   const nySti = sti && sti.indexOf('/sykefravaer') > -1 ? getSykefravaerUrl(sti) : sti;
@@ -14,9 +14,9 @@ const Brodsmule = ({ sti, tittel, sisteSmule, erKlikkbar }) => {
         {tittel}
       </a>
     ) : (
-      <Link className="js-smule brodsmuler__smule" to={root + nySti}>
+      <TrackedLink className="js-smule brodsmuler__smule" to={root + nySti}>
         {tittel}
-      </Link>
+      </TrackedLink>
     );
   if (sisteSmule) {
     return (

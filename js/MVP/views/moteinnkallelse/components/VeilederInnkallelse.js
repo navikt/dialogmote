@@ -1,9 +1,9 @@
 import React from 'react';
 import Veileder from 'nav-frontend-veileder';
 import styled from 'styled-components';
-import Lenke from 'nav-frontend-lenker';
 import VeilederAvatar from '../../../../components/svg/VeilederAvatar';
 import { statiskeURLer } from '../../../globals/paths';
+import { TrackedLenke } from '../../../../components/buttons/TrackedLenke';
 
 const VeilederStyled = styled(Veileder)`
   max-width: 576px;
@@ -20,9 +20,9 @@ const VeilederContent = () => {
   return (
     <React.Fragment>
       {texts.veileder}
-      <Lenke href={statiskeURLer.SYKMELDT_URL} target="_blank">
+      <TrackedLenke href={statiskeURLer.SYKMELDT_URL} target="_blank">
         {texts.veilederUrl}
-      </Lenke>
+      </TrackedLenke>
     </React.Fragment>
   );
 };
