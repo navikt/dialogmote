@@ -70,7 +70,10 @@ const Landing = () => {
       const sistOpprettetBrevTidspunkt = new Date(sistOpprettetBrev.createdAt);
       const sistOpprettetMoteplanleggerMoteTidspunkt = new Date(moteplanlegger.data.opprettetTidspunkt);
 
-      if (harSammeAvlysningsstatus(sistOpprettetBrev.brevType, moteplanlegger.data.status)) {
+      if (
+        harSammeAvlysningsstatus(sistOpprettetBrev.brevType, moteplanlegger.data.status) ||
+        sistOpprettetBrev.brevType === brevTypes.REFERAT
+      ) {
         return sistOpprettetBrevTidspunkt > sistOpprettetMoteplanleggerMoteTidspunkt; // Viser enten siste avvlysning/avbryttelse eller sist opprettet møte i planlegger eller innkalling
       }
       if (
