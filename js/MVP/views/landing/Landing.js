@@ -16,8 +16,10 @@ import { brevTypes } from '../../globals/constants';
 import { useBrev } from '../../hooks/brev';
 import { useMotebehov } from '../../hooks/motebehov';
 import { useMoteplanlegger } from '../../hooks/moteplanlegger';
+import { useSykmeldinger } from '../../hooks/sykmeldinger';
 import { getLongDateFormat } from '../../utils';
 import DialogmoteVideoPanel from './components/DialogmoteVideoPanel';
+import IkkeSykmeldtLanding from './components/IkkeSykmeldtLanding';
 import MotebehovPanel from './components/MotebehovPanel';
 import MoteinnkallelsePanel from './components/MoteinnkallelsePanel';
 import MoteplanleggerKvitteringPanel from './components/MoteplanleggerKvitteringPanel';
@@ -34,13 +36,19 @@ const Landing = () => {
   const brev = useBrev();
   const motebehov = useMotebehov();
   const moteplanlegger = useMoteplanlegger();
+  const sykmeldinger = useSykmeldinger();
 
-  if (brev.isLoading || motebehov.isLoading || moteplanlegger.isLoading) {
+  if (brev.isLoading || motebehov.isLoading || moteplanlegger.isLoading || sykmeldinger.isLoading) {
     return <AppSpinner />;
   }
 
   const FetchFailedError = () => {
-    if (brev.isError || motebehov.isError || (moteplanlegger.isError && !(moteplanlegger.error.message === '404'))) {
+    if (
+      brev.isError ||
+      motebehov.isError ||
+      (moteplanlegger.isError && !(moteplanlegger.error.message === '404')) ||
+      sykmeldinger.isError
+    ) {
       return (
         <AlertStripeStyled type="feil">
           Akkurat nå mangler det noe her. Vi har tekniske problemer som vi jobber med å løse. Prøv gjerne igjen om en
@@ -57,6 +65,25 @@ const Landing = () => {
       (brevType === brevTypes.AVLYST && moteplanleggerStatus === AVBRUTT) ||
       (brevType !== brevTypes.AVLYST && moteplanleggerStatus !== AVBRUTT)
     );
+  };
+
+  const harIngenSendteSykmeldingerIDag = () => {
+    return sykmeldinger.isSuccess && sykmeldinger.data && sykmeldinger.data.length === 0;
+  };
+
+  const harIngenInnkallelse = () => {
+    return brev.isSuccess && brev.data.length === 0;
+  };
+
+  const harIngenMoterIMoteplanlegger = () => {
+    return (
+      (moteplanlegger.isError && moteplanlegger.error.message === '404') ||
+      (moteplanlegger.isSuccess && moteplanlegger.data.length === 0)
+    );
+  };
+
+  const displayTomVisning = () => {
+    return harIngenSendteSykmeldingerIDag() || (harIngenInnkallelse() && harIngenMoterIMoteplanlegger());
   };
 
   const displayBrev = () => {
@@ -135,16 +162,28 @@ const Landing = () => {
     return <PreviousMotereferatPanel previousReferatDates={previousReferatDates} />;
   };
 
+  const displayContent = () => {
+    if (displayTomVisning()) {
+      return <IkkeSykmeldtLanding />;
+    }
+    return (
+      <React.Fragment>
+        {displayMotebehov() && <MotebehovPanel motebehov={motebehov} />}
+
+        <DialogmoteFeaturePanel />
+        <PreviousMotereferatFeaturePanel />
+      </React.Fragment>
+    );
+  };
+
   return (
     <DialogmoteContainer title="Dialogmøter">
       <VeilederLanding />
 
       <FetchFailedError />
 
-      {displayMotebehov() && <MotebehovPanel motebehov={motebehov} />}
+      {displayContent()}
 
-      <DialogmoteFeaturePanel />
-      <PreviousMotereferatFeaturePanel />
       <DialogmoteVideoPanel />
     </DialogmoteContainer>
   );
