@@ -23,6 +23,8 @@ export const getHarBehovKvittering = (harBehovSvar, harBehovSporsmal) => {
 };
 
 export const KvitteringForklaring = (forklaring) => {
+  if (!forklaring) return null;
+
   const isLegeRequestPresent = forklaring.includes(MELDMOTEBEHOV_FELTER.lege.tekst);
   const label = <UndertekstBold>{SVAR_MOTEBEHOV_FELTER.forklaring.spoersmaal}</UndertekstBold>;
   const forklaringTekst = forklaring.replace(MELDMOTEBEHOV_FELTER.lege.tekst, '').trim();
