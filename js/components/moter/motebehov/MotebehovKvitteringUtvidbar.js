@@ -24,15 +24,16 @@ export const getHarBehovKvittering = (harBehovSvar, harBehovSporsmal) => {
 
 export const KvitteringForklaring = (forklaring) => {
   if (!forklaring) return null;
-
-  const isLegeRequestPresent = forklaring.includes(MELDMOTEBEHOV_FELTER.lege.tekst);
+  
+  const legeRequestText = MELDMOTEBEHOV_FELTER.lege.tekst.replace(' (valgfri)', '').trim();
+  const isLegeRequestPresent = forklaring.includes(legeRequestText);
   const label = <UndertekstBold>{SVAR_MOTEBEHOV_FELTER.forklaring.spoersmaal}</UndertekstBold>;
-  const forklaringTekst = forklaring.replace(MELDMOTEBEHOV_FELTER.lege.tekst, '').trim();
+  const forklaringTekst = forklaring.replace(legeRequestText, '').trim();
 
   if (isLegeRequestPresent) {
     return (
       <React.Fragment>
-        <p>{MELDMOTEBEHOV_FELTER.lege.tekst}</p>
+        <p>{legeRequestText}</p>
         {forklaringTekst ? (
           <React.Fragment>
             {label}
