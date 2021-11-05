@@ -16,8 +16,10 @@ import { brevTypes } from '../../globals/constants';
 import { useBrev } from '../../hooks/brev';
 import { useMotebehov } from '../../hooks/motebehov';
 import { useMoteplanlegger } from '../../hooks/moteplanlegger';
+import { useSykmeldinger } from '../../hooks/sykmeldinger';
 import { getLongDateFormat } from '../../utils';
 import DialogmoteVideoPanel from './components/DialogmoteVideoPanel';
+import IkkeSykmeldtLanding from './components/IkkeSykmeldtLanding';
 import MotebehovPanel from './components/MotebehovPanel';
 import MoteinnkallelsePanel from './components/MoteinnkallelsePanel';
 import MoteplanleggerKvitteringPanel from './components/MoteplanleggerKvitteringPanel';
@@ -34,13 +36,19 @@ const Landing = () => {
   const brev = useBrev();
   const motebehov = useMotebehov();
   const moteplanlegger = useMoteplanlegger();
+  const sykmeldinger = useSykmeldinger();
 
-  if (brev.isLoading || motebehov.isLoading || moteplanlegger.isLoading) {
+  if (brev.isLoading || motebehov.isLoading || moteplanlegger.isLoading || sykmeldinger.isLoading) {
     return <AppSpinner />;
   }
 
   const FetchFailedError = () => {
-    if (brev.isError || motebehov.isError || (moteplanlegger.isError && !(moteplanlegger.error.message === '404'))) {
+    if (
+      brev.isError ||
+      motebehov.isError ||
+      (moteplanlegger.isError && !(moteplanlegger.error.message === '404')) ||
+      sykmeldinger.isError
+    ) {
       return (
         <AlertStripeStyled type="feil">
           Akkurat nå mangler det noe her. Vi har tekniske problemer som vi jobber med å løse. Prøv gjerne igjen om en
@@ -57,6 +65,10 @@ const Landing = () => {
       (brevType === brevTypes.AVLYST && moteplanleggerStatus === AVBRUTT) ||
       (brevType !== brevTypes.AVLYST && moteplanleggerStatus !== AVBRUTT)
     );
+  };
+
+  const hasNoSendteSykmeldinger = () => {
+    return sykmeldinger.isSuccess && sykmeldinger.data && sykmeldinger.data.length === 0;
   };
 
   const displayBrev = () => {
@@ -128,14 +140,34 @@ const Landing = () => {
     return null;
   };
 
-  const PreviousMotereferatFeaturePanel = () => {
-    if (brev.isError || brev.data.length < 2) return null;
+  const PreviousMotereferatFeaturePanel = (displayAlleReferater) => {
+    const includeLastReferat = displayAlleReferater.displayAlleReferater;
+    if (brev.isError || (!includeLastReferat && brev.data.length < 2)) return null;
 
-    const currentBrev = displayBrev() ? brev.data.slice(1) : brev.data;
+    const currentBrev = displayBrev() && !includeLastReferat ? brev.data.slice(1) : brev.data;
     const previousReferater = currentBrev.filter((hendelse) => hendelse.brevType === brevTypes.REFERAT);
     const previousReferatDates = previousReferater.map(({ tid }) => tid);
 
     return <PreviousMotereferatPanel previousReferatDates={previousReferatDates} />;
+  };
+
+  const displayContent = () => {
+    if (hasNoSendteSykmeldinger()) {
+      return (
+        <React.Fragment>
+          <IkkeSykmeldtLanding />
+          <PreviousMotereferatFeaturePanel displayAlleReferater />
+        </React.Fragment>
+      );
+    }
+    return (
+      <React.Fragment>
+        {displayMotebehov() && <MotebehovPanel motebehov={motebehov} />}
+
+        <DialogmoteFeaturePanel />
+        <PreviousMotereferatFeaturePanel displayAlleReferater={false} />
+      </React.Fragment>
+    );
   };
 
   return (
@@ -144,10 +176,8 @@ const Landing = () => {
 
       <FetchFailedError />
 
-      {displayMotebehov() && <MotebehovPanel motebehov={motebehov} />}
+      {displayContent()}
 
-      <DialogmoteFeaturePanel />
-      <PreviousMotereferatFeaturePanel />
       <DialogmoteVideoPanel />
     </DialogmoteContainer>
   );

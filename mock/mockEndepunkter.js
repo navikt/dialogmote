@@ -2,6 +2,7 @@ const express = require('express');
 const mockSyfomoteadmin = require('./mockSyfomoteadmin');
 const mockSyfomotebehov = require('./mockSyfomotebehov');
 const mockIsdialogmote = require('./mockIsdialogmote');
+const mockSyfooppfolgingsplanservice = require('./mockSyfooppfolgingsplanservice');
 
 function mockEndepunkter(server, erLokal) {
   server.use(express.json());
@@ -17,7 +18,7 @@ function mockEndepunkter(server, erLokal) {
     );
   });
 
-  [mockSyfomoteadmin, mockSyfomotebehov, mockIsdialogmote].forEach((func) => {
+  [mockSyfomoteadmin, mockSyfomotebehov, mockIsdialogmote, mockSyfooppfolgingsplanservice].forEach((func) => {
     func(server, erLokal);
   });
 }
