@@ -27,7 +27,7 @@ export const erMotePassert = (mote) => {
   const antallAlternativer = mote.alternativer.length;
   return (
     mote.alternativer.filter((alternativ) => {
-      return alternativ.tid <= newDate();
+      return new Date(alternativ.tid) <= newDate();
     }).length === antallAlternativer
   );
 };
