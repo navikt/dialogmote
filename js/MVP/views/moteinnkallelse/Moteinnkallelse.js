@@ -1,13 +1,12 @@
-import React, { useEffect } from "react";
+import React, { useEffect } from 'react';
 import styled from 'styled-components';
 import AlertStripe, { AlertStripeInfo } from 'nav-frontend-alertstriper';
 import { brevTypes } from '../../globals/constants';
 import DialogmoteContainer from '../../containers/DialogmoteContainer';
-import { useBrev, useMutateBrevLest } from "../../hooks/brev";
+import { useBrev, useMutateBrevLest } from '../../hooks/brev';
 import AppSpinner from '../../../components/AppSpinner';
 import DocumentContainer from '../../containers/DocumentContainer';
 import VeilederInnkallelse from './components/VeilederInnkallelse';
-import LestInnkallelseCheckbox from './components/LestInnkallelseCheckbox';
 import { innkallelseBreadcrumb, statiskeURLer } from '../../globals/paths';
 import { isDateInPast } from '../../utils';
 import NoInnkallelseAlert from './components/NoInnkallelseAlert';
@@ -64,7 +63,7 @@ const Moteinnkallelse = () => {
   const { tid, uuid, brevType, document, lestDato } = brevHead;
 
   useEffect(() => {
-    if (brevType === brevTypes.AVLYST && lestDato === null) {
+    if (lestDato === null) {
       mutation.mutate({ uuid });
     }
   }, []);
@@ -112,9 +111,7 @@ const Moteinnkallelse = () => {
     >
       {isDateInPast(tid) && <AlertStripeStyled type="advarsel">{texts.pastDateAlertBox}</AlertStripeStyled>}
 
-      <DocumentContainer document={document}>
-        {!isDateInPast(tid) && <LestInnkallelseCheckbox type={brevType} varselUuid={uuid} isRead={!!lestDato} />}
-      </DocumentContainer>
+      <DocumentContainer document={document} />
 
       <InfoStripeStyled>
         {texts.infoBox}
