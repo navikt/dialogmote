@@ -5,7 +5,6 @@ import React from 'react';
 import { applyMiddleware, combineReducers, compose, createStore } from 'redux';
 import { Provider } from 'react-redux';
 import createSagaMiddleware from 'redux-saga';
-import { setPerformOnHttpCalls } from '@navikt/digisyfo-npm';
 import { QueryClient, QueryClientProvider } from 'react-query';
 import { ReactQueryDevtools } from 'react-query/devtools';
 import AppRouter from './routers/AppRouter';
@@ -17,6 +16,7 @@ import reducers from './data/reducers';
 import { forlengInnloggetSesjon, sjekkInnloggingssesjon } from './timeout/timeout_actions';
 import { minutesToMillis } from './MVP/utils';
 import { initAmplitude } from './amplitude/amplitude';
+import { setPerformOnHttpCalls } from './data/gateway-api/apiUtils';
 
 initAmplitude();
 

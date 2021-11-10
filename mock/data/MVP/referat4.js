@@ -53,5 +53,3 @@ const referat = {
 };
 
 module.exports = referat;
-
-

@@ -1,7 +1,7 @@
 import { all, call, fork, put, takeEvery } from 'redux-saga/effects';
-import { getAjax } from '@navikt/digisyfo-npm';
 import { log } from '../../logging/log';
 import * as actions from './brukerinfo_actions';
+import { getAjax } from '../gateway-api/apiUtils';
 
 export function* sjekkInnlogging() {
   yield put(actions.sjekkerInnlogging());

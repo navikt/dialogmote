@@ -1,5 +1,5 @@
 import React from 'react';
-import { Utvidbar } from '@navikt/digisyfo-npm';
+import Ekspanderbartpanel from 'nav-frontend-ekspanderbartpanel';
 import { moteplanleggerDeltakerPt, motePt } from '../../../propTypes';
 import { BRUKER } from '../../../enums/moteplanleggerDeltakerTyper';
 import { finnDeltakerByType } from '../../../utils/moteUtils';
@@ -75,14 +75,14 @@ const Kvittering = ({ mote }) => {
         <div className="redaksjonelt blokk">
           <VeienVidereTekst deltaker={deltaker} />
         </div>
-        <Utvidbar tittel={tekster.dineSvar}>
+        <Ekspanderbartpanel tittel={tekster.dineSvar}>
           <div>
             <div className="blokk">
               <Motested sted={deltaker.svar[0].sted} />
             </div>
             <BesvarteTidspunkter mote={mote} alternativer={mote.alternativer} />
           </div>
-        </Utvidbar>
+        </Ekspanderbartpanel>
       </div>
     </div>
   );
