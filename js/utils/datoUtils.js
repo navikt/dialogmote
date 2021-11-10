@@ -1,8 +1,4 @@
-import { erGyldigDatoformat, tilLesbarDatoMedArstall } from '@navikt/digisyfo-npm';
-
-export { tilLesbarDatoMedArstall };
-
-const maneder = [
+const maaneder = [
   'januar',
   'februar',
   'mars',
@@ -35,19 +31,25 @@ export const newDate = () => {
   return new Date();
 };
 
-export const erGyldigDato = (dato) => {
-  // eslint-disable-next-line
-  const re = /^(?:(?:31(\/|-|\.)(?:0?[13578]|1[02]))\1|(?:(?:29|30)(\/|-|\.)(?:0?[1,3-9]|1[0-2])\2))(?:(?:1[6-9]|[2-9]\d)?\d{2})$|^(?:29(\/|-|\.)0?2\3(?:(?:(?:1[6-9]|[2-9]\d)?(?:0[48]|[2468][048]|[13579][26])|(?:(?:16|[2468][048]|[3579][26])00))))$|^(?:0?[1-9]|1\d|2[0-8])(\/|-|\.)(?:(?:0?[1-9])|(?:1[0-2]))\4(?:(?:1[6-9]|[2-9]\d)?\d{2})$/;
-  if (!re.test(dato)) {
-    return false;
-  }
-  return erGyldigDatoformat(dato);
-};
-
 export const ANTALL_MS_DAG = 1000 * 60 * 60 * 24;
 
 export const hentDagerMellomDatoer = (startDato, sluttDato) => {
   return Math.round(Math.abs((sluttDato.getTime() - startDato.getTime()) / ANTALL_MS_DAG));
+};
+
+export const tilLesbarDatoUtenAarstall = (datoArg) => {
+  if (datoArg) {
+    const dato = new Date(datoArg);
+    const dag = dato.getUTCDate();
+    const manedIndex = dato.getUTCMonth();
+    const maned = maaneder[manedIndex];
+    return `${dag}. ${maned}`;
+  }
+  return null;
+};
+
+export const tilLesbarDatoMedArstall = (datoArg) => {
+  return datoArg ? `${tilLesbarDatoUtenAarstall(new Date(datoArg))} ${new Date(datoArg).getUTCFullYear()}` : null;
 };
 
 export const leggTilDagerPaaDato = (dato, dager) => {
@@ -74,7 +76,7 @@ const pad = (int) => {
 };
 
 export const visDato = (d) => {
-  const maned = maneder[d.getMonth()];
+  const maned = maaneder[d.getMonth()];
   return `${capitalizeForsteBokstav(ukedager[d.getDay()])} ${d.getDate()}. ${maned} ${d.getFullYear()}`;
 };
 

@@ -1,8 +1,8 @@
 import { expect } from 'chai';
-import { put, call } from 'redux-saga/effects';
-import { getAjax } from '@navikt/digisyfo-npm';
+import { call, put } from 'redux-saga/effects';
 import { sjekkInnlogging } from './brukerinfoSagas';
 import { setErInnlogget, sjekkerInnlogging } from './brukerinfo_actions';
+import { getAjax } from '../gateway-api/apiUtils';
 
 describe('brukerinfoSagas', () => {
   describe('sjekkInnlogging', () => {
