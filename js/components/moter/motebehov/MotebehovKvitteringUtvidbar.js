@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Utvidbar } from '@navikt/digisyfo-npm';
+import Ekspanderbartpanel from 'nav-frontend-ekspanderbartpanel';
 import { UndertekstBold } from 'nav-frontend-typografi';
 import { motebehovReducerPt } from '../../../propTypes';
 import { FELTER as SVAR_MOTEBEHOV_FELTER } from './svarmotebehov/SvarMotebehovSkjema';
@@ -59,13 +59,13 @@ const MotebehovKvitteringUtvidbar = ({ motebehovReducer, harBehovSporsmal, harBe
   const { motebehov } = motebehovReducer.data;
   const { motebehovSvar } = motebehov;
   return (
-    <Utvidbar className="motebehovKvitteringUtvidbar" tittel={tekster.motebehovKvitteringUtvidbar.tittel}>
+    <Ekspanderbartpanel className="motebehovKvitteringUtvidbar" tittel={tekster.motebehovKvitteringUtvidbar.tittel}>
       <div>
         {motebehov.opprettetDato && <h4>{tilLesbarDatoMedArstallOgUkedag(motebehov.opprettetDato)}</h4>}
         {motebehovSvar.harMotebehov !== undefined && getHarBehovKvittering(harBehovSvar, harBehovSporsmal)}
         {motebehovSvar.forklaring && KvitteringForklaring(motebehovSvar.forklaring)}
       </div>
-    </Utvidbar>
+    </Ekspanderbartpanel>
   );
 };
 MotebehovKvitteringUtvidbar.propTypes = {

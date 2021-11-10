@@ -1,4 +1,4 @@
-import { setPerformOnHttpCalls } from '@navikt/digisyfo-npm';
+import { setPerformOnHttpCalls } from '../data/gateway-api/apiUtils';
 
 const setPerformOnOppDialogHttpCalls = (someFunction) => {
   setPerformOnHttpCalls(someFunction);
