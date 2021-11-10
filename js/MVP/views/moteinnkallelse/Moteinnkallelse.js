@@ -66,7 +66,7 @@ const Moteinnkallelse = () => {
     if (lestDato === null) {
       mutation.mutate({ uuid });
     }
-  }, []);
+  }, [lestDato, mutation, uuid]);
 
   if (brev.isLoading) {
     return <AppSpinner />;
