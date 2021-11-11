@@ -141,21 +141,6 @@ export const post = (url, body, headers = {}) => {
     });
 };
 
-export const hentApiUrl = () => {
-  const url = window && window.location && window.location.href ? window.location.href : '';
-
-  if (url.indexOf('tjenester.nav') > -1) {
-    // Prod
-    return 'https://syfoapi.nav.no/syfosoknad/api';
-  }
-  if (url.indexOf('localhost') > -1 || url.indexOf('herokuapp') > -1) {
-    // Lokalt
-    return '/syfoapi/syfosoknad/api';
-  }
-  // Preprod
-  return 'https://syfoapi-q.nav.no/syfosoknad/api';
-};
-
 export const API_NAVN = {
   SYFOMOTEADMIN: 'syfomoteadmin',
   SYFOMOTEBEHOV: 'syfomotebehov',

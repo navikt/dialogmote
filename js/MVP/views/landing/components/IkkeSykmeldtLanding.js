@@ -1,6 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import Icon from '../../../components/Icon';
+import { DialogReportGraImage } from '@/images/imageComponents';
 
 const texts = {
   text1: 'Dialogmøter er ikke aktuelt for deg nå siden du ikke er sykmeldt.',
@@ -21,7 +22,7 @@ const IkkeSykmeldtLanding = () => {
   return (
     <IkkeSykmeldtContentWrapper>
       <IkkeSykmeldtContent>
-        <Icon icon="dialog-report-gra" />
+        <Icon icon={DialogReportGraImage} />
       </IkkeSykmeldtContent>
       <IkkeSykmeldtContent style={{ marginBottom: '32px' }}>{texts.text1}</IkkeSykmeldtContent>
     </IkkeSykmeldtContentWrapper>

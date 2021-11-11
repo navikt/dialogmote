@@ -3,6 +3,7 @@ import * as actions from './motebehov_actions';
 
 describe('actions', () => {
   beforeEach(() => {
+    // eslint-disable-next-line no-global-assign
     window = window || {};
   });
 

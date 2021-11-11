@@ -3,9 +3,10 @@ import styled from 'styled-components';
 import PropTypes from 'prop-types';
 import DialogmotePanel from '../../../containers/DialogmotePanel';
 import ButtonLenke from '../../../components/ButtonLenke';
-import { MOTEINNKALLING_URL } from '../../../globals/paths';
-import { motePtMVP } from '../../../../propTypes';
-import { brevTypes } from '../../../globals/constants';
+import { MOTEINNKALLING_URL } from '@/MVP/globals/paths';
+import { motePtMVP } from '@/propTypes';
+import { brevTypes } from '@/MVP/globals/constants';
+import { KalenderInnkallingAvlystImage, KalenderInnkallingImage } from '@/images/imageComponents';
 
 const SectionStyled = styled.section`
   margin: 32px 0;
@@ -47,7 +48,7 @@ const MoteinnkallelsePanel = ({ innkallelse }) => {
       <Panel
         title={texts.titleAvlysning}
         text={texts.textAvlysning}
-        icon="kalender-innkalling_avlyst"
+        icon={KalenderInnkallingAvlystImage}
         buttonText={texts.buttonAvlysning}
       />
     );
@@ -58,14 +59,14 @@ const MoteinnkallelsePanel = ({ innkallelse }) => {
       <Panel
         title={texts.titleEndring}
         text={texts.textEndring}
-        icon="kalender-innkalling"
+        icon={KalenderInnkallingImage}
         buttonText={texts.buttonEndring}
       />
     );
   }
 
   return (
-    <Panel title={texts.title} text={texts.text} icon="kalender-innkalling" buttonText={texts.buttonInnkallingen} />
+    <Panel title={texts.title} text={texts.text} icon={KalenderInnkallingImage} buttonText={texts.buttonInnkallingen} />
   );
 };
 

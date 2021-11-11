@@ -1,4 +1,4 @@
-import { get } from '../../data/gateway-api/gatewayApi';
+import { get } from '@/data/gateway-api';
 import { MOTEBEHOV_API } from '../globals/paths';
 
 export const getMotebehov = async () => {

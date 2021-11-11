@@ -4,7 +4,8 @@ import PropTypes from 'prop-types';
 import Tekstomrade from 'nav-frontend-tekstomrade';
 import DialogmotePanel from '../../../containers/DialogmotePanel';
 import ButtonLenke from '../../../components/ButtonLenke';
-import { MOTEREFERAT_URL } from '../../../globals/paths';
+import { MOTEREFERAT_URL } from '@/MVP/globals/paths';
+import { DokumentImage } from '@/images/imageComponents';
 
 const DialogmotePanelStyled = styled(DialogmotePanel)`
   margin-top: 32px;
@@ -26,7 +27,7 @@ const text = (date) => {
 
 const MotereferatPanel = ({ date }) => {
   return (
-    <DialogmotePanelStyled title={texts.title} icon="dokument">
+    <DialogmotePanelStyled title={texts.title} icon={DokumentImage}>
       <TekstomradeStyled>{text(date)}</TekstomradeStyled>
       <ButtonLenke mini to={MOTEREFERAT_URL}>
         {texts.button}

@@ -1,6 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router';
-import { trackOnClick } from '../../amplitude/amplitude';
+import { trackOnClick } from '@/amplitude/amplitude';
+import { BlaaKalenderImage } from '@/images/imageComponents';
 
 const texts = {
   panel: {
@@ -15,7 +16,7 @@ const DialogmoterInnholdLenke = () => {
       <article aria-labelledby="dialogmoter-mote">
         <Link className="inngangspanel" to="/dialogmote/mote" onClick={() => trackOnClick(texts.trackingName)}>
           <span className="dialogmoterInnholdLenke__ikon">
-            <img src={`${process.env.REACT_APP_CONTEXT_ROOT}/img/svg/kalender-bgblaa.svg`} alt="Kalender" />
+            <img src={BlaaKalenderImage} alt="Kalender" />
           </span>
           <div className="inngangspanel__innhold">
             <header className="inngangspanel__header">

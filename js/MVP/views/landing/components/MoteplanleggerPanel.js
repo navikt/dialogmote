@@ -1,10 +1,11 @@
 import PropTypes from 'prop-types';
 import React from 'react';
 import styled from 'styled-components';
-import { AVBRUTT } from '../../../../utils/moteUtils';
+import { AVBRUTT } from '@/utils/moteUtils';
 import ButtonLenke from '../../../components/ButtonLenke';
 import DialogmotePanel from '../../../containers/DialogmotePanel';
-import { MOTEPLANLEGGER_URL } from '../../../globals/paths';
+import { MOTEPLANLEGGER_URL } from '@/MVP/globals/paths';
+import { KalenderInnkallingAvlystImage, KalenderInnkallingImage } from '@/images/imageComponents';
 
 const SectionStyled = styled.section`
   margin: 32px 0;
@@ -43,12 +44,12 @@ const MoteplanleggerPanel = ({ modus }) => {
       <Panel
         title={texts.titleAvbrutt}
         text={texts.textAvbrutt}
-        icon="kalender-innkalling_avlyst"
+        icon={KalenderInnkallingAvlystImage}
         buttonText={texts.buttonAvbrutt}
       />
     );
   }
-  return <Panel title={texts.title} text={texts.text} icon="kalender-innkalling" buttonText={texts.button} />;
+  return <Panel title={texts.title} text={texts.text} icon={KalenderInnkallingImage} buttonText={texts.button} />;
 };
 
 MoteplanleggerPanel.propTypes = { modus: PropTypes.string };

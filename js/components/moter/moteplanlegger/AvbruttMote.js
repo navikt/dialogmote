@@ -1,6 +1,7 @@
 import React from 'react';
-import { motePt } from '../../../propTypes';
-import { visDato, visKlokkeslett } from '../../../utils/datoUtils';
+import { motePt } from '@/propTypes';
+import { visDato, visKlokkeslett } from '@/utils/datoUtils';
+import { MoteAvbruttImage } from '@/images/imageComponents';
 
 /* eslint-disable max-len */
 const texts = {
@@ -31,11 +32,7 @@ const AvbruttMote = ({ mote }) => {
       </header>
       <div className="panel">
         <div className="illustrertTittel">
-          <img
-            className="illustrertTittel__img"
-            src={`${process.env.REACT_APP_CONTEXT_ROOT}/img/svg/mote_avbrutt.svg`}
-            alt=""
-          />
+          <img className="illustrertTittel__img" src={MoteAvbruttImage} alt="" />
           <h2 className="illustrertTittel__tittel">{texts.subTitle}</h2>
         </div>
         <div>
@@ -46,7 +43,6 @@ const AvbruttMote = ({ mote }) => {
           <div className="kvittering__svar blokk">
             {mote.alternativer.map((alternativ) => {
               return (
-                // eslint-disable-next-line jsx-a11y/label-has-associated-control
                 <label key={alternativ.id} className="avbrutt__mote__svar">
                   {`${visDato(alternativ.tid)} ${texts.tid} ${visKlokkeslett(alternativ.tid)}`}
                 </label>

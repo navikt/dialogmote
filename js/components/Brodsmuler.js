@@ -2,8 +2,9 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import getContextRoot from '../utils/getContextRoot';
 import { brodsmule as brodsmuleProptype } from '../propTypes';
-import { getSykefravaerUrl } from '../utils/urlUtils';
+import { getSykefravaerUrl } from '@/utils/urlUtils';
 import { TrackedLink } from './buttons/TrackedLink';
+import { PersonImage } from '@/images/imageComponents';
 
 const Brodsmule = ({ sti, tittel, sisteSmule, erKlikkbar }) => {
   const nySti = sti && sti.indexOf('/sykefravaer') > -1 ? getSykefravaerUrl(sti) : sti;
@@ -51,7 +52,6 @@ Brodsmule.propTypes = {
 const ToggleLink = ({ onClick }) => {
   return (
     <span>
-      {/* eslint-disable-next-line jsx-a11y/anchor-is-valid */}
       <a
         role="button"
         aria-label="Vis hele brødsmulestien"
@@ -103,7 +103,7 @@ class Brodsmuler extends Component {
     const synligeBrodsmuler = this.getSynligeBrodsmuler();
     return (
       <nav className="brodsmuler" aria-label="Du er her: ">
-        <img src={`${process.env.REACT_APP_CONTEXT_ROOT}/img/svg/person.svg`} alt="Du" className="brodsmuler__ikon" />
+        <img src={PersonImage} alt="Du" className="brodsmuler__ikon" />
         <div className="brodsmuler__smuler">
           <a href="/dittnav" className="js-smule brodsmuler__smule">
             Ditt NAV

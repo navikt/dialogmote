@@ -5,11 +5,12 @@ import React, { useState } from 'react';
 import styled from 'styled-components';
 import ButtonLenke from '../../../components/ButtonLenke';
 import DialogmotePanel from '../../../containers/DialogmotePanel';
-import { skjemaTypes } from '../../../globals/constants';
-import { MOTEBEHOV_URL, OPPFOLGINGSPLANER_URL, statiskeURLer } from '../../../globals/paths';
+import { skjemaTypes } from '@/MVP/globals/constants';
+import { MOTEBEHOV_URL, OPPFOLGINGSPLANER_URL, statiskeURLer } from '@/MVP/globals/paths';
 import MotebehovKvittering from './Motebehov/MotebehovKvittering';
-import { TrackedKnapp } from '../../../../components/buttons/TrackedKnapp';
-import { TrackedLenke } from '../../../../components/buttons/TrackedLenke';
+import { TrackedKnapp } from '@/components/buttons/TrackedKnapp';
+import { TrackedLenke } from '@/components/buttons/TrackedLenke';
+import { BehovImage } from '@/images/imageComponents';
 
 const DialogmotePanelStyled = styled(DialogmotePanel)`
   margin-bottom: 32px;
@@ -61,7 +62,7 @@ const MotebehovPanel = ({ motebehov }) => {
   if (data.motebehov) {
     if (data.skjemaType === skjemaTypes.MELD_BEHOV) {
       return (
-        <DialogmotePanelStyled title={texts.titleSvart} icon="behov">
+        <DialogmotePanelStyled title={texts.titleSvart} icon={BehovImage}>
           <TekstomradeStyled>{texts.textSvart}</TekstomradeStyled>
 
           <ModalWrapper
@@ -93,7 +94,7 @@ const MotebehovPanel = ({ motebehov }) => {
     }
 
     return (
-      <DialogmotePanelStyled title={texts.titleSvartSvarBehov} icon="behov">
+      <DialogmotePanelStyled title={texts.titleSvartSvarBehov} icon={BehovImage}>
         <TekstomradeStyled>{texts.textSvart}</TekstomradeStyled>
 
         <ModalWrapper
@@ -126,7 +127,7 @@ const MotebehovPanel = ({ motebehov }) => {
 
   if (data.skjemaType === skjemaTypes.MELD_BEHOV) {
     return (
-      <DialogmotePanelStyled title={texts.title} icon="behov">
+      <DialogmotePanelStyled title={texts.title} icon={BehovImage}>
         <ContactInfo />
         <ButtonLenke mini to={MOTEBEHOV_URL}>
           {texts.button}
@@ -136,7 +137,7 @@ const MotebehovPanel = ({ motebehov }) => {
   }
 
   return (
-    <DialogmotePanelStyled title={texts.titleSvarBehov} icon="behov">
+    <DialogmotePanelStyled title={texts.titleSvarBehov} icon={BehovImage}>
       <ContactInfo />
       <ButtonLenke mini to={MOTEBEHOV_URL}>
         {texts.button}
