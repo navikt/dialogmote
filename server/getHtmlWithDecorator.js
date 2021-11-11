@@ -8,8 +8,6 @@ const getHtmlWithDecorator = (filePath) =>
     filePath: filePath,
     urlLookupTable: false,
     chatbot: true,
-    enforceLogin: true,
-    redirectToApp: true,
   });
 
 module.exports = getHtmlWithDecorator;
