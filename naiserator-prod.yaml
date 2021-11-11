@@ -44,5 +44,5 @@ spec:
     - name: LOGINSERVICE_URL
       value: https://loginservice.nav.no/login
     - name: ISDIALOGMOTE_HOST
-      value: https://isdialogmote.nav.no
+      value: "isdialogmote.nav.no"
 
