@@ -36,7 +36,7 @@ export const hentLoginUrl = () => {
     return 'http://localhost:8080/syfoapi/local/cookie';
   }
   // Preprod
-  return 'https://loginservice-q.nav.no/login';
+  return 'https://loginservice.dev.nav.no/login';
 };
 
 export const leggTilCacheBuster = (url) => {
@@ -141,21 +141,6 @@ export const post = (url, body, headers = {}) => {
     });
 };
 
-export const hentApiUrl = () => {
-  const url = window && window.location && window.location.href ? window.location.href : '';
-
-  if (url.indexOf('tjenester.nav') > -1) {
-    // Prod
-    return 'https://syfoapi.nav.no/syfosoknad/api';
-  }
-  if (url.indexOf('localhost') > -1 || url.indexOf('herokuapp') > -1) {
-    // Lokalt
-    return '/syfoapi/syfosoknad/api';
-  }
-  // Preprod
-  return 'https://syfoapi-q.nav.no/syfosoknad/api';
-};
-
 export const API_NAVN = {
   SYFOMOTEADMIN: 'syfomoteadmin',
   SYFOMOTEBEHOV: 'syfomotebehov',
@@ -184,5 +169,5 @@ export const hentSyfoApiUrl = (appNavn) => {
     return `/${appNavn}/api`;
   }
   // Preprod
-  return `https://syfoapi-q.nav.no/${appNavn}/api`;
+  return `https://syfoapi.dev.nav.no/${appNavn}/api`;
 };

@@ -2,10 +2,10 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import Ekspanderbartpanel from 'nav-frontend-ekspanderbartpanel';
 import { UndertekstBold } from 'nav-frontend-typografi';
-import { motebehovReducerPt } from '../../../propTypes';
+import { motebehovReducerPt } from '@/propTypes';
 import { FELTER as SVAR_MOTEBEHOV_FELTER } from './svarmotebehov/SvarMotebehovSkjema';
 import { FELTER as MELDMOTEBEHOV_FELTER } from './meldbehov/MeldMotebehovSkjema';
-import { tilLesbarDatoMedArstallOgUkedag } from '../../../utils/datoUtils';
+import { tilLesbarDatoMedArstallOgUkedag } from '@/utils/datoUtils';
 
 const tekster = {
   motebehovKvitteringUtvidbar: {
@@ -19,7 +19,7 @@ export const getHarBehovKvittering = (harBehovSvar, harBehovSporsmal) => {
         <UndertekstBold key="harBehovSporsmal">{SVAR_MOTEBEHOV_FELTER.harMotebehov.spoersmaal}</UndertekstBold>,
         <p key="harBehovTekst">{harBehovSvar}</p>,
       ]
-    : [<p>{harBehovSvar}</p>];
+    : [<p key="harBehovSvar">{harBehovSvar}</p>];
 };
 
 export const KvitteringForklaring = (forklaring) => {

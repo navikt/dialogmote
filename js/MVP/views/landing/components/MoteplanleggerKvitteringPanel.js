@@ -3,12 +3,13 @@ import Tekstomrade from 'nav-frontend-tekstomrade';
 import PropTypes from 'prop-types';
 import React, { useState } from 'react';
 import styled from 'styled-components';
-import { motePt } from '../../../../propTypes';
-import { BEKREFTET, MOTESTATUS } from '../../../../utils/moteUtils';
+import { motePt } from '@/propTypes';
+import { BEKREFTET, MOTESTATUS } from '@/utils/moteUtils';
 import DialogmotePanel from '../../../containers/DialogmotePanel';
 import BekreftelseKvittering from '../../moteplanlegger/components/BekreftelseKvittering';
 import SvarKvittering from '../../moteplanlegger/components/SvarKvittering';
-import { TrackedKnapp } from '../../../../components/buttons/TrackedKnapp';
+import { TrackedKnapp } from '@/components/buttons/TrackedKnapp';
+import { KalenderInnkallingImage } from '@/images/imageComponents';
 
 const texts = {
   titleSvart: 'Du har svart på tidspunkt for dialogmøte',
@@ -30,14 +31,14 @@ const MoteplanleggerKvitteringPanel = ({ mote, modus }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   if (modus === BEKREFTET) {
     return (
-      <DialogmotePanelStyled title={texts.titleBekreftet} icon="kalender-innkalling">
+      <DialogmotePanelStyled title={texts.titleBekreftet} icon={KalenderInnkallingImage}>
         <BekreftelseKvittering mote={mote} />
       </DialogmotePanelStyled>
     );
   }
   if (modus === MOTESTATUS) {
     return (
-      <DialogmotePanelStyled title={texts.titleSvart} icon="kalender-innkalling">
+      <DialogmotePanelStyled title={texts.titleSvart} icon={KalenderInnkallingImage}>
         <TekstomradeStyled>{texts.textSvart}</TekstomradeStyled>
         <ModalWrapper
           isOpen={isModalOpen}

@@ -7,9 +7,9 @@ import Side from './Side';
 import MotebehovInnhold from '../components/moter/motebehov/MotebehovInnhold';
 import AppSpinner from '../components/AppSpinner';
 import Feilmelding from '../components/Feilmelding';
-import { hentMotebehov, svarMotebehov } from '../data/motebehov/motebehov_actions';
-import { erMotebehovTilgjengelig, skalViseMotebehovKvittering } from '../utils/motebehovUtils';
-import { dialogmoteBreadcrumb } from '../MVP/globals/paths';
+import { hentMotebehov, svarMotebehov } from '@/data/motebehov/motebehov_actions';
+import { erMotebehovTilgjengelig, skalViseMotebehovKvittering } from '@/utils/motebehovUtils';
+import { dialogmoteBreadcrumb } from '@/MVP/globals/paths';
 
 const tekster = {
   brodsmuleBase: 'Ditt sykefravær',
@@ -27,7 +27,7 @@ class Container extends Component {
   }
 
   render() {
-    const { henter, hentingFeilet, sendingFeilet, skalViseMotebehov, brodsmuler, motebehovReducer } = this.props;
+    const { henter, hentingFeilet, sendingFeilet, skalViseMotebehov, motebehovReducer } = this.props;
     const visKvittering = skalViseMotebehovKvittering(motebehovReducer);
     const sideTittel = visKvittering ? tekster.titler.kvittering : tekster.titler.meldBehov;
 

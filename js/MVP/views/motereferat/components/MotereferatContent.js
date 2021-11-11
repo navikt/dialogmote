@@ -3,13 +3,14 @@ import styled from 'styled-components';
 import PropTypes from 'prop-types';
 import { Knapp } from 'nav-frontend-knapper';
 import Icon from '../../../components/Icon';
-import { useMutateBrevLest } from '../../../hooks/brev';
-import { pdfTypes } from '../../../globals/constants';
+import { useMutateBrevLest } from '@/MVP/hooks/brev';
+import { pdfTypes } from '@/MVP/globals/constants';
 import NoReferatAlert from './NoReferatAlert';
 import { downloadBrevPdf, getProgrammaticDateFormat } from '../../../utils';
 import DocumentContainer from '../../../containers/DocumentContainer';
 import LinkInfoBox from './LinkInfoBox';
 import VeilederReferat from './VeilederReferat';
+import { DownloadImage } from '@/images/imageComponents';
 
 const texts = {
   downloadButton: 'LAST NED PDF',
@@ -29,11 +30,11 @@ const MotereferatContent = ({ referat }) => {
   const [downloadingPDF, setDownloadingPDF] = useState(false);
 
   useEffect(() => {
-    if (referat && referat.lestDato === null) {
+    if (referat && referat.lestDato === null && !mutation.isLoading) {
       const { uuid } = referat;
       mutation.mutate({ uuid });
     }
-  }, []);
+  }, [mutation, referat]);
 
   const handleClick = async (uuid, dokumentDato) => {
     setDownloadingPDF(true);
@@ -59,7 +60,7 @@ const MotereferatContent = ({ referat }) => {
         spinner={downloadingPDF}
         mini
       >
-        <Icon icon="download" rightPadding="8px" />
+        <Icon icon={DownloadImage} rightPadding="8px" />
         {texts.downloadButton}
       </KnappStyled>
 

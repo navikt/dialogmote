@@ -19,7 +19,7 @@ export const useFeiloppsumeringList = (formState) => {
       return { skjemaelementId: key, feilmelding: errors[key].message };
     });
     setErrorList(list);
-  }, [formState]);
+  }, [errors, formState]);
 
   return errorList;
 };

@@ -9,9 +9,8 @@ import Feilmelding from '../components/Feilmelding';
 import TimeoutBox from '../timeout/TimeoutBox';
 import * as actions from '../data/brukerinfo/brukerinfo_actions';
 import { brodsmule as brodsmulePt } from '../propTypes';
-import { toggleHeleAppen } from '../toggles';
-
-const DocumentTitle = require('react-document-title');
+import { toggleHeleAppen } from '@/toggles';
+import DocumentTitle from 'react-document-title';
 
 export const Utlogget = () => (
   <Feilmelding
@@ -75,12 +74,12 @@ export class SideComponent extends Component {
     };
   }
 
-  componentWillMount() {
+  UNSAFE_componentWillMount() {
     const { sjekkInnlogging } = this.props;
     sjekkInnlogging();
   }
 
-  componentWillReceiveProps(nextProps) {
+  UNSAFE_componentWillReceiveProps(nextProps) {
     const { laster } = this.props;
     const { timeoutHandle } = this.state;
     if (laster && !nextProps.laster) {

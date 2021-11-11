@@ -1,10 +1,11 @@
 import React from 'react';
 import Ekspanderbartpanel from 'nav-frontend-ekspanderbartpanel';
 import { moteplanleggerDeltakerPt, motePt } from '../../../propTypes';
-import { BRUKER } from '../../../enums/moteplanleggerDeltakerTyper';
-import { finnDeltakerByType } from '../../../utils/moteUtils';
+import { BRUKER } from '@/enums/moteplanleggerDeltakerTyper';
+import { finnDeltakerByType } from '@/utils/moteUtils';
 import BesvarteTidspunkter from './BesvarteTidspunkter';
 import Motested from './Motested';
+import { MotesvarSendtImage } from '@/images/imageComponents';
 
 const tekster = {
   tittel: 'Svaret ditt på tidspunkt for dialogmøte',
@@ -61,11 +62,7 @@ const Kvittering = ({ mote }) => {
       </header>
       <div className="panel">
         <div className="illustrertTittel">
-          <img
-            className="illustrertTittel__img"
-            src={`${process.env.REACT_APP_CONTEXT_ROOT}/img/svg/motesvarSendt.svg`}
-            alt=""
-          />
+          <img className="illustrertTittel__img" src={MotesvarSendtImage} alt="" />
           <h2 className="illustrertTittel__tittel">
             <div>
               <TextConfirmation />

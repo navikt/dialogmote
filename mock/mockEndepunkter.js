@@ -1,3 +1,4 @@
+/* eslint-disable */
 const express = require('express');
 const mockSyfomoteadmin = require('./mockSyfomoteadmin');
 const mockSyfomotebehov = require('./mockSyfomotebehov');
@@ -23,4 +24,6 @@ function mockEndepunkter(server, erLokal) {
   });
 }
 
-module.exports = mockEndepunkter;
+module.exports = {
+  mockEndepunkter,
+};

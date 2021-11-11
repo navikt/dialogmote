@@ -9,11 +9,11 @@ import AppSpinner from '../components/AppSpinner';
 import Feilmelding from '../components/Feilmelding';
 import DialogmoterInnhold from '../components/moter/DialogmoterInnhold';
 import { brodsmule as brodsmulePt, motebehovReducerPt } from '../propTypes';
-import { hentMote } from '../data/moter/mote_actions';
-import { hentMotebehov } from '../data/motebehov/motebehov_actions';
-import { forsoktHentetMote } from '../utils/reducerUtils';
-import { getMote } from '../utils/moteUtils';
-import { erMotebehovTilgjengelig } from '../utils/motebehovUtils';
+import { hentMote } from '@/data/moter/mote_actions';
+import { hentMotebehov } from '@/data/motebehov/motebehov_actions';
+import { forsoktHentetMote } from '@/utils/reducerUtils';
+import { getMote } from '@/utils/moteUtils';
+import { erMotebehovTilgjengelig } from '@/utils/motebehovUtils';
 
 const tekster = {
   brodsmuler: {
@@ -34,7 +34,7 @@ class Container extends Component {
     }
   }
 
-  componentWillReceiveProps(nextProps) {
+  UNSAFE_componentWillReceiveProps(nextProps) {
     const { harForsoektHentetAlt, skalViseMotebehov } = nextProps;
     if (harForsoektHentetAlt && skalViseMotebehov === false) {
       history.push(`${getContextRoot()}/mote`);

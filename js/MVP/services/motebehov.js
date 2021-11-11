@@ -1,7 +1,6 @@
-import { get } from '../../data/gateway-api/gatewayApi';
 import { MOTEBEHOV_API } from '../globals/paths';
+import { get } from '@/api/axios';
 
-export const getMotebehov = async () => {
-  const url = MOTEBEHOV_API;
-  return get(url);
+export const getMotebehov = () => {
+  return get(MOTEBEHOV_API);
 };
