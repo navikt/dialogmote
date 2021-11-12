@@ -51,12 +51,12 @@ export class Container extends Component {
   }
 
   render() {
-    const { henter, hentet, mote, brodsmuler, hentingFeilet, moteIkkeFunnet, doSendSvar } = this.props;
+    const { henter, mote, brodsmuler, hentingFeilet, moteIkkeFunnet, doSendSvar } = this.props;
     const modus = getSvarsideModus(mote);
     const tittel = hentTittelTekstFraModus(modus);
 
     return (
-      <Side tittel={tittel} brodsmuler={[...brodsmuler, { tittel }]} laster={henter || !hentet}>
+      <Side tittel={tittel} brodsmuler={[...brodsmuler, { tittel }]}>
         {(() => {
           if (henter) {
             return <AppSpinner />;
@@ -108,7 +108,6 @@ Container.propTypes = {
   sendingFeilet: PropTypes.bool,
   mote: motePt,
   motebehovReducer: motebehovReducerPt,
-  hentet: PropTypes.bool,
 };
 
 export function mapStateToProps(state) {

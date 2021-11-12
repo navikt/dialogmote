@@ -1,4 +1,4 @@
-import { API_NAVN, hentSyfoApiUrl } from '../../data/gateway-api/gatewayApi';
+import { API_NAVN, hentSyfoApiUrl } from '@/api/apiUtils';
 
 export const ISDIALOGMOTE_API_BASE_PATH = `/dialogmote/api/v1/arbeidstaker/brev`;
 export const MOTEBEHOV_API = `${hentSyfoApiUrl(API_NAVN.SYFOMOTEBEHOV)}/v2/arbeidstaker/motebehov`;

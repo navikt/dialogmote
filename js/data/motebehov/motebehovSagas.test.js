@@ -1,6 +1,7 @@
 import { expect } from 'chai';
-import { put, call } from 'redux-saga/effects';
-import { get, post, hentSyfoApiUrl, API_NAVN } from '../gateway-api/gatewayApi';
+import { call, put } from 'redux-saga/effects';
+import { get, post } from '@/api/axios';
+import { API_NAVN, hentSyfoApiUrl } from '@/api/apiUtils';
 import { hentMotebehov, svarMotebehov } from './motebehovSagas';
 import {
   HENT_MOTEBEHOV_HENTER,

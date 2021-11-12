@@ -4,7 +4,6 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import getContextRoot from '../utils/getContextRoot';
 import history from '../history';
-import Side from './Side';
 import AppSpinner from '../components/AppSpinner';
 import Feilmelding from '../components/Feilmelding';
 import DialogmoterInnhold from '../components/moter/DialogmoterInnhold';
@@ -14,6 +13,7 @@ import { hentMotebehov } from '@/data/motebehov/motebehov_actions';
 import { forsoktHentetMote } from '@/utils/reducerUtils';
 import { getMote } from '@/utils/moteUtils';
 import { erMotebehovTilgjengelig } from '@/utils/motebehovUtils';
+import Side from '@/sider/Side';
 
 const tekster = {
   brodsmuler: {
@@ -44,7 +44,7 @@ class Container extends Component {
   render() {
     const { brodsmuler, henter, hentingFeilet } = this.props;
     return (
-      <Side tittel={tekster.sideTittel} brodsmuler={brodsmuler} laster={henter}>
+      <Side tittel={tekster.sideTittel} brodsmuler={brodsmuler}>
         {(() => {
           if (henter) {
             return <AppSpinner />;

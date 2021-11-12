@@ -4,7 +4,7 @@ export const erPaaHeroku = () => {
 };
 
 export const getSykefravaerUrl = (sti) => {
-  return erPaaHeroku() ? `https://sykefravaer.herokuapp.com${sti}` : sti;
+  return sti ? `${window.location.origin}${sti}` : `${window.location.origin}/sykefravaer`;
 };
 
 export const oppfolgingsplanUrl = () => {

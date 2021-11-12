@@ -32,7 +32,7 @@ class Container extends Component {
     const sideTittel = visKvittering ? tekster.titler.kvittering : tekster.titler.meldBehov;
 
     return (
-      <Side tittel={sideTittel} brodsmuler={[...dialogmoteBreadcrumb, { tittel: sideTittel }]} laster={henter}>
+      <Side tittel={sideTittel} brodsmuler={[...dialogmoteBreadcrumb, { tittel: sideTittel }]}>
         {(() => {
           if (henter) {
             return <AppSpinner />;

@@ -1,8 +1,9 @@
 import { expect } from 'chai';
-import { put, call } from 'redux-saga/effects';
+import { call, put } from 'redux-saga/effects';
 import { HENTER_MOTE, MOTE_HENTET } from './mote_actions';
 import { hentMote } from './moteSagas';
-import { get, hentSyfoApiUrl, API_NAVN } from '../gateway-api/gatewayApi';
+import { get } from '@/api/axios';
+import { API_NAVN, hentSyfoApiUrl } from '@/api/apiUtils';
 
 describe('moteSagas', () => {
   let apiUrlBase;
