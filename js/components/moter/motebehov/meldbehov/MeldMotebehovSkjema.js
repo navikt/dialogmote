@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { Field, reduxForm, SubmissionError, formValueSelector } from 'redux-form';
 import { Feiloppsummering } from 'nav-frontend-skjema';
-import { motebehovSvarReducerPt } from '../../../../propTypes';
+import { motebehovSvarReducerPt } from '@/propTypes';
 import Tekstomraade from '../../../skjema/Tekstomraade';
 import CheckboxSelvstendig from '../../../skjema/CheckboxSelvstendig';
 import MotebehovSkjemaKnapper from '../MotebehovSkjemaKnapper';
@@ -65,7 +65,7 @@ export const MotebehovSkjemaTekstomraade = ({ felt, isFormSubmitted, validateFor
   );
 };
 MotebehovSkjemaTekstomraade.propTypes = {
-  felt: felterPt,
+  felt: PropTypes.object,
   isFormSubmitted: PropTypes.bool,
   validateForklaring: PropTypes.func,
 };

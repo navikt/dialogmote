@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { useQuery } from 'react-query';
 import { getMotebehov } from '../services/motebehov';
 
@@ -8,10 +8,8 @@ export const useMotebehov = () => {
   return useQuery(MOTEBEHOV, getMotebehov);
 };
 
-export const useFeiloppsumeringList = (formState) => {
+export const useFeiloppsumeringList = (errors) => {
   const [errorList, setErrorList] = useState([]);
-
-  const { errors } = formState;
 
   useEffect(() => {
     const keys = Object.keys(errors);
@@ -19,7 +17,7 @@ export const useFeiloppsumeringList = (formState) => {
       return { skjemaelementId: key, feilmelding: errors[key].message };
     });
     setErrorList(list);
-  }, [formState]);
+  }, [errors]);
 
   return errorList;
 };

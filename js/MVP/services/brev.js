@@ -1,4 +1,4 @@
-import { get, post, getRaw } from '../../data/gateway-api/gatewayApi';
+import { get, getRaw, post } from '../../data/gateway-api/gatewayApi';
 import { ISDIALOGMOTE_API_BASE_PATH } from '../globals/paths';
 
 export const postLestBrev = async (uuid) => {
@@ -7,8 +7,7 @@ export const postLestBrev = async (uuid) => {
 };
 
 export const getBrev = async () => {
-  const url = ISDIALOGMOTE_API_BASE_PATH;
-  return get(url);
+  return get(ISDIALOGMOTE_API_BASE_PATH);
 };
 
 export const getBrevPdf = async (uuid) => {

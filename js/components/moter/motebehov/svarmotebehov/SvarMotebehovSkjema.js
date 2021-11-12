@@ -2,9 +2,9 @@ import { Feiloppsummering } from 'nav-frontend-skjema';
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { Field, reduxForm, SubmissionError, formValueSelector } from 'redux-form';
+import { Field, formValueSelector, reduxForm, SubmissionError } from 'redux-form';
 import Alertstripe from 'nav-frontend-alertstriper';
-import { motebehovSvarReducerPt } from '../../../../propTypes';
+import { motebehovSvarReducerPt } from '@/propTypes';
 import Tekstomraade from '../../../skjema/Tekstomraade';
 import Radioknapper from '../../../skjema/Radioknapper';
 import MotebehovSkjemaKnapper from '../MotebehovSkjemaKnapper';
@@ -64,7 +64,6 @@ export const VilHaMoteSvarKnapper = ({ felt, isFormSubmitted, validateHarMoteBeh
             <input
               key={`vilHaMote-${index}`}
               value={svar.verdi}
-              label={svar.tekst}
               id={`${felt.navn}-${index}`}
               aria-labelledby={felt.navn}
             />
@@ -76,7 +75,7 @@ export const VilHaMoteSvarKnapper = ({ felt, isFormSubmitted, validateHarMoteBeh
 };
 
 VilHaMoteSvarKnapper.propTypes = {
-  felt: felterPt,
+  felt: PropTypes.object,
   isFormSubmitted: PropTypes.bool,
   validateHarMoteBehov: PropTypes.func,
 };
@@ -104,7 +103,7 @@ export const MotebehovSkjemaTekstomraade = ({ felt, harMotebehov, isFormSubmitte
   );
 };
 MotebehovSkjemaTekstomraade.propTypes = {
-  felt: felterPt,
+  felt: PropTypes.object,
   harMotebehov: PropTypes.string,
   isFormSubmitted: PropTypes.bool,
   validateForklaring: PropTypes.func,
@@ -151,7 +150,7 @@ export class SvarMotebehovSkjemaKomponent extends Component {
     this.handleSubmit = this.handleSubmit.bind(this);
   }
 
-  componentWillReceiveProps(nextProps) {
+  UNSAFE_componentWillReceiveProps(nextProps) {
     const { harMotebehov, forklaring } = nextProps;
     const { harMotebehov: harMotebehovProp } = this.props;
     const { isFormSubmitted } = this.state;

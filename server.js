@@ -1,174 +1,65 @@
-/* eslint-disable object-shorthand */
+/* eslint-disable */
 require('dotenv').config();
 
 const express = require('express');
 const path = require('path');
-const mustacheExpress = require('mustache-express');
-const Promise = require('promise');
 const prometheus = require('prom-client');
-
-const proxy = require('express-http-proxy');
+const getHtmlWithDecorator = require('./server/getHtmlWithDecorator');
+const winstonLogger = require('./server/winstonLogger');
+const appProxy = require('./server/appProxy');
 const cookieParser = require('cookie-parser');
-const getDecorator = require('./decorator');
-
-const isdalogmoteEnvVar = () => {
-  const fromEnv = process.env.ISDIALOGMOTE_HOST;
-  if (fromEnv) {
-    return fromEnv;
-  }
-
-  throw new Error(`Missing required environment variable ISDIALOGMOTE_HOST`);
-};
 
 // Prometheus metrics
-const { collectDefaultMetrics } = prometheus;
+const collectDefaultMetrics = prometheus.collectDefaultMetrics;
 collectDefaultMetrics({ timeout: 5000 });
 
-const httpRequestDurationMicroseconds = new prometheus.Histogram({
-  name: 'http_request_duration_ms',
-  help: 'Duration of HTTP requests in ms',
-  labelNames: ['route'],
-  // buckets for response time from 0.1ms to 500ms
-  buckets: [0.1, 5, 15, 50, 100, 200, 300, 400, 500],
-});
 const server = express();
-
 const env = process.argv[2];
-const settings = env === 'local' ? { isProd: false } : require('./settings.json');
 
-server.set('views', `${__dirname}/dist`);
-server.set('view engine', 'mustache');
-server.engine('html', mustacheExpress());
+server.use(express.json());
+server.disable('x-powered-by');
 
-const renderApp = (decoratorFragments) => {
-  return new Promise((resolve, reject) => {
-    server.render('index.html', Object.assign({}, decoratorFragments, settings), (err, html) => {
-      if (err) {
-        reject(err);
-      } else {
-        resolve(html);
-      }
-    });
-  });
-};
+const DIST_DIR = path.join(__dirname, './dist');
+const HTML_FILE = path.join(DIST_DIR, 'index.html');
 
-function nocache(req, res, next) {
-  res.header('Cache-Control', 'private, no-cache, no-store, must-revalidate');
-  res.header('Expires', '-1');
-  res.header('Pragma', 'no-cache');
-  next();
+function disableCache(res) {
+  res.setHeader('Pragma', 'no-cache');
+  res.setHeader('Cache-Control', 'private, no-cache, no-store, must-revalidate');
+  res.setHeader('Expires', '-1');
 }
 
-const startServer = (html) => {
-  if (env === 'opplaering' || env === 'local') {
-    require('./mock/mockEndepunkter')(server, env === 'local');
-  } else {
-    const isdialogmoteHost = isdalogmoteEnvVar();
-    server.use(
-      '/dialogmote/api/v1/arbeidstaker/brev/:uuid/les',
-      cookieParser(),
-      proxy(isdialogmoteHost, {
-        https: true,
-        parseReqBody: false,
-        proxyReqOptDecorator(proxyReqOpts, srcReq) {
-          const token = srcReq.cookies['selvbetjening-idtoken'];
-          proxyReqOpts.headers.Authorization = `Bearer ${token}`;
-          proxyReqOpts.headers['Content-Type'] = 'application/json';
-          return proxyReqOpts;
-        },
-        proxyReqPathResolver(req) {
-          const { uuid } = req.params;
-          return `/api/v1/arbeidstaker/brev/${uuid}/les`;
-        },
-        proxyErrorHandler(err, res, next) {
-          console.log('Error in proxy for isdialogmote', err.message);
-          next(err);
-        },
-      })
-    );
+server.get('/', (req, res) => {
+  res.redirect('/dialogmote');
+});
 
-    server.use(
-      '/dialogmote/api/v1/arbeidstaker/brev/:uuid/pdf',
-      cookieParser(),
-      proxy(isdialogmoteHost, {
-        https: true,
-        parseReqBody: false,
-        proxyReqOptDecorator(proxyReqOpts, srcReq) {
-          const token = srcReq.cookies['selvbetjening-idtoken'];
-          proxyReqOpts.headers.Authorization = `Bearer ${token}`;
-          proxyReqOpts.headers['Content-Type'] = 'application/json';
-          return proxyReqOpts;
-        },
-        proxyReqPathResolver(req) {
-          const { uuid } = req.params;
-          return `/api/v1/arbeidstaker/brev/${uuid}/pdf`;
-        },
-        proxyErrorHandler(err, res, next) {
-          console.log('Error in proxy for isdialogmote', err.message);
-          next(err);
-        },
-      })
-    );
+server.use('/dialogmote/static', express.static(DIST_DIR, { index: false }));
+server.get('/internal/isAlive|isReady', (req, res) => res.sendStatus(200));
 
-    server.use(
-      '/dialogmote/api/v1/arbeidstaker/brev',
-      cookieParser(),
-      proxy(isdialogmoteHost, {
-        https: true,
-        parseReqBody: false,
-        proxyReqOptDecorator(proxyReqOpts, srcReq) {
-          const token = srcReq.cookies['selvbetjening-idtoken'];
-          proxyReqOpts.headers.Authorization = `Bearer ${token}`;
-          proxyReqOpts.headers['Content-Type'] = 'application/json';
-          return proxyReqOpts;
-        },
-        proxyReqPathResolver() {
-          return '/api/v1/arbeidstaker/brev';
-        },
-        proxyErrorHandler(err, res, next) {
-          console.log('Error in proxy for isdialogmote', err.message);
-          next(err);
-        },
-      })
-    );
-  }
+server.use(cookieParser());
 
-  server.use('/dialogmote/resources', express.static(path.resolve(__dirname, 'dist/resources')));
-
-  server.use('/dialogmote/img', express.static(path.resolve(__dirname, 'dist/resources/img')));
-
-  server.get(['/', '/dialogmote/?', /^\/dialogmote\/(?!(resources|img)).*$/], nocache, (req, res) => {
-    res.send(html);
-    httpRequestDurationMicroseconds.labels(req.route.path).observe(10);
-  });
+if (env === 'opplaering') {
+  require('./mock/mockEndepunkter')(server, false);
+} else {
+  appProxy(server);
 
   server.get('/actuator/metrics', (req, res) => {
     res.set('Content-Type', prometheus.register.contentType);
     res.end(prometheus.register.metrics());
   });
+}
 
-  server.get('/health/isAlive', (req, res) => {
-    res.sendStatus(200);
-  });
-  server.get('/health/isReady', (req, res) => {
-    res.sendStatus(200);
-  });
+server.use('*', (req, res) =>
+  getHtmlWithDecorator(HTML_FILE)
+    .then((html) => {
+      disableCache(res);
+      res.send(html);
+    })
+    .catch((e) => {
+      winstonLogger.error(e);
+      disableCache(res);
+      res.status(500).send(e);
+    })
+);
 
-  const port = process.env.PORT || 8080;
-  server.listen(port, () => {
-    console.log(`App listening on port: ${port}`);
-  });
-};
-
-const logError = (errorMessage, details) => {
-  console.log(errorMessage, details);
-};
-
-getDecorator()
-  .then(renderApp, (error) => {
-    logError('Failed to get decorator', error);
-    process.exit(1);
-  })
-  .then(startServer, (error) => {
-    logError('Failed to render app', error);
-  });
+const port = process.env.PORT || 8080;
+server.listen(port, () => winstonLogger.info(`App listening on port: ${port}`));

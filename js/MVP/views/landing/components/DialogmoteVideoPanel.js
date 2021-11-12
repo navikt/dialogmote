@@ -2,6 +2,9 @@ import React from 'react';
 import styled from 'styled-components';
 import Video from '../../../../components/app/Video';
 import DialogmotePanel from '../../../containers/DialogmotePanel';
+import src from '../../../../../video/dialogmote.mp4';
+import captionSrc from '../../../../../videosubtitle/dialogmote.vtt';
+import poster from '../../../../../img/video/dialogmote.jpg';
 
 const DialogmotePanelStyled = styled(DialogmotePanel)`
   margin: 32px 0;
@@ -11,10 +14,10 @@ const texts = {
   title: 'Om dialogmøter',
 };
 
-const DIALOGMOTE_FILM_FILES = {
-  src: `${process.env.REACT_APP_CONTEXT_ROOT}/resources/video/dialogmote.mp4`,
-  captionSrc: `${process.env.REACT_APP_CONTEXT_ROOT}/resources/videosubtitle/dialogmote.vtt`,
-  poster: `${process.env.REACT_APP_CONTEXT_ROOT}/img/video/dialogmote.jpg`,
+export const DIALOGMOTE_FILM_FILES = {
+  src,
+  captionSrc,
+  poster,
 };
 
 const DialogmoteVideoPanel = () => {

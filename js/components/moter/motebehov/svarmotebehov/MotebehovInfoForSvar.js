@@ -1,5 +1,6 @@
 import React from 'react';
-import { erPaaHeroku } from '../../../../utils/urlUtils';
+import { erPaaHeroku } from '@/utils/urlUtils';
+import { ForDuSvarerImage } from '@/images/imageComponents';
 
 /* eslint-disable max-len */
 export const TEKSTER = {
@@ -17,7 +18,7 @@ export const TEKSTER = {
 export const TekstInformasjonBilde = () => {
   return (
     <div className="tekstInformasjon__bilde">
-      <img src={`${process.env.REACT_APP_CONTEXT_ROOT}/img/svg/forDuSvarer.svg`} alt="Kalender" />
+      <img src={ForDuSvarerImage} alt="Kalender" />
     </div>
   );
 };

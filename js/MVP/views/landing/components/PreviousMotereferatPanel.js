@@ -3,8 +3,9 @@ import styled from 'styled-components';
 import PropTypes from 'prop-types';
 import DialogmotePanel from '../../../containers/DialogmotePanel';
 import RouterLenke from '../../../components/RouterLenke';
-import { MOTEREFERAT_URL } from '../../../globals/paths';
+import { MOTEREFERAT_URL } from '@/MVP/globals/paths';
 import { getLongDateFormat, getProgrammaticDateFormat } from '../../../utils';
+import { DokumentImage } from '@/images/imageComponents';
 
 const DialogmotePanelStyled = styled(DialogmotePanel)`
   margin-top: 32px;
@@ -46,7 +47,7 @@ const PreviousMotereferatPanel = ({ previousReferatDates }) => {
   if (previousReferatDates.length === 0) return null;
 
   return (
-    <DialogmotePanelStyled title={texts.title} icon="dokument">
+    <DialogmotePanelStyled title={texts.title} icon={DokumentImage}>
       <MotereferatList referatDates={previousReferatDates} />
     </DialogmotePanelStyled>
   );

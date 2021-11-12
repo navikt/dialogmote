@@ -5,7 +5,7 @@ let performOnHttpCalls = () => {
 };
 
 export const setPerformOnHttpCalls = (_performOnHttpCalls) => {
-  // eslint-disable-next-line no-unused-vars
+  // eslint-disable-next-line no-unused-vars,@typescript-eslint/no-unused-vars
   performOnHttpCalls = _performOnHttpCalls;
 };
 

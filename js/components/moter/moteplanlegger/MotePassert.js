@@ -1,6 +1,6 @@
 import React from 'react';
+import { MoteAvbruttImage } from '@/images/imageComponents';
 
-/* eslint-disable max-len */
 const texts = {
   title: 'Tidspunkt for dialogmøte',
   subTitle: 'De foreslåtte tidspunktene er passert',
@@ -8,7 +8,6 @@ const texts = {
     'Du har tidligere mottatt en møteforespørsel med tidspunkter for et dialogmøte med NAV og din arbeidsgiver. Møteforespørselen er utdatert, og du kan se bort fra denne forespørselen. Er det fortsatt aktuelt med et møte, vil du få en ny forespørsel.',
   contactInfo: 'Har du spørsmål, kan du kontakte oss på 55 55 33 33',
 };
-/* eslint-enable max-len */
 
 const MotePassert = () => {
   return (
@@ -18,11 +17,7 @@ const MotePassert = () => {
       </header>
       <div className="panel">
         <div className="illustrertTittel">
-          <img
-            className="illustrertTittel__img"
-            src={`${process.env.REACT_APP_CONTEXT_ROOT}/img/svg/mote_avbrutt.svg`}
-            alt=""
-          />
+          <img className="illustrertTittel__img" src={MoteAvbruttImage} alt="" />
           <h2 className="illustrertTittel__tittel">{texts.subTitle}</h2>
         </div>
         <p>{texts.explanation}</p>

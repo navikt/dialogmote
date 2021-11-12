@@ -3,9 +3,9 @@ import styled from 'styled-components';
 import { Checkbox, Textarea, Feiloppsummering } from 'nav-frontend-skjema';
 import { Controller, useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { useFeiloppsumeringList } from '../../../hooks/motebehov';
+import { useFeiloppsumeringList } from '@/MVP/hooks/motebehov';
 import DialogmotePanel from '../../../containers/DialogmotePanel';
-import { postMeldMotebehovSchema } from '../../../schemas/motebehov';
+import { postMeldMotebehovSchema } from '@/MVP/schemas/motebehov';
 import FormButtons from './FormButtons';
 
 const CheckboxWrapper = styled.div`
@@ -45,13 +45,13 @@ const MeldMotebehovContent = () => {
     resolver: zodResolver(postMeldMotebehovSchema(MAX_LENGTH)),
   });
 
-  const feiloppsummeringList = useFeiloppsumeringList(formState);
-
   const { errors } = formState;
+
+  const feiloppsummeringList = useFeiloppsumeringList(errors);
 
   useEffect(() => {
     setValue(fields.BEGRUNN_TEXTAREA, textInput, { shouldValidate: true });
-  }, [textInput]);
+  }, [setValue, textInput]);
 
   return (
     <React.Fragment>
