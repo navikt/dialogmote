@@ -1,6 +1,6 @@
 import { API_NAVN, hentSyfoApiUrl } from '@/api/apiUtils';
 
-export const ISDIALOGMOTE_API_BASE_PATH = `/dialogmote/api/v1/arbeidstaker/brev`;
+export const ISDIALOGMOTE_API_BASE_PATH = `${process.env.REACT_APP_CONTEXT_ROOT}/api/v1/arbeidstaker/brev`;
 export const MOTEBEHOV_API = `${hentSyfoApiUrl(API_NAVN.SYFOMOTEBEHOV)}/v2/arbeidstaker/motebehov`;
 export const MOTEADMIN_API = `${hentSyfoApiUrl(API_NAVN.SYFOMOTEADMIN)}/bruker/arbeidstaker/moter/siste`;
 export const SYFOOPPFOLGINGSPLANSERVICE_API = `${hentSyfoApiUrl(
@@ -13,7 +13,7 @@ export const MOTEPLANLEGGER_URL = `${process.env.REACT_APP_CONTEXT_ROOT}/mote`;
 export const MOTEBEHOV_URL = `${process.env.REACT_APP_CONTEXT_ROOT}/behov`;
 export const MOTEREFERAT_URL = `${process.env.REACT_APP_CONTEXT_ROOT}/referat`;
 
-export const OPPFOLGINGSPLANER_URL = `${process.env.REACT_APP_OPPFOLGINGSPLAN_CONTEXT_ROOT}/oppfolgingsplaner`;
+export const OPPFOLGINGSPLANER_URL = process.env.REACT_APP_OPPFOLGINGSPLAN_CONTEXT_ROOT;
 
 // Statiske URLer
 export const statiskeURLer = {
@@ -28,7 +28,7 @@ export const statiskeURLer = {
 const dittSykefravarBreadcrumb = [
   {
     tittel: 'Ditt sykefravær',
-    sti: '/sykefravaer',
+    sti: process.env.REACT_APP_SYKEFRAVAER_ROOT,
     erKlikkbar: true,
   },
 ];

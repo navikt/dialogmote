@@ -1,9 +1,8 @@
 import React from 'react';
 import styled from 'styled-components';
 import AlertStripe from 'nav-frontend-alertstriper';
-import { motebehovReducerPt } from '../../../../propTypes';
+import { motebehovReducerPt } from '@/propTypes';
 import { FELTER } from './MeldMotebehovSkjema';
-import { oppfolgingsplanUrl } from '../../../../utils/urlUtils';
 import MotebehovKvitteringUtvidbar from '../MotebehovKvitteringUtvidbar';
 
 const tekster = {
@@ -36,7 +35,7 @@ const MeldMotebehovKvittering = ({ motebehovReducer }) => {
       <AlertstripeStyled type="info">
         {tekster.alertstripe}
         <br />
-        <a className="lenke" href={oppfolgingsplanUrl()}>
+        <a className="lenke" href={process.env.REACT_APP_OPPFOLGINGSPLAN_CONTEXT_ROOT}>
           {tekster.oppfolgingsplanlink}
         </a>
       </AlertstripeStyled>

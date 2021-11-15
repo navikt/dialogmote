@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import getContextRoot from '../utils/getContextRoot';
 import history from '../history';
 import AppSpinner from '../components/AppSpinner';
 import Feilmelding from '../components/Feilmelding';
@@ -14,6 +13,7 @@ import { forsoktHentetMote } from '@/utils/reducerUtils';
 import { getMote } from '@/utils/moteUtils';
 import { erMotebehovTilgjengelig } from '@/utils/motebehovUtils';
 import Side from '@/sider/Side';
+import { LANDING_URL } from '@/MVP/globals/paths';
 
 const tekster = {
   brodsmuler: {
@@ -30,14 +30,14 @@ class Container extends Component {
     actions.hentMote();
     actions.hentMotebehov();
     if (harForsoektHentetAlt && skalViseMotebehov === false) {
-      history.push(`${getContextRoot()}/mote`);
+      history.push(`${LANDING_URL}/mote`);
     }
   }
 
   UNSAFE_componentWillReceiveProps(nextProps) {
     const { harForsoektHentetAlt, skalViseMotebehov } = nextProps;
     if (harForsoektHentetAlt && skalViseMotebehov === false) {
-      history.push(`${getContextRoot()}/mote`);
+      history.push(`${LANDING_URL}/mote`);
     }
   }
 
@@ -109,7 +109,7 @@ export function mapStateToProps(state) {
     brodsmuler: [
       {
         tittel: tekster.brodsmuler.dittSykefravaer,
-        sti: '/sykefravaer',
+        sti: process.env.REACT_APP_SYKEFRAVAER_ROOT,
         erKlikkbar: true,
       },
       {
