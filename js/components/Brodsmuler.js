@@ -7,7 +7,7 @@ import { TrackedLink } from './buttons/TrackedLink';
 import { PersonImage } from '@/images/imageComponents';
 
 const Brodsmule = ({ sti, tittel, sisteSmule, erKlikkbar }) => {
-  const nySti = sti && sti.indexOf('/sykefravaer') > -1 ? getSykefravaerUrl(sti) : sti;
+  const nySti = sti && sti.indexOf('/sykefravaer') > -1 ? getSykefravaerUrl() : sti;
   const root = sti && sti.indexOf('/sykefravaer') > -1 ? '' : getContextRoot();
   const link =
     root === '' ? (

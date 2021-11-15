@@ -46,7 +46,7 @@ const Landing = () => {
     if (
       brev.isError ||
       motebehov.isError ||
-      (moteplanlegger.isError && !(moteplanlegger.error.message === '404')) ||
+      (moteplanlegger.isError && !(moteplanlegger.error.code === 404)) ||
       sykmeldinger.isError
     ) {
       return (

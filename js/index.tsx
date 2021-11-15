@@ -11,12 +11,9 @@ import AppRouter from './routers/AppRouter';
 import history from './history';
 import rootSaga from './data/rootSaga';
 import '../styles/styles.less';
-import setPerformOnOppDialogHttpCalls from './oppfolgingsdialogNpm/setPerformOnOppDialogHttpCalls';
 import reducers from './data/reducers';
-import { forlengInnloggetSesjon, sjekkInnloggingssesjon } from './timeout/timeout_actions';
 import { minutesToMillis } from './MVP/utils';
 import { initAmplitude } from './amplitude/amplitude';
-import { setPerformOnHttpCalls } from './data/gateway-api/apiUtils';
 
 initAmplitude();
 
@@ -38,21 +35,6 @@ const composeEnhancers = (window['__REDUX_DEVTOOLS_EXTENSION_COMPOSE__'] as type
 const store = createStore(rootReducer, /* preloadedState, */ composeEnhancers(applyMiddleware(sagaMiddleware)));
 
 sagaMiddleware.run(rootSaga);
-
-// <OBS>: Minimer antall kall som gjøres her!
-store.dispatch(forlengInnloggetSesjon());
-// </OBS>
-
-setPerformOnHttpCalls(() => {
-  store.dispatch(forlengInnloggetSesjon());
-});
-setPerformOnOppDialogHttpCalls(() => {
-  store.dispatch(forlengInnloggetSesjon());
-});
-
-setInterval(() => {
-  store.dispatch(sjekkInnloggingssesjon());
-}, 5000);
 
 render(
   <QueryClientProvider client={queryClient}>

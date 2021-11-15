@@ -1,4 +1,4 @@
-import { get } from '@/data/gateway-api';
+import { get } from '@/api/axios';
 import { SYFOOPPFOLGINGSPLANSERVICE_API } from '../globals/paths';
 
 export const getSyfoopfolgingsplanservice = async () => {

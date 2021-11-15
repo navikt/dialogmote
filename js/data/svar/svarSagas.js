@@ -1,6 +1,7 @@
 import { call, fork, put, takeEvery } from 'redux-saga/effects';
-import { log } from '../../logging/log';
-import { API_NAVN, hentSyfoApiUrl, post } from '../gateway-api/gatewayApi';
+import { log } from '@/logging/log';
+import { post } from '@/api/axios';
+import { API_NAVN, hentSyfoApiUrl } from '@/api/apiUtils';
 import { SEND_SVAR_FORESPURT, senderSvar, sendSvarFeilet, svarSendt } from './svar_actions';
 
 export function* sendSvar(action) {
@@ -11,8 +12,7 @@ export function* sendSvar(action) {
       valgteAlternativIder: action.data,
       deltakertype: action.deltakertype,
     });
-    const a = svarSendt(action.data, action.deltakertype);
-    yield put(a);
+    yield put(svarSendt(action.data, action.deltakertype));
   } catch (e) {
     log(e);
     yield put(sendSvarFeilet());

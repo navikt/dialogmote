@@ -1,8 +1,9 @@
-import { call, put, fork, takeEvery, select } from 'redux-saga/effects';
-import { log } from '../../logging/log';
+import { call, put, select, takeEvery } from 'redux-saga/effects';
+import { log } from '@/logging/log';
 import * as actions from './mote_actions';
 import { skalHenteMote } from './moteSelectors';
-import { API_NAVN, hentSyfoApiUrl, get } from '../gateway-api/gatewayApi';
+import { get } from '@/api/axios';
+import { API_NAVN, hentSyfoApiUrl } from '@/api/apiUtils';
 
 export function* hentMote() {
   yield put(actions.henterMote());
@@ -11,7 +12,7 @@ export function* hentMote() {
     const mote = yield call(get, url);
     yield put(actions.moteHentet(mote));
   } catch (e) {
-    if (e.message === '404') {
+    if (e.code === 404) {
       yield put(actions.moteIkkeFunnet());
     } else {
       log(e);
@@ -27,10 +28,6 @@ export function* hentMoteHvisIkkeHentet() {
   }
 }
 
-function* watchHentMote() {
-  yield takeEvery(actions.HENT_MOTE_FORESPURT, hentMoteHvisIkkeHentet);
-}
-
 export default function* svarSagas() {
-  yield fork(watchHentMote);
+  yield takeEvery(actions.HENT_MOTE_FORESPURT, hentMoteHvisIkkeHentet);
 }
