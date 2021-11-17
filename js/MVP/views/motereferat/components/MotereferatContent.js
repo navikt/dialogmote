@@ -11,6 +11,8 @@ import DocumentContainer from '../../../containers/DocumentContainer';
 import LinkInfoBox from './LinkInfoBox';
 import VeilederReferat from './VeilederReferat';
 import { DownloadImage } from '@/images/imageComponents';
+import { trackOnClick } from '@/amplitude/amplitude';
+import { eventNames } from '@/amplitude/events';
 
 const texts = {
   downloadButton: 'LAST NED PDF',
@@ -55,7 +57,10 @@ const MotereferatContent = ({ referat }) => {
       <DocumentContainer document={document} />
 
       <KnappStyled
-        onClick={() => handleClick(uuid, getProgrammaticDateFormat(tid))}
+        onClick={() => {
+          handleClick(uuid, getProgrammaticDateFormat(tid));
+          trackOnClick(eventNames.lastNedReferat);
+        }}
         autoDisableVedSpinner
         spinner={downloadingPDF}
         mini

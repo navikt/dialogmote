@@ -10,7 +10,9 @@ import VeilederInnkallelse from './components/VeilederInnkallelse';
 import { innkallelseBreadcrumb, statiskeURLer } from '../../globals/paths';
 import { isDateInPast } from '../../utils';
 import NoInnkallelseAlert from './components/NoInnkallelseAlert';
-import { TrackedLenke } from '../../../components/buttons/TrackedLenke';
+import Lenke from 'nav-frontend-lenker';
+import { trackOnClick } from '@/amplitude/amplitude';
+import { eventNames } from '@/amplitude/events';
 
 const AlertStripeStyled = styled(AlertStripe)`
   margin-bottom: 32px;
@@ -115,7 +117,9 @@ const Moteinnkallelse = () => {
 
       <InfoStripeStyled>
         {texts.infoBox}
-        <TrackedLenke href={statiskeURLer.KONTAKT_INFO_URL}>{texts.infoBoxUrl}</TrackedLenke>
+        <Lenke href={statiskeURLer.KONTAKT_INFO_URL} onClick={() => trackOnClick(eventNames.kontaktOss)}>
+          {texts.infoBoxUrl}
+        </Lenke>
       </InfoStripeStyled>
 
       <VeilederInnkallelse />

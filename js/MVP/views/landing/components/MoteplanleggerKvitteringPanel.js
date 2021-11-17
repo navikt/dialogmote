@@ -8,8 +8,8 @@ import { BEKREFTET, MOTESTATUS } from '@/utils/moteUtils';
 import DialogmotePanel from '../../../containers/DialogmotePanel';
 import BekreftelseKvittering from '../../moteplanlegger/components/BekreftelseKvittering';
 import SvarKvittering from '../../moteplanlegger/components/SvarKvittering';
-import { TrackedKnapp } from '@/components/buttons/TrackedKnapp';
 import { KalenderInnkallingImage } from '@/images/imageComponents';
+import { Knapp } from 'nav-frontend-knapper';
 
 const texts = {
   titleSvart: 'Du har svart på tidspunkt for dialogmøte',
@@ -51,9 +51,9 @@ const MoteplanleggerKvitteringPanel = ({ mote, modus }) => {
           </div>
         </ModalWrapper>
 
-        <TrackedKnapp mini onClick={() => setIsModalOpen(true)}>
+        <Knapp mini onClick={() => setIsModalOpen(true)}>
           {texts.buttonSvart}
-        </TrackedKnapp>
+        </Knapp>
       </DialogmotePanelStyled>
     );
   }

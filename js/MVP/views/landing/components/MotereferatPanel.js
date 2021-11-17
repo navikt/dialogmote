@@ -6,6 +6,7 @@ import DialogmotePanel from '../../../containers/DialogmotePanel';
 import ButtonLenke from '../../../components/ButtonLenke';
 import { MOTEREFERAT_URL } from '@/MVP/globals/paths';
 import { DokumentImage } from '@/images/imageComponents';
+import { eventNames } from '@/amplitude/events';
 
 const DialogmotePanelStyled = styled(DialogmotePanel)`
   margin-top: 32px;
@@ -29,7 +30,7 @@ const MotereferatPanel = ({ date }) => {
   return (
     <DialogmotePanelStyled title={texts.title} icon={DokumentImage}>
       <TekstomradeStyled>{text(date)}</TekstomradeStyled>
-      <ButtonLenke mini to={MOTEREFERAT_URL}>
+      <ButtonLenke mini to={MOTEREFERAT_URL} trackingName={eventNames.aktivtReferat}>
         {texts.button}
       </ButtonLenke>
     </DialogmotePanelStyled>
