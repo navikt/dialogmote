@@ -8,6 +8,7 @@ import Tekstomraade from '../../../skjema/Tekstomraade';
 import CheckboxSelvstendig from '../../../skjema/CheckboxSelvstendig';
 import MotebehovSkjemaKnapper from '../MotebehovSkjemaKnapper';
 import ObligatoriskeFelterInfotekst from '../ObligatoriskeFelterInfotekst';
+import { eventNames } from '@/amplitude/events';
 
 export const tekstfeltRegex = new RegExp('.*<[^ ][^>]+[^ ]>.*');
 
@@ -221,7 +222,7 @@ export class MeldMotebehovSkjemaKomponent extends Component {
           {errorList.length > 0 && (
             <Feiloppsummering tittel="For å gå videre må du rette opp følgende:" feil={errorList} />
           )}
-          <MotebehovSkjemaKnapper sender={motebehovSvarReducer.sender} />
+          <MotebehovSkjemaKnapper sender={motebehovSvarReducer.sender} trackingName={eventNames.sendMeldBehov} />
         </div>
         <TekstOpplysning />
       </form>

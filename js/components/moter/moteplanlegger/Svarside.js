@@ -1,10 +1,10 @@
 import React from 'react';
 import Alertstripe from 'nav-frontend-alertstriper';
 import Svarskjema from './Svarskjema';
-import { motePt } from '../../../propTypes';
-import { BRUKER } from '../../../enums/moteplanleggerDeltakerTyper';
-import { BEKREFTET, finnNyesteAlternativ } from '../../../utils/moteUtils';
-import { visKortDato } from '../../../utils/datoUtils';
+import { motePt } from '@/propTypes';
+import { BRUKER } from '@/enums/moteplanleggerDeltakerTyper';
+import { BEKREFTET, finnNyesteAlternativ } from '@/utils/moteUtils';
+import { visKortDato } from '@/utils/datoUtils';
 
 const texts = {
   title: 'Tidspunkt for dialogmøte',

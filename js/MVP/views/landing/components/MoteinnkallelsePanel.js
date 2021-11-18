@@ -7,6 +7,7 @@ import { MOTEINNKALLING_URL } from '@/MVP/globals/paths';
 import { motePtMVP } from '@/propTypes';
 import { brevTypes } from '@/MVP/globals/constants';
 import { KalenderInnkallingAvlystImage, KalenderInnkallingImage } from '@/images/imageComponents';
+import { eventNames } from '@/amplitude/events';
 
 const SectionStyled = styled.section`
   margin: 32px 0;
@@ -24,11 +25,11 @@ const texts = {
   buttonAvlysning: 'Se avlysningen',
 };
 
-const Panel = ({ title, text, icon, buttonText }) => {
+const Panel = ({ title, text, icon, buttonText, trackingName }) => {
   return (
     <DialogmotePanel title={title} icon={icon}>
       <SectionStyled>{text}</SectionStyled>
-      <ButtonLenke mini to={MOTEINNKALLING_URL}>
+      <ButtonLenke mini to={MOTEINNKALLING_URL} trackingName={trackingName}>
         {buttonText}
       </ButtonLenke>
     </DialogmotePanel>
@@ -40,6 +41,7 @@ Panel.propTypes = {
   text: PropTypes.string,
   icon: PropTypes.string,
   buttonText: PropTypes.string,
+  trackingName: PropTypes.string,
 };
 
 const MoteinnkallelsePanel = ({ innkallelse }) => {
@@ -50,6 +52,7 @@ const MoteinnkallelsePanel = ({ innkallelse }) => {
         text={texts.textAvlysning}
         icon={KalenderInnkallingAvlystImage}
         buttonText={texts.buttonAvlysning}
+        trackingName={eventNames.seAvlysning}
       />
     );
   }
@@ -61,12 +64,19 @@ const MoteinnkallelsePanel = ({ innkallelse }) => {
         text={texts.textEndring}
         icon={KalenderInnkallingImage}
         buttonText={texts.buttonEndring}
+        trackingName={eventNames.seEndring}
       />
     );
   }
 
   return (
-    <Panel title={texts.title} text={texts.text} icon={KalenderInnkallingImage} buttonText={texts.buttonInnkallingen} />
+    <Panel
+      title={texts.title}
+      text={texts.text}
+      icon={KalenderInnkallingImage}
+      buttonText={texts.buttonInnkallingen}
+      trackingName={eventNames.seInnkalling}
+    />
   );
 };
 

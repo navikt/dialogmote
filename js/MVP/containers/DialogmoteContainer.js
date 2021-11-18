@@ -5,8 +5,10 @@ import PropTypes from 'prop-types';
 import { browserHistory } from 'react-router';
 import Brodsmuler from '../../components/Brodsmuler';
 import { dialogmoteBreadcrumb, statiskeURLer } from '../globals/paths';
-import { TrackedLenke } from '../../components/buttons/TrackedLenke';
-import { TrackedTilbakeknapp } from '../../components/buttons/TrackedTilbakeknapp';
+import { Tilbakeknapp } from 'nav-frontend-ikonknapper';
+import Lenke from 'nav-frontend-lenker';
+import { trackOnClick } from '@/amplitude/amplitude';
+import { eventNames } from '@/amplitude/events';
 
 const WrapperStyled = styled.div`
   display: flex;
@@ -28,7 +30,7 @@ const HeaderStyled = styled.header`
   text-align: center;
 `;
 
-const TilbakeknappStyled = styled(TrackedTilbakeknapp)`
+const TilbakeknappStyled = styled(Tilbakeknapp)`
   width: 108px;
   margin-bottom: 32px;
 `;
@@ -55,7 +57,12 @@ const DialogmoteContainer = ({ title, breadcrumb = dialogmoteBreadcrumb, display
         {displayTilbakeknapp && <TilbakeknappStyled onClick={browserHistory.goBack} />}
         <BottomInfoStyled>
           <Normaltekst>{texts.bottomText}</Normaltekst>
-          <TrackedLenke href={statiskeURLer.PERSONVERN_URL}>{texts.bottomUrl}</TrackedLenke>
+          <Lenke
+            href={statiskeURLer.PERSONVERN_URL}
+            onClick={() => trackOnClick(eventNames.behandlePersonopplysninger)}
+          >
+            {texts.bottomUrl}
+          </Lenke>
         </BottomInfoStyled>
       </ContentStyled>
     </WrapperStyled>

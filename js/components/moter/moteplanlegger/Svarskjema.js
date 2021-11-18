@@ -6,15 +6,15 @@ import Alertstripe from 'nav-frontend-alertstriper';
 import Ekspanderbartpanel from 'nav-frontend-ekspanderbartpanel';
 import Ikon from 'nav-frontend-ikoner-assets';
 import { motebehovReducerPt, moteplanleggerDeltakertypePt, motePt } from '../../../propTypes';
-import { getNyeAlternativer, getTidligereAlternativer, SVARSKJEMANAVN } from '../../../utils/moteUtils';
-import { BRUKER } from '../../../enums/moteplanleggerDeltakerTyper';
+import { getNyeAlternativer, getTidligereAlternativer, SVARSKJEMANAVN } from '@/utils/moteUtils';
+import { BRUKER } from '@/enums/moteplanleggerDeltakerTyper';
 import Motested from './Motested';
 import Alternativer from './Alternativer';
 import BesvarteTidspunkter from './BesvarteTidspunkter';
 import DeclinedMotebehov from './DeclinedMotebehov';
-import { erMotebehovTilgjengelig } from '../../../utils/motebehovUtils';
-import { TrackedHovedknapp } from '../../buttons/TrackedHovedknapp';
-import { TrackedLink } from '../../buttons/TrackedLink';
+import { erMotebehovTilgjengelig } from '@/utils/motebehovUtils';
+import { Hovedknapp } from 'nav-frontend-knapper';
+import { Link } from 'react-router';
 
 const texts = {
   error: 'Beklager, det oppstod en feil!',
@@ -139,12 +139,12 @@ export const Skjema = ({
         )}
       </div>
       <div className="knapperad">
-        <TrackedHovedknapp className="js-submit" htmlType="submit" disabled={sender} spinner={sender}>
+        <Hovedknapp className="js-submit" htmlType="submit" disabled={sender} spinner={sender}>
           {texts.submitButton}
-        </TrackedHovedknapp>
+        </Hovedknapp>
       </div>
       <div className="knapperad">
-        <TrackedLink href={previous()}>{texts.cancel}</TrackedLink>
+        <Link href={previous()}>{texts.cancel}</Link>
       </div>
     </form>
   );

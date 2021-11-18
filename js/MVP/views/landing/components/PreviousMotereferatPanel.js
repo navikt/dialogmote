@@ -6,6 +6,7 @@ import RouterLenke from '../../../components/RouterLenke';
 import { MOTEREFERAT_URL } from '@/MVP/globals/paths';
 import { getLongDateFormat, getProgrammaticDateFormat } from '../../../utils';
 import { DokumentImage } from '@/images/imageComponents';
+import { eventNames } from '@/amplitude/events';
 
 const DialogmotePanelStyled = styled(DialogmotePanel)`
   margin-top: 32px;
@@ -32,7 +33,7 @@ const MotereferatList = ({ referatDates }) => {
         return (
           <RouterLenke
             key={date}
-            trackingName={texts.linkText}
+            trackingName={eventNames.tidligereReferat}
             to={`${MOTEREFERAT_URL}/${programmaticDate}`}
           >{`${texts.linkText} ${formattedDate}`}</RouterLenke>
         );

@@ -4,7 +4,9 @@ import PropTypes from 'prop-types';
 import { UndertekstBold } from 'nav-frontend-typografi';
 import styled from 'styled-components';
 import { infoUrls } from '../data';
-import { TrackedLenke } from '../../../../components/buttons/TrackedLenke';
+import Lenke from 'nav-frontend-lenker';
+import { trackOnClick } from '@/amplitude/amplitude';
+import { eventNames } from '@/amplitude/events';
 
 const AlertStripeStyled = styled(AlertStripeInfo)`
   margin-top: 32px;
@@ -34,7 +36,9 @@ const ListUrls = ({ documentKeys }) => {
 
         return (
           <li key={key}>
-            <TrackedLenke href={url}>{text}</TrackedLenke>
+            <Lenke href={url} onClick={() => trackOnClick(eventNames.lenkeIReferat, { linkType: text })}>
+              {text}
+            </Lenke>
           </li>
         );
       })}

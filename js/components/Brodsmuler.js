@@ -1,24 +1,23 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import getContextRoot from '../utils/getContextRoot';
 import { brodsmule as brodsmuleProptype } from '../propTypes';
-import { getSykefravaerUrl } from '@/utils/urlUtils';
-import { TrackedLink } from './buttons/TrackedLink';
 import { PersonImage } from '@/images/imageComponents';
+import { LANDING_URL } from '@/MVP/globals/paths';
+import { Link } from 'react-router';
+import Lenke from 'nav-frontend-lenker';
 
 const Brodsmule = ({ sti, tittel, sisteSmule, erKlikkbar }) => {
-  const nySti = sti && sti.indexOf('/sykefravaer') > -1 ? getSykefravaerUrl() : sti;
-  const root = sti && sti.indexOf('/sykefravaer') > -1 ? '' : getContextRoot();
-  const link =
-    root === '' ? (
-      <a className="js-smule js-smule-a brodsmuler__smule" href={nySti}>
-        {tittel}
-      </a>
-    ) : (
-      <TrackedLink className="js-smule brodsmuler__smule" to={root + nySti}>
-        {tittel}
-      </TrackedLink>
-    );
+  const isInternalLink = sti && sti.indexOf(LANDING_URL) > -1;
+  const link = isInternalLink ? (
+    <Link className="js-smule brodsmuler__smule" to={sti}>
+      {tittel}
+    </Link>
+  ) : (
+    <Lenke className="js-smule js-smule-a brodsmuler__smule" href={sti}>
+      {tittel}
+    </Lenke>
+  );
+
   if (sisteSmule) {
     return (
       <span className="js-smuletekst">

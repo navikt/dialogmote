@@ -8,9 +8,11 @@ import DialogmotePanel from '../../../containers/DialogmotePanel';
 import { skjemaTypes } from '@/MVP/globals/constants';
 import { MOTEBEHOV_URL, OPPFOLGINGSPLANER_URL, statiskeURLer } from '@/MVP/globals/paths';
 import MotebehovKvittering from './Motebehov/MotebehovKvittering';
-import { TrackedKnapp } from '@/components/buttons/TrackedKnapp';
-import { TrackedLenke } from '@/components/buttons/TrackedLenke';
 import { BehovImage } from '@/images/imageComponents';
+import { trackOnClick } from '@/amplitude/amplitude';
+import { eventNames } from '@/amplitude/events';
+import Lenke from 'nav-frontend-lenker';
+import { Knapp } from 'nav-frontend-knapper';
 
 const DialogmotePanelStyled = styled(DialogmotePanel)`
   margin-bottom: 32px;
@@ -46,9 +48,13 @@ const ContactInfo = () => {
       <br />
       <br />
       {texts.text2}
-      <TrackedLenke href={statiskeURLer.KONTAKT_INFO_URL} target="_blank">
+      <Lenke
+        href={statiskeURLer.KONTAKT_INFO_URL}
+        target="_blank"
+        onClick={() => trackOnClick(eventNames.kontaktAndreMoter)}
+      >
         {texts.link}
-      </TrackedLenke>
+      </Lenke>
     </TekstomradeStyled>
   );
 };
@@ -83,12 +89,20 @@ const MotebehovPanel = ({ motebehov }) => {
           <AlertstripeStyled type="info">
             {texts.alertstripe}
             <br />
-            <TrackedLenke href={OPPFOLGINGSPLANER_URL}>{texts.oppfolgingsplanlink}</TrackedLenke>
+            <Lenke href={OPPFOLGINGSPLANER_URL} onClick={() => trackOnClick(eventNames.oppfolgingsplan)}>
+              {texts.oppfolgingsplanlink}
+            </Lenke>
           </AlertstripeStyled>
 
-          <TrackedKnapp mini onClick={() => setIsModalOpen(true)}>
+          <Knapp
+            mini
+            onClick={() => {
+              setIsModalOpen(true);
+              trackOnClick(eventNames.meldBehovKvittering);
+            }}
+          >
             {texts.buttonSvart}
-          </TrackedKnapp>
+          </Knapp>
         </DialogmotePanelStyled>
       );
     }
@@ -115,12 +129,20 @@ const MotebehovPanel = ({ motebehov }) => {
         <AlertstripeStyled type="info">
           {texts.alertstripe}
           <br />
-          <TrackedLenke href={OPPFOLGINGSPLANER_URL}>{texts.oppfolgingsplanlink}</TrackedLenke>
+          <Lenke href={OPPFOLGINGSPLANER_URL} onClick={() => trackOnClick(eventNames.oppfolgingsplan)}>
+            {texts.oppfolgingsplanlink}
+          </Lenke>
         </AlertstripeStyled>
 
-        <TrackedKnapp mini onClick={() => setIsModalOpen(true)}>
+        <Knapp
+          mini
+          onClick={() => {
+            setIsModalOpen(true);
+            trackOnClick(eventNames.svarBehovKvittering);
+          }}
+        >
           {texts.buttonSvart}
-        </TrackedKnapp>
+        </Knapp>
       </DialogmotePanelStyled>
     );
   }
@@ -129,7 +151,7 @@ const MotebehovPanel = ({ motebehov }) => {
     return (
       <DialogmotePanelStyled title={texts.title} icon={BehovImage}>
         <ContactInfo />
-        <ButtonLenke mini to={MOTEBEHOV_URL}>
+        <ButtonLenke mini to={MOTEBEHOV_URL} trackingName={eventNames.meldBehov}>
           {texts.button}
         </ButtonLenke>
       </DialogmotePanelStyled>
@@ -137,7 +159,7 @@ const MotebehovPanel = ({ motebehov }) => {
   }
 
   return (
-    <DialogmotePanelStyled title={texts.titleSvarBehov} icon={BehovImage}>
+    <DialogmotePanelStyled title={texts.titleSvarBehov} icon={BehovImage} trackingName={eventNames.svarBehov}>
       <ContactInfo />
       <ButtonLenke mini to={MOTEBEHOV_URL}>
         {texts.button}

@@ -1,15 +1,16 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
-import { TrackedLink } from '../../components/buttons/TrackedLink';
+import { Link } from 'react-router';
+import { trackOnClick } from '@/amplitude/amplitude';
 
-const LinkStyled = styled(TrackedLink)`
+const LinkStyled = styled(Link)`
   width: fit-content;
 `;
 
 function RouterLenke({ to, children, trackingName }) {
   return (
-    <LinkStyled to={to} className="lenke" trackingName={trackingName}>
+    <LinkStyled to={to} className="lenke" onClick={() => trackOnClick(trackingName)}>
       {children}
     </LinkStyled>
   );
