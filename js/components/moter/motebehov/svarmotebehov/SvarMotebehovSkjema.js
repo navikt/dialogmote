@@ -63,6 +63,7 @@ export const VilHaMoteSvarKnapper = ({ felt, isFormSubmitted, validateHarMoteBeh
             <input
               key={`vilHaMote-${index}`}
               value={svar.verdi}
+              label={svar.tekst}
               id={`${felt.navn}-${index}`}
               aria-labelledby={felt.navn}
             />
