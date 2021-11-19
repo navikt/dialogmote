@@ -1,6 +1,6 @@
 import VeilederSpeechBubble from '@/MVP/components/VeilederSpeechBubble';
 import VeilederLandingContent from '@/MVP/views/landing/components/VeilederLandingContent';
-import React from 'react';
+import React, { ReactElement } from 'react';
 import AlertStripe from 'nav-frontend-alertstriper';
 import styled from 'styled-components';
 import AppSpinner from '../../../components/AppSpinner';
@@ -26,7 +26,11 @@ const AlertStripeStyled = styled(AlertStripe)`
   margin-bottom: 32px;
 `;
 
-const Landing = () => {
+interface PreviousMotereferatFeaturePanelProps {
+  displayAlleReferater: boolean;
+}
+
+const Landing = (): ReactElement => {
   const brev = useBrev();
   const motebehov = useMotebehov();
   const moteplanlegger = useMoteplanlegger();
@@ -36,13 +40,9 @@ const Landing = () => {
     return <AppSpinner />;
   }
 
-  const FetchFailedError = () => {
-    if (
-      brev.isError ||
-      motebehov.isError ||
-      (moteplanlegger.isError && !(moteplanlegger.error.code === 404)) ||
-      sykmeldinger.isError
-    ) {
+  const FetchFailedError = (): ReactElement | null => {
+    const isSisteMoteNotFound = moteplanlegger.error instanceof Error && moteplanlegger.error.message.includes('404');
+    if (brev.isError || motebehov.isError || (moteplanlegger.isError && !isSisteMoteNotFound) || sykmeldinger.isError) {
       return (
         <AlertStripeStyled type="feil">
           Akkurat nå mangler det noe her. Vi har tekniske problemer som vi jobber med å løse. Prøv gjerne igjen om en
@@ -54,23 +54,25 @@ const Landing = () => {
     return null;
   };
 
-  const harSammeAvlysningsstatus = (brevType, moteplanleggerStatus) => {
+  const harSammeAvlysningsstatus = (brevType: string, moteplanleggerStatus: string): boolean => {
     return (
       (brevType === brevTypes.AVLYST && moteplanleggerStatus === AVBRUTT) ||
       (brevType !== brevTypes.AVLYST && moteplanleggerStatus !== AVBRUTT)
     );
   };
 
-  const hasNoSendteSykmeldinger = () => {
+  const hasNoSendteSykmeldinger = (): boolean => {
     return sykmeldinger.isSuccess && sykmeldinger.data && sykmeldinger.data.length === 0;
   };
 
-  const displayBrev = () => {
+  const displayBrev = (): boolean => {
     if (brev.isError || brev.data.length === 0) {
       return false;
     }
     if (!moteplanlegger.isError && moteplanlegger.data) {
-      const brevArraySorted = brev.data.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
+      const brevArraySorted = brev.data.sort(
+        (a, b) => new Date(b.createdAt).valueOf() - new Date(a.createdAt).valueOf()
+      );
       const sistOpprettetBrev = brevArraySorted[0];
 
       const sistOpprettetBrevTidspunkt = new Date(sistOpprettetBrev.createdAt);
@@ -93,7 +95,7 @@ const Landing = () => {
     return true;
   };
 
-  const displayMotebehov = () => {
+  const displayMotebehov = (): boolean => {
     if (motebehov.isError || !motebehov.data.visMotebehov) return false;
     if (!moteplanlegger.isError && moteplanlegger.data.status !== AVBRUTT && !erMotePassert(moteplanlegger.data))
       return false;
@@ -105,7 +107,7 @@ const Landing = () => {
     return true;
   };
 
-  const BrevPanel = () => {
+  const BrevPanel = (): ReactElement => {
     const brevHead = brev.data[0];
 
     if (brevHead.brevType === brevTypes.REFERAT) {
@@ -115,7 +117,7 @@ const Landing = () => {
     return <MoteinnkallelsePanel innkallelse={brevHead} />;
   };
 
-  const PlanleggerPanel = () => {
+  const PlanleggerPanel = (): ReactElement => {
     const modus = getSvarsideModus(moteplanlegger.data, BRUKER);
     const convertedMotedata = konverterTid(moteplanlegger.data);
     if (modus === BEKREFTET || modus === MOTESTATUS) {
@@ -124,7 +126,7 @@ const Landing = () => {
     return <MoteplanleggerPanel modus={modus} />;
   };
 
-  const DialogmoteFeaturePanel = () => {
+  const DialogmoteFeaturePanel = (): ReactElement | null => {
     if (displayBrev()) {
       return BrevPanel();
     }
@@ -134,23 +136,24 @@ const Landing = () => {
     return null;
   };
 
-  const PreviousMotereferatFeaturePanel = (displayAlleReferater) => {
-    const includeLastReferat = displayAlleReferater.displayAlleReferater;
-    if (brev.isError || (!includeLastReferat && brev.data.length < 2)) return null;
+  const PreviousMotereferatFeaturePanel = ({
+    displayAlleReferater,
+  }: PreviousMotereferatFeaturePanelProps): ReactElement | null => {
+    if (brev.isError || (!displayAlleReferater && brev.data.length < 2)) return null;
 
-    const currentBrev = displayBrev() && !includeLastReferat ? brev.data.slice(1) : brev.data;
+    const currentBrev = displayBrev() && !displayAlleReferater ? brev.data.slice(1) : brev.data;
     const previousReferater = currentBrev.filter((hendelse) => hendelse.brevType === brevTypes.REFERAT);
     const previousReferatDates = previousReferater.map(({ tid }) => tid);
 
     return <PreviousMotereferatPanel previousReferatDates={previousReferatDates} />;
   };
 
-  const displayContent = () => {
+  const MainContentPanel = (): ReactElement => {
     if (hasNoSendteSykmeldinger()) {
       return (
         <React.Fragment>
           <IkkeSykmeldtLanding />
-          <PreviousMotereferatFeaturePanel displayAlleReferater />
+          <PreviousMotereferatFeaturePanel displayAlleReferater={true} />
         </React.Fragment>
       );
     }
@@ -170,7 +173,7 @@ const Landing = () => {
 
       <FetchFailedError />
 
-      {displayContent()}
+      <MainContentPanel />
 
       <DialogmoteVideoPanel />
     </DialogmoteContainer>
