@@ -1,10 +1,10 @@
 import VeilederSpeechBubble from '@/MVP/components/VeilederSpeechBubble';
-import React, { useEffect } from 'react';
+import React, { ReactElement } from 'react';
 import styled from 'styled-components';
 import AlertStripe, { AlertStripeInfo } from 'nav-frontend-alertstriper';
 import { brevTypes } from '../../globals/constants';
 import DialogmoteContainer from '../../containers/DialogmoteContainer';
-import { useBrev, useMutateBrevLest } from '../../hooks/brev';
+import { useBrev } from '../../hooks/brev';
 import AppSpinner from '../../../components/AppSpinner';
 import DocumentContainer from '../../containers/DocumentContainer';
 import VeilederInnkallelseContent from './components/VeilederInnkallelseContent';
@@ -36,7 +36,7 @@ const texts = {
   innkallingtitle: 'Innkalling til dialogmøte',
 };
 
-const title = (type) => {
+const title = (type: string): string => {
   switch (type) {
     case brevTypes.AVLYST:
       return texts.avlystTitle;
@@ -47,29 +47,11 @@ const title = (type) => {
   }
 };
 
-const breadcrumbTitle = (type) => {
-  switch (type) {
-    case brevTypes.AVLYST:
-      return texts.avlystTitle;
-    case brevTypes.ENDRING:
-      return texts.endringTitle;
-    default:
-      return texts.innkallingtitle;
-  }
-};
-
-const Moteinnkallelse = () => {
+const Moteinnkallelse = (): ReactElement => {
   const brev = useBrev();
-  const mutation = useMutateBrevLest();
 
   const brevHead = Array.isArray(brev.data) ? brev.data[0] : null;
   const { tid, uuid, brevType, document, lestDato } = brevHead;
-
-  useEffect(() => {
-    if (lestDato === null) {
-      mutation.mutate({ uuid });
-    }
-  }, [lestDato, mutation, uuid]);
 
   if (brev.isLoading) {
     return <AppSpinner />;
@@ -77,7 +59,7 @@ const Moteinnkallelse = () => {
 
   if (brev.isError) {
     return (
-      <DialogmoteContainer title={title()} breadcrumb={innkallelseBreadcrumb(breadcrumbTitle())} displayTilbakeknapp>
+      <DialogmoteContainer title={title('')} breadcrumb={innkallelseBreadcrumb(title(brevType))} displayTilbakeknapp>
         <AlertStripeStyled type="feil">
           Akkurat nå mangler det noe her. Vi har tekniske problemer som vi jobber med å løse. Prøv gjerne igjen om en
           stund.
@@ -88,7 +70,11 @@ const Moteinnkallelse = () => {
 
   if (!brevHead || brevType === brevTypes.REFERAT) {
     return (
-      <DialogmoteContainer title={title()} breadcrumb={innkallelseBreadcrumb(breadcrumbTitle())} displayTilbakeknapp>
+      <DialogmoteContainer
+        title={title(brevType)}
+        breadcrumb={innkallelseBreadcrumb(title(brevType))}
+        displayTilbakeknapp
+      >
         <NoInnkallelseAlert />;
       </DialogmoteContainer>
     );
@@ -98,7 +84,7 @@ const Moteinnkallelse = () => {
     return (
       <DialogmoteContainer
         title={title(brevType)}
-        breadcrumb={innkallelseBreadcrumb(breadcrumbTitle(brevType))}
+        breadcrumb={innkallelseBreadcrumb(title(brevType))}
         displayTilbakeknapp
       >
         <AvlystDocumentContainerStyled document={document} />
@@ -109,12 +95,12 @@ const Moteinnkallelse = () => {
   return (
     <DialogmoteContainer
       title={title(brevType)}
-      breadcrumb={innkallelseBreadcrumb(breadcrumbTitle(brevType))}
+      breadcrumb={innkallelseBreadcrumb(title(brevType))}
       displayTilbakeknapp
     >
       {isDateInPast(tid) && <AlertStripeStyled type="advarsel">{texts.pastDateAlertBox}</AlertStripeStyled>}
 
-      <DocumentContainer document={document} />
+      <DocumentContainer document={document} lestDato={lestDato} uuid={uuid} />
 
       <InfoStripeStyled>
         {texts.infoBox}

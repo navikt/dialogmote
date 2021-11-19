@@ -1,10 +1,9 @@
 import VeilederSpeechBubble from '@/MVP/components/VeilederSpeechBubble';
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
 import { Knapp } from 'nav-frontend-knapper';
 import Icon from '../../../components/Icon';
-import { useMutateBrevLest } from '@/MVP/hooks/brev';
 import { pdfTypes } from '@/MVP/globals/constants';
 import NoReferatAlert from './NoReferatAlert';
 import { downloadBrevPdf, getProgrammaticDateFormat } from '../../../utils';
@@ -29,15 +28,7 @@ const getDocumentKeys = (document) => {
 };
 
 const MotereferatContent = ({ referat }) => {
-  const mutation = useMutateBrevLest();
   const [downloadingPDF, setDownloadingPDF] = useState(false);
-
-  useEffect(() => {
-    if (referat && referat.lestDato === null && !mutation.isLoading) {
-      const { uuid } = referat;
-      mutation.mutate({ uuid });
-    }
-  }, [mutation, referat]);
 
   const handleClick = async (uuid, dokumentDato) => {
     setDownloadingPDF(true);
@@ -51,11 +42,11 @@ const MotereferatContent = ({ referat }) => {
   if (!referat) {
     return <NoReferatAlert />;
   }
-  const { uuid, document, tid } = referat;
+  const { uuid, document, tid, lestDato } = referat;
 
   return (
     <React.Fragment>
-      <DocumentContainer document={document} />
+      <DocumentContainer document={document} lestDato={lestDato} uuid={uuid} />
 
       <KnappStyled
         onClick={() => {

@@ -1,3 +1,5 @@
+import VeilederSpeechBubble from '@/MVP/components/VeilederSpeechBubble';
+import VeilederLandingContent from '@/MVP/views/landing/components/VeilederLandingContent';
 import React from 'react';
 import AlertStripe from 'nav-frontend-alertstriper';
 import styled from 'styled-components';
@@ -26,7 +28,6 @@ import MoteplanleggerKvitteringPanel from './components/MoteplanleggerKvittering
 import MoteplanleggerPanel from './components/MoteplanleggerPanel';
 import MotereferatPanel from './components/MotereferatPanel';
 import PreviousMotereferatPanel from './components/PreviousMotereferatPanel';
-import VeilederLanding from './components/VeilederLanding';
 
 const AlertStripeStyled = styled(AlertStripe)`
   margin-bottom: 32px;
@@ -172,7 +173,7 @@ const Landing = () => {
 
   return (
     <DialogmoteContainer title="Dialogmøter">
-      <VeilederLanding />
+      <VeilederSpeechBubble content={<VeilederLandingContent />} />
 
       <FetchFailedError />
 
