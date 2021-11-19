@@ -14,6 +14,7 @@ import NoInnkallelseAlert from './components/NoInnkallelseAlert';
 import Lenke from 'nav-frontend-lenker';
 import { trackOnClick } from '@/amplitude/amplitude';
 import { eventNames } from '@/amplitude/events';
+import FeilAlertStripe from '@/MVP/components/FeilAlertStripe';
 
 const AlertStripeStyled = styled(AlertStripe)`
   margin-bottom: 32px;
@@ -60,10 +61,7 @@ const Moteinnkallelse = (): ReactElement => {
   if (brev.isError) {
     return (
       <DialogmoteContainer title={title('')} breadcrumb={innkallelseBreadcrumb(title(brevType))} displayTilbakeknapp>
-        <AlertStripeStyled type="feil">
-          Akkurat nå mangler det noe her. Vi har tekniske problemer som vi jobber med å løse. Prøv gjerne igjen om en
-          stund.
-        </AlertStripeStyled>
+        <FeilAlertStripe />
       </DialogmoteContainer>
     );
   }

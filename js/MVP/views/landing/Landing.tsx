@@ -1,8 +1,6 @@
 import VeilederSpeechBubble from '@/MVP/components/VeilederSpeechBubble';
 import VeilederLandingContent from '@/MVP/views/landing/components/VeilederLandingContent';
 import React, { ReactElement } from 'react';
-import AlertStripe from 'nav-frontend-alertstriper';
-import styled from 'styled-components';
 import AppSpinner from '../../../components/AppSpinner';
 import { BRUKER } from '@/enums/moteplanleggerDeltakerTyper';
 import { AVBRUTT, BEKREFTET, erMotePassert, getSvarsideModus, konverterTid, MOTESTATUS } from '@/utils/moteUtils';
@@ -21,10 +19,7 @@ import MoteplanleggerKvitteringPanel from './components/MoteplanleggerKvittering
 import MoteplanleggerPanel from './components/MoteplanleggerPanel';
 import MotereferatPanel from './components/MotereferatPanel';
 import PreviousMotereferatPanel from './components/PreviousMotereferatPanel';
-
-const AlertStripeStyled = styled(AlertStripe)`
-  margin-bottom: 32px;
-`;
+import FeilAlertStripe from '@/MVP/components/FeilAlertStripe';
 
 interface PreviousMotereferatFeaturePanelProps {
   displayAlleReferater: boolean;
@@ -43,12 +38,7 @@ const Landing = (): ReactElement => {
   const FetchFailedError = (): ReactElement | null => {
     const isSisteMoteNotFound = moteplanlegger.error instanceof Error && moteplanlegger.error.message.includes('404');
     if (brev.isError || motebehov.isError || (moteplanlegger.isError && !isSisteMoteNotFound) || sykmeldinger.isError) {
-      return (
-        <AlertStripeStyled type="feil">
-          Akkurat nå mangler det noe her. Vi har tekniske problemer som vi jobber med å løse. Prøv gjerne igjen om en
-          stund.
-        </AlertStripeStyled>
-      );
+      return <FeilAlertStripe />;
     }
 
     return null;
