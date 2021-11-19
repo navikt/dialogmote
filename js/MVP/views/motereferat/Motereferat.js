@@ -6,7 +6,7 @@ import AppSpinner from '../../../components/AppSpinner';
 import DialogmoteContainer from '../../containers/DialogmoteContainer';
 import { brevTypes } from '../../globals/constants';
 import { motereferatBreadcrumb } from '../../globals/paths';
-import { useBrev } from '../../hooks/brev';
+import { useBrev } from '../../queries/brev';
 import { getProgrammaticDateFormat } from '../../utils';
 import MotereferatContent from './components/MotereferatContent';
 

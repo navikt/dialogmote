@@ -1,4 +1,4 @@
-import { useMutateBrevLest } from '@/MVP/hooks/brev';
+import { useMutateBrevLest } from '@/MVP/queries/brev';
 import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';

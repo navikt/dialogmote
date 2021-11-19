@@ -4,7 +4,7 @@ import styled from 'styled-components';
 import AlertStripe, { AlertStripeInfo } from 'nav-frontend-alertstriper';
 import { brevTypes } from '../../globals/constants';
 import DialogmoteContainer from '../../containers/DialogmoteContainer';
-import { useBrev } from '../../hooks/brev';
+import { useBrev } from '../../queries/brev';
 import AppSpinner from '../../../components/AppSpinner';
 import DocumentContainer from '../../containers/DocumentContainer';
 import VeilederInnkallelseContent from './components/VeilederInnkallelseContent';

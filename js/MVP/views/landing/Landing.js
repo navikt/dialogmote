@@ -4,21 +4,14 @@ import React from 'react';
 import AlertStripe from 'nav-frontend-alertstriper';
 import styled from 'styled-components';
 import AppSpinner from '../../../components/AppSpinner';
-import { BRUKER } from '../../../enums/moteplanleggerDeltakerTyper';
-import {
-  AVBRUTT,
-  BEKREFTET,
-  erMotePassert,
-  getSvarsideModus,
-  konverterTid,
-  MOTESTATUS,
-} from '../../../utils/moteUtils';
+import { BRUKER } from '@/enums/moteplanleggerDeltakerTyper';
+import { AVBRUTT, BEKREFTET, erMotePassert, getSvarsideModus, konverterTid, MOTESTATUS } from '@/utils/moteUtils';
 import DialogmoteContainer from '../../containers/DialogmoteContainer';
 import { brevTypes } from '../../globals/constants';
-import { useBrev } from '../../hooks/brev';
-import { useMotebehov } from '../../hooks/motebehov';
-import { useMoteplanlegger } from '../../hooks/moteplanlegger';
-import { useSykmeldinger } from '../../hooks/sykmeldinger';
+import { useBrev } from '../../queries/brev';
+import { useMotebehov } from '../../queries/motebehov';
+import { useMoteplanlegger } from '../../queries/moteplanlegger';
+import { useSykmeldinger } from '../../queries/sykmeldinger';
 import { getLongDateFormat } from '../../utils';
 import DialogmoteVideoPanel from './components/DialogmoteVideoPanel';
 import IkkeSykmeldtLanding from './components/IkkeSykmeldtLanding';
