@@ -1,3 +1,4 @@
+import VeilederSpeechBubble from '@/MVP/components/VeilederSpeechBubble';
 import React, { useEffect } from 'react';
 import styled from 'styled-components';
 import AlertStripe, { AlertStripeInfo } from 'nav-frontend-alertstriper';
@@ -6,7 +7,7 @@ import DialogmoteContainer from '../../containers/DialogmoteContainer';
 import { useBrev, useMutateBrevLest } from '../../hooks/brev';
 import AppSpinner from '../../../components/AppSpinner';
 import DocumentContainer from '../../containers/DocumentContainer';
-import VeilederInnkallelse from './components/VeilederInnkallelse';
+import VeilederInnkallelseContent from './components/VeilederInnkallelseContent';
 import { innkallelseBreadcrumb, statiskeURLer } from '../../globals/paths';
 import { isDateInPast } from '../../utils';
 import NoInnkallelseAlert from './components/NoInnkallelseAlert';
@@ -122,7 +123,7 @@ const Moteinnkallelse = () => {
         </Lenke>
       </InfoStripeStyled>
 
-      <VeilederInnkallelse />
+      <VeilederSpeechBubble content={<VeilederInnkallelseContent />} />
     </DialogmoteContainer>
   );
 };

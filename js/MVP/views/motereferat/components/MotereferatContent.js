@@ -1,3 +1,4 @@
+import VeilederSpeechBubble from '@/MVP/components/VeilederSpeechBubble';
 import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
@@ -9,7 +10,7 @@ import NoReferatAlert from './NoReferatAlert';
 import { downloadBrevPdf, getProgrammaticDateFormat } from '../../../utils';
 import DocumentContainer from '../../../containers/DocumentContainer';
 import LinkInfoBox from './LinkInfoBox';
-import VeilederReferat from './VeilederReferat';
+import VeilederReferatContent from './VeilederReferatContent';
 import { DownloadImage } from '@/images/imageComponents';
 import { trackOnClick } from '@/amplitude/amplitude';
 import { eventNames } from '@/amplitude/events';
@@ -70,7 +71,7 @@ const MotereferatContent = ({ referat }) => {
       </KnappStyled>
 
       <LinkInfoBox documentKeys={getDocumentKeys(document)} />
-      <VeilederReferat />
+      <VeilederSpeechBubble content={<VeilederReferatContent />} />
     </React.Fragment>
   );
 };
