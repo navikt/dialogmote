@@ -20,6 +20,7 @@ import MoteplanleggerPanel from './components/MoteplanleggerPanel';
 import MotereferatPanel from './components/MotereferatPanel';
 import PreviousMotereferatPanel from './components/PreviousMotereferatPanel';
 import FeilAlertStripe from '@/MVP/components/FeilAlertStripe';
+import { ApiErrorException } from '@/api/errors';
 
 interface PreviousMotereferatFeaturePanelProps {
   displayAlleReferater: boolean;
@@ -36,7 +37,7 @@ const Landing = (): ReactElement => {
   }
 
   const FetchFailedError = (): ReactElement | null => {
-    const isSisteMoteNotFound = moteplanlegger.error instanceof Error && moteplanlegger.error.message.includes('404');
+    const isSisteMoteNotFound = moteplanlegger.error instanceof ApiErrorException && moteplanlegger.error.code === 404;
     if (brev.isError || motebehov.isError || (moteplanlegger.isError && !isSisteMoteNotFound) || sykmeldinger.isError) {
       return <FeilAlertStripe />;
     }

@@ -11,9 +11,9 @@ const texts = {
   veilederLink1: 'Slik deltar du i videomøte med NAV.',
 };
 
-function VeilederInnkallelseContent(): ReactElement {
+const VeilederInnkallelseContent = (): ReactElement => {
   return (
-    <React.Fragment>
+    <>
       <Element>{texts.veilederText1}</Element>
       {texts.veilederText2}
       <Lenke
@@ -24,8 +24,8 @@ function VeilederInnkallelseContent(): ReactElement {
         {texts.veilederLink1}
       </Lenke>
       <br />
-    </React.Fragment>
+    </>
   );
-}
+};
 
 export default VeilederInnkallelseContent;

@@ -15,6 +15,4 @@ const FeilAlertStripe = (): ReactElement => {
   return <AlertStripeStyled type="feil">{texts.feil}</AlertStripeStyled>;
 };
 
-FeilAlertStripe.propTypes = {};
-
 export default FeilAlertStripe;
