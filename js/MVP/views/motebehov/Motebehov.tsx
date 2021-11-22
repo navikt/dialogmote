@@ -2,7 +2,7 @@ import React from 'react';
 import DialogmoteContainer from '../../containers/DialogmoteContainer';
 import AppSpinner from '../../../components/AppSpinner';
 import { motebehoveBreadcrumb } from '../../globals/paths';
-import { useMotebehov } from '../../hooks/motebehov';
+import { useMotebehov } from '../../queries/motebehov';
 import SvarMoteBehovContent from './components/SvarMotebehovContent';
 
 const texts = {
