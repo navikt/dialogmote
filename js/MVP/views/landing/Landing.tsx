@@ -20,7 +20,6 @@ import MoteplanleggerPanel from './components/MoteplanleggerPanel';
 import MotereferatPanel from './components/MotereferatPanel';
 import PreviousMotereferatPanel from './components/PreviousMotereferatPanel';
 import FeilAlertStripe from '@/MVP/components/FeilAlertStripe';
-import { ApiErrorException } from '@/api/errors';
 
 interface PreviousMotereferatFeaturePanelProps {
   displayAlleReferater: boolean;
