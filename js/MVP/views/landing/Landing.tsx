@@ -88,7 +88,7 @@ const Landing = (): ReactElement => {
 
   const displayMotebehov = (): boolean => {
     if (motebehov.isError || !motebehov.data.visMotebehov) return false;
-    if (!moteplanlegger.isError && moteplanlegger.data.status !== AVBRUTT && !erMotePassert(moteplanlegger.data))
+    if (!moteplanlegger.isError && moteplanlegger.data?.status !== AVBRUTT && !erMotePassert(moteplanlegger.data))
       return false;
     if (!brev.isError && brev.data[0]) {
       const brevHead = brev.data[0];
