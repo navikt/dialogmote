@@ -37,8 +37,12 @@ const Landing = (): ReactElement => {
   }
 
   const FetchFailedError = (): ReactElement | null => {
-    const isSisteMoteNotFound = moteplanlegger.error instanceof ApiErrorException && moteplanlegger.error.code === 404;
-    if (brev.isError || motebehov.isError || (moteplanlegger.isError && !isSisteMoteNotFound) || sykmeldinger.isError) {
+    if (
+      brev.isError ||
+      motebehov.isError ||
+      (moteplanlegger.isError && !(moteplanlegger.error.code === 404)) ||
+      sykmeldinger.isError
+    ) {
       return <FeilAlertStripe />;
     }
 
