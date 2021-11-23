@@ -159,9 +159,9 @@ const MotebehovPanel = ({ motebehov }) => {
   }
 
   return (
-    <DialogmotePanelStyled title={texts.titleSvarBehov} icon={BehovImage} trackingName={eventNames.svarBehov}>
+    <DialogmotePanelStyled title={texts.titleSvarBehov} icon={BehovImage}>
       <ContactInfo />
-      <ButtonLenke mini to={MOTEBEHOV_URL}>
+      <ButtonLenke mini to={MOTEBEHOV_URL} trackingName={eventNames.svarBehov}>
         {texts.button}
       </ButtonLenke>
     </DialogmotePanelStyled>
