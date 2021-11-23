@@ -3,7 +3,6 @@ import { statiskeURLer } from '@/MVP/globals/paths';
 import Lenke from 'nav-frontend-lenker';
 import { trackOnClick } from '@/amplitude/amplitude';
 import { eventNames } from '@/amplitude/events';
-import { getSykefravaerUrl } from '@/utils/urlUtils';
 
 const texts = {
   veilederText1: 'Lurer du på hva som skjer underveis i sykefraværet?',
@@ -13,15 +12,17 @@ const texts = {
   veilederLink2: 'kontakte oss.',
 };
 
-const tidslinjeURL = getSykefravaerUrl('/sykefravaer/tidslinjen');
-
 function VeilederReferatContent(): ReactElement {
   return (
     <React.Fragment>
       {texts.veilederText1}
       <br />
       {texts.veilederText2}
-      <Lenke href={tidslinjeURL} target="_blank" onClick={() => trackOnClick(eventNames.tidslinjen)}>
+      <Lenke
+        href={process.env.REACT_APP_SYKEFRAVAER_TIDSLINJEN || ''}
+        target="_blank"
+        onClick={() => trackOnClick(eventNames.tidslinjen)}
+      >
         {texts.veilederLink1}
       </Lenke>
       <br />

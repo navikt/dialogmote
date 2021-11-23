@@ -14,7 +14,7 @@ const config = function () {
     entry: './js/index.tsx',
     output: {
       path: path.resolve(__dirname, './dist'),
-      publicPath: '/dialogmote/static/',
+      publicPath: '/syk/dialogmote/static/',
       filename: 'bundle-prod.js',
       clean: true,
     },

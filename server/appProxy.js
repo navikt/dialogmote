@@ -3,11 +3,11 @@ const { createProxyMiddleware } = require('http-proxy-middleware');
 
 const appProxy = (server) => {
   server.use(
-    '/dialogmote/api/v1/arbeidstaker/brev',
+    '/syk/dialogmote/api/v1/arbeidstaker/brev',
     createProxyMiddleware({
       target: process.env.ISDIALOGMOTE_HOST,
       pathRewrite: {
-        '^/dialogmote/api/v1/arbeidstaker/brev': '/api/v1/arbeidstaker/brev',
+        '^/syk/dialogmote/api/v1/arbeidstaker/brev': '/api/v1/arbeidstaker/brev',
       },
       onError: (err, req, res) => {
         res.statusCode = 500;

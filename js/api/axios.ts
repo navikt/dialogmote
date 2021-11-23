@@ -1,7 +1,6 @@
 import axios, { AxiosError, ResponseType } from 'axios';
 import { accessDeniedError, ApiErrorException, generalError, loginRequiredError, networkError } from './errors';
-import { defaultRequestHeaders, hentLoginUrl } from '@/api/apiUtils';
-import { getSykefravaerUrl } from '@/utils/urlUtils';
+import { defaultRequestHeaders } from '@/api/apiUtils';
 
 interface AxiosOptions {
   responseType?: ResponseType;
@@ -11,7 +10,6 @@ function handleAxiosError(error: AxiosError) {
   if (error.response) {
     switch (error.response.status) {
       case 401: {
-        window.location.href = `${hentLoginUrl()}?redirect=${getSykefravaerUrl()}`;
         throw new ApiErrorException(loginRequiredError(error), error.response.status);
       }
       case 403: {

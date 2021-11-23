@@ -29,10 +29,10 @@ function disableCache(res) {
 }
 
 server.get('/', (req, res) => {
-  res.redirect('/dialogmote');
+  res.redirect('/syk/dialogmote');
 });
 
-server.use('/dialogmote/static', express.static(DIST_DIR, { index: false }));
+server.use('/syk/dialogmote/static', express.static(DIST_DIR, { index: false }));
 server.get('/internal/isAlive|isReady', (req, res) => res.sendStatus(200));
 
 server.use(cookieParser());

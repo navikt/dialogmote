@@ -9,6 +9,8 @@ const getHtmlWithDecorator = (filePath) =>
     urlLookupTable: false,
     chatbot: true,
     enforceLogin: true,
+    level: 'Level4',
+    redirectToApp: true,
   });
 
 module.exports = getHtmlWithDecorator;
