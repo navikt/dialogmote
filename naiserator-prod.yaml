@@ -2,9 +2,9 @@ apiVersion: "nais.io/v1alpha1"
 kind: "Application"
 metadata:
   name: dialogmote
-  namespace: default
+  namespace: team-esyfo
   labels:
-    team: teamsykefravr
+    team: team-esyfo
 spec:
   image: {{ image }}
   replicas:
@@ -34,8 +34,7 @@ spec:
       cpu: 200m
       memory: 256Mi
   ingresses:
-    - "https://tjenester.nav.no/dialogmote"
-    - "https://dialogmote.nais.oera.no"
+    - "https://www.nav.no/syk/dialogmote"
   env:
     - name: DECORATOR_URL
       value: https://nav.no/dekoratoren
@@ -45,4 +44,5 @@ spec:
       value: https://loginservice.nav.no/login
     - name: ISDIALOGMOTE_HOST
       value: https://isdialogmote.nav.no
-
+    - name: DITTNAV_URL
+      value: https://www.nav.no/person/dittnav

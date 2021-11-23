@@ -1,5 +1,5 @@
 FROM node:16-alpine
-WORKDIR /dialogmotearbeidsgiver
+WORKDIR /dialogmote
 
 ENV NODE_ENV production
 

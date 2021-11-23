@@ -1,25 +1,18 @@
 # Dialogmote
 
-Frontend for digitalisering av sykefraværsoppfølging (DigiSYFO) http://tjenester.nav.no/dialogmote/
+React frontend for sykmeldtes dialogmøter
 
-## TL;DR
+- Prod: https://www.nav.no/syk/dialogmote
+- Test: https://www-gcp.dev.nav.no/syk/dialogmote
+- Lokalt: http://localhost:8080/syk/dialogmote
 
-React-app for den sykmeldte. Viser dialogmøter
+## Kjøre koden lokalt:
 
-## Kjøre lokalt
-
-Applikasjonen har en mock som kan brukes lokalt. Her mockes diverse endepunkter, dog ikke alle.
-
-Du må ha Node installert.
-
-- For å kjøre koden lokalt:
-
-  - `$ npm install`
-  - `$ npm start`
-  - Gå til `http://localhost:8080/dialogmote`
-  - Eventuelt kan komandoene kjøres fra `package.json` i intellij.
-  - Data til dialogmøte kan bli endret i `siste.json`
-  - Møtebehovstatus kan bli endret i `mockSyfomotebehov.js`: bytt verdi av `motebehovStatusEnum` i `mockPilotEndepunkterForLokalmiljo(...)`
+- `$ npm install`
+- `$ npm start`
+- Eventuelt kan komandoene kjøres fra `package.json` i intellij.
+- Data til dialogmøte kan bli endret i `siste.json`
+- Møtebehovstatus kan bli endret i `mockSyfomotebehov.js`: bytt verdi av `motebehovStatusEnum` i `mockPilotEndepunkterForLokalmiljo(...)`
 
 - Kjør tester med `npm test` eller `npm test:watch`
 - Lint JS-kode med `npm run lint` eller `npm run lint:fix`

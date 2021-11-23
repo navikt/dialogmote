@@ -1,5 +1,4 @@
 import React from 'react';
-import { erPaaHeroku } from '@/utils/urlUtils';
 import { ForDuSvarerImage } from '@/images/imageComponents';
 
 /* eslint-disable max-len */
@@ -31,14 +30,7 @@ export const TekstInformasjonInnhold = () => {
         <li>{TEKSTER.forDuSvarer.lagetPlan}</li>
         <li>
           {TEKSTER.forDuSvarer.ikkeLagetPlan}{' '}
-          <a
-            className="lenke"
-            href={
-              erPaaHeroku()
-                ? 'https://oppfolgingsplan.herokuapp.com/oppfolgingsplan/oppfolgingsplaner'
-                : `${process.env.REACT_APP_OPPFOLGINGSPLAN_CONTEXT_ROOT}/oppfolgingsplaner`
-            }
-          >
+          <a className="lenke" href={process.env.REACT_APP_OPPFOLGINGSPLAN_CONTEXT_ROOT}>
             {TEKSTER.tekstInformasjonInnhold.lenke}
           </a>
         </li>
