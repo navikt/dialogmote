@@ -86,7 +86,7 @@ export const Skjema = ({
       return newPath;
     }
 
-    return process.env.REACT_APP_SYKEFRAVAER_ROOT;
+    return process.env.REACT_APP_CONTEXT_ROOT;
   };
 
   const displayDeclinedMotebehov =

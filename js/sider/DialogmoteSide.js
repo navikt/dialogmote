@@ -129,7 +129,7 @@ export function mapStateToProps(state) {
       },
       {
         tittel: 'Dialogmøter',
-        sti: '/',
+        sti: process.env.REACT_APP_CONTEXT_ROOT,
         erKlikkbar: true,
       },
     ],
