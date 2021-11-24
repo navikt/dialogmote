@@ -9,6 +9,7 @@ const getHtmlWithDecorator = (filePath) =>
     urlLookupTable: false,
     chatbot: true,
     enforceLogin: true,
+    utloggingsvarsel: true,
     level: 'Level4',
     redirectToApp: true,
   });
