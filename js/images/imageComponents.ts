@@ -2,7 +2,6 @@ import BehovImage from '../../img/svg/behov.svg';
 import BlaaKalenderImage from '../../img/svg/kalender-bgblaa.svg';
 import DialogReportGraImage from '../../img/svg/dialog-report-gra.svg';
 import DokumentImage from '../../img/svg/dokument.svg';
-import DownloadImage from '../../img/svg/download.svg';
 import ForDuSvarerImage from '../../img/svg/forDuSvarer.svg';
 import KalenderInnkallingAvlystImage from '../../img/svg/kalender-innkalling_avlyst.svg';
 import KalenderInnkallingImage from '../../img/svg/kalender-innkalling.svg';
@@ -18,7 +17,6 @@ export {
   BlaaKalenderImage,
   DialogReportGraImage,
   DokumentImage,
-  DownloadImage,
   ForDuSvarerImage,
   KalenderInnkallingAvlystImage,
   KalenderInnkallingImage,
