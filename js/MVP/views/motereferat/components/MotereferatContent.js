@@ -2,7 +2,6 @@ import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
 import { Knapp } from 'nav-frontend-knapper';
-import Icon from '../../../components/Icon';
 import { useMutateBrevLest } from '@/MVP/hooks/brev';
 import { pdfTypes } from '@/MVP/globals/constants';
 import NoReferatAlert from './NoReferatAlert';
@@ -10,7 +9,7 @@ import { downloadBrevPdf, getProgrammaticDateFormat } from '../../../utils';
 import DocumentContainer from '../../../containers/DocumentContainer';
 import LinkInfoBox from './LinkInfoBox';
 import VeilederReferat from './VeilederReferat';
-import { DownloadImage } from '@/images/imageComponents';
+import { Download as DownloadImage } from '@navikt/ds-icons';
 import { trackOnClick } from '@/amplitude/amplitude';
 import { eventNames } from '@/amplitude/events';
 
@@ -65,8 +64,8 @@ const MotereferatContent = ({ referat }) => {
         spinner={downloadingPDF}
         mini
       >
-        <Icon icon={DownloadImage} rightPadding="8px" />
-        {texts.downloadButton}
+        <DownloadImage />
+        <span>{texts.downloadButton}</span>
       </KnappStyled>
 
       <LinkInfoBox documentKeys={getDocumentKeys(document)} />
