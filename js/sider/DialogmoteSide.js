@@ -124,12 +124,12 @@ export function mapStateToProps(state) {
     brodsmuler: [
       {
         tittel: tekster.brodsmuleBase,
-        sti: '/sykefravaer',
+        sti: process.env.REACT_APP_SYKEFRAVAER_ROOT,
         erKlikkbar: true,
       },
       {
         tittel: 'Dialogmøter',
-        sti: '/',
+        sti: process.env.REACT_APP_CONTEXT_ROOT,
         erKlikkbar: true,
       },
     ],

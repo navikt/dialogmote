@@ -1,18 +1,13 @@
+import FeilAlertStripe from '@/MVP/components/FeilAlertStripe';
 import React from 'react';
 import PropTypes from 'prop-types';
-import AlertStripe from 'nav-frontend-alertstriper';
-import styled from 'styled-components';
 import AppSpinner from '../../../components/AppSpinner';
 import DialogmoteContainer from '../../containers/DialogmoteContainer';
 import { brevTypes } from '../../globals/constants';
 import { motereferatBreadcrumb } from '../../globals/paths';
-import { useBrev } from '../../hooks/brev';
+import { useBrev } from '../../queries/brev';
 import { getProgrammaticDateFormat } from '../../utils';
 import MotereferatContent from './components/MotereferatContent';
-
-const AlertStripeStyled = styled(AlertStripe)`
-  margin-bottom: 32px;
-`;
 
 const texts = {
   title: 'Referat fra dialogmøte',
@@ -48,10 +43,7 @@ const Motereferat = ({ params }) => {
   if (isError) {
     return (
       <DialogmoteContainer title={texts.title} breadcrumb={motereferatBreadcrumb} displayTilbakeknapp>
-        <AlertStripeStyled type="feil">
-          Akkurat nå mangler det noe her. Vi har tekniske problemer som vi jobber med å løse. Prøv gjerne igjen om en
-          stund.
-        </AlertStripeStyled>
+        <FeilAlertStripe />
       </DialogmoteContainer>
     );
   }

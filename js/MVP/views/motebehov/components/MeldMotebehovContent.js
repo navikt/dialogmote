@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import { Checkbox, Textarea, Feiloppsummering } from 'nav-frontend-skjema';
 import { Controller, useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { useFeiloppsumeringList } from '@/MVP/hooks/motebehov';
+import { useFeiloppsumeringList } from '@/MVP/queries/motebehov';
 import DialogmotePanel from '../../../containers/DialogmotePanel';
 import { postMeldMotebehovSchema } from '@/MVP/schemas/motebehov';
 import FormButtons from './FormButtons';
