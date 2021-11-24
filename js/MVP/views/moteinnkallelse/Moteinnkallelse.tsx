@@ -63,7 +63,7 @@ const Moteinnkallelse = (): ReactElement => {
     );
   }
 
-  const brevHead = Array.isArray(brev.data) ? brev.data[0] : null;
+  const brevHead = brev.data[0];
   const { tid, uuid, brevType, document, lestDato } = brevHead;
 
   if (!brevHead || brevType === brevTypes.REFERAT) {
