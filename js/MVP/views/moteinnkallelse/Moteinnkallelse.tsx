@@ -51,20 +51,20 @@ const title = (type: string): string => {
 const Moteinnkallelse = (): ReactElement => {
   const brev = useBrev();
 
-  const brevHead = Array.isArray(brev.data) ? brev.data[0] : null;
-  const { tid, uuid, brevType, document, lestDato } = brevHead;
-
   if (brev.isLoading) {
     return <AppSpinner />;
   }
 
   if (brev.isError) {
     return (
-      <DialogmoteContainer title={title('')} breadcrumb={innkallelseBreadcrumb(title(brevType))} displayTilbakeknapp>
+      <DialogmoteContainer title={title('')} breadcrumb={innkallelseBreadcrumb(title(''))} displayTilbakeknapp>
         <FeilAlertStripe />
       </DialogmoteContainer>
     );
   }
+
+  const brevHead = brev.data[0];
+  const { tid, uuid, brevType, document, lestDato } = brevHead;
 
   if (!brevHead || brevType === brevTypes.REFERAT) {
     return (
