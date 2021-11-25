@@ -1,8 +1,10 @@
+import { isLabs, isLocal, isProd } from '@/utils/urlUtils';
+
 export const hentLoginUrl = () => {
   if (window.location.href.indexOf('www.nav') > -1) {
     // Prod
     return 'https://loginservice.nav.no/login';
-  } else if (window.location.href.indexOf('localhost') > -1) {
+  } else if (isLocal()) {
     // Lokalt
     return 'http://localhost:8080/syfoapi/local/cookie';
   }
@@ -18,12 +20,10 @@ export const API_NAVN = {
 };
 
 export const hentSyfoApiUrl = (appNavn) => {
-  const url = window && window.location && window.location.href ? window.location.href : '';
-
-  if (url.indexOf('www.nav') > -1) {
+  if (isProd()) {
     // Prod
     return `https://syfoapi.nav.no/${appNavn}/api`;
-  } else if (url.indexOf('localhost') > -1 || url.indexOf('herokuapp') > -1) {
+  } else if (isLocal() || isLabs()) {
     // Lokalt
     return `/${appNavn}/api`;
   }

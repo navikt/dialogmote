@@ -105,9 +105,9 @@ function mockPilotEndepunkterForLokalmiljo(server) {
 }
 
 function mockPilotEndepunkterForOpplaeringsmiljo(server) {
-  server.get('/syfomotebehov/api/motebehov', (req, res) => {
-    res.status(403);
-    res.send();
+  server.get('/syfomotebehov/api/v2/arbeidstaker/motebehov', (req, res) => {
+    res.setHeader('Content-Type', 'application/json');
+    res.send(JSON.stringify(getMotebehovStatus(motebehovStatusEnum.SVAR_BEHOV, res)));
   });
 }
 
