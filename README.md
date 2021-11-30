@@ -16,14 +16,3 @@ React frontend for sykmeldtes dialogmøter
 
 - Kjør tester med `npm test` eller `npm test:watch`
 - Lint JS-kode med `npm run lint` eller `npm run lint:fix`
-
-## Deploy mock app til Heroku
-
-Installer heroku, på mac kan du bruke brew: `$ brew install heroku`.
-
-For å kunne deploye til Heroku må du først logge inn:
-
-- `$ heroku login`
-- `$ heroku container:login`
-
-Deploy til heroku ved å kjøre deployscript: `$ sh deploy-heroku.sh`.
