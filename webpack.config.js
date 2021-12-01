@@ -7,7 +7,7 @@ const ForkTsCheckerWebpackPlugin = require('fork-ts-checker-webpack-plugin');
 const TsconfigPathsPlugin = require('tsconfig-paths-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const extensions = ['.tsx', '.jsx', '.js', '.ts', '.json'];
-const { mockEndepunkter } = require('./mock/mockEndepunkter');
+const mockEndepunkter = require('./mock/mockEndepunkter');
 
 const setupDev = async (app, compiler) => {
   mockEndepunkter(app, true);
