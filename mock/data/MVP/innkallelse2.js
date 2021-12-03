@@ -56,6 +56,7 @@ const innkallelse = {
     },
   ],
   virksomhetsnummer: '1234',
+  svar: 'JEG_VIL_AVLYSE'
 };
 
 module.exports = innkallelse;
