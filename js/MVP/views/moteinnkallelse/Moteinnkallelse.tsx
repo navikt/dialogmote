@@ -64,7 +64,7 @@ const Moteinnkallelse = (): ReactElement => {
   }
 
   const brevHead = brev.data[0];
-  const { tid, uuid, brevType, document, lestDato } = brevHead;
+  const { tid, uuid, brevType, document, lestDato, videoLink } = brevHead;
 
   if (!brevHead || brevType === brevTypes.REFERAT) {
     return (
@@ -107,7 +107,7 @@ const Moteinnkallelse = (): ReactElement => {
         </Lenke>
       </InfoStripeStyled>
 
-      <VeilederSpeechBubble content={<VeilederInnkallelseContent />} />
+      {videoLink && <VeilederSpeechBubble content={<VeilederInnkallelseContent />} />}
     </DialogmoteContainer>
   );
 };
