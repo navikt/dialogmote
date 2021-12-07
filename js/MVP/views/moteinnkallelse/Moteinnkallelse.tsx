@@ -49,7 +49,7 @@ const title = (type: string): string => {
   }
 };
 
-const InfoOmObligatoriskDeltakelse = () => {
+const InfoOmObligatoriskDeltakelse = (): ReactElement => {
   return (
     <InfoStripeStyled>
       {texts.infoBox}

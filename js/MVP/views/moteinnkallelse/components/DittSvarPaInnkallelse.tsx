@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {ReactElement} from 'react';
 import { AlertStripeSuksess } from 'nav-frontend-alertstriper';
 import { svarInnkallelseTypes } from '@/MVP/globals/constants';
 import Tekstomrade from 'nav-frontend-tekstomrade';
@@ -12,7 +12,7 @@ const SuksessStripeStyled = styled(AlertStripeSuksess)`
   margin-top: 32px;
 `;
 
-const JegKommer = () => {
+const JegKommer = (): ReactElement => {
   return (
     <SuksessStripeStyled>
       <Tekstomrade>{`Du har svart at du kommer til dette dialogmøtet.`}</Tekstomrade>
@@ -23,7 +23,7 @@ const JegKommer = () => {
   );
 };
 
-const JegVilEndre = () => {
+const JegVilEndre = (): ReactElement => {
   return (
     <SuksessStripeStyled>
       <Tekstomrade>
@@ -35,7 +35,7 @@ const JegVilEndre = () => {
   );
 };
 
-const JegVilAvlyse = () => {
+const JegVilAvlyse = (): ReactElement => {
   return (
     <SuksessStripeStyled>
       <Tekstomrade>
@@ -49,7 +49,7 @@ const JegVilAvlyse = () => {
   );
 };
 
-const DittSvarPaInnkallelse = ({ svar }) => {
+const DittSvarPaInnkallelse = ({ svar }): ReactElement => {
   switch (svar) {
     case svarInnkallelseTypes.JEG_KOMMER:
       return <JegKommer />;
