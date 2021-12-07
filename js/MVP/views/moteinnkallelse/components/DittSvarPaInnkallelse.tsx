@@ -9,7 +9,7 @@ import Lenke from 'nav-frontend-lenker';
 import styled from 'styled-components';
 
 const SuksessStripeStyled = styled(AlertStripeSuksess)`
-  margin-top: 32px;
+  margin-top: 2rem;
 `;
 
 const JegKommer = (): ReactElement => {
