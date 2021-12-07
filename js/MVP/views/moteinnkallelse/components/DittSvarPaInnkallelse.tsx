@@ -1,4 +1,4 @@
-import React, {ReactElement} from 'react';
+import React, { ReactElement } from 'react';
 import { AlertStripeSuksess } from 'nav-frontend-alertstriper';
 import { svarInnkallelseTypes } from '@/MVP/globals/constants';
 import Tekstomrade from 'nav-frontend-tekstomrade';
