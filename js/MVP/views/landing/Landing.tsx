@@ -93,7 +93,7 @@ const Landing = (): ReactElement => {
   const displayMotebehov = (): boolean => {
     if (isLabs()) return true;
 
-    if (motebehov.isError || !motebehov.data.visMotebehov) return false;
+    if (motebehov.isIdle || motebehov.isError || !motebehov.data.visMotebehov) return false;
     if (!moteplanlegger.isError && moteplanlegger.data?.status !== AVBRUTT && !erMotePassert(moteplanlegger.data))
       return false;
     if (!brev.isIdle && !brev.isError && brev.data[0]) {

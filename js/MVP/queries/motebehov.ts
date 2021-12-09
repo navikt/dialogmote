@@ -1,15 +1,19 @@
 import { useEffect, useState } from 'react';
 import { useQuery } from 'react-query';
-import { getMotebehov } from '../services/motebehov';
+import { FeiloppsummeringFeil } from 'nav-frontend-skjema/src/feiloppsummering';
+import { MOTEBEHOV_API } from '@/MVP/globals/paths';
+import { get } from '@/api/axios';
+import { MotebehovStatus } from '@/api/types/motebehovTypes';
 
 const MOTEBEHOV = 'motebehov';
 
 export const useMotebehov = () => {
-  return useQuery(MOTEBEHOV, getMotebehov);
+  const fetchMotebehov = () => get<MotebehovStatus>(MOTEBEHOV_API);
+  return useQuery(MOTEBEHOV, fetchMotebehov);
 };
 
 export const useFeiloppsumeringList = (errors) => {
-  const [errorList, setErrorList] = useState([]);
+  const [errorList, setErrorList] = useState([] as FeiloppsummeringFeil[]);
 
   useEffect(() => {
     const keys = Object.keys(errors);
