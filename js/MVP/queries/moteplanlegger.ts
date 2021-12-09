@@ -1,12 +1,14 @@
-import { ApiErrorException } from '@/api/errors';
 import { useQuery } from 'react-query';
-import { getMoteadmin } from '../services/moteadmin';
+import { get } from '@/api/axios';
+import { MOTEADMIN_API } from '@/MVP/globals/paths';
 import { Moteplanlegger } from '@/api/types/moteplanleggerTypes';
+import { ApiErrorException } from '@/api/errors';
 
 const MOTEPLANLEGGER = 'moteplanlegger';
 
 export const useMoteplanlegger = () => {
-  return useQuery<Moteplanlegger, ApiErrorException>(MOTEPLANLEGGER, getMoteadmin, {
+  const fetchPlanlegger = () => get<Moteplanlegger>(MOTEADMIN_API);
+  return useQuery<Moteplanlegger, ApiErrorException>(MOTEPLANLEGGER, fetchPlanlegger, {
     retry: 0,
   });
 };
