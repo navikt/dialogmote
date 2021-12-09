@@ -1,6 +1,5 @@
+import { getBrevPdf } from '@/MVP/queries/brev';
 import { format } from 'date-fns';
-import { getBrevPdf } from '../services/brev';
-
 export const downloadBrevPdf = async (uuid, dokumentDato, pdfType) => {
   const blob = await getBrevPdf(uuid);
 
