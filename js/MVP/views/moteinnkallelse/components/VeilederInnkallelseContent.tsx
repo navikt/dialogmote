@@ -19,7 +19,7 @@ const VeilederInnkallelseContent = (): ReactElement => {
       <Lenke
         href={statiskeURLer.VIDEOMOTE_INFO_URL}
         target="_blank"
-        onClick={() => trackOnClick(eventNames.lesMerOmSykefravaer)}
+        onClick={() => trackOnClick(eventNames.lesOmHvordanDeltaVideomote)}
       >
         {texts.veilederLink1}
       </Lenke>
