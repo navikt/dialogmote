@@ -39,7 +39,7 @@ export const useMutateBrevLest = () => {
   );
 };
 
-export const getBrevPdf = async (uuid) => {
+export const getBrevPdf = (uuid) => {
   const url = `${ISDIALOGMOTE_API_BASE_PATH}/${uuid}/pdf`;
   return get(url, { responseType: 'blob' });
 };

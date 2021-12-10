@@ -13,7 +13,7 @@ export const useMotebehov = () => {
 };
 
 export const useFeiloppsumeringList = (errors) => {
-  const [errorList, setErrorList] = useState([] as FeiloppsummeringFeil[]);
+  const [errorList, setErrorList] = useState<FeiloppsummeringFeil[]>([]);
 
   useEffect(() => {
     const keys = Object.keys(errors);
