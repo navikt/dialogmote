@@ -59,11 +59,13 @@ const ContactInfo = () => {
   );
 };
 
-const MotebehovPanel = ({ motebehov }) => {
+const MotebehovPanel = ({ motebehov, displayPanel }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const { data } = motebehov;
 
   const modalStyle = { padding: '2rem 2.5rem', maxWidth: '576px' };
+
+  if (!displayPanel) return null;
 
   if (data.motebehov) {
     if (data.skjemaType === skjemaTypes.MELD_BEHOV) {
@@ -168,6 +170,6 @@ const MotebehovPanel = ({ motebehov }) => {
   );
 };
 
-MotebehovPanel.propTypes = { motebehov: PropTypes.object };
+MotebehovPanel.propTypes = { motebehov: PropTypes.object, displayPanel: PropTypes.bool };
 
 export default MotebehovPanel;
