@@ -1,3 +1,5 @@
+export type DocumentComponentType = 'HEADER' | 'PARAGRAPH' | 'LINK';
+
 export interface Brev {
   uuid: string;
   deltakerUuid: string;
@@ -9,11 +11,11 @@ export interface Brev {
   sted: string;
   tid: string;
   videoLink?: string;
-  document: BrevDocument[];
+  document: DocumentComponent[];
   virksomhetsnummer: string;
 }
 
-type BrevDocument = {
-  type: string;
+type DocumentComponent = {
+  type: DocumentComponentType;
   texts: string[];
 };
