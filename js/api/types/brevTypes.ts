@@ -15,7 +15,8 @@ export interface Brev {
   virksomhetsnummer: string;
 }
 
-type DocumentComponent = {
+export type DocumentComponent = {
   type: DocumentComponentType;
+  title?: string;
   texts: string[];
 };
