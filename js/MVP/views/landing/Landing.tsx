@@ -70,7 +70,7 @@ const Landing = (): ReactElement => {
         <React.Fragment>
           <MotebehovPanel displayPanel={displayMotebehov} motebehov={motebehov} />
           <BrevPanel displayPanel={displayBrev} brevData={brev.data} />
-          <PlanleggerPanel displayPanel={!isMotePassert} moteplanleggerData={moteplanlegger.data} />
+          <PlanleggerPanel displayPanel={!isMotePassert && !displayBrev} moteplanleggerData={moteplanlegger.data} />
           <PreviousMotereferatFeaturePanel
             displayBrev={displayBrev}
             brevData={brev.data}
