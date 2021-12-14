@@ -1,10 +1,13 @@
 import { useMutation, useQuery, useQueryClient } from 'react-query';
-import { getBrev, postLestBrev } from '../services/brev';
+import { get, post } from '@/api/axios';
+import { Brev } from '@/api/types/brevTypes';
+import { ISDIALOGMOTE_API_BASE_PATH } from '@/MVP/globals/paths';
 
 const BREV = 'brev';
 
 export const useBrev = () => {
-  return useQuery(BREV, getBrev);
+  const fetchBrev = () => get<Brev[]>(ISDIALOGMOTE_API_BASE_PATH);
+  return useQuery(BREV, fetchBrev);
 };
 
 const setLestDatoForBrev = (uuid: string) => {
@@ -20,6 +23,8 @@ const setLestDatoForBrev = (uuid: string) => {
 export const useMutateBrevLest = () => {
   const queryClient = useQueryClient();
 
+  const postLestBrev = (uuid) => post(`${ISDIALOGMOTE_API_BASE_PATH}/${uuid}/les`);
+
   return useMutation(
     ({ uuid }) => {
       return postLestBrev(uuid);
@@ -32,4 +37,9 @@ export const useMutateBrevLest = () => {
       },
     }
   );
+};
+
+export const getBrevPdf = (uuid) => {
+  const url = `${ISDIALOGMOTE_API_BASE_PATH}/${uuid}/pdf`;
+  return get(url, { responseType: 'blob' });
 };

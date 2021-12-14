@@ -61,10 +61,10 @@ const Landing = (): ReactElement => {
   };
 
   const displayBrev = (): boolean => {
-    if (brev.isError || brev.data.length === 0) {
+    if (brev.isIdle || brev.isError || !brev.data || brev.data.length === 0) {
       return false;
     }
-    if (!moteplanlegger.isError && moteplanlegger.data) {
+    if (moteplanlegger.isSuccess && moteplanlegger.data) {
       const brevArraySorted = brev.data.sort(
         (a, b) => new Date(b.createdAt).valueOf() - new Date(a.createdAt).valueOf()
       );
@@ -93,10 +93,10 @@ const Landing = (): ReactElement => {
   const displayMotebehov = (): boolean => {
     if (isLabs()) return true;
 
-    if (motebehov.isError || !motebehov.data.visMotebehov) return false;
+    if (motebehov.isIdle || motebehov.isError || !motebehov.data.visMotebehov) return false;
     if (!moteplanlegger.isError && moteplanlegger.data?.status !== AVBRUTT && !erMotePassert(moteplanlegger.data))
       return false;
-    if (!brev.isError && brev.data[0]) {
+    if (!brev.isIdle && !brev.isError && brev.data[0]) {
       const brevHead = brev.data[0];
       if (brevHead.brevType === brevTypes.INNKALT || brevHead.brevType === brevTypes.ENDRING) return false;
     }
@@ -105,9 +105,9 @@ const Landing = (): ReactElement => {
   };
 
   const BrevPanel = (): ReactElement => {
-    const brevHead = brev.data[0];
+    const brevHead = brev.data ? brev.data[0] : undefined;
 
-    if (brevHead.brevType === brevTypes.REFERAT) {
+    if (brevHead?.brevType === brevTypes.REFERAT) {
       const date = getLongDateFormat(brevHead.tid);
       return <MotereferatPanel date={date} />;
     }
@@ -136,7 +136,7 @@ const Landing = (): ReactElement => {
   const PreviousMotereferatFeaturePanel = ({
     displayAlleReferater,
   }: PreviousMotereferatFeaturePanelProps): ReactElement | null => {
-    if (brev.isError || (!displayAlleReferater && brev.data.length < 2)) return null;
+    if (brev.isIdle || brev.isError || (!displayAlleReferater && brev.data.length < 2)) return null;
 
     const currentBrev = displayBrev() && !displayAlleReferater ? brev.data.slice(1) : brev.data;
     const previousReferater = currentBrev.filter((hendelse) => hendelse.brevType === brevTypes.REFERAT);
