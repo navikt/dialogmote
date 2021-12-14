@@ -15,7 +15,7 @@ interface Props {
   documentComponent: DocumentComponent;
 }
 
-const DocumentRenderer = ({ documentComponent }: Props): ReactElement => {
+const DocumentRenderer = ({ documentComponent }: Props): ReactElement | null => {
   const { type, title, texts } = documentComponent;
 
   switch (type) {
@@ -55,7 +55,7 @@ const DocumentRenderer = ({ documentComponent }: Props): ReactElement => {
       );
 
     default:
-      return <></>;
+      return null;
   }
 };
 
