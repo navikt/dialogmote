@@ -10,7 +10,7 @@ const harSammeAvlysningsstatus = (brevType: string, moteplanleggerStatus: string
   );
 };
 
-export const shouldDisplayBrev = (brevData: Brev[], moteplanleggerData: Moteplanlegger): boolean => {
+export const shouldDisplayBrev = (brevData: Brev[], moteplanleggerData?: Moteplanlegger): boolean => {
   if (brevData?.length === 0) {
     return false;
   }

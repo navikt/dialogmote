@@ -32,12 +32,7 @@ const Landing = (): ReactElement => {
   }
 
   const FetchFailedError = (): ReactElement | null => {
-    if (
-      brev.isError ||
-      motebehov.isError ||
-      (moteplanlegger.isError && !(moteplanlegger.error.code === 404)) ||
-      sykmeldinger.isError
-    ) {
+    if (brev.isError || motebehov.isError || moteplanlegger.isError || sykmeldinger.isError) {
       return <FeilAlertStripe />;
     }
 
@@ -46,11 +41,11 @@ const Landing = (): ReactElement => {
 
   const shouldDisplayMotebehov = (
     motebehovData: MotebehovStatus,
-    moteplanleggerData: Moteplanlegger,
-    brevData: Brev[]
+    brevData: Brev[],
+    moteplanleggerData?: Moteplanlegger
   ): boolean => {
     const harAlleredeMoteplanleggerPaaGang =
-      moteplanleggerData.status !== AVBRUTT && !erMotePassert(moteplanleggerData);
+      !!moteplanleggerData && moteplanleggerData.status !== AVBRUTT && !erMotePassert(moteplanleggerData);
     const isBrevTypeInnkaltEllerEndring =
       brevData[0]?.brevType === brevTypes.INNKALT || brevData[0]?.brevType === brevTypes.ENDRING;
 
@@ -60,7 +55,7 @@ const Landing = (): ReactElement => {
   const MainContentPanel = (): ReactElement | null => {
     if (brev.isSuccess && moteplanlegger.isSuccess && motebehov.isSuccess && sykmeldinger.isSuccess) {
       const displayBrev = shouldDisplayBrev(brev.data, moteplanlegger.data);
-      const displayMotebehov = shouldDisplayMotebehov(motebehov.data, moteplanlegger.data, brev.data);
+      const displayMotebehov = shouldDisplayMotebehov(motebehov.data, brev.data, moteplanlegger.data);
       const isMotePassert = erMotePassert(moteplanlegger.data);
 
       if (sykmeldinger.data.length === 0) {
@@ -70,7 +65,10 @@ const Landing = (): ReactElement => {
         <React.Fragment>
           <MotebehovPanel displayPanel={displayMotebehov} motebehov={motebehov} />
           <BrevPanel displayPanel={displayBrev} brevData={brev.data} />
-          <PlanleggerPanel displayPanel={!isMotePassert && !displayBrev} moteplanleggerData={moteplanlegger.data} />
+          <PlanleggerPanel
+            displayPanel={!isMotePassert && !displayBrev && !!moteplanlegger.data}
+            moteplanleggerData={moteplanlegger.data}
+          />
           <PreviousMotereferatFeaturePanel
             displayBrev={displayBrev}
             brevData={brev.data}

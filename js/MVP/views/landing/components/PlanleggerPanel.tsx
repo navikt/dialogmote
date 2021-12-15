@@ -7,7 +7,7 @@ import { Moteplanlegger } from '@/api/types/moteplanleggerTypes';
 
 interface Props {
   displayPanel: boolean;
-  moteplanleggerData: Moteplanlegger;
+  moteplanleggerData?: Moteplanlegger;
 }
 
 export const PlanleggerPanel = ({ displayPanel, moteplanleggerData }: Props): ReactElement | null => {

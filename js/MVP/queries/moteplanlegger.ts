@@ -7,7 +7,7 @@ import { ApiErrorException } from '@/api/errors';
 const MOTEPLANLEGGER = 'moteplanlegger';
 
 export const useMoteplanlegger = () => {
-  const fetchPlanlegger = () => get<Moteplanlegger>(MOTEADMIN_API);
+  const fetchPlanlegger = () => get<Moteplanlegger>(MOTEADMIN_API, { handle404AsSuccess: true });
   return useQuery<Moteplanlegger, ApiErrorException>(MOTEPLANLEGGER, fetchPlanlegger, {
     retry: 0,
   });

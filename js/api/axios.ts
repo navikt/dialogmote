@@ -4,6 +4,7 @@ import { defaultRequestHeaders } from '@/api/apiUtils';
 
 interface AxiosOptions {
   responseType?: ResponseType;
+  handle404AsSuccess?: boolean;
 }
 
 function handleAxiosError(error: AxiosError) {
@@ -31,8 +32,17 @@ export const get = <ResponseData>(url: string, options?: AxiosOptions): Promise<
       headers: defaultRequestHeaders(),
       responseType: options?.responseType,
       withCredentials: true,
+      validateStatus: function (status) {
+        const defaultValidation = status >= 200 && status < 300;
+        return options?.handle404AsSuccess ? defaultValidation || status === 404 : defaultValidation;
+      },
     })
-    .then((response) => response.data)
+    .then((response) => {
+      if (response.status === 404) {
+        return undefined;
+      }
+      return response.data;
+    })
     .catch(function (error) {
       if (axios.isAxiosError(error)) {
         handleAxiosError(error);
@@ -52,8 +62,17 @@ export const post = <ResponseData>(
       headers: defaultRequestHeaders(),
       responseType: options?.responseType,
       withCredentials: true,
+      validateStatus: function (status) {
+        const defaultValidation = status >= 200 && status < 300;
+        return options?.handle404AsSuccess ? defaultValidation || status === 404 : defaultValidation;
+      },
     })
-    .then((response) => response.data)
+    .then((response) => {
+      if (response.status === 404) {
+        return undefined;
+      }
+      return response.data;
+    })
     .catch(function (error) {
       if (axios.isAxiosError(error)) {
         handleAxiosError(error);
