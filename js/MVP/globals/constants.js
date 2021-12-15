@@ -16,9 +16,3 @@ export const pdfTypes = {
   REFERAT: 'referat',
   BREV: 'brev',
 };
-
-export const svarInnkallelseTypes = {
-  JEG_KOMMER: 'JEG_KOMMER',
-  JEG_VIL_ENDRE: 'JEG_VIL_ENDRE',
-  JEG_VIL_AVLYSE: 'JEG_VIL_AVLYSE',
-};

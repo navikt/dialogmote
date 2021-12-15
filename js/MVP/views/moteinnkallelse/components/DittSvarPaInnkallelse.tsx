@@ -1,12 +1,12 @@
 import React, { ReactElement } from 'react';
 import { AlertStripeSuksess } from 'nav-frontend-alertstriper';
-import { svarInnkallelseTypes } from '@/MVP/globals/constants';
 import Tekstomrade from 'nav-frontend-tekstomrade';
 import { statiskeURLer } from '@/MVP/globals/paths';
 import { trackOnClick } from '@/amplitude/amplitude';
 import { eventNames } from '@/amplitude/events';
 import Lenke from 'nav-frontend-lenker';
 import styled from 'styled-components';
+import { SvarType } from '@/api/types/brevTypes';
 
 const SuksessStripeStyled = styled(AlertStripeSuksess)`
   margin-top: 2rem;
@@ -49,21 +49,21 @@ const JegVilAvlyse = (): ReactElement => {
   );
 };
 
-const DittSvarPaInnkallelse = ({ svar }): ReactElement => {
-  switch (svar) {
-    case svarInnkallelseTypes.JEG_KOMMER:
+interface SvarProps {
+  svarType: SvarType;
+}
+
+const DittSvarPaInnkallelse = ({ svarType }: SvarProps): ReactElement | null => {
+  switch (svarType) {
+    case 'KOMMER':
       return <JegKommer />;
-    case svarInnkallelseTypes.JEG_VIL_ENDRE:
+    case 'NYTT_TID_STED':
       return <JegVilEndre />;
-    case svarInnkallelseTypes.JEG_VIL_AVLYSE:
+    case 'KOMMER_IKKE':
       return <JegVilAvlyse />;
     default:
-      return <></>;
+      return null;
   }
-};
-
-DittSvarPaInnkallelse.propTypes = {
-  svar: svarInnkallelseTypes,
 };
 
 export default DittSvarPaInnkallelse;

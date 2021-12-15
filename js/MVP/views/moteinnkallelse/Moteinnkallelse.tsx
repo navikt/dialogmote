@@ -73,7 +73,7 @@ const Moteinnkallelse = (): ReactElement => {
 
   if (brev.isSuccess) {
     const brevHead = brev.data[0];
-    const { tid, uuid, brevType, document, lestDato, videoLink, svar } = brevHead;
+    const { tid, uuid, brevType, document, lestDato, videoLink, svarType } = brevHead;
 
     if (!brevHead || brevType === brevTypes.REFERAT) {
       return (
@@ -109,7 +109,7 @@ const Moteinnkallelse = (): ReactElement => {
 
         <DocumentContainer document={document} lestDato={lestDato} uuid={uuid} />
 
-        {svar ? <DittSvarPaInnkallelse svar={svar} /> : <InfoOmObligatoriskDeltakelse />}
+        {svarType ? <DittSvarPaInnkallelse svarType={svarType} /> : <InfoOmObligatoriskDeltakelse />}
 
         {videoLink && <VeilederSpeechBubble content={<VeilederInnkallelseContent />} />}
       </DialogmoteContainer>
