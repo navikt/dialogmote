@@ -13,6 +13,7 @@ export interface Brev {
   videoLink?: string;
   document: DocumentComponent[];
   virksomhetsnummer: string;
+  svar: string;
 }
 
 export type DocumentComponent = {
