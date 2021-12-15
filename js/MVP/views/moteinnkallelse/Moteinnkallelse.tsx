@@ -15,7 +15,7 @@ import Lenke from 'nav-frontend-lenker';
 import { trackOnClick } from '@/amplitude/amplitude';
 import { eventNames } from '@/amplitude/events';
 import FeilAlertStripe from '@/MVP/components/FeilAlertStripe';
-import DittSvarPaInnkallelse from '@/MVP/views/moteinnkallelse/components/DittSvarPaInnkallelse';
+import SvarPaInnkallelse from '@/MVP/views/moteinnkallelse/components/SvarPaInnkallelse';
 
 const AlertStripeStyled = styled(AlertStripe)`
   margin-bottom: 32px;
@@ -99,6 +99,8 @@ const Moteinnkallelse = (): ReactElement => {
       );
     }
 
+    const skalViseSvarPaInnkallelse = true;
+
     return (
       <DialogmoteContainer
         title={title(brevType)}
@@ -109,7 +111,7 @@ const Moteinnkallelse = (): ReactElement => {
 
         <DocumentContainer document={document} lestDato={lestDato} uuid={uuid} />
 
-        {svar ? <DittSvarPaInnkallelse svarType={svar.svarType} /> : <InfoOmObligatoriskDeltakelse />}
+        {skalViseSvarPaInnkallelse ? <SvarPaInnkallelse svarType={svar?.svarType} /> : <InfoOmObligatoriskDeltakelse />}
 
         {videoLink && <VeilederSpeechBubble content={<VeilederInnkallelseContent />} />}
       </DialogmoteContainer>
