@@ -1,8 +1,10 @@
 import Tekstomrade from 'nav-frontend-tekstomrade';
 import { Radio, RadioGruppe } from 'nav-frontend-skjema';
 import { Hovedknapp } from 'nav-frontend-knapper';
-import React from 'react';
-import styled from "styled-components";
+import React, { useState } from 'react';
+import styled from 'styled-components';
+import { useSvarPaInnkallelse } from '@/MVP/queries/brev';
+import { SvarType } from '@/api/types/brevTypes';
 
 const Svar = styled.div`
   display: flex;
@@ -18,7 +20,20 @@ const Inline = styled.div`
   display: inline-flex;
 `;
 
-export function GiSvarPaInnkallelse() {
+interface Props {
+  brevUuid: string;
+}
+
+export function GiSvarPaInnkallelse({ brevUuid }: Props) {
+  const svarPaInnkallelse = useSvarPaInnkallelse(brevUuid);
+  const [selectedSvar, setSelectedSvar] = useState<SvarType>();
+
+  const sendSvar = () => {
+    if (selectedSvar) {
+      svarPaInnkallelse.mutate({ svarType: selectedSvar });
+    }
+  };
+
   return (
     <Svar>
       <Tekstomrade>
@@ -26,12 +41,16 @@ export function GiSvarPaInnkallelse() {
       </Tekstomrade>
       <Tekstomrade>Alle felt er obligatoriske.</Tekstomrade>
       <RadioGruppe legend="Svar på innkallingen">
-        <Radio label={'Jeg kommer'} name="svar" />
-        <Radio label={'Jeg ønsker å endre tidspunkt eller sted'} name="svar" />
-        <Radio label={'Jeg ønsker å avlyse'} name="svar" />
+        <Radio label={'Jeg kommer'} name="svar" onChange={() => setSelectedSvar('KOMMER')} />
+        <Radio
+          label={'Jeg ønsker å endre tidspunkt eller sted'}
+          name="svar"
+          onChange={() => setSelectedSvar('NYTT_TID_STED')}
+        />
+        <Radio label={'Jeg ønsker å avlyse'} name="svar" onChange={() => setSelectedSvar('KOMMER_IKKE')} />
       </RadioGruppe>
       <Inline>
-        <Hovedknapp>Send svar</Hovedknapp>
+        <Hovedknapp onClick={sendSvar}>Send svar</Hovedknapp>
       </Inline>
     </Svar>
   );
