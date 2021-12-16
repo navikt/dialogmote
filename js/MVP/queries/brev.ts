@@ -1,6 +1,6 @@
 import { useMutation, useQuery, useQueryClient } from 'react-query';
 import { get, post } from '@/api/axios';
-import { Brev } from '@/api/types/brevTypes';
+import { Brev, SvarRespons } from '@/api/types/brevTypes';
 import { ISDIALOGMOTE_API_BASE_PATH } from '@/MVP/globals/paths';
 
 const BREV = 'brev';
@@ -8,6 +8,17 @@ const BREV = 'brev';
 export const useBrev = () => {
   const fetchBrev = () => get<Brev[]>(ISDIALOGMOTE_API_BASE_PATH);
   return useQuery(BREV, fetchBrev);
+};
+
+export const useSvarPaInnkallelse = (uuid: string) => {
+  const queryClient = useQueryClient();
+  const postSvar = (uuid, svar: SvarRespons) => post(`${ISDIALOGMOTE_API_BASE_PATH}/${uuid}/respons`, svar);
+
+  return useMutation((svar: SvarRespons) => postSvar(uuid, svar), {
+    onSuccess: () => {
+      queryClient.invalidateQueries(BREV);
+    },
+  });
 };
 
 const setLestDatoForBrev = (uuid: string) => {

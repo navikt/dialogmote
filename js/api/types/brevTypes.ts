@@ -24,8 +24,13 @@ export type DocumentComponent = {
   texts: string[];
 };
 
-export interface Svar {
+export type Svar = {
   svarTidspunkt: string;
   svarType: SvarType;
   svarTekst?: string;
-}
+};
+
+export type SvarRespons = {
+  svarType: SvarType;
+  svarTekst?: string;
+};
