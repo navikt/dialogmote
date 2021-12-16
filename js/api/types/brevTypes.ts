@@ -15,9 +15,7 @@ export interface Brev {
   videoLink?: string;
   document: DocumentComponent[];
   virksomhetsnummer: string;
-  svarType?: SvarType;
-  svarTekst?: string;
-  svarTidspunkt?: string;
+  svar?: Svar;
 }
 
 export type DocumentComponent = {
@@ -25,3 +23,9 @@ export type DocumentComponent = {
   title?: string;
   texts: string[];
 };
+
+export interface Svar {
+  svarTidspunkt: string;
+  svarType: SvarType;
+  svarTekst?: string;
+}
