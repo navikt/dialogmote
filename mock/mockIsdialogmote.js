@@ -18,6 +18,11 @@ function mockSyfomoteadmin(server, erLokal) {
       res.setHeader('Content-Type', 'application/json');
       res.send(referat);
     });
+
+    server.post('/syk/dialogmote/api/v1/arbeidstaker/brev/:uuid/respons', (req, res) => {
+      res.setHeader('Content-Type', 'application/json');
+      res.sendStatus(200);
+    });
   }
   server.get('/syk/dialogmote/api/v1/arbeidstaker/brev', (req, res) => {
     res.setHeader('Content-Type', 'application/json');
@@ -31,6 +36,11 @@ function mockSyfomoteadmin(server, erLokal) {
   server.get('/syk/dialogmote/api/v1/arbeidstaker/brev/:uuid/referat', (req, res) => {
     res.setHeader('Content-Type', 'application/json');
     res.send(referat);
+  });
+
+  server.post('/syk/dialogmote/api/v1/arbeidstaker/brev/:uuid/respons', (req, res) => {
+    res.setHeader('Content-Type', 'application/json');
+    res.sendStatus(200);
   });
 }
 
