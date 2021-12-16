@@ -3,11 +3,12 @@ import DittSvarPaInnkallelse from '@/MVP/views/moteinnkallelse/components/DittSv
 import { SvarType } from '@/api/types/brevTypes';
 import { GiSvarPaInnkallelse } from '@/MVP/views/moteinnkallelse/components/GiSvarPaInnkallelse';
 
-interface SvarProps {
+interface Props {
+  brevUuid: string;
   svarType?: SvarType;
 }
-const SvarPaInnkallelse = ({ svarType }: SvarProps) => {
-  return svarType ? <DittSvarPaInnkallelse svarType={svarType} /> : <GiSvarPaInnkallelse />;
+const SvarPaInnkallelse = ({ brevUuid, svarType }: Props) => {
+  return svarType ? <DittSvarPaInnkallelse svarType={svarType} /> : <GiSvarPaInnkallelse brevUuid={brevUuid} />;
 };
 
 export default SvarPaInnkallelse;
