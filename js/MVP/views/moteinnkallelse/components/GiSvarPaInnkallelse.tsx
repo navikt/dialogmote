@@ -1,10 +1,11 @@
 import Tekstomrade from 'nav-frontend-tekstomrade';
-import { Radio, RadioGruppe } from 'nav-frontend-skjema';
+import { Radio, RadioGruppe, TextareaControlled } from 'nav-frontend-skjema';
 import { Hovedknapp } from 'nav-frontend-knapper';
-import React, { useState } from 'react';
+import React, { ReactElement, useState } from 'react';
 import styled from 'styled-components';
 import { useSvarPaInnkallelse } from '@/MVP/queries/brev';
 import { SvarType } from '@/api/types/brevTypes';
+import { AlertStripeAdvarsel } from 'nav-frontend-alertstriper';
 
 const Svar = styled.div`
   display: flex;
@@ -22,6 +23,46 @@ const Inline = styled.div`
 
 interface Props {
   brevUuid: string;
+}
+
+function BegrunnelseForEndring(): ReactElement {
+  return (
+    <>
+      <AlertStripeAdvarsel>
+        <Tekstomrade>
+          {`NAV-kontoret vil vurdere ønsket ditt. Du får et nytt varsel hvis møtet endres. Hvis du ikke får et nytt varsel, er det fortsatt tidspunktet og stedet i denne innkallingen som gjelder.
+
+            Husk å begrunne svaret godt slik at NAV-kontoret kan ta beslutningen på et best mulig grunnlag.`}
+        </Tekstomrade>
+      </AlertStripeAdvarsel>
+      <TextareaControlled
+        label="Hvorfor ønsker du å endre tidspunkt eller sted?"
+        description="Ikke skriv sensitiv informasjon, for eksempel detaljerte opplysninger om helse."
+        defaultValue={''}
+        maxLength={300}
+      />
+    </>
+  );
+}
+
+function BegrunnelseForAvlysning(): ReactElement {
+  return (
+    <>
+      <AlertStripeAdvarsel>
+        <Tekstomrade>
+          {`NAV-kontoret vil vurdere ønsket ditt. Du får et nytt varsel hvis møtet avlyses. Hvis du ikke får noe nytt varsel, må du fortsatt stille til møtet i denne innkallingen.  
+
+            Selv om du ønsker å avlyse, kan det hende NAV-kontoret likevel konkluderer med at et møte er nødvendig. Husk å begrunne svaret godt slik at NAV-kontoret kan ta beslutningen på et best mulig grunnlag.`}
+        </Tekstomrade>
+      </AlertStripeAdvarsel>
+      <TextareaControlled
+        label="Hvorfor ønsker du å avlyse?"
+        description="Ikke skriv sensitiv informasjon, for eksempel detaljerte opplysninger om helse."
+        defaultValue={''}
+        maxLength={300}
+      />
+    </>
+  );
 }
 
 export function GiSvarPaInnkallelse({ brevUuid }: Props) {
@@ -49,6 +90,8 @@ export function GiSvarPaInnkallelse({ brevUuid }: Props) {
         />
         <Radio label={'Jeg ønsker å avlyse'} name="svar" onChange={() => setSelectedSvar('KOMMER_IKKE')} />
       </RadioGruppe>
+      {selectedSvar == 'NYTT_TID_STED' && <BegrunnelseForEndring />}
+      {selectedSvar == 'KOMMER_IKKE' && <BegrunnelseForAvlysning />}
       <Inline>
         <Hovedknapp onClick={sendSvar}>Send svar</Hovedknapp>
       </Inline>
