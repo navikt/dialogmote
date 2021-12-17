@@ -25,7 +25,7 @@ interface Props {
   brevUuid: string;
 }
 
-function BegrunnelseForEndring(): ReactElement {
+const BegrunnelseForEndring = (): ReactElement => {
   return (
     <>
       <AlertStripeAdvarsel>
@@ -43,9 +43,9 @@ function BegrunnelseForEndring(): ReactElement {
       />
     </>
   );
-}
+};
 
-function BegrunnelseForAvlysning(): ReactElement {
+const BegrunnelseForAvlysning = (): ReactElement => {
   return (
     <>
       <AlertStripeAdvarsel>
@@ -63,9 +63,9 @@ function BegrunnelseForAvlysning(): ReactElement {
       />
     </>
   );
-}
+};
 
-export function GiSvarPaInnkallelse({ brevUuid }: Props) {
+export const GiSvarPaInnkallelse = ({ brevUuid }: Props): ReactElement => {
   const svarPaInnkallelse = useSvarPaInnkallelse(brevUuid);
   const [selectedSvar, setSelectedSvar] = useState<SvarType>();
 
@@ -97,4 +97,4 @@ export function GiSvarPaInnkallelse({ brevUuid }: Props) {
       </Inline>
     </Svar>
   );
-}
+};
