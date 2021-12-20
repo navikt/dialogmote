@@ -1,5 +1,5 @@
 import Tekstomrade from 'nav-frontend-tekstomrade';
-import { Radio, RadioGruppe, TextareaControlled } from 'nav-frontend-skjema';
+import { Radio, RadioGruppe, Textarea } from 'nav-frontend-skjema';
 import { Hovedknapp } from 'nav-frontend-knapper';
 import React, { ReactElement, useState } from 'react';
 import styled from 'styled-components';
@@ -25,7 +25,12 @@ interface Props {
   brevUuid: string;
 }
 
-const BegrunnelseForEndring = (): ReactElement => {
+interface BegrunnelseProps {
+  onChange: (text: string) => void;
+  value: string;
+}
+
+const BegrunnelseForEndring = ({ onChange, value }: BegrunnelseProps): ReactElement => {
   return (
     <>
       <AlertStripeAdvarsel>
@@ -35,17 +40,18 @@ const BegrunnelseForEndring = (): ReactElement => {
             Husk å begrunne svaret godt slik at NAV-kontoret kan ta beslutningen på et best mulig grunnlag.`}
         </Tekstomrade>
       </AlertStripeAdvarsel>
-      <TextareaControlled
+      <Textarea
         label="Hvorfor ønsker du å endre tidspunkt eller sted?"
         description="Ikke skriv sensitiv informasjon, for eksempel detaljerte opplysninger om helse."
-        defaultValue={''}
         maxLength={300}
+        value={value}
+        onChange={(event) => onChange(event.target.value)}
       />
     </>
   );
 };
 
-const BegrunnelseForAvlysning = (): ReactElement => {
+const BegrunnelseForAvlysning = ({ onChange, value }: BegrunnelseProps): ReactElement => {
   return (
     <>
       <AlertStripeAdvarsel>
@@ -55,10 +61,11 @@ const BegrunnelseForAvlysning = (): ReactElement => {
             Selv om du ønsker å avlyse, kan det hende NAV-kontoret likevel konkluderer med at et møte er nødvendig. Husk å begrunne svaret godt slik at NAV-kontoret kan ta beslutningen på et best mulig grunnlag.`}
         </Tekstomrade>
       </AlertStripeAdvarsel>
-      <TextareaControlled
+      <Textarea
         label="Hvorfor ønsker du å avlyse?"
         description="Ikke skriv sensitiv informasjon, for eksempel detaljerte opplysninger om helse."
-        defaultValue={''}
+        value={value}
+        onChange={(event) => onChange(event.target.value)}
         maxLength={300}
       />
     </>
@@ -68,11 +75,27 @@ const BegrunnelseForAvlysning = (): ReactElement => {
 export const GiSvarPaInnkallelse = ({ brevUuid }: Props): ReactElement => {
   const svarPaInnkallelse = useSvarPaInnkallelse(brevUuid);
   const [selectedSvar, setSelectedSvar] = useState<SvarType>();
+  const [begrunnelseEndring, setBegrunnelseEndring] = useState<string>('');
+  const [begrunnelseAvlysning, setBegrunnelseAvlysning] = useState<string>('');
 
-  const sendSvar = () => {
+  const sendSvar = (): void => {
     if (selectedSvar) {
-      svarPaInnkallelse.mutate({ svarType: selectedSvar });
+      const svar = {
+        svarType: selectedSvar,
+        ...begrunnelse(),
+      };
+      svarPaInnkallelse.mutate(svar);
     }
+  };
+
+  const begrunnelse = (): { svarTekst: string } | undefined => {
+      switch (selectedSvar) {
+          case 'NYTT_TID_STED':
+              return { svarTekst: begrunnelseEndring }
+          case 'KOMMER_IKKE':
+              return { svarTekst: begrunnelseAvlysning}
+      }
+    return undefined;
   };
 
   return (
@@ -90,8 +113,12 @@ export const GiSvarPaInnkallelse = ({ brevUuid }: Props): ReactElement => {
         />
         <Radio label={'Jeg ønsker å avlyse'} name="svar" onChange={() => setSelectedSvar('KOMMER_IKKE')} />
       </RadioGruppe>
-      {selectedSvar == 'NYTT_TID_STED' && <BegrunnelseForEndring />}
-      {selectedSvar == 'KOMMER_IKKE' && <BegrunnelseForAvlysning />}
+      {selectedSvar == 'NYTT_TID_STED' && (
+        <BegrunnelseForEndring onChange={(event) => setBegrunnelseEndring(event)} value={begrunnelseEndring} />
+      )}
+      {selectedSvar == 'KOMMER_IKKE' && (
+        <BegrunnelseForAvlysning onChange={(event) => setBegrunnelseAvlysning(event)} value={begrunnelseAvlysning} />
+      )}
       <Inline>
         <Hovedknapp onClick={sendSvar}>Send svar</Hovedknapp>
       </Inline>
