@@ -1,12 +1,12 @@
 import Tekstomrade from 'nav-frontend-tekstomrade';
 import { Feiloppsummering, Radio, RadioGruppe, Textarea } from 'nav-frontend-skjema';
 import { Hovedknapp } from 'nav-frontend-knapper';
-import React, { ReactElement, useState } from 'react';
+import React, { ReactElement } from 'react';
 import styled from 'styled-components';
 import { useSvarPaInnkallelse } from '@/MVP/queries/brev';
 import { SvarType } from '@/api/types/brevTypes';
 import { AlertStripeAdvarsel } from 'nav-frontend-alertstriper';
-import { useForm } from 'react-hook-form';
+import { Control, Controller, FieldErrors, useForm } from 'react-hook-form';
 import { mapErrors } from '@/utils/formUtils';
 
 const Svar = styled.div`
@@ -23,16 +23,12 @@ const Inline = styled.div`
   display: inline-flex;
 `;
 
-interface Props {
-  brevUuid: string;
-}
-
 interface BegrunnelseProps {
-  onChange: (text: string) => void;
-  value: string;
+  control: Control;
+  errors: FieldErrors;
 }
 
-const BegrunnelseForEndring = ({ onChange, value }: BegrunnelseProps): ReactElement => {
+const BegrunnelseForEndring = ({ control, errors }: BegrunnelseProps): ReactElement => {
   return (
     <>
       <AlertStripeAdvarsel>
@@ -42,18 +38,30 @@ const BegrunnelseForEndring = ({ onChange, value }: BegrunnelseProps): ReactElem
             Husk å begrunne svaret godt slik at NAV-kontoret kan ta beslutningen på et best mulig grunnlag.`}
         </Tekstomrade>
       </AlertStripeAdvarsel>
-      <Textarea
-        label="Hvorfor ønsker du å endre tidspunkt eller sted?"
-        description="Ikke skriv sensitiv informasjon, for eksempel detaljerte opplysninger om helse."
-        maxLength={300}
-        value={value}
-        onChange={(event) => onChange(event.target.value)}
+      <Controller
+        name="begrunnelseEndring"
+        control={control}
+        defaultValue={''}
+        rules={{
+          required: 'Begrunnelse er obligatorisk',
+          maxLength: { value: 300, message: 'Begrunnelse kan ikke være lenger enn 300 tegn' },
+        }}
+        render={({ field }) => (
+          <Textarea
+            id="begrunnelseEndring"
+            {...field}
+            label={'Hvorfor ønsker du å endre tidspunkt eller sted?'}
+            description={'Ikke skriv sensitiv informasjon, for eksempel detaljerte opplysninger om helse.'}
+            maxLength={300}
+            feil={errors.begrunnelseEndring?.message}
+          />
+        )}
       />
     </>
   );
 };
 
-const BegrunnelseForAvlysning = ({ onChange, value }: BegrunnelseProps): ReactElement => {
+const BegrunnelseForAvlysning = ({ control, errors }: BegrunnelseProps): ReactElement => {
   return (
     <>
       <AlertStripeAdvarsel>
@@ -63,22 +71,36 @@ const BegrunnelseForAvlysning = ({ onChange, value }: BegrunnelseProps): ReactEl
             Selv om du ønsker å avlyse, kan det hende NAV-kontoret likevel konkluderer med at et møte er nødvendig. Husk å begrunne svaret godt slik at NAV-kontoret kan ta beslutningen på et best mulig grunnlag.`}
         </Tekstomrade>
       </AlertStripeAdvarsel>
-      <Textarea
-        label="Hvorfor ønsker du å avlyse?"
-        description="Ikke skriv sensitiv informasjon, for eksempel detaljerte opplysninger om helse."
-        value={value}
-        onChange={(event) => onChange(event.target.value)}
-        maxLength={300}
+      <Controller
+        name="begrunnelseAvlysning"
+        control={control}
+        defaultValue={''}
+        rules={{
+          required: 'Begrunnelse er obligatorisk',
+          maxLength: { value: 300, message: 'Begrunnelse kan ikke være lenger enn 300 tegn' },
+        }}
+        render={({ field }) => (
+          <Textarea
+            id="begrunnelseAvlysning"
+            {...field}
+            label={'Hvorfor ønsker du å avlyse?'}
+            description={'Ikke skriv sensitiv informasjon, for eksempel detaljerte opplysninger om helse.'}
+            maxLength={300}
+            feil={errors.begrunnelseAvlysning?.message}
+          />
+        )}
       />
     </>
   );
 };
 
+interface Props {
+  brevUuid: string;
+}
+
 export const GiSvarPaInnkallelse = ({ brevUuid }: Props): ReactElement => {
   const svarPaInnkallelse = useSvarPaInnkallelse(brevUuid);
-  const [begrunnelseEndring, setBegrunnelseEndring] = useState<string>('');
-  const [begrunnelseAvlysning, setBegrunnelseAvlysning] = useState<string>('');
-  const { register, watch, formState, handleSubmit, getValues } = useForm();
+  const { register, watch, formState, handleSubmit, getValues, control } = useForm();
   const { errors } = formState;
   const watchSvar = watch('svar', false);
 
@@ -89,6 +111,7 @@ export const GiSvarPaInnkallelse = ({ brevUuid }: Props): ReactElement => {
         svarType: selectedSvar,
         ...begrunnelse(selectedSvar),
       };
+      console.log(svar);
       svarPaInnkallelse.mutate(svar);
     }
   };
@@ -96,9 +119,9 @@ export const GiSvarPaInnkallelse = ({ brevUuid }: Props): ReactElement => {
   const begrunnelse = (selectedSvar: SvarType): { svarTekst: string } | undefined => {
     switch (selectedSvar) {
       case 'NYTT_TID_STED':
-        return { svarTekst: begrunnelseEndring };
+        return { svarTekst: getValues('begrunnelseEndring') };
       case 'KOMMER_IKKE':
-        return { svarTekst: begrunnelseAvlysning };
+        return { svarTekst: getValues('begrunnelseAvlysning') };
     }
     return undefined;
   };
@@ -140,13 +163,12 @@ export const GiSvarPaInnkallelse = ({ brevUuid }: Props): ReactElement => {
             onBlur={radio.onBlur}
           />
         </RadioGruppe>
-        {watchSvar == 'NYTT_TID_STED' && (
-          <BegrunnelseForEndring onChange={(event) => setBegrunnelseEndring(event)} value={begrunnelseEndring} />
-        )}
-        {watchSvar == 'KOMMER_IKKE' && (
-          <BegrunnelseForAvlysning onChange={(event) => setBegrunnelseAvlysning(event)} value={begrunnelseAvlysning} />
-        )}
+
+        {watchSvar == 'NYTT_TID_STED' && <BegrunnelseForEndring control={control} errors={errors} />}
+        {watchSvar == 'KOMMER_IKKE' && <BegrunnelseForAvlysning control={control} errors={errors} />}
+
         {!!feil.length && <Feiloppsummering tittel="For å gå videre må du rette opp følgende:" feil={feil} />}
+
         <Inline>
           <Hovedknapp>Send svar</Hovedknapp>
         </Inline>
