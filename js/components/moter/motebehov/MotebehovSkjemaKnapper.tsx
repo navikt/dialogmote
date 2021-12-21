@@ -11,9 +11,10 @@ const texts = {
 interface Props {
   sender: boolean;
   trackingName: string;
+  cancelLinkTo: string;
 }
 
-const MotebehovSkjemaKnapper = ({ sender, trackingName }: Props): ReactElement => {
+const MotebehovSkjemaKnapper = ({ sender, trackingName, cancelLinkTo }: Props): ReactElement => {
   return (
     <div className="knapperad knapperad--justervenstre">
       <div className="knapperad__element">
@@ -22,7 +23,7 @@ const MotebehovSkjemaKnapper = ({ sender, trackingName }: Props): ReactElement =
         </Hovedknapp>
       </div>
       <div className="knapperad__element">
-        <Link className="lenke" to=".">
+        <Link className="lenke" to={cancelLinkTo}>
           {texts.buttonAbort}
         </Link>
       </div>
