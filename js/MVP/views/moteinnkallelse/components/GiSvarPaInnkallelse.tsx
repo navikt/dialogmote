@@ -1,11 +1,13 @@
 import Tekstomrade from 'nav-frontend-tekstomrade';
-import { Radio, RadioGruppe, Textarea } from 'nav-frontend-skjema';
+import { Feiloppsummering, Radio, RadioGruppe, Textarea } from 'nav-frontend-skjema';
 import { Hovedknapp } from 'nav-frontend-knapper';
 import React, { ReactElement, useState } from 'react';
 import styled from 'styled-components';
 import { useSvarPaInnkallelse } from '@/MVP/queries/brev';
 import { SvarType } from '@/api/types/brevTypes';
 import { AlertStripeAdvarsel } from 'nav-frontend-alertstriper';
+import { useForm } from 'react-hook-form';
+import { mapErrors } from '@/utils/formUtils';
 
 const Svar = styled.div`
   display: flex;
@@ -74,29 +76,36 @@ const BegrunnelseForAvlysning = ({ onChange, value }: BegrunnelseProps): ReactEl
 
 export const GiSvarPaInnkallelse = ({ brevUuid }: Props): ReactElement => {
   const svarPaInnkallelse = useSvarPaInnkallelse(brevUuid);
-  const [selectedSvar, setSelectedSvar] = useState<SvarType>();
   const [begrunnelseEndring, setBegrunnelseEndring] = useState<string>('');
   const [begrunnelseAvlysning, setBegrunnelseAvlysning] = useState<string>('');
+  const { register, watch, formState, handleSubmit, getValues } = useForm();
+  const { errors } = formState;
+  const watchSvar = watch('svar', false);
 
   const sendSvar = (): void => {
+    const selectedSvar = getValues('svar');
     if (selectedSvar) {
       const svar = {
         svarType: selectedSvar,
-        ...begrunnelse(),
+        ...begrunnelse(selectedSvar),
       };
       svarPaInnkallelse.mutate(svar);
     }
   };
 
-  const begrunnelse = (): { svarTekst: string } | undefined => {
-      switch (selectedSvar) {
-          case 'NYTT_TID_STED':
-              return { svarTekst: begrunnelseEndring }
-          case 'KOMMER_IKKE':
-              return { svarTekst: begrunnelseAvlysning}
-      }
+  const begrunnelse = (selectedSvar: SvarType): { svarTekst: string } | undefined => {
+    switch (selectedSvar) {
+      case 'NYTT_TID_STED':
+        return { svarTekst: begrunnelseEndring };
+      case 'KOMMER_IKKE':
+        return { svarTekst: begrunnelseAvlysning };
+    }
     return undefined;
   };
+
+  const radio = register('svar', { required: 'Du må velge et svar' });
+
+  const feil = mapErrors(errors);
 
   return (
     <Svar>
@@ -104,24 +113,44 @@ export const GiSvarPaInnkallelse = ({ brevUuid }: Props): ReactElement => {
         Det er et krav at du deltar i dialogmøter i løpet av sykefraværet. Passer ikke møtetidspunktet? Be om endring.
       </Tekstomrade>
       <Tekstomrade>Alle felt er obligatoriske.</Tekstomrade>
-      <RadioGruppe legend="Svar på innkallingen">
-        <Radio label={'Jeg kommer'} name="svar" onChange={() => setSelectedSvar('KOMMER')} />
-        <Radio
-          label={'Jeg ønsker å endre tidspunkt eller sted'}
-          name="svar"
-          onChange={() => setSelectedSvar('NYTT_TID_STED')}
-        />
-        <Radio label={'Jeg ønsker å avlyse'} name="svar" onChange={() => setSelectedSvar('KOMMER_IKKE')} />
-      </RadioGruppe>
-      {selectedSvar == 'NYTT_TID_STED' && (
-        <BegrunnelseForEndring onChange={(event) => setBegrunnelseEndring(event)} value={begrunnelseEndring} />
-      )}
-      {selectedSvar == 'KOMMER_IKKE' && (
-        <BegrunnelseForAvlysning onChange={(event) => setBegrunnelseAvlysning(event)} value={begrunnelseAvlysning} />
-      )}
-      <Inline>
-        <Hovedknapp onClick={sendSvar}>Send svar</Hovedknapp>
-      </Inline>
+      <form onSubmit={handleSubmit(sendSvar)}>
+        <RadioGruppe legend="Svar på innkallingen" feil={errors.svar?.message}>
+          <Radio
+            label={'Jeg kommer'}
+            name={radio.name}
+            value={'KOMMER'}
+            radioRef={radio.ref}
+            onChange={radio.onChange}
+            onBlur={radio.onBlur}
+          />
+          <Radio
+            label={'Jeg ønsker å endre tidspunkt eller sted'}
+            name={radio.name}
+            value={'NYTT_TID_STED'}
+            radioRef={radio.ref}
+            onChange={radio.onChange}
+            onBlur={radio.onBlur}
+          />
+          <Radio
+            label={'Jeg ønsker å avlyse'}
+            name={radio.name}
+            value={'KOMMER_IKKE'}
+            radioRef={radio.ref}
+            onChange={radio.onChange}
+            onBlur={radio.onBlur}
+          />
+        </RadioGruppe>
+        {watchSvar == 'NYTT_TID_STED' && (
+          <BegrunnelseForEndring onChange={(event) => setBegrunnelseEndring(event)} value={begrunnelseEndring} />
+        )}
+        {watchSvar == 'KOMMER_IKKE' && (
+          <BegrunnelseForAvlysning onChange={(event) => setBegrunnelseAvlysning(event)} value={begrunnelseAvlysning} />
+        )}
+        {!!feil.length && <Feiloppsummering tittel="For å gå videre må du rette opp følgende:" feil={feil} />}
+        <Inline>
+          <Hovedknapp>Send svar</Hovedknapp>
+        </Inline>
+      </form>
     </Svar>
   );
 };
