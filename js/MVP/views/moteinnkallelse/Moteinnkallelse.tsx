@@ -109,7 +109,7 @@ const Moteinnkallelse = (): ReactElement => {
 
         <DocumentContainer document={document} lestDato={lestDato} uuid={uuid} />
 
-        {svar ? <DittSvarPaInnkallelse svarType={svar?.svarType} /> : <InfoOmObligatoriskDeltakelse />}
+        {svar ? <DittSvarPaInnkallelse svarType={svar.svarType} /> : <InfoOmObligatoriskDeltakelse />}
 
         {videoLink && <VeilederSpeechBubble content={<VeilederInnkallelseContent />} />}
       </DialogmoteContainer>
