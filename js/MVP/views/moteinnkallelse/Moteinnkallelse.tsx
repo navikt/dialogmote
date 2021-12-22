@@ -15,7 +15,7 @@ import Lenke from 'nav-frontend-lenker';
 import { trackOnClick } from '@/amplitude/amplitude';
 import { eventNames } from '@/amplitude/events';
 import FeilAlertStripe from '@/MVP/components/FeilAlertStripe';
-import SvarPaInnkallelse from '@/MVP/views/moteinnkallelse/components/SvarPaInnkallelse';
+import SvarPaInnkallelse from './components/SvarPaInnkallelse';
 
 const AlertStripeStyled = styled(AlertStripe)`
   margin-bottom: 32px;

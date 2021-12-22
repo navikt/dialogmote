@@ -104,7 +104,7 @@ interface Props {
   brevUuid: string;
 }
 
-export const GiSvarPaInnkallelse = ({ brevUuid }: Props): ReactElement => {
+const GiSvarPaInnkallelse = ({ brevUuid }: Props): ReactElement => {
   const svarPaInnkallelse = useSvarPaInnkallelse(brevUuid);
   const { register, watch, formState, handleSubmit, getValues, control } = useForm();
   const { errors } = formState;
