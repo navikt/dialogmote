@@ -178,7 +178,7 @@ const GiSvarPaInnkallelse = ({ brevUuid }: Props): ReactElement => {
         {svarPaInnkallelse.isError && <AlertStripeFeil>Svaret ditt kom ikke frem. Kan du prøve igjen?</AlertStripeFeil>}
 
         <InlineStyled>
-          <Hovedknapp>Send svar</Hovedknapp>
+          <Hovedknapp disabled={svarPaInnkallelse.isLoading} spinner={svarPaInnkallelse.isLoading}>Send svar</Hovedknapp>
         </InlineStyled>
       </FormStyled>
     </SvarStyled>
