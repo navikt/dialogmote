@@ -9,18 +9,24 @@ import { AlertStripeAdvarsel } from 'nav-frontend-alertstriper';
 import { Control, Controller, FieldErrors, useForm } from 'react-hook-form';
 import { mapErrors } from '@/utils/formUtils';
 
-const Svar = styled.div`
+const SvarStyled = styled.div`
   display: flex;
   flex-direction: column;
-  gap: 32px;
+  gap: 2rem;
   border-radius: 4px;
-  padding: 32px;
+  padding: 2rem;
   background-color: white;
-  margin-top: 32px;
+  margin-top: 2rem;
 `;
 
-const Inline = styled.div`
+const InlineStyled = styled.div`
   display: inline-flex;
+`;
+
+const FormStyled = styled.form`
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
 `;
 
 interface BegrunnelseProps {
@@ -131,12 +137,12 @@ export const GiSvarPaInnkallelse = ({ brevUuid }: Props): ReactElement => {
   const feil = mapErrors(errors);
 
   return (
-    <Svar>
+    <SvarStyled>
       <Tekstomrade>
         Det er et krav at du deltar i dialogmøter i løpet av sykefraværet. Passer ikke møtetidspunktet? Be om endring.
       </Tekstomrade>
       <Tekstomrade>Alle felt er obligatoriske.</Tekstomrade>
-      <form onSubmit={handleSubmit(sendSvar)}>
+      <FormStyled onSubmit={handleSubmit(sendSvar)}>
         <RadioGruppe legend="Svar på innkallingen" feil={errors.svar?.message}>
           <Radio
             label={'Jeg kommer'}
@@ -169,10 +175,10 @@ export const GiSvarPaInnkallelse = ({ brevUuid }: Props): ReactElement => {
 
         {!!feil.length && <Feiloppsummering tittel="For å gå videre må du rette opp følgende:" feil={feil} />}
 
-        <Inline>
+        <InlineStyled>
           <Hovedknapp>Send svar</Hovedknapp>
-        </Inline>
-      </form>
-    </Svar>
+        </InlineStyled>
+      </FormStyled>
+    </SvarStyled>
   );
 };
