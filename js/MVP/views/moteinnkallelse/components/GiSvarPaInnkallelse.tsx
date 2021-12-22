@@ -182,3 +182,5 @@ export const GiSvarPaInnkallelse = ({ brevUuid }: Props): ReactElement => {
     </SvarStyled>
   );
 };
+
+export default GiSvarPaInnkallelse;
