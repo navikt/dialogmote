@@ -1,5 +1,7 @@
 export type DocumentComponentType = 'HEADER' | 'PARAGRAPH' | 'LINK';
 
+export type SvarType = 'KOMMER' | 'NYTT_TID_STED' | 'KOMMER_IKKE';
+
 export interface Brev {
   uuid: string;
   deltakerUuid: string;
@@ -13,6 +15,7 @@ export interface Brev {
   videoLink?: string;
   document: DocumentComponent[];
   virksomhetsnummer: string;
+  svar?: Svar;
 }
 
 export type DocumentComponent = {
@@ -20,3 +23,9 @@ export type DocumentComponent = {
   title?: string;
   texts: string[];
 };
+
+export interface Svar {
+  svarTidspunkt: string;
+  svarType: SvarType;
+  svarTekst?: string;
+}
