@@ -24,7 +24,7 @@ const InlineStyled = styled.div`
 `;
 
 const FormStyled = styled.form`
-display: flex;
+  display: flex;
   flex-direction: column;
   gap: 2rem;
 `;
