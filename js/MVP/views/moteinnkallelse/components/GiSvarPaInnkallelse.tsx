@@ -5,7 +5,7 @@ import React, { ReactElement } from 'react';
 import styled from 'styled-components';
 import { useSvarPaInnkallelse } from '@/MVP/queries/brev';
 import { SvarType } from '@/api/types/brevTypes';
-import { AlertStripeAdvarsel } from 'nav-frontend-alertstriper';
+import { AlertStripeAdvarsel, AlertStripeFeil } from 'nav-frontend-alertstriper';
 import { Control, Controller, FieldErrors, useForm } from 'react-hook-form';
 import { mapErrors } from '@/utils/formUtils';
 
@@ -174,6 +174,8 @@ const GiSvarPaInnkallelse = ({ brevUuid }: Props): ReactElement => {
         {watchSvar == 'KOMMER_IKKE' && <BegrunnelseForAvlysning control={control} errors={errors} />}
 
         {!!feil.length && <Feiloppsummering tittel="For å gå videre må du rette opp følgende:" feil={feil} />}
+
+        {svarPaInnkallelse.isError && <AlertStripeFeil>Svaret ditt kom ikke frem. Kan du prøve igjen?</AlertStripeFeil>}
 
         <InlineStyled>
           <Hovedknapp>Send svar</Hovedknapp>
