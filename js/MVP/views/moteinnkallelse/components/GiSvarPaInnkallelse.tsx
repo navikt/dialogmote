@@ -8,6 +8,8 @@ import { SvarType } from '@/api/types/brevTypes';
 import { AlertStripeAdvarsel, AlertStripeFeil } from 'nav-frontend-alertstriper';
 import { Control, Controller, FieldErrors, useForm } from 'react-hook-form';
 import { mapErrors } from '@/utils/formUtils';
+import { trackOnClick } from '@/amplitude/amplitude';
+import { eventNames } from '@/amplitude/events';
 
 const SvarStyled = styled.div`
   display: flex;
@@ -178,7 +180,13 @@ const GiSvarPaInnkallelse = ({ brevUuid }: Props): ReactElement => {
         {svarPaInnkallelse.isError && <AlertStripeFeil>Svaret ditt kom ikke frem. Kan du prøve igjen?</AlertStripeFeil>}
 
         <InlineStyled>
-          <Hovedknapp disabled={svarPaInnkallelse.isLoading} spinner={svarPaInnkallelse.isLoading}>Send svar</Hovedknapp>
+          <Hovedknapp
+            disabled={svarPaInnkallelse.isLoading}
+            spinner={svarPaInnkallelse.isLoading}
+            onClick={() => trackOnClick(eventNames.sendSvarPaInnkallelse)}
+          >
+            Send svar
+          </Hovedknapp>
         </InlineStyled>
       </FormStyled>
     </SvarStyled>
