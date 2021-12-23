@@ -6,7 +6,7 @@ import styled from 'styled-components';
 import { useSvarPaInnkallelse } from '@/MVP/queries/brev';
 import { SvarType } from '@/api/types/brevTypes';
 import { AlertStripeAdvarsel, AlertStripeFeil } from 'nav-frontend-alertstriper';
-import { Control, Controller, FieldErrors, useForm, UseFormRegisterReturn } from 'react-hook-form';
+import { Control, Controller, useForm, UseFormRegisterReturn } from 'react-hook-form';
 import { mapErrors } from '@/utils/formUtils';
 import { trackOnClick } from '@/amplitude/amplitude';
 import { eventNames } from '@/amplitude/events';
@@ -53,64 +53,32 @@ const texts = {
 
 interface BegrunnelseProps {
   control: Control;
-  errors: FieldErrors;
+  name: string;
+  label: string;
+  error: string;
 }
 
-const BegrunnelseForEndring = ({ control, errors }: BegrunnelseProps): ReactElement => {
+const BegrunnelseInput = ({ control, name, label, error }: BegrunnelseProps): ReactElement => {
   return (
-    <>
-      <AlertStripeAdvarsel>
-        <Tekstomrade>{texts.infoEndring}</Tekstomrade>
-      </AlertStripeAdvarsel>
-      <Controller
-        name="begrunnelseEndring"
-        control={control}
-        defaultValue={''}
-        rules={{
-          required: texts.begrunnelseRequired,
-          maxLength: { value: 300, message: texts.begrunnelseMaxLength },
-        }}
-        render={({ field }) => (
-          <Textarea
-            id="begrunnelseEndring"
-            {...field}
-            label={texts.begrunnelseEndringLabel}
-            description={texts.begrunnelseDescription}
-            maxLength={300}
-            feil={errors.begrunnelseEndring?.message}
-          />
-        )}
-      />
-    </>
-  );
-};
-
-const BegrunnelseForAvlysning = ({ control, errors }: BegrunnelseProps): ReactElement => {
-  return (
-    <>
-      <AlertStripeAdvarsel>
-        <Tekstomrade>{texts.infoAvlysning}</Tekstomrade>
-      </AlertStripeAdvarsel>
-      <Controller
-        name="begrunnelseAvlysning"
-        control={control}
-        defaultValue={''}
-        rules={{
-          required: texts.begrunnelseRequired,
-          maxLength: { value: 300, message: texts.begrunnelseMaxLength },
-        }}
-        render={({ field }) => (
-          <Textarea
-            id="begrunnelseAvlysning"
-            {...field}
-            label={texts.begrunnelseAvlysningLabel}
-            description={texts.begrunnelseDescription}
-            maxLength={300}
-            feil={errors.begrunnelseAvlysning?.message}
-          />
-        )}
-      />
-    </>
+    <Controller
+      name={name}
+      control={control}
+      defaultValue={''}
+      rules={{
+        required: texts.begrunnelseRequired,
+        maxLength: { value: 300, message: texts.begrunnelseMaxLength },
+      }}
+      render={({ field }) => (
+        <Textarea
+          id={name}
+          {...field}
+          label={label}
+          description={texts.begrunnelseDescription}
+          maxLength={300}
+          feil={error}
+        />
+      )}
+    />
   );
 };
 
@@ -130,6 +98,18 @@ const RadioValg = ({ radio, label, value }: RadioProps): ReactElement => {
       onChange={radio.onChange}
       onBlur={radio.onBlur}
     />
+  );
+};
+
+interface AdvarselProps {
+  children: string;
+}
+
+const Advarsel = ({ children }: AdvarselProps): ReactElement => {
+  return (
+    <AlertStripeAdvarsel>
+      <Tekstomrade>{children}</Tekstomrade>
+    </AlertStripeAdvarsel>
   );
 };
 
@@ -180,8 +160,29 @@ const GiSvarPaInnkallelse = ({ brevUuid }: Props): ReactElement => {
           <RadioValg radio={radio} label={texts.svarAvlysning} value={'KOMMER_IKKE'} />
         </RadioGruppe>
 
-        {watchSvar == 'NYTT_TID_STED' && <BegrunnelseForEndring control={control} errors={errors} />}
-        {watchSvar == 'KOMMER_IKKE' && <BegrunnelseForAvlysning control={control} errors={errors} />}
+        {watchSvar == 'NYTT_TID_STED' && (
+          <>
+            <Advarsel>{texts.infoEndring}</Advarsel>
+            <BegrunnelseInput
+              control={control}
+              name={'begrunnelseEndring'}
+              error={errors.begrunnelseEndring?.message}
+              label={texts.begrunnelseEndringLabel}
+            />
+          </>
+        )}
+
+        {watchSvar == 'KOMMER_IKKE' && (
+          <>
+          <Advarsel>{texts.infoAvlysning}</Advarsel>
+            <BegrunnelseInput
+              control={control}
+              name={'begrunnelseAvlysning'}
+              error={errors.begrunnelseAvlysning?.message}
+              label={texts.begrunnelseAvlysningLabel}
+            />
+          </>
+        )}
 
         {!!feil.length && <Feiloppsummering tittel={texts.feiloppsummeringTittel} feil={feil} />}
 
