@@ -51,6 +51,12 @@ const texts = {
   svarLegend: 'Svar på innkallingen',
 };
 
+const fields = {
+  SVAR: 'svar',
+  BEGRUNNELSE_ENDRING: 'begrunnelseEndring',
+  BEGRUNNELSE_AVLYSNING: 'begrunnelseAvlysning',
+};
+
 interface BegrunnelseProps {
   control: Control;
   name: string;
@@ -121,10 +127,10 @@ const GiSvarPaInnkallelse = ({ brevUuid }: Props): ReactElement => {
   const svarPaInnkallelse = useSvarPaInnkallelse(brevUuid);
   const { register, watch, formState, handleSubmit, getValues, control } = useForm();
   const { errors } = formState;
-  const watchSvar = watch('svar', false);
+  const watchSvar = watch(fields.SVAR, false);
 
   const sendSvar = (): void => {
-    const selectedSvar = getValues('svar');
+    const selectedSvar = getValues(fields.SVAR);
     if (selectedSvar) {
       const svar = {
         svarType: selectedSvar,
@@ -138,14 +144,14 @@ const GiSvarPaInnkallelse = ({ brevUuid }: Props): ReactElement => {
   const begrunnelse = (selectedSvar: SvarType): { svarTekst: string } | undefined => {
     switch (selectedSvar) {
       case 'NYTT_TID_STED':
-        return { svarTekst: getValues('begrunnelseEndring') };
+        return { svarTekst: getValues(fields.BEGRUNNELSE_ENDRING) };
       case 'KOMMER_IKKE':
-        return { svarTekst: getValues('begrunnelseAvlysning') };
+        return { svarTekst: getValues(fields.BEGRUNNELSE_AVLYSNING) };
     }
     return undefined;
   };
 
-  const radio = register('svar', { required: texts.svarRequired });
+  const radio = register(fields.SVAR, { required: texts.svarRequired });
 
   const feil = mapErrors(errors);
 
@@ -165,7 +171,7 @@ const GiSvarPaInnkallelse = ({ brevUuid }: Props): ReactElement => {
             <Advarsel>{texts.infoEndring}</Advarsel>
             <BegrunnelseInput
               control={control}
-              name={'begrunnelseEndring'}
+              name={fields.BEGRUNNELSE_ENDRING}
               error={errors.begrunnelseEndring?.message}
               label={texts.begrunnelseEndringLabel}
             />
@@ -174,10 +180,10 @@ const GiSvarPaInnkallelse = ({ brevUuid }: Props): ReactElement => {
 
         {watchSvar == 'KOMMER_IKKE' && (
           <>
-          <Advarsel>{texts.infoAvlysning}</Advarsel>
+            <Advarsel>{texts.infoAvlysning}</Advarsel>
             <BegrunnelseInput
               control={control}
-              name={'begrunnelseAvlysning'}
+              name={fields.BEGRUNNELSE_AVLYSNING}
               error={errors.begrunnelseAvlysning?.message}
               label={texts.begrunnelseAvlysningLabel}
             />
