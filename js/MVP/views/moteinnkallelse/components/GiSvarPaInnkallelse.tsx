@@ -133,7 +133,6 @@ const GiSvarPaInnkallelse = ({ brevUuid }: Props): ReactElement => {
         svarType: selectedSvar,
         ...begrunnelse(selectedSvar),
       };
-      console.log(svar);
       svarPaInnkallelse.mutate(svar);
     }
   };
