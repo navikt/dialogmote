@@ -1,28 +1,21 @@
 import VeilederSpeechBubble from '@/MVP/components/VeilederSpeechBubble';
 import React, { ReactElement } from 'react';
 import styled from 'styled-components';
-import AlertStripe, { AlertStripeInfo } from 'nav-frontend-alertstriper';
+import AlertStripe from 'nav-frontend-alertstriper';
 import { brevTypes } from '../../globals/constants';
 import DialogmoteContainer from '../../containers/DialogmoteContainer';
 import { useBrev } from '../../queries/brev';
 import AppSpinner from '../../../components/AppSpinner';
 import DocumentContainer from '../../containers/DocumentContainer';
 import VeilederInnkallelseContent from './components/VeilederInnkallelseContent';
-import { innkallelseBreadcrumb, statiskeURLer } from '../../globals/paths';
+import { innkallelseBreadcrumb } from '../../globals/paths';
 import { isDateInPast } from '../../utils';
 import NoInnkallelseAlert from './components/NoInnkallelseAlert';
-import Lenke from 'nav-frontend-lenker';
-import { trackOnClick } from '@/amplitude/amplitude';
-import { eventNames } from '@/amplitude/events';
 import FeilAlertStripe from '@/MVP/components/FeilAlertStripe';
 import SvarPaInnkallelse from './components/SvarPaInnkallelse';
 
 const AlertStripeStyled = styled(AlertStripe)`
   margin-bottom: 32px;
-`;
-
-const InfoStripeStyled = styled(AlertStripeInfo)`
-  margin-top: 32px;
 `;
 
 const AvlystDocumentContainerStyled = styled(DocumentContainer)`
@@ -47,17 +40,6 @@ const title = (type: string): string => {
     default:
       return texts.innkallingtitle;
   }
-};
-
-const InfoOmObligatoriskDeltakelse = (): ReactElement => {
-  return (
-    <InfoStripeStyled>
-      {texts.infoBox}
-      <Lenke href={statiskeURLer.KONTAKT_INFO_URL} onClick={() => trackOnClick(eventNames.kontaktOss)}>
-        {texts.infoBoxUrl}
-      </Lenke>
-    </InfoStripeStyled>
-  );
 };
 
 const Moteinnkallelse = (): ReactElement => {
@@ -98,9 +80,6 @@ const Moteinnkallelse = (): ReactElement => {
         </DialogmoteContainer>
       );
     }
-
-    const skalViseSvarPaInnkallelse = true;
-
     return (
       <DialogmoteContainer
         title={title(brevType)}
@@ -111,11 +90,7 @@ const Moteinnkallelse = (): ReactElement => {
 
         <DocumentContainer document={document} lestDato={lestDato} uuid={uuid} />
 
-        {skalViseSvarPaInnkallelse ? (
-          <SvarPaInnkallelse brevUuid={uuid} svarType={svar?.svarType} />
-        ) : (
-          <InfoOmObligatoriskDeltakelse />
-        )}
+        <SvarPaInnkallelse brevUuid={uuid} svarType={svar?.svarType} />
 
         {videoLink && <VeilederSpeechBubble content={<VeilederInnkallelseContent />} />}
       </DialogmoteContainer>
