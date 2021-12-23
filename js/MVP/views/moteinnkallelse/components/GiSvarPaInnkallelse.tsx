@@ -10,19 +10,12 @@ import { Control, Controller, useForm, UseFormRegisterReturn } from 'react-hook-
 import { mapErrors } from '@/utils/formUtils';
 import { trackOnClick } from '@/amplitude/amplitude';
 import { eventNames } from '@/amplitude/events';
+import DialogmotePanel from '@/MVP/containers/DialogmotePanel';
 
-const SvarStyled = styled.div`
+const SvarStyled = styled(DialogmotePanel)`
   display: flex;
   flex-direction: column;
   gap: 2rem;
-  border-radius: 4px;
-  padding: 2rem;
-  background-color: white;
-  margin-top: 2rem;
-`;
-
-const InlineStyled = styled.div`
-  display: inline-flex;
 `;
 
 const FormStyled = styled.form`
@@ -31,10 +24,15 @@ const FormStyled = styled.form`
   gap: 2rem;
 `;
 
+const KnappStyled = styled(Hovedknapp)`
+  width: fit-content;
+`;
+
 const texts = {
   info:
     'Det er et krav at du deltar i dialogmøter i løpet av sykefraværet. Passer ikke møtetidspunktet? Be om endring.',
   infoRequired: 'Alle felt er obligatoriske.',
+  svarLegend: 'Svar på innkallingen',
   svarRequired: 'Du må velge et svar',
   svarKommer: 'Jeg kommer',
   svarEndring: 'Jeg ønsker å endre tidspunkt eller sted',
@@ -48,7 +46,6 @@ const texts = {
   begrunnelseDescription: 'Ikke skriv sensitiv informasjon, for eksempel detaljerte opplysninger om helse.',
   feiloppsummeringTittel: 'For å gå videre må du rette opp følgende:',
   errorMessage: 'Svaret ditt kom ikke frem. Kan du prøve igjen?',
-  svarLegend: 'Svar på innkallingen',
 };
 
 const fields = {
@@ -194,15 +191,13 @@ const GiSvarPaInnkallelse = ({ brevUuid }: Props): ReactElement => {
 
         {svarPaInnkallelse.isError && <AlertStripeFeil>{texts.errorMessage}</AlertStripeFeil>}
 
-        <InlineStyled>
-          <Hovedknapp
-            disabled={svarPaInnkallelse.isLoading}
-            spinner={svarPaInnkallelse.isLoading}
-            onClick={() => trackOnClick(eventNames.sendSvarPaInnkallelse)}
-          >
-            Send svar
-          </Hovedknapp>
-        </InlineStyled>
+        <KnappStyled
+          disabled={svarPaInnkallelse.isLoading}
+          spinner={svarPaInnkallelse.isLoading}
+          onClick={() => trackOnClick(eventNames.sendSvarPaInnkallelse)}
+        >
+          Send svar
+        </KnappStyled>
       </FormStyled>
     </SvarStyled>
   );
