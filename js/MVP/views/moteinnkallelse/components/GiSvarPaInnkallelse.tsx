@@ -6,7 +6,7 @@ import styled from 'styled-components';
 import { useSvarPaInnkallelse } from '@/MVP/queries/brev';
 import { SvarType } from '@/api/types/brevTypes';
 import { AlertStripeAdvarsel, AlertStripeFeil } from 'nav-frontend-alertstriper';
-import { Control, Controller, FieldErrors, useForm } from 'react-hook-form';
+import { Control, Controller, FieldErrors, useForm, UseFormRegisterReturn } from 'react-hook-form';
 import { mapErrors } from '@/utils/formUtils';
 import { trackOnClick } from '@/amplitude/amplitude';
 import { eventNames } from '@/amplitude/events';
@@ -114,6 +114,25 @@ const BegrunnelseForAvlysning = ({ control, errors }: BegrunnelseProps): ReactEl
   );
 };
 
+interface RadioProps {
+  radio: UseFormRegisterReturn;
+  label: string;
+  value: string;
+}
+
+const RadioValg = ({ radio, label, value }: RadioProps): ReactElement => {
+  return (
+    <Radio
+      label={label}
+      name={radio.name}
+      value={value}
+      radioRef={radio.ref}
+      onChange={radio.onChange}
+      onBlur={radio.onBlur}
+    />
+  );
+};
+
 interface Props {
   brevUuid: string;
 }
@@ -156,30 +175,9 @@ const GiSvarPaInnkallelse = ({ brevUuid }: Props): ReactElement => {
       <Tekstomrade>{texts.infoRequired}</Tekstomrade>
       <FormStyled onSubmit={handleSubmit(sendSvar)}>
         <RadioGruppe legend={texts.svarLegend} feil={errors.svar?.message}>
-          <Radio
-            label={texts.svarKommer}
-            name={radio.name}
-            value={'KOMMER'}
-            radioRef={radio.ref}
-            onChange={radio.onChange}
-            onBlur={radio.onBlur}
-          />
-          <Radio
-            label={texts.svarEndring}
-            name={radio.name}
-            value={'NYTT_TID_STED'}
-            radioRef={radio.ref}
-            onChange={radio.onChange}
-            onBlur={radio.onBlur}
-          />
-          <Radio
-            label={texts.svarAvlysning}
-            name={radio.name}
-            value={'KOMMER_IKKE'}
-            radioRef={radio.ref}
-            onChange={radio.onChange}
-            onBlur={radio.onBlur}
-          />
+          <RadioValg radio={radio} label={texts.svarKommer} value={'KOMMER'} />
+          <RadioValg radio={radio} label={texts.svarEndring} value={'NYTT_TID_STED'} />
+          <RadioValg radio={radio} label={texts.svarAvlysning} value={'KOMMER_IKKE'} />
         </RadioGruppe>
 
         {watchSvar == 'NYTT_TID_STED' && <BegrunnelseForEndring control={control} errors={errors} />}
