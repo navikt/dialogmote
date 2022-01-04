@@ -20,11 +20,21 @@ const appProxy = (server) => {
         res.end();
       },
       onProxyReq(proxyReq, req, res) {
+        console.log('I onProxyReq');
         const token = req.cookies['selvbetjening-idtoken'];
         proxyReq.setHeader('Content-Type', 'application/json');
         proxyReq.setHeader('Authorization', `Bearer ${token}`);
       },
-      logLevel: 'error',
+      onProxyRes(proxyRes, req, res) {
+        console.log('I onProxyRes');
+        var body = '';
+        proxyRes.on('data', function (data) {
+          data = data.toString();
+          body += data;
+          console.log(body);
+        });
+      },
+      logLevel: 'debug',
       changeOrigin: true,
     })
   );
