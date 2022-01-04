@@ -12,7 +12,7 @@ export const useBrev = () => {
 
 export const useSvarPaInnkallelse = (uuid: string) => {
   const queryClient = useQueryClient();
-  const postSvar = (uuid, svar: SvarRespons) => post(`${ISDIALOGMOTE_API_BASE_PATH}/${uuid}/respons`);
+  const postSvar = (uuid, svar: SvarRespons) => post(`${ISDIALOGMOTE_API_BASE_PATH}/${uuid}/respons`, svar);
 
   return useMutation((svar: SvarRespons) => postSvar(uuid, svar), {
     onSuccess: () => {
