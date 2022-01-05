@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { Field, reduxForm, SubmissionError, formValueSelector } from 'redux-form';
+import { Field, formValueSelector, reduxForm, SubmissionError } from 'redux-form';
 import { Feiloppsummering } from 'nav-frontend-skjema';
 import { motebehovSvarReducerPt } from '@/propTypes';
 import Tekstomraade from '../../../skjema/Tekstomraade';
@@ -9,6 +9,7 @@ import CheckboxSelvstendig from '../../../skjema/CheckboxSelvstendig';
 import MotebehovSkjemaKnapper from '../MotebehovSkjemaKnapper';
 import ObligatoriskeFelterInfotekst from '../ObligatoriskeFelterInfotekst';
 import { eventNames } from '@/amplitude/events';
+import { LANDING_URL_AVBRUTT_MELD_BEHOV } from '@/MVP/globals/paths';
 
 export const tekstfeltRegex = new RegExp('.*<[^ ][^>]+[^ ]>.*');
 
@@ -222,7 +223,11 @@ export class MeldMotebehovSkjemaKomponent extends Component {
           {errorList.length > 0 && (
             <Feiloppsummering tittel="For å gå videre må du rette opp følgende:" feil={errorList} />
           )}
-          <MotebehovSkjemaKnapper sender={motebehovSvarReducer.sender} trackingName={eventNames.sendMeldBehov} />
+          <MotebehovSkjemaKnapper
+            sender={motebehovSvarReducer.sender}
+            trackingName={eventNames.sendMeldBehov}
+            cancelLinkTo={LANDING_URL_AVBRUTT_MELD_BEHOV}
+          />
         </div>
         <TekstOpplysning />
       </form>

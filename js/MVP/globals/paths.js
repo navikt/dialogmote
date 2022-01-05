@@ -10,8 +10,11 @@ export const SYFOOPPFOLGINGSPLANSERVICE_API = `${hentSyfoApiUrl(
 export const LANDING_URL = `${process.env.REACT_APP_CONTEXT_ROOT}`;
 export const MOTEINNKALLING_URL = `${process.env.REACT_APP_CONTEXT_ROOT}/moteinnkallelse`;
 export const MOTEPLANLEGGER_URL = `${process.env.REACT_APP_CONTEXT_ROOT}/mote`;
-export const MOTEBEHOV_URL = `${process.env.REACT_APP_CONTEXT_ROOT}/behov`;
+export const MELD_BEHOV_URL = `${process.env.REACT_APP_CONTEXT_ROOT}/behov/meld`;
+export const SVAR_BEHOV_URL = `${process.env.REACT_APP_CONTEXT_ROOT}/behov/svar`;
 export const MOTEREFERAT_URL = `${process.env.REACT_APP_CONTEXT_ROOT}/referat`;
+
+export const LANDING_URL_AVBRUTT_MELD_BEHOV = `${process.env.REACT_APP_CONTEXT_ROOT}/avbruttMeldBehov`;
 
 export const OPPFOLGINGSPLANER_URL = process.env.REACT_APP_OPPFOLGINGSPLAN_CONTEXT_ROOT;
 
@@ -32,10 +35,6 @@ const dittSykefravarBreadcrumb = [
     erKlikkbar: true,
   },
 ];
-
-export const emptyBreadcrumb = () => {
-  return dittSykefravarBreadcrumb;
-};
 
 export const dialogmoteBreadcrumb = [
   ...dittSykefravarBreadcrumb,
@@ -60,15 +59,6 @@ export const innkallelseBreadcrumb = (title) => [
   {
     tittel: title,
     sti: MOTEINNKALLING_URL,
-    erKlikkbar: true,
-  },
-];
-
-export const motebehoveBreadcrumb = [
-  ...dialogmoteBreadcrumb,
-  {
-    tittel: 'Meld behov for møte',
-    sti: MOTEBEHOV_URL,
     erKlikkbar: true,
   },
 ];

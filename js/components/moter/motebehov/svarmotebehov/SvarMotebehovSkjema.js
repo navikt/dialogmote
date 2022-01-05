@@ -10,6 +10,7 @@ import Radioknapper from '../../../skjema/Radioknapper';
 import MotebehovSkjemaKnapper from '../MotebehovSkjemaKnapper';
 import ObligatoriskeFelterInfotekst from '../ObligatoriskeFelterInfotekst';
 import { eventNames } from '@/amplitude/events';
+import { LANDING_URL } from '@/MVP/globals/paths';
 
 export const tekstfeltRegex = new RegExp('.*<[^ ][^>]+[^ ]>.*');
 
@@ -297,7 +298,11 @@ export class SvarMotebehovSkjemaKomponent extends Component {
           {errorList.length > 0 && (
             <Feiloppsummering tittel="For å gå videre må du rette opp følgende:" feil={errorList} />
           )}
-          <MotebehovSkjemaKnapper sender={motebehovSvarReducer.sender} trackingName={eventNames.sendSvarBehov} />
+          <MotebehovSkjemaKnapper
+            sender={motebehovSvarReducer.sender}
+            trackingName={eventNames.sendSvarBehov}
+            cancelLinkTo={LANDING_URL}
+          />
         </div>
 
         <TekstOpplysning />

@@ -6,7 +6,7 @@ import styled from 'styled-components';
 import ButtonLenke from '../../../components/ButtonLenke';
 import DialogmotePanel from '../../../containers/DialogmotePanel';
 import { skjemaTypes } from '@/MVP/globals/constants';
-import { MOTEBEHOV_URL, OPPFOLGINGSPLANER_URL, statiskeURLer } from '@/MVP/globals/paths';
+import { MELD_BEHOV_URL, OPPFOLGINGSPLANER_URL, statiskeURLer, SVAR_BEHOV_URL } from '@/MVP/globals/paths';
 import MotebehovKvittering from './Motebehov/MotebehovKvittering';
 import { BehovImage } from '@/images/imageComponents';
 import { trackOnClick } from '@/amplitude/amplitude';
@@ -151,7 +151,7 @@ const MotebehovPanel = ({ motebehov }) => {
     return (
       <DialogmotePanelStyled title={texts.title} icon={BehovImage}>
         <ContactInfo />
-        <ButtonLenke mini to={MOTEBEHOV_URL} trackingName={eventNames.meldBehov}>
+        <ButtonLenke mini to={MELD_BEHOV_URL} trackingName={eventNames.meldBehov}>
           {texts.button}
         </ButtonLenke>
       </DialogmotePanelStyled>
@@ -161,7 +161,7 @@ const MotebehovPanel = ({ motebehov }) => {
   return (
     <DialogmotePanelStyled title={texts.titleSvarBehov} icon={BehovImage}>
       <ContactInfo />
-      <ButtonLenke mini to={MOTEBEHOV_URL} trackingName={eventNames.svarBehov}>
+      <ButtonLenke mini to={SVAR_BEHOV_URL} trackingName={eventNames.svarBehov}>
         {texts.button}
       </ButtonLenke>
     </DialogmotePanelStyled>
