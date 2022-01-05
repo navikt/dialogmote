@@ -10,7 +10,7 @@ const extensions = ['.tsx', '.jsx', '.js', '.ts', '.json'];
 const mockEndepunkter = require('./mock/mockEndepunkter');
 
 const setupDev = async (app, compiler) => {
-  mockEndepunkter(app, true);
+  mockEndepunkter(app);
   app.use('/static', express.static(path.resolve(__dirname, 'dist')));
 
   app.use('*', (req, res) => {

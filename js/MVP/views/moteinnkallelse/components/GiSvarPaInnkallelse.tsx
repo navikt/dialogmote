@@ -1,18 +1,19 @@
 import Tekstomrade from 'nav-frontend-tekstomrade';
+import { AlertStripeAdvarsel, AlertStripeFeil } from 'nav-frontend-alertstriper';
 import { Feiloppsummering, Radio, RadioGruppe, Textarea } from 'nav-frontend-skjema';
 import { Hovedknapp } from 'nav-frontend-knapper';
 import React, { ReactElement } from 'react';
 import styled from 'styled-components';
 import { useSvarPaInnkallelse } from '@/MVP/queries/brev';
-import { SvarType } from '@/api/types/brevTypes';
-import { AlertStripeAdvarsel, AlertStripeFeil } from 'nav-frontend-alertstriper';
+import { SvarRespons, SvarType } from '@/api/types/brevTypes';
 import { Control, Controller, useForm, UseFormRegisterReturn } from 'react-hook-form';
-import { mapErrors } from '@/utils/formUtils';
+import { mapErrors } from '@/MVP/utils/formUtils';
 import { trackOnClick } from '@/amplitude/amplitude';
 import { eventNames } from '@/amplitude/events';
 import DialogmotePanel from '@/MVP/containers/DialogmotePanel';
 
 const SvarStyled = styled(DialogmotePanel)`
+  margin-top: 2rem;
   display: flex;
   flex-direction: column;
   gap: 2rem;
@@ -128,13 +129,11 @@ const GiSvarPaInnkallelse = ({ brevUuid }: Props): ReactElement => {
 
   const sendSvar = (): void => {
     const selectedSvar = getValues(fields.SVAR);
-    if (selectedSvar) {
-      const svar = {
-        svarType: selectedSvar,
-        ...begrunnelse(selectedSvar),
-      };
-      svarPaInnkallelse.mutate(svar);
-    }
+    const svar: SvarRespons = {
+      svarType: selectedSvar,
+      ...begrunnelse(selectedSvar),
+    };
+    svarPaInnkallelse.mutate(svar);
   };
 
   const begrunnelse = (selectedSvar: SvarType): { svarTekst: string } | undefined => {
