@@ -1,7 +1,7 @@
 import PropTypes from 'prop-types';
 import React from 'react';
 import { Route, Router } from 'react-router';
-import { MOTEINNKALLING_URL, MOTEPLANLEGGER_URL } from '../MVP/globals/paths';
+import { MOTEINNKALLING_URL, MOTEPLANLEGGER_URL } from '@/MVP/globals/paths';
 import Landing from '../MVP/views/landing/Landing';
 import Moteinnkallelse from '../MVP/views/moteinnkallelse/Moteinnkallelse';
 import Motereferat from '../MVP/views/motereferat/Motereferat';
@@ -13,6 +13,7 @@ const AppRouter = ({ history }) => {
     <Router history={history}>
       <Route path={`${process.env.REACT_APP_CONTEXT_ROOT}`} component={Landing} />
       <Route path={`${process.env.REACT_APP_CONTEXT_ROOT}/behov`} component={MotebehovContainer} />
+      <Route path={`${process.env.REACT_APP_CONTEXT_ROOT}/behov/*`} component={MotebehovContainer} />
       <Route path={`${process.env.REACT_APP_CONTEXT_ROOT}/mote`} component={DialogmoteSide} />
       <Route path={MOTEINNKALLING_URL} component={Moteinnkallelse} />
       <Route path={MOTEPLANLEGGER_URL} component={DialogmoteSide} />
