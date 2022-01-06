@@ -23,7 +23,6 @@ const appProxy = (server) => {
         const token = req.cookies['selvbetjening-idtoken'];
         proxyReq.setHeader('Content-Type', 'application/json');
         proxyReq.setHeader('Authorization', `Bearer ${token}`);
-        // fixRequestBody(proxyReq, req);
       },
       logLevel: 'error',
       changeOrigin: true,
