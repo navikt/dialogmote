@@ -34,11 +34,12 @@ server.get('/', (req, res) => {
 server.use('/syk/dialogmote/static', express.static(DIST_DIR, { index: false }));
 server.get('/internal/isAlive|isReady', (req, res) => res.sendStatus(200));
 
+server.use(cookieParser());
+
 if (env === 'opplaering') {
   require('./mock/mockEndepunkter')(server, false);
 } else {
   appProxy(server);
-  server.use(cookieParser());
 
   server.get('/actuator/metrics', (req, res) => {
     res.set('Content-Type', prometheus.register.contentType);
