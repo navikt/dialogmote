@@ -30,7 +30,7 @@ const appProxy = (server) => {
           proxyReq.write(bodyData);
         }
       },
-      logLevel: 'debug',
+      logLevel: 'error',
       changeOrigin: true,
     })
   );
