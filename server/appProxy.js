@@ -1,5 +1,5 @@
 /* eslint-disable */
-const { createProxyMiddleware, fixRequestBody } = require('http-proxy-middleware');
+const { createProxyMiddleware } = require('http-proxy-middleware');
 
 const appProxy = (server) => {
   server.use(
