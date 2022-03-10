@@ -30,8 +30,6 @@ const KnappStyled = styled(Hovedknapp)`
 `;
 
 const texts = {
-  info:
-    'Det er et krav at du deltar i dialogmøter i løpet av sykefraværet. Passer ikke møtetidspunktet? Be om endring.',
   infoRequired: 'Alle felt er obligatoriske.',
   svarLegend: 'Svar på innkallingen',
   svarRequired: 'Du må velge et svar',
@@ -161,7 +159,6 @@ const GiSvarPaInnkallelse = ({ brevUuid }: Props): ReactElement => {
 
   return (
     <SvarStyled>
-      <Tekstomrade>{texts.info}</Tekstomrade>
       <Tekstomrade>{texts.infoRequired}</Tekstomrade>
       <FormStyled onSubmit={handleSubmit(sendSvar)}>
         <RadioGruppe legend={texts.svarLegend} feil={errors.svar?.message}>
