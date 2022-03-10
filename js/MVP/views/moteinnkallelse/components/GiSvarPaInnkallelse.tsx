@@ -8,7 +8,7 @@ import { AlertStripeAdvarsel, AlertStripeFeil } from 'nav-frontend-alertstriper'
 import { Hovedknapp } from 'nav-frontend-knapper';
 import { Feiloppsummering, Radio, RadioGruppe, Textarea } from 'nav-frontend-skjema';
 import Tekstomrade from 'nav-frontend-tekstomrade';
-import {Systemtittel} from "nav-frontend-typografi";
+import { Systemtittel } from 'nav-frontend-typografi';
 import React, { ReactElement, useEffect } from 'react';
 import { Control, Controller, useForm, UseFormRegisterReturn } from 'react-hook-form';
 import styled from 'styled-components';
