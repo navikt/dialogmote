@@ -9,10 +9,8 @@ import { brevTypes } from '../../globals/constants';
 import { useBrev } from '../../queries/brev';
 import { useMotebehov } from '../../queries/motebehov';
 import { useMoteplanlegger } from '../../queries/moteplanlegger';
-import { useSykmeldinger } from '../../queries/sykmeldinger';
 import { getLongDateFormat } from '../../utils';
 import DialogmoteVideoPanel from './components/DialogmoteVideoPanel';
-import IkkeSykmeldtLanding from './components/IkkeSykmeldtLanding';
 import MotebehovPanel from './components/MotebehovPanel';
 import MoteinnkallelsePanel from './components/MoteinnkallelsePanel';
 import MoteplanleggerKvitteringPanel from './components/MoteplanleggerKvitteringPanel';
@@ -29,19 +27,13 @@ const Landing = (): ReactElement => {
   const brev = useBrev();
   const motebehov = useMotebehov();
   const moteplanlegger = useMoteplanlegger();
-  const sykmeldinger = useSykmeldinger();
 
-  if (brev.isLoading || motebehov.isLoading || moteplanlegger.isLoading || sykmeldinger.isLoading) {
+  if (brev.isLoading || motebehov.isLoading || moteplanlegger.isLoading) {
     return <AppSpinner />;
   }
 
   const FetchFailedError = (): ReactElement | null => {
-    if (
-      brev.isError ||
-      motebehov.isError ||
-      (moteplanlegger.isError && !(moteplanlegger.error.code === 404)) ||
-      sykmeldinger.isError
-    ) {
+    if (brev.isError || motebehov.isError || (moteplanlegger.isError && !(moteplanlegger.error.code === 404))) {
       return <FeilAlertStripe />;
     }
 
@@ -53,10 +45,6 @@ const Landing = (): ReactElement => {
       (brevType === brevTypes.AVLYST && moteplanleggerStatus === AVBRUTT) ||
       (brevType !== brevTypes.AVLYST && moteplanleggerStatus !== AVBRUTT)
     );
-  };
-
-  const hasNoSendteSykmeldinger = (): boolean => {
-    return sykmeldinger.isSuccess && sykmeldinger.data && sykmeldinger.data.length === 0;
   };
 
   const displayBrev = (): boolean => {
@@ -143,14 +131,6 @@ const Landing = (): ReactElement => {
   };
 
   const MainContentPanel = (): ReactElement => {
-    if (hasNoSendteSykmeldinger()) {
-      return (
-        <React.Fragment>
-          <IkkeSykmeldtLanding />
-          <PreviousMotereferatFeaturePanel displayAlleReferater={true} />
-        </React.Fragment>
-      );
-    }
     return (
       <React.Fragment>
         {displayMotebehov() && <MotebehovPanel motebehov={motebehov} />}
