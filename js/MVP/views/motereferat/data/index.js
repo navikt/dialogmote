@@ -2,7 +2,7 @@ export const infoUrls = {
   FRISKMELDING_ARBEIDSFORMIDLING: {
     text: 'Les mer om friskmelding til arbeidsformidling',
     url:
-      'www.nav.no/no/person/arbeid/sykmeldt-arbeidsavklaringspenger-og-yrkesskade/nynorsk/friskmelding-til-arbeidsformidling-nynorsk',
+      'https://www.nav.no/no/person/arbeid/sykmeldt-arbeidsavklaringspenger-og-yrkesskade/sykmelding-ulike-former/friskmelding-til-arbeidsformidling',
   },
   AVKLARING_ARBEIDSEVNE: {
     text: 'Les mer om avklaring av arbeidsevnen',
@@ -24,7 +24,7 @@ export const infoUrls = {
     url: 'https://www.nav.no/no/Bedrift/Oppfolging/Sykmeldt+arbeidstaker/Sykepenger/kronisk-syk-arbeidstaker',
   },
   REISETILSKUDD: {
-    text: 'Les mer om reisetilskudd (nav.no)',
+    text: 'Les mer om reisetilskudd',
     url:
       'https://www.nav.no/no/person/arbeid/sykmeldt-arbeidsavklaringspenger-og-yrkesskade/sykmelding-ulike-former/reisetilskudd',
   },
@@ -41,5 +41,10 @@ export const infoUrls = {
   INGEN_RETTIGHETER: {
     text: 'Se etter stillinger på arbeidsplassen.nav.no',
     url: 'https://arbeidsplassen.nav.no/',
+  },
+  ARBEIDSRETTET_REHABILITERING: {
+    text: 'Les mer om arbeidsrettet rehabilitering',
+    url:
+      'https://www.nav.no/no/person/arbeid/oppfolging-og-tiltak-for-a-komme-i-jobb/tiltak-for-a-komme-i-jobb/arbeidsrettet-rehabilitering',
   },
 };

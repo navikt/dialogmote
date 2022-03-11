@@ -56,9 +56,6 @@ const innkallelse = {
     },
   ],
   virksomhetsnummer: '1234',
-  svar: {
-    svarType: 'NYTT_TID_STED',
-  },
 };
 
 module.exports = innkallelse;
