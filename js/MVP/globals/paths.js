@@ -1,4 +1,5 @@
 import { API_NAVN, hentSyfoApiUrl } from '@/api/apiUtils';
+import { isLabs } from '@/utils/urlUtils';
 
 export const ISDIALOGMOTE_API_BASE_PATH = `${process.env.REACT_APP_CONTEXT_ROOT}/api/v1/arbeidstaker/brev`;
 export const MOTEBEHOV_API = `${hentSyfoApiUrl(API_NAVN.SYFOMOTEBEHOV)}/v2/arbeidstaker/motebehov`;
@@ -13,6 +14,9 @@ export const MOTEPLANLEGGER_URL = `${process.env.REACT_APP_CONTEXT_ROOT}/mote`;
 export const MELD_BEHOV_URL = `${process.env.REACT_APP_CONTEXT_ROOT}/behov/meld`;
 export const SVAR_BEHOV_URL = `${process.env.REACT_APP_CONTEXT_ROOT}/behov/svar`;
 export const MOTEREFERAT_URL = `${process.env.REACT_APP_CONTEXT_ROOT}/referat`;
+export const DITT_SYKEFRAVAER_URL = isLabs()
+  ? 'https://sykefravaer.labs.nais.io/syk/sykefravaer'
+  : process.env.REACT_APP_SYKEFRAVAER_ROOT;
 
 export const LANDING_URL_AVBRUTT_MELD_BEHOV = `${process.env.REACT_APP_CONTEXT_ROOT}/avbruttMeldBehov`;
 
@@ -31,7 +35,7 @@ export const statiskeURLer = {
 const dittSykefravarBreadcrumb = [
   {
     tittel: 'Ditt sykefravær',
-    sti: process.env.REACT_APP_SYKEFRAVAER_ROOT,
+    sti: DITT_SYKEFRAVAER_URL,
     erKlikkbar: true,
   },
 ];
