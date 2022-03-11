@@ -18,7 +18,6 @@ import MoteplanleggerPanel from './components/MoteplanleggerPanel';
 import MotereferatPanel from './components/MotereferatPanel';
 import PreviousMotereferatPanel from './components/PreviousMotereferatPanel';
 import FeilAlertStripe from '@/MVP/components/FeilAlertStripe';
-import { isLabs } from '@/utils/urlUtils';
 
 interface PreviousMotereferatFeaturePanelProps {
   displayAlleReferater: boolean;
@@ -79,8 +78,6 @@ const Landing = (): ReactElement => {
   };
 
   const displayMotebehov = (): boolean => {
-    if (isLabs()) return true;
-
     if (motebehov.isIdle || motebehov.isError || !motebehov.data.visMotebehov) return false;
     if (!moteplanlegger.isError && moteplanlegger.data?.status !== AVBRUTT && !erMotePassert(moteplanlegger.data))
       return false;
