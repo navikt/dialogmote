@@ -16,7 +16,6 @@ export const API_NAVN = {
   SYFOMOTEADMIN: 'syfomoteadmin',
   SYFOMOTEBEHOV: 'syfomotebehov',
   ISDIALOGMOTE: 'isdialogmote',
-  SYFOOPPFOLGINGSPLANSERVICE: 'syfooppfolgingsplanservice',
 };
 
 export const hentSyfoApiUrl = (appNavn) => {
