@@ -3,12 +3,12 @@ import { log } from '@/logging/log';
 import * as actions from './mote_actions';
 import { skalHenteMote } from './moteSelectors';
 import { get } from '@/api/axios';
-import { API_NAVN, hentSyfoApiUrl } from '@/api/apiUtils';
+import { MOTEADMIN_API } from '@/MVP/globals/paths';
 
 export function* hentMote() {
   yield put(actions.henterMote());
   try {
-    const url = `${hentSyfoApiUrl(API_NAVN.SYFOMOTEADMIN)}/bruker/arbeidstaker/moter/siste`;
+    const url = `${MOTEADMIN_API}/arbeidstaker/moter/siste`;
     const mote = yield call(get, url);
     yield put(actions.moteHentet(mote));
   } catch (e) {

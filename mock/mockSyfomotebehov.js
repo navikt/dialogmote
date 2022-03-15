@@ -91,12 +91,12 @@ function getMotebehovStatus(type, res) {
 }
 
 function mockPilotEndepunkter(server) {
-  server.get('/syfomotebehov/api/v2/arbeidstaker/motebehov', (req, res) => {
+  server.get('/syk/dialogmote/api/motebehov', (req, res) => {
     res.setHeader('Content-Type', 'application/json');
     res.send(JSON.stringify(getMotebehovStatus(motebehovStatusEnum.INGEN_MOTEBEHOV, res)));
   });
 
-  server.post('/syfomotebehov/api/v2/arbeidstaker/motebehov', (req, res) => {
+  server.post('/syk/dialogmote/api/motebehov', (req, res) => {
     const nyttMotebehov = req.body;
 
     res.setHeader('Content-Type', 'application/json');

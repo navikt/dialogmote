@@ -1,16 +1,15 @@
 import { call, put, select, takeEvery } from 'redux-saga/effects';
 import { log } from '@/logging/log';
 import { get, post } from '@/api/axios';
-import { API_NAVN, hentSyfoApiUrl } from '@/api/apiUtils';
 import * as actions from './motebehov_actions';
 import { skalHenteMotebehov } from './motebehovSelectors';
 import { input2RSLagreMotebehov } from '@/utils/motebehovUtils';
+import { MOTEBEHOV_API } from '@/MVP/globals/paths';
 
 export function* hentMotebehov() {
   yield put(actions.hentMotebehovHenter());
   try {
-    const url = `${hentSyfoApiUrl(API_NAVN.SYFOMOTEBEHOV)}/v2/arbeidstaker/motebehov`;
-    const data = yield call(get, url);
+    const data = yield call(get, MOTEBEHOV_API);
     yield put(actions.hentMotebehovHentet(data));
   } catch (e) {
     log(e);
@@ -33,8 +32,7 @@ export function* svarMotebehov(action) {
   const body = input2RSLagreMotebehov(action.svar);
   yield put(actions.svarMotebehovSender());
   try {
-    const url = `${hentSyfoApiUrl(API_NAVN.SYFOMOTEBEHOV)}/v2/arbeidstaker/motebehov`;
-    yield call(post, url, body);
+    yield call(post, MOTEBEHOV_API, body);
     yield put(actions.svarMotebehovSendt(body));
   } catch (e) {
     log(e);
