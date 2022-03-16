@@ -68,24 +68,19 @@ const Moteinnkallelse = (): ReactElement => {
         </DialogmoteContainer>
       );
     }
+    const isLegacyHeader = document[0]?.type !== 'HEADER_H1';
+    const pageHeader = isLegacyHeader ? title(brevType) : null;
 
     if (brevType === brevTypes.AVLYST) {
       return (
-        <DialogmoteContainer
-          title={title(brevType)}
-          breadcrumb={innkallelseBreadcrumb(title(brevType))}
-          displayTilbakeknapp
-        >
+        <DialogmoteContainer title={pageHeader} breadcrumb={innkallelseBreadcrumb(title(brevType))} displayTilbakeknapp>
           <AvlystDocumentContainerStyled document={document} lestDato={lestDato} uuid={uuid} />
         </DialogmoteContainer>
       );
     }
+
     return (
-      <DialogmoteContainer
-        title={title(brevType)}
-        breadcrumb={innkallelseBreadcrumb(title(brevType))}
-        displayTilbakeknapp
-      >
+      <DialogmoteContainer title={pageHeader} breadcrumb={innkallelseBreadcrumb(title(brevType))} displayTilbakeknapp>
         {isDateInPast(tid) && <AlertStripeStyled type="advarsel">{texts.pastDateAlertBox}</AlertStripeStyled>}
 
         <DocumentContainer document={document} lestDato={lestDato} uuid={uuid} />
