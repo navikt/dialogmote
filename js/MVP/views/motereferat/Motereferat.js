@@ -51,8 +51,11 @@ const Motereferat = ({ params }) => {
   const { date } = params;
   const referat = getReferat(data, date);
 
+  const isLegacyHeader = referat?.document[0]?.type !== 'HEADER_H1';
+  const pageHeader = isLegacyHeader ? texts.title : null;
+
   return (
-    <DialogmoteContainer title={texts.title} breadcrumb={motereferatBreadcrumb} displayTilbakeknapp>
+    <DialogmoteContainer title={pageHeader} breadcrumb={motereferatBreadcrumb} displayTilbakeknapp>
       <MotereferatContent referat={referat} />
     </DialogmoteContainer>
   );
