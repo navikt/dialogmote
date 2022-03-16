@@ -1,12 +1,14 @@
 import React, { ReactElement } from 'react';
-import { Element, Innholdstittel, Normaltekst } from 'nav-frontend-typografi';
+import { Element, Innholdstittel, Normaltekst, Sidetittel } from 'nav-frontend-typografi';
 import Lenke from 'nav-frontend-lenker';
 import { trackOnClick } from '@/amplitude/amplitude';
 import { eventNames } from '@/amplitude/events';
 import { DocumentComponent } from '@/api/types/brevTypes';
 
 const DocumentTypes = {
-  HEADER: 'HEADER',
+  HEADER: 'HEADER', // legacy
+  HEADER_H1: 'HEADER_H1',
+  HEADER_H2: 'HEADER_H2',
   PARAGRAPH: 'PARAGRAPH',
   LINK: 'LINK',
 };
@@ -23,7 +25,29 @@ const DocumentRenderer = ({ documentComponent }: Props): ReactElement | null => 
       return (
         <>
           {texts.map((text, index) => (
-            <Innholdstittel key={index}>{text}</Innholdstittel>
+            <Innholdstittel key={index} tag="h2">
+              {text}
+            </Innholdstittel>
+          ))}
+        </>
+      );
+
+    case DocumentTypes.HEADER_H1:
+      return (
+        <>
+          {texts.map((text, index) => (
+            <Sidetittel key={index}>{text}</Sidetittel>
+          ))}
+        </>
+      );
+
+    case DocumentTypes.HEADER_H2:
+      return (
+        <>
+          {texts.map((text, index) => (
+            <Innholdstittel key={index} tag="h2">
+              {text}
+            </Innholdstittel>
           ))}
         </>
       );

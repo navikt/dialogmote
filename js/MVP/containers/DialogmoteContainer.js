@@ -50,9 +50,11 @@ const DialogmoteContainer = ({ title, breadcrumb = dialogmoteBreadcrumb, display
     <WrapperStyled>
       <ContentStyled>
         <Brodsmuler brodsmuler={breadcrumb} />
-        <HeaderStyled>
-          <Sidetittel>{title}</Sidetittel>
-        </HeaderStyled>
+        {title && (
+          <HeaderStyled>
+            <Sidetittel>{title}</Sidetittel>
+          </HeaderStyled>
+        )}
         {children}
         {displayTilbakeknapp && <TilbakeknappStyled onClick={browserHistory.goBack} />}
         <BottomInfoStyled>
