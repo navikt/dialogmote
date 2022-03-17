@@ -46,3 +46,12 @@ spec:
       value: https://isdialogmote.nav.no
     - name: DITTNAV_URL
       value: https://www.nav.no/person/dittnav
+    - name: SYFOMOTEBEHOV_HOST
+      value: https://syfomotebehov.prod-fss-pub.nais.io
+    - name: SYFOMOTEADMIN_HOST
+      value: https://syfomoteadmin.prod-fss-pub.nais.io
+  accessPolicy:
+    outbound:
+      external:
+        - host: syfomotebehov.prod-fss-pub.nais.io
+        - host: syfomoteadmin.prod-fss-pub.nais.io
