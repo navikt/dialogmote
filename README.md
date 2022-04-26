@@ -1,6 +1,6 @@
 # Dialogmote
 
-React frontend for sykmeldtes dialogmøter
+React frontend for sykmeldtes dialogmøter 
 
 - Prod: https://www.nav.no/syk/dialogmote
 - Test: https://www-gcp.dev.nav.no/syk/dialogmote
