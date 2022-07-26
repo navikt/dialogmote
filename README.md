@@ -1,5 +1,7 @@
 # Dialogmote
 
+:warning: Dette repoet er arkivert, og erstattet av [dialogmote-frontend](https://github.com/navikt/dialogmote-frontend) :warning:
+
 React frontend for sykmeldtes dialogmøter 
 
 - Prod: https://www.nav.no/syk/dialogmote
